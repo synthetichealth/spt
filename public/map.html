@@ -1,0 +1,275 @@
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>SPT - Map</title>
+
+  <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
+  <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
+
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
+  <script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+  <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+   integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+   crossorigin=""/>
+   
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+   integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+   crossorigin=""></script>
+   
+<!-- Load Esri Leaflet from CDN -->
+<script src="https://unpkg.com/esri-leaflet@2.1.1/dist/esri-leaflet.js"
+    integrity="sha512-ECQqaYZke9cSdqlFG08zSkudgrdF6I1d8ViSa7I3VIszJyVqw4ng1G8sehEXlumdMnFYfzY0tMgdQa4WCs9IUw=="
+    crossorigin=""></script>
+
+<!-- leaflet easy button -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+<script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+
+    <style type="text/css">
+
+html, body {
+   height: 100%;
+}
+
+.container {
+
+    max-width: inherit;
+    height: 100%;
+}
+
+
+/* simple-sidebar start */
+body {
+  overflow-x: hidden;
+}
+
+#wrapper {
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#wrapper.leftToggled {
+  padding-left: 250px;
+}
+
+#wrapper.rightToggled {
+  padding-left: 250px;
+}
+
+#leftbar-wrapper {
+  z-index: 1000;
+  position: fixed;
+  left: 250px;
+  width: 0;
+  height: 100%;
+  margin-left: -250px;
+  overflow-y: auto;
+  background: #000;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#wrapper.leftToggled #leftbar-wrapper {
+  width: 250px;
+}
+
+#wrapper.rightToggled #rightbar-wrapper {
+  width: 250px;
+}
+
+#page-content-wrapper {
+  width: 100%;
+  position: absolute;
+  padding: 15px;
+}
+
+#wrapper.leftToggled #page-content-wrapper {
+  position: absolute;
+  margin-right: -250px;
+}
+
+#wrapper.rightToggled #page-content-wrapper {
+  position: absolute;
+  margin-left: -250px;
+}
+
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+  position: absolute;
+  top: 0;
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar-nav li {
+  text-indent: 20px;
+  line-height: 40px;
+}
+
+.sidebar-nav li a {
+  display: block;
+  text-decoration: none;
+  color: #999999;
+}
+
+.sidebar-nav li a:hover {
+  text-decoration: none;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-nav li a:active, .sidebar-nav li a:focus {
+  text-decoration: none;
+}
+
+.sidebar-nav>.sidebar-brand {
+  height: 65px;
+  font-size: 18px;
+  line-height: 60px;
+}
+
+.sidebar-nav>.sidebar-brand a {
+  color: #999999;
+}
+
+.sidebar-nav>.sidebar-brand a:hover {
+  color: #fff;
+  background: none;
+}
+
+@media(min-width:768px) {
+  #wrapper {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  #wrapper.leftToggled {
+    padding-left: 250px;
+  }
+  #wrapper.rightToggled {
+    padding-right: 250px;
+  }
+  #leftbar-wrapper {
+    width: 0;
+  }
+  #wrapper.leftToggled #leftbar-wrapper {
+    width: 250px;
+  }
+  #wrapper.rightToggled #rightbar-wrapper {
+    width: 250px;
+  }
+  #page-content-wrapper {
+    padding: 20px;
+    position: relative;
+  }
+  #wrapper.leftToggled #page-content-wrapper {
+    position: relative;
+    margin-right: 0;
+  }
+}
+/* simple-sidebar end */
+
+</style>
+</head>
+<body>
+  <main role="main" class="container">
+    <div id="app">
+      <div id="wrapper" v-bind:class="{ leftToggled : showLeftBar, rightToggled : showRightBar }">
+
+        <!-- Sidebar -->
+        <div id="leftbar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#" @click="toggleShowLeftBar()">
+                        Start Bootstrap
+                    </a>
+                </li>
+                <li>
+                    <a href="#">Dashboard</a>
+                </li>
+                <li>
+                    <a href="#">Shortcuts</a>
+                </li>
+                <li>
+                    <a href="#" @click="toggleShowRightBar('clicked overview')">Overview</a>
+                </li>
+                <li>
+                    <a href="#">Events</a>
+                </li>
+                <li>
+                    <a href="#" @click="toggleShowRightBar('clicked about')">About</a>
+                </li>
+                <li>
+                    <a href="#">Services</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+      <!-- /#leftbar-wrapper -->
+
+      <div id="mapid" style="height: 100%;"></div>
+
+
+      <div id="rightbar-wrapper">
+        {{ this.rightBarContent }}
+      </div>
+    </div></div>
+  </main>
+
+  <script>
+    new Vue({
+    el: '#app',
+    mounted() {
+        this.setupMap();
+    },
+    data: {
+      showLeftBar: false,
+      showRightBar: false,
+      rightBarContent: null,
+      map: null,
+      tileLayer: null,
+      layers: [
+        {
+          id: 0,
+          name: 'Routes',
+          active: false,
+          features: [],
+        },
+      ]
+    },
+    methods: {
+        setupMap() {
+          this.map = L.map('mapid', { 'zoomControl' : false }).setView([42.00, -71.00], 12);
+          this.tileLayer = L.esri.basemapLayer('ShadedRelief');
+          this.tileLayer.addTo(this.map);
+          this.layerLabels = L.esri.basemapLayer('ShadedReliefLabels');
+          this.layerLabels.addTo(this.map);
+
+          L.easyButton('=', this.toggleShowLeftBar).addTo( this.map );
+        },
+        toggleShowLeftBar() {
+          this.showLeftBar = !this.showLeftBar;
+        },
+        toggleShowRightBar(content) {
+          this.showRightBar = !this.showRightBar;
+          this.rightBarContent = content;
+        }
+    }
+});
+  </script>
+</body>
+</html>
