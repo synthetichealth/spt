@@ -33,6 +33,13 @@
 }
 
 
+
+body {
+  border: 12px solid #F0F8FF;
+}
+
+
+
 dl {
  margin-top:0;
  margin-bottom:20px

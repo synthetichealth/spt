@@ -19,21 +19,19 @@
 </head>
 <body>
 
-<div id="app">
+<div id="app" class="container-fluid">
 
 <div id="patient" v-if="patient">
   <div class="health-record__header"><div class="header-title">summary</div><div class="header-divider"></div></div>
   <div id="p_brief" class="row">
-    <div id="p_brief_photo">
-      <img v-bind:src="'https://randomuser.me/api/portraits/' + (patient.gender == 'female' ? 'women' : 'men') + '/' + randInt(64) + '.jpg'" id="p_patient_photo" alt="Patient Photo">
+    <div id="p_brief_photo" class="col-2">
+      <img v-bind:src="'https://randomuser.me/api/portraits/' + (patient.gender == 'female' ? 'women' : 'men') + '/' + randInt(64) + '.jpg'" id="p_patient_photo" alt="Patient Photo" style="height:100%">
     </div>
-    <div id="p_brief_records" class="col-xs-8 col-sm-9">
+    <div id="p_brief_records" class="col-5">
       <div id="p_brief_name_address" class="p_block">
         <dl class="dl-horizontal p_brief_family">
-          <dt>Family name</dt>
-            <dd>{{ patient.name[0].family }}</dd>
-          <dt>Given name</dt>
-            <dd>{{ patient.name[0].given.join(' ') }}</dd>
+          <dt>Name</dt>
+            <dd>{{ patient.name[0].family }}, {{ patient.name[0].given.join(' ') }}</dd>
           <dt>Gender</dt>
             <dd>{{ patient.gender }}</dd>
           <dt>Date of Birth</dt>
@@ -47,15 +45,34 @@
         </dl>
       </div>
     </div>
+    <div id="p_brief_records" class="col-5">
+      <div id="p_brief_name_address" class="p_block">
+        <dl class="dl-horizontal p_brief_family">
+          <dt>Height</dt>
+            <dd>{{ height_obs | obsValue }}</dd>
+          <dt>Weight</dt>
+            <dd>{{ weight_obs | obsValue }}</dd>
+          <dt>Race</dt>
+            <dd>{{ race || 'unk.' }}</dd>
+          <dt>Ethnicity</dt>
+            <dd>{{ ethnicity || 'unk.' }}</dd>
+          <dt>Language</dt>
+            <dd>{{ patient.communication[0].language.coding[0].display }}</dd>
+          <dt>Blood Type</dt>
+            <dd>unknown</dd>
+        </dl>
+      </div>
+    </div>
   </div>
 </div>
 
 
 <div id="conditions" v-if="conditions.length > 0">
   <div class="health-record__header"><div class="header-title">conditions</div><div class="header-divider"></div></div>
-  <table class="table table-hover">
+  <table class="table table-sm table-hover">
   <thead id="p_conditions_head">
     <tr>
+      <th scope="col">SNOMED</th>
       <th scope="col">Condition</th>
       <th scope="col">Date of Onset</th>
       <th scope="col">Date Resolved</th>
@@ -63,6 +80,7 @@
   </thead>
   <tbody id="p_conditions_list">
     <tr v-for="entry in conditions.slice().reverse()">
+      <td>{{ entry.code.coding[0].code }}</td>
       <td>{{ entry.code.coding[0].display }}</td>
       <td>{{ entry.onsetDateTime | date }}</td>
       <td>{{ entry.abatementDateTime || 'N/A' | date }}</td>
@@ -73,10 +91,10 @@
 
 <div id="observations" v-if="observations.length > 0"> 
   <div class="health-record__header"><div class="header-title">observations</div><div class="header-divider"></div></div>
-  <table class="table table-hover">
+  <table class="table table-sm table-hover">
   <thead id="p_observations_head">
     <tr>
-      <th scope="col">Code</th>
+      <th scope="col">LOINC</th>
       <th scope="col">Observation</th>
       <th scope="col">Value</th>
       <th scope="col">Date Recorded</th>
@@ -95,10 +113,10 @@
 
 <div id="reports" v-if="reports.length > 0">
   <div class="health-record__header"><div class="header-title">reports</div><div class="header-divider"></div></div>
-  <table class="table table-hover">
+  <table class="table table-sm table-hover">
   <thead id="p_reports_head">
     <tr>
-      <th scope="col">Code</th>
+      <th scope="col">LOINC</th>
       <th scope="col">Report / Observation</th>
       <th scope="col">Value</th>
       <th scope="col">Date</th>
@@ -125,10 +143,10 @@
 
 <div id="medications" v-if="medications.length > 0">
   <div class="health-record__header"><div class="header-title">medications</div><div class="header-divider"></div></div>
-  <table class="table table-hover">
+  <table class="table table-sm table-hover">
   <thead id="p_medications_head">
     <tr>
-      <th scope="col">Code</th>
+      <th scope="col">RxNorm</th>
       <th scope="col">Medication Order</th>
       <th scope="col">Date of Rx</th>
     </tr>
@@ -145,15 +163,17 @@
 
 <div id="allergies" v-if="allergies.length > 0">
   <div class="health-record__header"><div class="header-title">allergies</div><div class="header-divider"></div></div>
-  <table class="table table-hover">
+  <table class="table table-sm table-hover">
   <thead id="p_allergies_head">
     <tr>
+      <th scope="col">SNOMED</th>
       <th scope="col">Allergy</th>
       <th scope="col">Date Recorded</th>
     </tr>
   </thead>
   <tbody id="p_allergies_list">
     <tr v-for="entry in allergies.slice().reverse()">
+      <td>{{ entry.code.coding[0].code }}</td>
       <td>{{ entry.code.coding[0].display }}</td>
       <td>{{ entry.assertedDate | date }}</td>
     </tr>
@@ -163,10 +183,10 @@
 
 <div id="care_plans" v-if="care_plans.length > 0">
   <div class="health-record__header"><div class="header-title">careplans</div><div class="header-divider"></div></div>
-  <table class="table table-hover">
+  <table class="table table-sm table-hover">
   <thead id="p_care_plans_head">
     <tr>
-      <th scope="col">Code</th>
+      <th scope="col">SNOMED</th>
       <th scope="col">Care Plan</th>
       <th scope="col">Date</th>
     </tr>
@@ -195,10 +215,10 @@
 
 <div id="procedures" v-if="procedures.length > 0">
   <div class="health-record__header"><div class="header-title">procedures</div><div class="header-divider"></div></div>
-  <table class="table table-hover">
+  <table class="table table-sm table-hover">
   <thead id="p_procedures_head">
     <tr>
-      <th scope="col">Code</th>
+      <th scope="col">SNOMED</th>
       <th scope="col">Procedure</th>
       <th scope="col">Date</th>
     </tr>
@@ -215,10 +235,10 @@
 
 <div id="encounters" v-if="encounters.length > 0">
   <div class="health-record__header"><div class="header-title">encounters</div><div class="header-divider"></div></div>
-  <table class="table table-hover">
+  <table class="table table-sm table-hover">
   <thead id="p_encounters_head">
     <tr>
-      <th scope="col">Code</th>
+      <th scope="col">SNOMED</th>
       <th scope="col">Encounter</th>
       <th scope="col">Start Date</th>
       <th scope="col">Duration</th>
@@ -237,15 +257,17 @@
 
 <div id="vaccinations" v-if="vaccinations.length > 0">
   <div class="health-record__header"><div class="header-title">vaccinations</div><div class="header-divider"></div></div>
-  <table class="table table-hover">
+  <table class="table table-sm table-hover">
   <thead id="p_vaccinations_head">
     <tr>
+      <th scope="col">CVX</th>
       <th scope="col">Vaccination</th>
       <th scope="col">Date Last Given</th>
     </tr>
   </thead>
   <tbody id="p_vaccinations_list">
     <tr v-for="entry in vaccinations.slice().reverse()">
+      <td>{{ entry.vaccineCode.coding[0].code }}</td>
       <td>{{ entry.vaccineCode.coding[0].display }}</td>
       <td>{{ entry.date | date }}</td>
     </tr>
@@ -265,7 +287,6 @@
     
 <script type="text/javascript">
 
-
 const round = function (num, digits) {
   return Number.parseFloat(num).toFixed(digits);
 }
@@ -275,6 +296,10 @@ var app = new Vue({
   data: {
     raw_record: null,
     patient: null,
+    height_obs: null,
+    weight_obs: null,
+    race: null,
+    ethnicity: null,
     observations: [],
     reports: [],
     conditions: [],
@@ -314,7 +339,7 @@ var app = new Vue({
     },
     obsValue: function(entry) {
       if (entry.valueQuantity) {
-        return round(entry.valueQuantity.value, 2) + entry.valueQuantity.code;
+        return round(entry.valueQuantity.value, 2) + ' ' + entry.valueQuantity.code;
       } else if (entry.valueCodeableConcept) { 
         return entry.valueCodeableConcept.coding[0].display;
       } else if (entry.valueString) {
@@ -353,40 +378,56 @@ function update(incoming) {
 
   app.patient = groupedEntries.Patient[0];
 
+  const raceExt = _.find(app.patient.extension, (e) => { return e.url == 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-race'});
+  if (raceExt) {
+      app.race = raceExt.extension[0].valueString || raceExt.extension[0].valueCoding.display;
+  }
+
+  const ethExt = _.find(app.patient.extension, (e) => { return e.url == 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity'});
+  if (ethExt) {
+      app.ethnicity = ethExt.extension[0].valueString || ethExt.extension[0].valueCoding.display;
+  }
+
   app.conditions = groupedEntries.Condition || [];
   _.sortBy(app.conditions, 'onsetDateTime');
-
 
   app.reports = groupedEntries.DiagnosticReport || [];
   app.observations = groupedEntries.Observation || [];
 
-
   app.reports.forEach((r) => {
-    r.observations = _.map(r.result, (res) => { return _.find(app.observations, (o) => { return 'urn:uuid:'+o.id == res.reference}) } );
+    r.observations = r.result.map((res) => { return _.find(app.observations, (o) => { return 'urn:uuid:'+o.id == res.reference}) } );
 
     app.observations = _.difference(app.observations, r.observations);
   });
-
   _.sortBy(app.observations, 'effectiveDateTime');
 
+  const searchableObs = app.observations.slice().reverse();
+  app.height_obs = _.find(searchableObs, (o) => { return o.code.coding[0].display == 'Body Height'});
+  app.weight_obs = _.find(searchableObs, (o) => { return o.code.coding[0].display == 'Body Weight'});
+
   app.medications = groupedEntries.MedicationRequest || [];
+  _.sortBy(app.medications, 'authoredOn');
 
   app.allergies = groupedEntries.AllergyIntolerance || [];
-
+  _.sortBy(app.allergies, 'assertedDate');
 
   app.care_plans = groupedEntries.CarePlan || [];
-
   const goals = groupedEntries.Goal || [];
 
   app.care_plans.forEach((c) => {
-    c.care_goals = _.map(c.goal, (ref) => { return _.find(goals, (g) => { return 'urn:uuid:'+g.id == ref.reference}) } );
+    const currGoals = c.goal || [];
+    c.care_goals = currGoals.map((ref) => { return _.find(goals, (g) => { return 'urn:uuid:'+g.id == ref.reference}) } );
   });
+  _.sortBy(app.care_plans, 'period.start');
 
   app.procedures = groupedEntries.Procedure || [];
+  _.sortBy(app.procedures, 'performedPeriod.start');
 
   app.encounters = groupedEntries.Encounter || [];
+  _.sortBy(app.encounters, 'period.start');
 
   app.vaccinations = groupedEntries.Immunization || [];
+  _.sortBy(app.vaccinations, 'date');
 }
 
 new DragDropHelper(update);
