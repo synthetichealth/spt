@@ -42,6 +42,10 @@
             <dd>{{ patient.address[0].city }}, {{ patient.address[0].state }}</dd>
           <dt>Postal Code</dt>
             <dd>{{ patient.address[0].postalCode }}</dd>
+          <template v-if="patient.deceasedDateTime">
+            <dt>Date of Death</dt>
+              <dd>{{ patient.deceasedDateTime | date }}</td></dd>
+          </template>
         </dl>
       </div>
     </div>
@@ -60,6 +64,10 @@
             <dd>{{ patient.communication[0].language.coding[0].display }}</dd>
           <dt>Blood Type</dt>
             <dd>unknown</dd>
+          <template v-if="cause_of_death_obs">
+            <dt>Cause of Death</dt>
+              <dd>{{ cause_of_death_obs | obsValue }}</td></dd>
+          </template>
         </dl>
       </div>
     </div>
@@ -300,6 +308,7 @@ var app = new Vue({
     weight_obs: null,
     race: null,
     ethnicity: null,
+    cause_of_death_obs: null,
     observations: [],
     reports: [],
     conditions: [],
@@ -338,7 +347,9 @@ var app = new Vue({
       return moment.duration( start.diff(end) ).humanize();;
     },
     obsValue: function(entry) {
-      if (entry.valueQuantity) {
+      if (entry == null) {
+        return '';
+      } else if (entry.valueQuantity) {
         return round(entry.valueQuantity.value, 2) + ' ' + entry.valueQuantity.code;
       } else if (entry.valueCodeableConcept) { 
         return entry.valueCodeableConcept.coding[0].display;
@@ -380,12 +391,16 @@ function update(incoming) {
 
   const raceExt = _.find(app.patient.extension, (e) => { return e.url == 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-race'});
   if (raceExt) {
-      app.race = raceExt.extension[0].valueString || raceExt.extension[0].valueCoding.display;
+    app.race = raceExt.extension[0].valueString || raceExt.extension[0].valueCoding.display;
+  } else {
+    app.race = null;
   }
 
   const ethExt = _.find(app.patient.extension, (e) => { return e.url == 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity'});
   if (ethExt) {
-      app.ethnicity = ethExt.extension[0].valueString || ethExt.extension[0].valueCoding.display;
+    app.ethnicity = ethExt.extension[0].valueString || ethExt.extension[0].valueCoding.display;
+  } else {
+    app.ethnicity = null;
   }
 
   app.conditions = groupedEntries.Condition || [];
@@ -400,6 +415,13 @@ function update(incoming) {
     app.observations = _.difference(app.observations, r.observations);
   });
   _.sortBy(app.observations, 'effectiveDateTime');
+
+  const deathCert = _.find(app.reports, (r) => { return r.code.coding[0].display == 'U.S. standard certificate of death - 2003 revision' });
+  if (deathCert) {
+    app.cause_of_death_obs = deathCert.observations[0];
+  } else {
+    app.cause_of_death_obs = null;
+  }
 
   const searchableObs = app.observations.slice().reverse();
   app.height_obs = _.find(searchableObs, (o) => { return o.code.coding[0].display == 'Body Height'});
