@@ -238,7 +238,7 @@ const transitionsAsDOT = (module, selectedState, selectedStateTransition, module
               if (checkDestInHistory && transitionHistory.includes(t.transition)) {
                 nodeHighlighted[nodes] = 'highlighted'
               } else {
-                nodeHighlighted[nodes] = 'standard'
+                nodeHighlighted[nodes] = 'muted'
               }
             }
 
@@ -261,10 +261,10 @@ const transitionsAsDOT = (module, selectedState, selectedStateTransition, module
                 nodeHighlighted[nodes] = 'highlighted'
               }
               if (moduleHistory) {
-                if (checkDestInHistory && transitionHistory.includes(t.transition)) {
+                if (checkDestInHistory && transitionHistory.includes(dist.transition)) {
                   nodeHighlighted[nodes] = 'highlighted'
                 } else {
-                  nodeHighlighted[nodes] = 'standard'
+                  nodeHighlighted[nodes] = 'muted'
                 }
               }            
               if(transitions[nodes] === undefined){
@@ -285,6 +285,8 @@ const transitionsAsDOT = (module, selectedState, selectedStateTransition, module
           transitionClassName = ''
         } else if(nodeHighlighted[trans] === 'highlighted'){
           transitionClassName='transition-highlighted'
+        } else {
+          transitionClassName='transition-muted'
         }
         if(selectedStateTransition === index){
           transitionClassName += ' transition-selected';
