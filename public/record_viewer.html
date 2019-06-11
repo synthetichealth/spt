@@ -299,7 +299,14 @@ const round = function (num, digits) {
   return Number.parseFloat(num).toFixed(digits);
 }
 
-var app = new Vue({
+const isMatchingReference = function(entry, reference, resourceType) {
+  return entry.id === reference 
+        || ('urn:uuid:'+entry.id) === reference 
+        || (resourceType+'/'+entry.id) === reference;
+};
+
+
+const app = new Vue({
   el: '#app',
   data: {
     raw_record: null,
@@ -410,8 +417,7 @@ function update(incoming) {
   app.observations = groupedEntries.Observation || [];
 
   app.reports.forEach((r) => {
-    r.observations = r.result.map((res) => { return _.find(app.observations, (o) => { return 'urn:uuid:'+o.id == res.reference}) } );
-
+    r.observations = r.result.map((res) => _.find(app.observations, (o) => isMatchingReference(o, res.reference, 'Observation') )  );
     app.observations = _.difference(app.observations, r.observations);
   });
   _.sortBy(app.observations, 'effectiveDateTime');
@@ -438,7 +444,8 @@ function update(incoming) {
 
   app.care_plans.forEach((c) => {
     const currGoals = c.goal || [];
-    c.care_goals = currGoals.map((ref) => { return _.find(goals, (g) => { return 'urn:uuid:'+g.id == ref.reference}) } );
+    c.care_goals = currGoals.map((ref) => _.find(goals, (g) => isMatchingReference(g, ref.reference, 'Goal'))  );
+
   });
   _.sortBy(app.care_plans, 'period.start');
 
@@ -452,7 +459,30 @@ function update(incoming) {
   _.sortBy(app.vaccinations, 'date');
 }
 
-new DragDropHelper(update);
+const urlParams = new URLSearchParams(window.location.search);
+const patientId = urlParams.get('patient');
+const apiKey = urlParams.get('apikey');
+
+if (patientId && apiKey) {
+
+  const url = `https://syntheticmass.mitre.org/v1/fhir/Patient/${patientId}/$everything?apikey=${apiKey}`;
+
+  const get = new XMLHttpRequest();
+  get.onreadystatechange = function() {
+    if (get.readyState === XMLHttpRequest.DONE) {
+      if (get.status === 200) {
+        const result = JSON.parse(get.responseText);
+        update(result);
+      }
+    }
+  };
+  get.open('GET', url);
+  get.send();
+
+} else {
+  new DragDropHelper(update);
+}
+
 
 </script>
 
