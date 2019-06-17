@@ -471,8 +471,15 @@ if (patientId && apiKey) {
   get.onreadystatechange = function() {
     if (get.readyState === XMLHttpRequest.DONE) {
       if (get.status === 200) {
-        const result = JSON.parse(get.responseText);
-        update(result);
+        const json = get.responseText;
+        try {
+          const result = JSON.parse(json);
+          update(result);
+        } catch (e) {
+          console.error(e);
+          console.log(`URL was ${url}`);
+          console.log(`json was ${JSON.stringify(json, null, 2)}`);
+        }
       }
     }
   };

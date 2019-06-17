@@ -5,8 +5,17 @@
   <meta content="utf-8" http-equiv="encoding">
 <link rel="stylesheet" href="styles/record_viewer.css" />
 
+  <script src="ma_geo.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+   integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+   crossorigin=""/>
+   
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+   integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+   crossorigin=""></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js" integrity="sha256-59IZ5dbLyByZgSsRE3Z0TjDuX7e1AiqW5bZ8Bg50dsU=" crossorigin="anonymous"></script>
 
@@ -25,18 +34,26 @@
 
 </div>
 
-<div id="city" v-if="apikey && city">
-  <h1> {{ city }} </h1>
-  <dl class="dl-horizontal" v-for="patient in patients">
-    <dt v-html="linkToPatient(patient)"></dt>
-      <dd v-html="patientDetails(patient)"></dd>
-  </dl>
-</div>
+<div id="apikey_given" v-if="apikey">
 
-<div id="all_cities" v-if="apikey && !city">
-  <ul class="ul-horizontal" v-for="cityName in allCities">
-    <li v-html="linkToCity(cityName)"></dt>
-  </ul>
+  <div id="map_view">
+    <div class="map" id="main_map" style="width:720px;height:480px"></div>
+  </div>
+
+  <div id="city" v-if="city">
+    <h1> {{ city }} </h1>
+    <div id="spinner" v-if="isLoadingCity"><img src="https://i.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.webp"></div>
+    <dl class="dl-horizontal" v-for="patient in patients">
+      <dt v-html="linkToPatient(patient)"></dt>
+        <dd v-html="patientDetails(patient)"></dd>
+    </dl>
+  </div>
+
+  <div id="all_cities" v-if="!city">
+    <ul class="ul-horizontal" v-for="cityName in allCities">
+      <li v-html="linkToCity(cityName)"></li>
+    </ul>
+  </div>
 </div>
 
 </div>
@@ -59,23 +76,24 @@ const urlParams = new URLSearchParams(window.location.search);
 const city = urlParams.get('city');
 const apikey = urlParams.get('apikey');
 
-
 const app = new Vue({
   el: '#app',
   data: {
     city,
     patients: [],
     allCities,
-    apikey
+    apikey,
+    map: null,
+    isLoadingCity: false
   },
   methods: {
     linkToPatient: function(patient) {
       const patientName = patient.name[0].family + ', ' + patient.name[0].given.join(' ');
-      const url = `record_viewer.html?patient=${patient.id}&apikey=${app.apikey}`;
+      const url = `record_viewer.html?patient=${patient.id}&apikey=${this.apikey}`;
       return `<a href="${url}">${patientName}</a>`
     },
     linkToCity: function(cityName) {
-      const url = `patient_list.html?city=${cityName}&apikey=${apikey}`;
+      const url = `patient_list.html?city=${cityName}&apikey=${this.apikey}`;
       return `<a href="${url}">${cityName}</a>`;
     },
     patientDetails: function(patient) {
@@ -90,6 +108,30 @@ const app = new Vue({
       const deceased = patient.deceasedDateTime ? 'Deceased ' + date(patient.deceasedDateTime) : '';
 
       return `<br/>${gender}<br/>DOB: ${birthdate} (Age ${age})<br/>${addrLine1}<br/>${addrLine2}<br/>${deceased}`;
+    },
+    loadPatients: function() {
+      const url = `https://syntheticmass.mitre.org/v1/fhir/Patient?address-city:exact=${this.city}&apikey=${this.apikey}`;
+
+      const getPatients = new XMLHttpRequest();
+      getPatients.onreadystatechange = () => {
+        if (getPatients.readyState === XMLHttpRequest.DONE) {
+          if (getPatients.status === 200) {
+            const json = getPatients.responseText;
+            try {
+              const result = JSON.parse(json);
+              app.patients = result.entry.map(e => e.resource);
+            } catch (e) {
+              console.error(e);
+              console.log(`url was ${url}`);
+              console.log(`json was ${JSON.stringify(json, null, 2)}`);
+            }
+            this.isLoadingCity = false;
+          }
+        }
+      };
+      this.isLoadingCity = true;
+      getPatients.open('GET', url);
+      getPatients.send();
     }
   },   
   filters: {
@@ -105,19 +147,63 @@ const app = new Vue({
 });
 
 if (city && apikey) {
-  const url = `https://syntheticmass.mitre.org/v1/fhir/Patient?address-city=${city}&apikey=${apikey}`;
+  app.loadPatients();
+}
 
-  const getPatients = new XMLHttpRequest();
-  getPatients.onreadystatechange = function() {
-    if (getPatients.readyState === XMLHttpRequest.DONE) {
-      if (getPatients.status === 200) {
-        const result = JSON.parse(getPatients.responseText);
-        app.patients = result.entry.map(e => e.resource);
-      }
-    }
+const colorScale = {
+  0: "#f1eef6",
+  1750: "#d4b9da",
+  5250: '#c994c7',
+  8750: '#df65b0',
+  14000: '#e7298a',
+  17500: '#ce1256',
+  35000: '#91003f'
+}
+
+
+if (!city && apikey) {
+  app.map = L.map("main_map",{doubleClickZoom:false,scrollWheelZoom:false}).setView([42.1,-71.333836],8);
+  const original_bounds = app.map.getBounds();
+  // app.mapView = $("#map_view");
+  const tiles = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}
+  );
+  app.map.addLayer(tiles);
+
+  // const MA_outer_border = '{"type":"FeatureCollection","features":[{"type":"Feature","id":"USA-MA","properties":{"fips":"25","name":"Massachusetts"},"geometry":{"type":"Polygon","coordinates":[[[-70.917521,42.887974],[-70.818936,42.871543],[-70.780598,42.696281],[-70.824413,42.55388],[-70.983245,42.422434],[-70.988722,42.269079],[-70.769644,42.247172],[-70.638197,42.08834],[-70.660105,41.962371],[-70.550566,41.929509],[-70.539613,41.814493],[-70.260289,41.715908],[-69.937149,41.809016],[-70.008349,41.672093],[-70.484843,41.5516],[-70.660105,41.546123],[-70.764167,41.639231],[-70.928475,41.611847],[-70.933952,41.540646],[-71.120168,41.496831],[-71.196845,41.67757],[-71.22423,41.710431],[-71.328292,41.781632],[-71.383061,42.01714],[-71.530939,42.01714],[-71.799309,42.006186],[-71.799309,42.022617],[-73.053528,42.039048],[-73.486206,42.050002],[-73.508114,42.08834],[-73.267129,42.745573],[-72.456542,42.729142],[-71.29543,42.696281],[-71.185891,42.789389],[-70.917521,42.887974]]]}}]}';
+
+  // const outerLayer = L.geoJSON(JSON.parse(MA_outer_border), { style: { color: '#000000', opacity: 0.8, fillOpacity: 0.0 } }).addTo(app.map);
+
+  const cityClicked = (e) => {
+    // e = event
+    // console.log(e);
+    app.city = e.target.feature.properties.cs_name;
+    app.loadPatients();
   };
-  getPatients.open('GET', url);
-  getPatients.send();
+
+  const citiesLayer = L.geoJSON(MA_GEO_JSON, {
+    onEachFeature: function(feature, layer) {
+      const props = feature.properties;
+      layer.bindTooltip(`<b>${props.cs_name} - ${props.ct_name} County</b><br/>Population: ${props.pop}`);
+      layer.on({
+          click: cityClicked
+      });
+    },
+    style: function(feature) { 
+      const props = feature.properties;
+      const pop = props.pop;
+      let fillColor = '#ffffff';
+
+      for (const levelPop in colorScale) {
+        if (pop > levelPop) {
+          fillColor = colorScale[levelPop];
+        }
+      }
+
+
+      return { color: '#ffffff', opacity: 0.8, fillOpacity: 0.75, fillColor };
+    }
+  }).addTo(app.map);
 
 }
 
