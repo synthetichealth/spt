@@ -110,7 +110,7 @@ const app = new Vue({
       return `<br/>${gender}<br/>DOB: ${birthdate} (Age ${age})<br/>${addrLine1}<br/>${addrLine2}<br/>${deceased}`;
     },
     loadPatients: function() {
-      const url = `https://syntheticmass.mitre.org/v1/fhir/Patient?address-city:exact=${this.city}&apikey=${this.apikey}`;
+      const url = `https://syntheticmass.mitre.org/v1/fhir/Patient?address-city:exact=${this.city}&_count=10&apikey=${this.apikey}`;
 
       const getPatients = new XMLHttpRequest();
       getPatients.onreadystatechange = () => {

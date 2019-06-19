@@ -411,7 +411,7 @@ function update(incoming) {
   }
 
   app.conditions = groupedEntries.Condition || [];
-  _.sortBy(app.conditions, 'onsetDateTime');
+  app.conditions = _.sortBy(app.conditions, 'onsetDateTime');
 
   app.reports = groupedEntries.DiagnosticReport || [];
   app.observations = groupedEntries.Observation || [];
@@ -420,7 +420,7 @@ function update(incoming) {
     r.observations = r.result.map((res) => _.find(app.observations, (o) => isMatchingReference(o, res.reference, 'Observation') )  );
     app.observations = _.difference(app.observations, r.observations);
   });
-  _.sortBy(app.observations, 'effectiveDateTime');
+  app.observations = _.sortBy(app.observations, 'effectiveDateTime');
 
   const deathCert = _.find(app.reports, (r) => { return r.code.coding[0].display == 'U.S. standard certificate of death - 2003 revision' });
   if (deathCert) {
@@ -434,10 +434,10 @@ function update(incoming) {
   app.weight_obs = _.find(searchableObs, (o) => { return o.code.coding[0].display == 'Body Weight'});
 
   app.medications = groupedEntries.MedicationRequest || [];
-  _.sortBy(app.medications, 'authoredOn');
+  app.medications = _.sortBy(app.medications, 'authoredOn');
 
   app.allergies = groupedEntries.AllergyIntolerance || [];
-  _.sortBy(app.allergies, 'assertedDate');
+  app.allergies = _.sortBy(app.allergies, 'assertedDate');
 
   app.care_plans = groupedEntries.CarePlan || [];
   const goals = groupedEntries.Goal || [];
@@ -447,16 +447,16 @@ function update(incoming) {
     c.care_goals = currGoals.map((ref) => _.find(goals, (g) => isMatchingReference(g, ref.reference, 'Goal'))  );
 
   });
-  _.sortBy(app.care_plans, 'period.start');
+  app.care_plans = _.sortBy(app.care_plans, 'period.start');
 
   app.procedures = groupedEntries.Procedure || [];
-  _.sortBy(app.procedures, 'performedPeriod.start');
+  app.procedures = _.sortBy(app.procedures, 'performedPeriod.start');
 
   app.encounters = groupedEntries.Encounter || [];
-  _.sortBy(app.encounters, 'period.start');
+  app.encounters = _.sortBy(app.encounters, 'period.start');
 
   app.vaccinations = groupedEntries.Immunization || [];
-  _.sortBy(app.vaccinations, 'date');
+  app.vaccinations = _.sortBy(app.vaccinations, 'date');
 }
 
 const urlParams = new URLSearchParams(window.location.search);
