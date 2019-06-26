@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="styles/record_viewer.css" />
 
   <script src="ma_geo.js"></script>
+  <script src="us_states_geo.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
@@ -24,8 +25,21 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <a class="navbar-brand" href="#">SyntheticMass</a>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div id="maptype-wrapper" class="leaflet-bar">
+          <select name="maptypes" id="maptypes" onChange="setMap(this)">
+            <option value="states" selected>US States</option>
+            <option value="counties">US Counties</option>
+            <option value="state_counties">Single State - Counties</option>
+            <option value="state_cities">Single State - Cities</option>
+          </select>
+        </div>
+      </div>
+    </nav>
 
-<div id="app" class="container-fluid">
+<main role="main" id="app" class="container-fluid">
 
 <div id="apikey_entry" v-if="!apikey">
   <form method="get" action="patient_list.html">
@@ -37,26 +51,21 @@
 <div id="apikey_given" v-if="apikey">
 
   <div id="map_view">
-    <div class="map" id="main_map" style="width:720px;height:480px"></div>
+    <div class="map" id="main_map" style="width:1024px;height:600px"></div>
   </div>
 
   <div id="city" v-if="city">
     <h1> {{ city }} </h1>
-    <div id="spinner" v-if="isLoadingCity"><img src="https://i.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.webp"></div>
+    <div id="spinner" v-if="isLoading"><img src="https://i.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.webp"></div>
     <dl class="dl-horizontal" v-for="patient in patients">
       <dt v-html="linkToPatient(patient)"></dt>
         <dd v-html="patientDetails(patient)"></dd>
     </dl>
   </div>
 
-  <div id="all_cities" v-if="!city">
-    <ul class="ul-horizontal" v-for="cityName in allCities">
-      <li v-html="linkToCity(cityName)"></li>
-    </ul>
-  </div>
 </div>
 
-</div>
+</main>
 
 <script type="text/javascript">
 
@@ -70,23 +79,121 @@ const isMatchingReference = function(entry, reference, resourceType) {
         || (resourceType+'/'+entry.id) === reference;
 };
 
-const allCities = ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford', 'Brockton', 'Quincy', 'Lynn', 'Fall River', 'Newton', 'Lawrence', 'Somerville', 'Framingham', 'Haverhill', 'Waltham', 'Malden', 'Brookline', 'Plymouth', 'Medford', 'Taunton', 'Chicopee', 'Weymouth', 'Revere', 'Peabody', 'Methuen', 'Barnstable', 'Pittsfield', 'Attleboro', 'Arlington', 'Everett', 'Salem', 'Westfield', 'Leominster', 'Fitchburg', 'Billerica', 'Holyoke', 'Beverly', 'Marlborough', 'Woburn', 'Amherst', 'Braintree', 'Shrewsbury', 'Chelsea', 'Dartmouth', 'Chelmsford', 'Andover', 'Natick', 'Randolph', 'Watertown', 'Franklin', 'Falmouth', 'Lexington', 'Dracut', 'Tewksbury', 'Needham', 'Gloucester', 'North Attleborough', 'Norwood', 'Northampton', 'Agawam', 'West Springfield', 'North Andover', 'Milford', 'Wellesley', 'Milton', 'Melrose', 'Stoughton', 'Saugus', 'Bridgewater', 'Danvers', 'Marshfield', 'Wakefield', 'Reading', 'Belmont', 'Dedham', 'Burlington', 'Walpole', 'Yarmouth', 'Mansfield', 'Middleborough', 'Easton', 'Wilmington', 'Hingham', 'Westford', 'Acton', 'Wareham', 'Canton', 'Stoneham', 'Winchester', 'Ludlow', 'Sandwich', 'Gardner', 'Marblehead', 'Bourne', 'Hudson', 'Norton', 'Westborough', 'Somerset', 'Scituate', 'Pembroke', 'Grafton', 'Concord', 'Sudbury', 'Sharon', 'South Hadley', 'Winthrop', 'Rockland', 'Greenfield', 'Newburyport', 'Holden', 'Foxborough', 'Webster', 'Southbridge', 'Ashland', 'Bellingham', 'Amesbury', 'Auburn', 'Easthampton', 'Abington', 'Fairhaven', 'Swansea', 'Longmeadow', 'East Longmeadow', 'Northbridge', 'Westport', 'Duxbury', 'Hopkinton', 'North Reading', 'Belchertown', 'Westwood', 'Whitman', 'Wilbraham', 'Dennis', 'Northborough', 'Mashpee', 'Hanover', 'East Bridgewater', 'Swampscott', 'Seekonk', 'Oxford', 'North Adams', 'Clinton', 'Holliston', 'Uxbridge', 'Raynham', 'Bedford', 'Millbury', 'Ipswich', 'Wayland', 'Charlton', 'Medway', 'Kingston', 'Harwich', 'Palmer', 'Medfield', 'Spencer', 'Rehoboth', 'Lynnfield', 'Athol', 'Carver', 'Pepperell', 'Dudley', 'Tyngsborough', 'Weston', 'Norfolk', 'Leicester', 'Wrentham', 'Holbrook', 'Groton', 'Lakeville', 'Norwell', 'Acushnet', 'Winchendon', 'Hull', 'Hanson', 'Nantucket', 'Maynard', 'Lunenburg', 'Ware', 'Brewster', 'Southborough', 'Southwick', 'Sturbridge', 'Blackstone', 'Middleton', 'Sutton', 'Townsend', 'Littleton', 'Freetown', 'Monson', 'Adams', 'Douglas', 'Montague', 'Salisbury', 'Plainville', 'Georgetown', 'Lancaster', 'Templeton', 'Rutland', 'Boxford', 'Millis', 'Orange', 'Sterling', 'Hamilton', 'Williamstown', 'West Boylston', 'Cohasset', 'Upton', 'Halifax', 'Ayer', 'Westminster', 'Shirley', 'Great Barrington', 'Dighton', 'Rockport', 'West Bridgewater', 'Dalton', 'Newbury', 'Stow', 'Harvard', 'Groveland', 'Berkley', 'Lincoln', 'Merrimac', 'Granby', 'Chatham', 'Topsfield', 'Ashburnham', 'Mattapoisett', 'Lee', 'Hopedale', 'Orleans', 'Rowley', 'Mendon', 'Southampton', 'Dover', 'Barre', 'Hadley', 'Rochester', 'Hampden', 'Manchester-by-the-Sea', 'Warren', 'Deerfield', 'Lenox', 'Boxborough', 'Eastham', 'Marion', 'Bolton', 'Wenham', 'Carlisle', 'Paxton', 'North Brookfield', 'Oak Bluffs', 'Hubbardston', 'Avon', 'Boylston', 'West Newbury', 'Sherborn', 'Edgartown', 'Tisbury', 'West Brookfield', 'Sunderland', 'Brimfield', 'Essex', 'Princeton', 'Nahant', 'Brookfield', 'Hatfield', 'Sheffield', 'Cheshire', 'Millville', 'Dunstable', 'Lanesborough', 'Ashby', 'Northfield', 'Hardwick', 'Provincetown', 'Berlin', 'Plympton', 'Wellfleet', 'West Tisbury', 'Williamsburg', 'Holland', 'East Brookfield', 'Huntington', 'Bernardston', 'Hinsdale', 'Truro', 'Stockbridge', 'Buckland', 'Oakham', 'Conway', 'Shelburne', 'Leverett', 'Wales', 'Erving', 'Becket', 'Russell', 'Shutesbury', 'Ashfield', 'Clarksburg', 'Phillipston', 'Colrain', 'Otis', 'Westhampton', 'Granville', 'New Marlborough', 'Gill', 'Whately', 'Richmond', 'Chester', 'Pelham', 'West Stockbridge', 'Charlemont', 'Royalston', 'Petersham', 'Blandford', 'Egremont', 'Chesterfield', 'Worthington', 'Goshen', 'New Braintree', 'New Salem', 'Monterey', 'Sandisfield', 'Windsor', 'Cummington', 'Chilmark', 'Wendell', 'Peru', 'Montgomery', 'Warwick', 'Florida', 'Hancock', 'Leyden', 'Heath', 'Savoy', 'Plainfield', 'Washington', 'Middlefield', 'Alford', 'Tolland', 'Rowe', 'Hawley', 'Tyringham', 'Aquinnah', 'New Ashford', 'Mount Washington', 'Monroe', 'Gosnold'];
+
+const stateClicked = (e) => {
+  // e = event
+  // console.log(e);
+  const layer = e.target;
+  app.state = layer.feature.properties.cs_name;
+
+  const bounds = layer.getBounds();
+  app.map.fitBounds(bounds);
+
+  app.loadState();
+};
+
+const cityClicked = (e) => {
+  // e = event
+  // console.log(e);
+  app.city = e.target.feature.properties.cs_name;
+  app.loadPatients();
+};
+
+const colorScale = {
+  0: "#f1eef6",
+  1750: "#d4b9da",
+  5250: '#c994c7',
+  8750: '#df65b0',
+  14000: '#e7298a',
+  17500: '#ce1256',
+  35000: '#91003f'
+};
+
+const citiesLayer = L.geoJSON(MA_GEO_JSON, {
+  onEachFeature: function(feature, layer) {
+    const props = feature.properties;
+    layer.bindTooltip(`<b>${props.cs_name} - ${props.ct_name} County</b><br/>Population: ${props.pop}`);
+    layer.on({
+        click: cityClicked
+    });
+  },
+  style: function(feature) { 
+    const props = feature.properties;
+    const pop = props.pop;
+    let fillColor = '#ffffff';
+
+    for (const levelPop in colorScale) {
+      if (pop > levelPop) {
+        fillColor = colorScale[levelPop];
+      }
+    }
+
+    return { color: '#ffffff', opacity: 0.8, fillOpacity: 0.75, fillColor };
+  }
+});
+
+const statesLayer = L.geoJSON(US_STATES_GEO_JSON, {
+  onEachFeature: function(feature, layer) {
+    const props = feature.properties;
+    layer.bindTooltip(`<b>${props.NAME}</b>`);
+    layer.on({
+        click: stateClicked
+    });
+  }
+});
+
 
 const urlParams = new URLSearchParams(window.location.search);
 const city = urlParams.get('city');
+const state = urlParams.get('state');
 const apikey = urlParams.get('apikey');
+
+
 
 const app = new Vue({
   el: '#app',
   data: {
+    state,
     city,
     patients: [],
-    allCities,
     apikey,
     map: null,
-    isLoadingCity: false
+    currentLayer: null,
+    isLoading: false
   },
   methods: {
+    initMap: function() {
+      this.map = L.map("main_map",{doubleClickZoom:false,scrollWheelZoom:false});
+      this.map.setView([39.833333, -98.583333],4);
+
+      const tiles = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}
+      );
+      this.map.addLayer(tiles);
+      this.currentLayer = statesLayer;
+      this.map.addLayer(statesLayer);
+    },
+    setMap: function(event) {
+      this.map.removeLayer(this.currentLayer);
+
+      switch(event.value) {
+        case 'states':
+          this.currentLayer = statesLayer;
+          break;
+
+        case 'counties':
+          break;
+
+        case 'state_counties':
+          break;
+
+        case 'state_cities':
+          this.currentLayer = citiesLayer;
+          break;
+      }
+
+      this.map.addLayer(this.currentLayer);
+    },
     linkToPatient: function(patient) {
       const patientName = patient.name[0].family + ', ' + patient.name[0].given.join(' ');
       const url = `record_viewer.html?patient=${patient.id}&apikey=${this.apikey}`;
@@ -125,13 +232,16 @@ const app = new Vue({
               console.log(`url was ${url}`);
               console.log(`json was ${JSON.stringify(json, null, 2)}`);
             }
-            this.isLoadingCity = false;
+            this.isLoading = false;
           }
         }
       };
-      this.isLoadingCity = true;
+      this.isLoading = true;
       getPatients.open('GET', url);
       getPatients.send();
+    },
+    loadState: function() {
+
     }
   },   
   filters: {
@@ -150,63 +260,16 @@ if (city && apikey) {
   app.loadPatients();
 }
 
-const colorScale = {
-  0: "#f1eef6",
-  1750: "#d4b9da",
-  5250: '#c994c7',
-  8750: '#df65b0',
-  14000: '#e7298a',
-  17500: '#ce1256',
-  35000: '#91003f'
-}
+if (apikey && !city) {
 
-
-if (!city && apikey) {
-  app.map = L.map("main_map",{doubleClickZoom:false,scrollWheelZoom:false}).setView([42.1,-71.333836],8);
-  const original_bounds = app.map.getBounds();
-  // app.mapView = $("#map_view");
-  const tiles = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}
-  );
-  app.map.addLayer(tiles);
-
-  // const MA_outer_border = '{"type":"FeatureCollection","features":[{"type":"Feature","id":"USA-MA","properties":{"fips":"25","name":"Massachusetts"},"geometry":{"type":"Polygon","coordinates":[[[-70.917521,42.887974],[-70.818936,42.871543],[-70.780598,42.696281],[-70.824413,42.55388],[-70.983245,42.422434],[-70.988722,42.269079],[-70.769644,42.247172],[-70.638197,42.08834],[-70.660105,41.962371],[-70.550566,41.929509],[-70.539613,41.814493],[-70.260289,41.715908],[-69.937149,41.809016],[-70.008349,41.672093],[-70.484843,41.5516],[-70.660105,41.546123],[-70.764167,41.639231],[-70.928475,41.611847],[-70.933952,41.540646],[-71.120168,41.496831],[-71.196845,41.67757],[-71.22423,41.710431],[-71.328292,41.781632],[-71.383061,42.01714],[-71.530939,42.01714],[-71.799309,42.006186],[-71.799309,42.022617],[-73.053528,42.039048],[-73.486206,42.050002],[-73.508114,42.08834],[-73.267129,42.745573],[-72.456542,42.729142],[-71.29543,42.696281],[-71.185891,42.789389],[-70.917521,42.887974]]]}}]}';
-
-  // const outerLayer = L.geoJSON(JSON.parse(MA_outer_border), { style: { color: '#000000', opacity: 0.8, fillOpacity: 0.0 } }).addTo(app.map);
-
-  const cityClicked = (e) => {
-    // e = event
-    // console.log(e);
-    app.city = e.target.feature.properties.cs_name;
-    app.loadPatients();
-  };
-
-  const citiesLayer = L.geoJSON(MA_GEO_JSON, {
-    onEachFeature: function(feature, layer) {
-      const props = feature.properties;
-      layer.bindTooltip(`<b>${props.cs_name} - ${props.ct_name} County</b><br/>Population: ${props.pop}`);
-      layer.on({
-          click: cityClicked
-      });
-    },
-    style: function(feature) { 
-      const props = feature.properties;
-      const pop = props.pop;
-      let fillColor = '#ffffff';
-
-      for (const levelPop in colorScale) {
-        if (pop > levelPop) {
-          fillColor = colorScale[levelPop];
-        }
-      }
-
-
-      return { color: '#ffffff', opacity: 0.8, fillOpacity: 0.75, fillColor };
-    }
-  }).addTo(app.map);
+  app.initMap();
 
 }
 
+
+
+// TODO: fix this, the dropdown should bind directly
+const setMap = e => app.setMap(e);
 
 </script>
 
