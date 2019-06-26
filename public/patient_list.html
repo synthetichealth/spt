@@ -7,6 +7,7 @@
 
   <script src="ma_geo.js"></script>
   <script src="us_states_geo.js"></script>
+  <script src="us_counties_geo.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
@@ -142,6 +143,15 @@ const statesLayer = L.geoJSON(US_STATES_GEO_JSON, {
   }
 });
 
+const countiesLayer = L.geoJSON(US_COUNTIES_GEO_JSON, {
+  onEachFeature: function(feature, layer) {
+    const props = feature.properties;
+    layer.bindTooltip(`<b>${props.NAME}</b>`);
+    layer.on({
+        click: stateClicked
+    });
+  }
+});
 
 const urlParams = new URLSearchParams(window.location.search);
 const city = urlParams.get('city');
@@ -182,6 +192,7 @@ const app = new Vue({
           break;
 
         case 'counties':
+          this.currentLayer = countiesLayer;
           break;
 
         case 'state_counties':
