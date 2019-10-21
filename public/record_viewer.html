@@ -213,11 +213,11 @@
           <td>Activity: {{ activity.detail.code.coding[0].display }}</td>
           <td></td>
         </tr>
-        <tr v-for="goal in entry.care_goals">
+        <!-- TODO: fetch goals separately, they don't come with Patient$everything tr v-for="goal in entry.care_goals">
           <td></td>
           <td>Goal: {{ goal.description.text }}</td>
           <td></td>
-        </tr>
+        </tr-->
       </template>
     </tbody>
     </table>
@@ -533,10 +533,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const patientId = urlParams.get('patient');
 const apiKey = urlParams.get('apikey');
 
-if (patientId && apiKey) {
-
-  const url = `https://syntheticmass.mitre.org/v1/fhir/Patient/${patientId}/$everything?apikey=${apiKey}`;
-
+const getBundle = (url, callback, priorResults) => {
   const get = new XMLHttpRequest();
   get.onreadystatechange = function() {
     if (get.readyState === XMLHttpRequest.DONE) {
@@ -544,7 +541,25 @@ if (patientId && apiKey) {
         const json = get.responseText;
         try {
           const result = JSON.parse(json);
-          update(result);
+
+          if (priorResults) {
+            result.entry.push(...priorResults.entry);
+            result.total = result.entry.length;
+          }
+
+          if (result.link) {
+            const next = result.link.find(l => l.relation === 'next');
+            if (next && next.url) {
+              const nextUrl = `${next.url}&apikey=${apiKey}`;
+              getBundle(nextUrl, callback, result);
+            } else {
+              callback(result);
+            }
+          } else {
+            callback(result);
+          }
+
+
         } catch (e) {
           console.error(e);
           console.log(`URL was ${url}`);
@@ -555,6 +570,13 @@ if (patientId && apiKey) {
   };
   get.open('GET', url);
   get.send();
+}
+
+if (patientId && apiKey) {
+
+  const url = `https://syntheticmass.mitre.org/v1/fhir/Patient/${patientId}/$everything?apikey=${apiKey}`;
+  getBundle(url, update);
+  
 
 } else {
   new DragDropHelper(update);
