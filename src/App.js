@@ -1,24 +1,24 @@
 import React from 'react';
 import './App.css';
-import { PatientVisualizer, ConditionsVisualizer, ObservationsVisualizer } from 'fhir-visualizers';
+import { BrowserRouter, Route } from "react-router-dom";
 
-import bundle from './demo_data.json';
-
+import StateMap from './components/StateMap';
+import PatientViewer from './components/PatientViewer';
+import PatientList from './components/PatientList';
 
 export default class App extends React.Component {
 
   render() {
-  	const allResources = bundle.entry.map(e => e.resource);
-  	const patient = allResources.find(r => r.resourceType === 'Patient');
-  	const conditions = allResources.filter(r => r.resourceType === 'Condition');
-  	const observations = allResources.filter(r => r.resourceType === 'Observation');
-
     return (
-      <div>
-        <PatientVisualizer patient={patient} />
-        <ConditionsVisualizer rows={conditions}/>
-        <ObservationsVisualizer rows={observations} />
-      </div>
+      <BrowserRouter>
+        <StateMap />
+          <Route path="/city/:city">
+            <PatientList />
+          </Route>
+          <Route path="/city/:city/patient/:id">
+            <PatientViewer />
+          </Route>
+      </BrowserRouter>
     );
   }
 }
