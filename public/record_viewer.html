@@ -474,8 +474,10 @@ function update(incoming) {
   app.observations = groupedEntries.Observation || [];
 
   app.reports.forEach((r) => {
-    r.observations = r.result.map(res => _.find(app.observations, o => isMatchingReference(o, res.reference, 'Observation') )  );
-    app.observations = _.difference(app.observations, r.observations);
+    if (r.result) {
+      r.observations = r.result.map(res => _.find(app.observations, o => isMatchingReference(o, res.reference, 'Observation') )  );
+      app.observations = _.difference(app.observations, r.observations);
+    }
   });
   app.observations = _.sortBy(app.observations, o => o.effectiveDateTime);
 
