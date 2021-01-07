@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Route } from "react-router-dom";
+import { HashRouter, Route, Switch } from "react-router-dom";
 
 import StateMap from './components/StateMap';
 import PatientViewer from './components/PatientViewer';
@@ -10,15 +10,22 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <StateMap />
-          <Route path="/city/:city">
-            <PatientList />
-          </Route>
-          <Route path="/city/:city/patient/:id">
+      <HashRouter>
+        <Switch>
+          <Route path={["/record_viewer", "/patient_viewer"]}>
             <PatientViewer />
           </Route>
-      </BrowserRouter>
+          <Route path="/">
+            <StateMap />
+            <Route path="/city/:city">
+              <PatientList />
+              <Route path="/city/:city/patient/:id">
+                <PatientViewer />
+              </Route>
+            </Route>
+          </Route>
+        </Switch>
+      </HashRouter>
     );
   }
 }
