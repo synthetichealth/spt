@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "fhir-visualizers": "synthetichealth/fhir-visualizers",
+    "fhir-visualizers": "^0.0.2",
     "leaflet": "^1.6.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
