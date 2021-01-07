@@ -1,0 +1,129 @@
+<html>
+<head>
+  <title>SyntheticMass Patient List</title>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+<link rel="stylesheet" href="styles/record_viewer.css" />
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js" integrity="sha256-59IZ5dbLyByZgSsRE3Z0TjDuX7e1AiqW5bZ8Bg50dsU=" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div id="app" class="container-fluid">
+
+<div id="apikey_entry" v-if="!apikey">
+  <form method="get" action="patient_list.html">
+    Enter API key: <input type="text" id="apikey" name="apikey"> <button type="submit">Continue</button>
+</form>
+
+</div>
+
+<div id="city" v-if="apikey && city">
+  <h1> {{ city }} </h1>
+  <dl class="dl-horizontal" v-for="patient in patients">
+    <dt v-html="linkToPatient(patient)"></dt>
+      <dd v-html="patientDetails(patient)"></dd>
+  </dl>
+</div>
+
+<div id="all_cities" v-if="apikey && !city">
+  <ul class="ul-horizontal" v-for="cityName in allCities">
+    <li v-html="linkToCity(cityName)"></dt>
+  </ul>
+</div>
+
+</div>
+
+<script type="text/javascript">
+
+const round = function (num, digits) {
+  return Number.parseFloat(num).toFixed(digits);
+}
+
+const isMatchingReference = function(entry, reference, resourceType) {
+  return entry.id === reference 
+        || ('urn:uuid:'+entry.id) === reference 
+        || (resourceType+'/'+entry.id) === reference;
+};
+
+const allCities = ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford', 'Brockton', 'Quincy', 'Lynn', 'Fall River', 'Newton', 'Lawrence', 'Somerville', 'Framingham', 'Haverhill', 'Waltham', 'Malden', 'Brookline', 'Plymouth', 'Medford', 'Taunton', 'Chicopee', 'Weymouth', 'Revere', 'Peabody', 'Methuen', 'Barnstable', 'Pittsfield', 'Attleboro', 'Arlington', 'Everett', 'Salem', 'Westfield', 'Leominster', 'Fitchburg', 'Billerica', 'Holyoke', 'Beverly', 'Marlborough', 'Woburn', 'Amherst', 'Braintree', 'Shrewsbury', 'Chelsea', 'Dartmouth', 'Chelmsford', 'Andover', 'Natick', 'Randolph', 'Watertown', 'Franklin', 'Falmouth', 'Lexington', 'Dracut', 'Tewksbury', 'Needham', 'Gloucester', 'North Attleborough', 'Norwood', 'Northampton', 'Agawam', 'West Springfield', 'North Andover', 'Milford', 'Wellesley', 'Milton', 'Melrose', 'Stoughton', 'Saugus', 'Bridgewater', 'Danvers', 'Marshfield', 'Wakefield', 'Reading', 'Belmont', 'Dedham', 'Burlington', 'Walpole', 'Yarmouth', 'Mansfield', 'Middleborough', 'Easton', 'Wilmington', 'Hingham', 'Westford', 'Acton', 'Wareham', 'Canton', 'Stoneham', 'Winchester', 'Ludlow', 'Sandwich', 'Gardner', 'Marblehead', 'Bourne', 'Hudson', 'Norton', 'Westborough', 'Somerset', 'Scituate', 'Pembroke', 'Grafton', 'Concord', 'Sudbury', 'Sharon', 'South Hadley', 'Winthrop', 'Rockland', 'Greenfield', 'Newburyport', 'Holden', 'Foxborough', 'Webster', 'Southbridge', 'Ashland', 'Bellingham', 'Amesbury', 'Auburn', 'Easthampton', 'Abington', 'Fairhaven', 'Swansea', 'Longmeadow', 'East Longmeadow', 'Northbridge', 'Westport', 'Duxbury', 'Hopkinton', 'North Reading', 'Belchertown', 'Westwood', 'Whitman', 'Wilbraham', 'Dennis', 'Northborough', 'Mashpee', 'Hanover', 'East Bridgewater', 'Swampscott', 'Seekonk', 'Oxford', 'North Adams', 'Clinton', 'Holliston', 'Uxbridge', 'Raynham', 'Bedford', 'Millbury', 'Ipswich', 'Wayland', 'Charlton', 'Medway', 'Kingston', 'Harwich', 'Palmer', 'Medfield', 'Spencer', 'Rehoboth', 'Lynnfield', 'Athol', 'Carver', 'Pepperell', 'Dudley', 'Tyngsborough', 'Weston', 'Norfolk', 'Leicester', 'Wrentham', 'Holbrook', 'Groton', 'Lakeville', 'Norwell', 'Acushnet', 'Winchendon', 'Hull', 'Hanson', 'Nantucket', 'Maynard', 'Lunenburg', 'Ware', 'Brewster', 'Southborough', 'Southwick', 'Sturbridge', 'Blackstone', 'Middleton', 'Sutton', 'Townsend', 'Littleton', 'Freetown', 'Monson', 'Adams', 'Douglas', 'Montague', 'Salisbury', 'Plainville', 'Georgetown', 'Lancaster', 'Templeton', 'Rutland', 'Boxford', 'Millis', 'Orange', 'Sterling', 'Hamilton', 'Williamstown', 'West Boylston', 'Cohasset', 'Upton', 'Halifax', 'Ayer', 'Westminster', 'Shirley', 'Great Barrington', 'Dighton', 'Rockport', 'West Bridgewater', 'Dalton', 'Newbury', 'Stow', 'Harvard', 'Groveland', 'Berkley', 'Lincoln', 'Merrimac', 'Granby', 'Chatham', 'Topsfield', 'Ashburnham', 'Mattapoisett', 'Lee', 'Hopedale', 'Orleans', 'Rowley', 'Mendon', 'Southampton', 'Dover', 'Barre', 'Hadley', 'Rochester', 'Hampden', 'Manchester-by-the-Sea', 'Warren', 'Deerfield', 'Lenox', 'Boxborough', 'Eastham', 'Marion', 'Bolton', 'Wenham', 'Carlisle', 'Paxton', 'North Brookfield', 'Oak Bluffs', 'Hubbardston', 'Avon', 'Boylston', 'West Newbury', 'Sherborn', 'Edgartown', 'Tisbury', 'West Brookfield', 'Sunderland', 'Brimfield', 'Essex', 'Princeton', 'Nahant', 'Brookfield', 'Hatfield', 'Sheffield', 'Cheshire', 'Millville', 'Dunstable', 'Lanesborough', 'Ashby', 'Northfield', 'Hardwick', 'Provincetown', 'Berlin', 'Plympton', 'Wellfleet', 'West Tisbury', 'Williamsburg', 'Holland', 'East Brookfield', 'Huntington', 'Bernardston', 'Hinsdale', 'Truro', 'Stockbridge', 'Buckland', 'Oakham', 'Conway', 'Shelburne', 'Leverett', 'Wales', 'Erving', 'Becket', 'Russell', 'Shutesbury', 'Ashfield', 'Clarksburg', 'Phillipston', 'Colrain', 'Otis', 'Westhampton', 'Granville', 'New Marlborough', 'Gill', 'Whately', 'Richmond', 'Chester', 'Pelham', 'West Stockbridge', 'Charlemont', 'Royalston', 'Petersham', 'Blandford', 'Egremont', 'Chesterfield', 'Worthington', 'Goshen', 'New Braintree', 'New Salem', 'Monterey', 'Sandisfield', 'Windsor', 'Cummington', 'Chilmark', 'Wendell', 'Peru', 'Montgomery', 'Warwick', 'Florida', 'Hancock', 'Leyden', 'Heath', 'Savoy', 'Plainfield', 'Washington', 'Middlefield', 'Alford', 'Tolland', 'Rowe', 'Hawley', 'Tyringham', 'Aquinnah', 'New Ashford', 'Mount Washington', 'Monroe', 'Gosnold'];
+
+const urlParams = new URLSearchParams(window.location.search);
+const city = urlParams.get('city');
+const apikey = urlParams.get('apikey');
+
+
+const app = new Vue({
+  el: '#app',
+  data: {
+    city,
+    patients: [],
+    allCities,
+    apikey
+  },
+  methods: {
+    linkToPatient: function(patient) {
+      const patientName = patient.name[0].family + ', ' + patient.name[0].given.join(' ');
+      const url = `record_viewer.html?patient=${patient.id}&apikey=${app.apikey}`;
+      return `<a href="${url}">${patientName}</a>`
+    },
+    linkToCity: function(cityName) {
+      const url = `patient_list.html?city=${cityName}&apikey=${apikey}`;
+      return `<a href="${url}">${cityName}</a>`;
+    },
+    patientDetails: function(patient) {
+      const date = this.$options.filters.date;
+
+      const gender = patient.gender;
+      const birthdate = date(patient.birthDate);
+      const age = moment().diff(birthdate, 'years');
+      const addr = patient.address[0];
+      const addrLine1 = addr.line.join(' ');
+      const addrLine2 = addr.city + ', ' + addr.state + ' ' + patient.address[0].postalCode;
+      const deceased = patient.deceasedDateTime ? 'Deceased ' + date(patient.deceasedDateTime) : '';
+
+      return `<br/>${gender}<br/>DOB: ${birthdate} (Age ${age})<br/>${addrLine1}<br/>${addrLine2}<br/>${deceased}`;
+    }
+  },   
+  filters: {
+    date: function(str) {
+      let d = moment(str);
+      return d.isValid() ? d.format('YYYY-MM-DD') : str;
+    },
+    dateTime: function(str) {
+      let d = moment(str);
+      return d.isValid() ? d.format('YYYY-MM-DD h:mm:ss a') : str;
+    },
+  }
+});
+
+if (city && apikey) {
+  const url = `https://syntheticmass.mitre.org/v1/fhir/Patient?address-city=${city}&apikey=${apikey}`;
+
+  const getPatients = new XMLHttpRequest();
+  getPatients.onreadystatechange = function() {
+    if (getPatients.readyState === XMLHttpRequest.DONE) {
+      if (getPatients.status === 200) {
+        const result = JSON.parse(getPatients.responseText);
+        app.patients = result.entry.map(e => e.resource);
+      }
+    }
+  };
+  getPatients.open('GET', url);
+  getPatients.send();
+
+}
+
+
+</script>
+
+
+</body>
+</html>
