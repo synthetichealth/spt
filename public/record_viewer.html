@@ -74,268 +74,213 @@
   </div>
 </div>
 
-<div id="by_type" v-if="!group_by_encounter">
-  <a id="toggle_grouping_enc" title="Toggle Grouping By Encounter"
-     href="#" onclick="ToggleGrouping(true);return false;">Group by Encounter</a>
-  <div id="conditions" v-if="conditions.length > 0">
-    <div class="health-record__header"><div class="header-title">conditions</div><div class="header-divider"></div></div>
-    <table class="table table-sm table-hover">
-    <thead id="p_conditions_head">
-      <tr>
-        <th scope="col">SNOMED</th>
-        <th scope="col">Condition</th>
-        <th scope="col">Date of Onset</th>
-        <th scope="col">Date Resolved</th>
-      </tr>
-    </thead>
-    <tbody id="p_conditions_list">
-      <tr v-for="entry in conditions.slice().reverse()">
-        <td>{{ entry.code.coding[0].code }}</td>
-        <td>{{ entry.code.coding[0].display }}</td>
-        <td>{{ entry.onsetDateTime | date }}</td>
-        <td>{{ entry.abatementDateTime || 'N/A' | date }}</td>
-      </tr>
-    </tbody>
-    </table>
-  </div>
 
-  <div id="observations" v-if="observations.length > 0"> 
-    <div class="health-record__header"><div class="header-title">observations</div><div class="header-divider"></div></div>
-    <table class="table table-sm table-hover">
-    <thead id="p_observations_head">
-      <tr>
-        <th scope="col">LOINC</th>
-        <th scope="col">Observation</th>
-        <th scope="col">Value</th>
-        <th scope="col">Date Recorded</th>
-      </tr>
-    </thead>
-    <tbody id="p_observations_list">
-      <tr v-for="entry in observations.slice().reverse()">
-        <td>{{ entry.code.coding[0].code }}</td>
-        <td>{{ entry.code.coding[0].display }}</td>
-        <td>{{ entry | obsValue }}</td>
-        <td>{{ entry.effectiveDateTime | dateTime }}</td>
-      </tr>
-    </tbody>
-    </table>
-  </div>
-
-  <div id="reports" v-if="reports.length > 0">
-    <div class="health-record__header"><div class="header-title">reports</div><div class="header-divider"></div></div>
-    <table class="table table-sm table-hover">
-    <thead id="p_reports_head">
-      <tr>
-        <th scope="col">LOINC</th>
-        <th scope="col">Report / Observation</th>
-        <th scope="col">Value</th>
-        <th scope="col">Date</th>
-      </tr>
-    </thead>
-    <tbody id="p_reports_list">
-      <template v-for="entry in reports.slice().reverse()">
-        <tr class="report-line">
-          <td>{{ entry.code.coding[0].code }}</td>
-          <td>{{ entry.code.coding[0].display }}</td>
-          <td></td>
-          <td>{{ entry.effectiveDateTime | date }}</td>
-        </tr>
-        <tr v-for="obs in entry.observations" class="report-obs-line">
-          <td>{{ obs.code.coding[0].code }}</td>
-          <td>{{ obs.code.coding[0].display }}</td>
-          <td>{{ obs | obsValue }}</td>
-          <td></td>
-        </tr>
-      </template>
-    </tbody>
-    </table>
-  </div>
-
-  <div id="medications" v-if="medications.length > 0">
-    <div class="health-record__header"><div class="header-title">medications</div><div class="header-divider"></div></div>
-    <table class="table table-sm table-hover">
-    <thead id="p_medications_head">
-      <tr>
-        <th scope="col">RxNorm</th>
-        <th scope="col">Medication Order</th>
-        <th scope="col">Date of Rx</th>
-      </tr>
-    </thead>
-    <tbody id="p_medications_list">
-      <tr v-for="entry in medications.slice().reverse()">
-        <td>{{ entry.medicationCodeableConcept.coding[0].code }}</td>
-        <td>{{ entry.medicationCodeableConcept.coding[0].display }}</td>
-        <td>{{ entry.authoredOn | date }}</td>
-      </tr>
-    </tbody>
-    </table>
-  </div>
-
-  <div id="allergies" v-if="allergies.length > 0">
-    <div class="health-record__header"><div class="header-title">allergies</div><div class="header-divider"></div></div>
-    <table class="table table-sm table-hover">
-    <thead id="p_allergies_head">
-      <tr>
-        <th scope="col">SNOMED</th>
-        <th scope="col">Allergy</th>
-        <th scope="col">Date Recorded</th>
-      </tr>
-    </thead>
-    <tbody id="p_allergies_list">
-      <tr v-for="entry in allergies.slice().reverse()">
-        <td>{{ entry.code.coding[0].code }}</td>
-        <td>{{ entry.code.coding[0].display }}</td>
-        <td>{{ entry.assertedDate | date }}</td>
-      </tr>
-    </tbody>
-    </table>
-  </div>
-
-  <div id="care_plans" v-if="care_plans.length > 0">
-    <div class="health-record__header"><div class="header-title">careplans</div><div class="header-divider"></div></div>
-    <table class="table table-sm table-hover">
-    <thead id="p_care_plans_head">
-      <tr>
-        <th scope="col">SNOMED</th>
-        <th scope="col">Care Plan</th>
-        <th scope="col">Date</th>
-      </tr>
-    </thead>
-    <tbody id="p_reports_list">
-      <template v-for="entry in care_plans.slice().reverse()">
-        <tr>
-          <td>{{ entry.category[0].coding[0].code }}</td>
-          <td>{{ entry.category[0].coding[0].display }}</td>
-          <td>{{ entry.period.start | date }}</td>
-        </tr>
-        <tr v-for="activity in entry.activity">
-          <td></td>
-          <td>Activity: {{ activity.detail.code.coding[0].display }}</td>
-          <td></td>
-        </tr>
-        <!-- TODO: fetch goals separately, they don't come with Patient$everything tr v-for="goal in entry.care_goals">
-          <td></td>
-          <td>Goal: {{ goal.description.text }}</td>
-          <td></td>
-        </tr-->
-      </template>
-    </tbody>
-    </table>
-  </div>
-
-  <div id="procedures" v-if="procedures.length > 0">
-    <div class="health-record__header"><div class="header-title">procedures</div><div class="header-divider"></div></div>
-    <table class="table table-sm table-hover">
-    <thead id="p_procedures_head">
-      <tr>
-        <th scope="col">SNOMED</th>
-        <th scope="col">Procedure</th>
-        <th scope="col">Date</th>
-      </tr>
-    </thead>
-    <tbody id="p_procedures_list">
-      <tr v-for="entry in procedures.slice().reverse()">
-        <td>{{ entry.code.coding[0].code }}</td>
-        <td>{{ entry.code.coding[0].display }}</td>
-        <td>{{ entry.performedPeriod.start | dateTime }}</td>
-      </tr>
-    </tbody>
-    </table>
-  </div>
-
-  <div id="encounters" v-if="encounters.length > 0">
-    <div class="health-record__header"><div class="header-title">encounters</div><div class="header-divider"></div></div>
-    <table class="table table-sm table-hover">
-    <thead id="p_encounters_head">
-      <tr>
-        <th scope="col">SNOMED</th>
-        <th scope="col">Encounter</th>
-        <th scope="col">Start Date</th>
-        <th scope="col">Duration</th>
-      </tr>
-    </thead>
-    <tbody id="p_encounters_list">
-      <tr v-for="entry in encounters.slice().reverse()">
-        <td>{{ entry.type[0].coding[0].code }}</td>
-        <td>{{ entry.type[0].coding[0].display }}</td>
-        <td>{{ entry.period.start }}</td>
-        <td>{{ entry.period | duration }}</td>
-      </tr>
-    </tbody>
-    </table>
-  </div>
-
-  <div id="vaccinations" v-if="vaccinations.length > 0">
-    <div class="health-record__header"><div class="header-title">vaccinations</div><div class="header-divider"></div></div>
-    <table class="table table-sm table-hover">
-    <thead id="p_vaccinations_head">
-      <tr>
-        <th scope="col">CVX</th>
-        <th scope="col">Vaccination</th>
-        <th scope="col">Date Last Given</th>
-      </tr>
-    </thead>
-    <tbody id="p_vaccinations_list">
-      <tr v-for="entry in vaccinations.slice().reverse()">
-        <td>{{ entry.vaccineCode.coding[0].code }}</td>
-        <td>{{ entry.vaccineCode.coding[0].display }}</td>
-        <td>{{ entry.date | date }}</td>
-      </tr>
-    </tbody>
-    </table>
-  </div>
+<div id="conditions" v-if="conditions.length > 0">
+  <div class="health-record__header"><div class="header-title">conditions</div><div class="header-divider"></div></div>
+  <table class="table table-sm table-hover">
+  <thead id="p_conditions_head">
+    <tr>
+      <th scope="col">SNOMED</th>
+      <th scope="col">Condition</th>
+      <th scope="col">Date of Onset</th>
+      <th scope="col">Date Resolved</th>
+    </tr>
+  </thead>
+  <tbody id="p_conditions_list">
+    <tr v-for="entry in conditions.slice().reverse()">
+      <td>{{ entry.code.coding[0].code }}</td>
+      <td>{{ entry.code.coding[0].display }}</td>
+      <td>{{ entry.onsetDateTime | date }}</td>
+      <td>{{ entry.abatementDateTime || 'N/A' | date }}</td>
+    </tr>
+  </tbody>
+  </table>
 </div>
 
-<div id="by_encounter" v-if="group_by_encounter">
-  <a id="toggle_grouping" title="Toggle Grouping By Type"
-     href="#" onclick="ToggleGrouping(false);return false;">Group by Type</a>
-  <div id="groupedencounters" v-if="encounters.length > 0">
-    <div class="health-record__header"><div class="header-title">encounters</div><div class="header-divider"></div></div>
-    <table class="table table-sm table-hover">
-    <thead id="p_encountergroup_head">
-      <tr>
-        <th scope="col">Type</th>
-        <th scope="col">Code</th>
-        <th scope="col">Display</th>
-        <th scope="col">Value</th>
-        <th scope="col">Date/Time</th>
+<div id="observations" v-if="observations.length > 0"> 
+  <div class="health-record__header"><div class="header-title">observations</div><div class="header-divider"></div></div>
+  <table class="table table-sm table-hover">
+  <thead id="p_observations_head">
+    <tr>
+      <th scope="col">LOINC</th>
+      <th scope="col">Observation</th>
+      <th scope="col">Value</th>
+      <th scope="col">Date Recorded</th>
+    </tr>
+  </thead>
+  <tbody id="p_observations_list">
+    <tr v-for="entry in observations.slice().reverse()">
+      <td>{{ entry.code.coding[0].code }}</td>
+      <td>{{ entry.code.coding[0].display }}</td>
+      <td>{{ entry | obsValue }}</td>
+      <td>{{ entry.effectiveDateTime | dateTime }}</td>
+    </tr>
+  </tbody>
+  </table>
+</div>
+
+<div id="reports" v-if="reports.length > 0">
+  <div class="health-record__header"><div class="header-title">reports</div><div class="header-divider"></div></div>
+  <table class="table table-sm table-hover">
+  <thead id="p_reports_head">
+    <tr>
+      <th scope="col">LOINC</th>
+      <th scope="col">Report / Observation</th>
+      <th scope="col">Value</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody id="p_reports_list">
+    <template v-for="entry in reports.slice().reverse()">
+      <tr class="report-line">
+        <td>{{ entry.code.coding[0].code }}</td>
+        <td>{{ entry.code.coding[0].display }}</td>
+        <td></td>
+        <td>{{ entry.effectiveDateTime | date }}</td>
       </tr>
-    </thead>
-    <tbody id="p_groupedencounters_list">
-      <template v-for="enc in encounters.slice().reverse()">
-        <tr class="report-line">
-          <td>Encounter</td>
-          <td>SNOMED {{ enc.type[0].coding[0].code }}</td>
-          <td>{{ enc.type[0].coding[0].display }}</td>
-          <td></td>
-          <td>{{ enc.period.start }} - {{ enc.period | duration }}</td>
-        </tr>
-        <tr v-for="condition in enc.entries.conditions">
-          <td>Diagnosis</td>
-          <td>SNOMED {{ condition.code.coding[0].code }}</td>
-          <td>{{ condition.code.coding[0].display }}</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr v-for="medication in enc.entries.medications">
-          <td>Prescription</td>
-          <td>RxNorm {{ medication.medicationCodeableConcept.coding[0].code }}</td>
-          <td>{{ medication.medicationCodeableConcept.coding[0].display }}</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr v-for="procedure in enc.entries.procedures">
-          <td>Procedure</td>
-          <td>SNOMED {{ procedure.code.coding[0].code }}</td>
-          <td>{{ procedure.code.coding[0].display }}</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr><td></td><td></td><td></td><td></td></tr> <!-- blank line for spacing? -->
-      </template>
-    </tbody>
-    </table>
-  </div>
+      <tr v-for="obs in entry.observations" class="report-obs-line">
+        <td>{{ obs.code.coding[0].code }}</td>
+        <td>{{ obs.code.coding[0].display }}</td>
+        <td>{{ obs | obsValue }}</td>
+        <td></td>
+      </tr>
+    </template>
+  </tbody>
+  </table>
+</div>
+
+<div id="medications" v-if="medications.length > 0">
+  <div class="health-record__header"><div class="header-title">medications</div><div class="header-divider"></div></div>
+  <table class="table table-sm table-hover">
+  <thead id="p_medications_head">
+    <tr>
+      <th scope="col">RxNorm</th>
+      <th scope="col">Medication Order</th>
+      <th scope="col">Date of Rx</th>
+    </tr>
+  </thead>
+  <tbody id="p_medications_list">
+    <tr v-for="entry in medications.slice().reverse()">
+      <td>{{ entry.medicationCodeableConcept.coding[0].code }}</td>
+      <td>{{ entry.medicationCodeableConcept.coding[0].display }}</td>
+      <td>{{ entry.authoredOn | date }}</td>
+    </tr>
+  </tbody>
+  </table>
+</div>
+
+<div id="allergies" v-if="allergies.length > 0">
+  <div class="health-record__header"><div class="header-title">allergies</div><div class="header-divider"></div></div>
+  <table class="table table-sm table-hover">
+  <thead id="p_allergies_head">
+    <tr>
+      <th scope="col">SNOMED</th>
+      <th scope="col">Allergy</th>
+      <th scope="col">Date Recorded</th>
+    </tr>
+  </thead>
+  <tbody id="p_allergies_list">
+    <tr v-for="entry in allergies.slice().reverse()">
+      <td>{{ entry.code.coding[0].code }}</td>
+      <td>{{ entry.code.coding[0].display }}</td>
+      <td>{{ entry.assertedDate | date }}</td>
+    </tr>
+  </tbody>
+  </table>
+</div>
+
+<div id="care_plans" v-if="care_plans.length > 0">
+  <div class="health-record__header"><div class="header-title">careplans</div><div class="header-divider"></div></div>
+  <table class="table table-sm table-hover">
+  <thead id="p_care_plans_head">
+    <tr>
+      <th scope="col">SNOMED</th>
+      <th scope="col">Care Plan</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody id="p_reports_list">
+    <template v-for="entry in care_plans.slice().reverse()">
+      <tr>
+        <td>{{ entry.category[0].coding[0].code }}</td>
+        <td>{{ entry.category[0].coding[0].display }}</td>
+        <td>{{ entry.period.start | date }}</td>
+      </tr>
+      <tr v-for="activity in entry.activity">
+        <td></td>
+        <td>Activity: {{ activity.detail.code.coding[0].display }}</td>
+        <td></td>
+      </tr>
+      <tr v-for="goal in entry.care_goals">
+        <td></td>
+        <td>Goal: {{ goal.description.text }}</td>
+        <td></td>
+      </tr>
+    </template>
+  </tbody>
+  </table>
+</div>
+
+<div id="procedures" v-if="procedures.length > 0">
+  <div class="health-record__header"><div class="header-title">procedures</div><div class="header-divider"></div></div>
+  <table class="table table-sm table-hover">
+  <thead id="p_procedures_head">
+    <tr>
+      <th scope="col">SNOMED</th>
+      <th scope="col">Procedure</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody id="p_procedures_list">
+    <tr v-for="entry in procedures.slice().reverse()">
+      <td>{{ entry.code.coding[0].code }}</td>
+      <td>{{ entry.code.coding[0].display }}</td>
+      <td>{{ entry.performedPeriod.start | dateTime }}</td>
+    </tr>
+  </tbody>
+  </table>
+</div>
+
+<div id="encounters" v-if="encounters.length > 0">
+  <div class="health-record__header"><div class="header-title">encounters</div><div class="header-divider"></div></div>
+  <table class="table table-sm table-hover">
+  <thead id="p_encounters_head">
+    <tr>
+      <th scope="col">SNOMED</th>
+      <th scope="col">Encounter</th>
+      <th scope="col">Start Date</th>
+      <th scope="col">Duration</th>
+    </tr>
+  </thead>
+  <tbody id="p_encounters_list">
+    <tr v-for="entry in encounters.slice().reverse()">
+      <td>{{ entry.type[0].coding[0].code }}</td>
+      <td>{{ entry.type[0].coding[0].display }}</td>
+      <td>{{ entry.period.start }}</td>
+      <td>{{ entry.period | duration }}</td>
+    </tr>
+  </tbody>
+  </table>
+</div>
+
+<div id="vaccinations" v-if="vaccinations.length > 0">
+  <div class="health-record__header"><div class="header-title">vaccinations</div><div class="header-divider"></div></div>
+  <table class="table table-sm table-hover">
+  <thead id="p_vaccinations_head">
+    <tr>
+      <th scope="col">CVX</th>
+      <th scope="col">Vaccination</th>
+      <th scope="col">Date Last Given</th>
+    </tr>
+  </thead>
+  <tbody id="p_vaccinations_list">
+    <tr v-for="entry in vaccinations.slice().reverse()">
+      <td>{{ entry.vaccineCode.coding[0].code }}</td>
+      <td>{{ entry.vaccineCode.coding[0].display }}</td>
+      <td>{{ entry.date | date }}</td>
+    </tr>
+  </tbody>
+  </table>
 </div>
 
 
@@ -355,7 +300,6 @@ const round = function (num, digits) {
 }
 
 const isMatchingReference = function(entry, reference, resourceType) {
-  if (typeof reference === 'object' && reference.reference) reference = reference.reference;
   return entry.id === reference 
         || ('urn:uuid:'+entry.id) === reference 
         || (resourceType+'/'+entry.id) === reference;
@@ -366,7 +310,6 @@ const app = new Vue({
   el: '#app',
   data: {
     raw_record: null,
-    group_by_encounter: false,
     patient: null,
     height_obs: null,
     weight_obs: null,
@@ -448,19 +391,19 @@ const app = new Vue({
 
 function update(incoming) {
   app.raw_record = incoming;
-  let entries = _.map(incoming.entry, e => e.resource);
-  let groupedEntries = _.groupBy(entries, e => e.resourceType);
+  let entries = _.map(incoming.entry, (e) => e.resource);
+  let groupedEntries = _.groupBy(entries, (e) => e.resourceType);
 
   app.patient = groupedEntries.Patient[0];
 
-  const raceExt = _.find(app.patient.extension, e => e.url == 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-race');
+  const raceExt = _.find(app.patient.extension, (e) => { return e.url == 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-race'});
   if (raceExt) {
     app.race = raceExt.extension[0].valueString || raceExt.extension[0].valueCoding.display;
   } else {
     app.race = null;
   }
 
-  const ethExt = _.find(app.patient.extension, e => e.url == 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity');
+  const ethExt = _.find(app.patient.extension, (e) => { return e.url == 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity'});
   if (ethExt) {
     app.ethnicity = ethExt.extension[0].valueString || ethExt.extension[0].valueCoding.display;
   } else {
@@ -468,20 +411,18 @@ function update(incoming) {
   }
 
   app.conditions = groupedEntries.Condition || [];
-  app.conditions = _.sortBy(app.conditions, c => c.onsetDateTime);
+  _.sortBy(app.conditions, 'onsetDateTime');
 
   app.reports = groupedEntries.DiagnosticReport || [];
   app.observations = groupedEntries.Observation || [];
 
   app.reports.forEach((r) => {
-    if (r.result) {
-      r.observations = r.result.map(res => _.find(app.observations, o => isMatchingReference(o, res.reference, 'Observation') )  );
-      app.observations = _.difference(app.observations, r.observations);
-    }
+    r.observations = r.result.map((res) => _.find(app.observations, (o) => isMatchingReference(o, res.reference, 'Observation') )  );
+    app.observations = _.difference(app.observations, r.observations);
   });
-  app.observations = _.sortBy(app.observations, o => o.effectiveDateTime);
+  _.sortBy(app.observations, 'effectiveDateTime');
 
-  const deathCert = _.find(app.reports, r => r.code.coding[0].display === 'U.S. standard certificate of death - 2003 revision');
+  const deathCert = _.find(app.reports, (r) => { return r.code.coding[0].display == 'U.S. standard certificate of death - 2003 revision' });
   if (deathCert) {
     app.cause_of_death_obs = deathCert.observations[0];
   } else {
@@ -489,14 +430,14 @@ function update(incoming) {
   }
 
   const searchableObs = app.observations.slice().reverse();
-  app.height_obs = _.find(searchableObs, o => o.code.coding[0].display === 'Body Height');
-  app.weight_obs = _.find(searchableObs, o => o.code.coding[0].display === 'Body Weight');
+  app.height_obs = _.find(searchableObs, (o) => { return o.code.coding[0].display == 'Body Height'});
+  app.weight_obs = _.find(searchableObs, (o) => { return o.code.coding[0].display == 'Body Weight'});
 
   app.medications = groupedEntries.MedicationRequest || [];
-  app.medications = _.sortBy(app.medications, m => m.authoredOn);
+  _.sortBy(app.medications, 'authoredOn');
 
   app.allergies = groupedEntries.AllergyIntolerance || [];
-  app.allergies = _.sortBy(app.allergies, a => a.assertedDate);
+  _.sortBy(app.allergies, 'assertedDate');
 
   app.care_plans = groupedEntries.CarePlan || [];
   const goals = groupedEntries.Goal || [];
@@ -506,79 +447,37 @@ function update(incoming) {
     c.care_goals = currGoals.map((ref) => _.find(goals, (g) => isMatchingReference(g, ref.reference, 'Goal'))  );
 
   });
-  app.care_plans = _.sortBy(app.care_plans, cp => cp.period.start);
+  _.sortBy(app.care_plans, 'period.start');
 
   app.procedures = groupedEntries.Procedure || [];
-  app.procedures = _.sortBy(app.procedures, p => p.performedPeriod.start);
+  _.sortBy(app.procedures, 'performedPeriod.start');
 
   app.encounters = groupedEntries.Encounter || [];
-  app.encounters = _.sortBy(app.encounters, e => e.period.start);
+  _.sortBy(app.encounters, 'period.start');
 
   app.vaccinations = groupedEntries.Immunization || [];
-  app.vaccinations = _.sortBy(app.vaccinations, 'date');
-
-  // now re-group everything by encounter as well
-  app.encounters.forEach(enc => {
-    enc.entries = {};
-
-    enc.entries.conditions = app.conditions.filter(c => isMatchingReference(enc, c.context || c.encounter, 'Encounter'));
-    enc.entries.medications = app.medications.filter(m => isMatchingReference(enc, m.context || m.encounter, 'Encounter'));
-    enc.entries.procedures = app.procedures.filter(p => isMatchingReference(enc, p.context || p.encounter, 'Encounter'));
-  });
-}
-
-const ToggleGrouping = function(isGroupByEncounter) {
-  app.group_by_encounter = isGroupByEncounter;
+  _.sortBy(app.vaccinations, 'date');
 }
 
 const urlParams = new URLSearchParams(window.location.search);
 const patientId = urlParams.get('patient');
 const apiKey = urlParams.get('apikey');
 
-const getBundle = (url, callback, priorResults) => {
+if (patientId && apiKey) {
+
+  const url = `https://syntheticmass.mitre.org/v1/fhir/Patient/${patientId}/$everything?apikey=${apiKey}`;
+
   const get = new XMLHttpRequest();
   get.onreadystatechange = function() {
     if (get.readyState === XMLHttpRequest.DONE) {
       if (get.status === 200) {
-        const json = get.responseText;
-        try {
-          const result = JSON.parse(json);
-
-          if (priorResults) {
-            result.entry.push(...priorResults.entry);
-            result.total = result.entry.length;
-          }
-
-          if (result.link) {
-            const next = result.link.find(l => l.relation === 'next');
-            if (next && next.url) {
-              const nextUrl = `${next.url}&apikey=${apiKey}`;
-              getBundle(nextUrl, callback, result);
-            } else {
-              callback(result);
-            }
-          } else {
-            callback(result);
-          }
-
-
-        } catch (e) {
-          console.error(e);
-          console.log(`URL was ${url}`);
-          console.log(`json was ${JSON.stringify(json, null, 2)}`);
-        }
+        const result = JSON.parse(get.responseText);
+        update(result);
       }
     }
   };
   get.open('GET', url);
   get.send();
-}
-
-if (patientId && apiKey) {
-
-  const url = `https://syntheticmass.mitre.org/v1/fhir/Patient/${patientId}/$everything?apikey=${apiKey}`;
-  getBundle(url, update);
-  
 
 } else {
   new DragDropHelper(update);
