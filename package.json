@@ -4,7 +4,7 @@
   "homepage": "https://dehall.github.io/spt",
   "private": true,
   "dependencies": {
-    "fhir-visualizers": "^0.0.2",
+    "fhir-visualizers": "^0.0.3",
     "leaflet": "^1.6.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
