@@ -1,31 +1,33 @@
-import React from 'react';
-import './App.css';
-import { HashRouter, Route, Switch } from "react-router-dom";
+require('dotenv').config();
 
-import StateMap from './components/StateMap';
-import PatientViewer from './components/PatientViewer';
-import PatientList from './components/PatientList';
+const crypto = require('crypto');
+const express = require('express');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
 
-export default class App extends React.Component {
 
-  render() {
-    return (
-      <HashRouter>
-        <Switch>
-          <Route path={["/record_viewer", "/patient_viewer"]}>
-            <PatientViewer />
-          </Route>
-          <Route path="/">
-            <StateMap />
-            <Route path="/city/:city">
-              <PatientList />
-              <Route path="/city/:city/patient/:id">
-                <PatientViewer />
-              </Route>
-            </Route>
-          </Route>
-        </Switch>
-      </HashRouter>
-    );
-  }
-}
+const { runWhenDBReady } = require('./storage/postinit');
+const { genericController } = require('./handlers/crudHandler');
+const collections = require('./storage/collections');
+
+const app = express();
+
+app.use('/public', express.static(__dirname + '/../public'));
+app.use(logger('dev'));
+app.use(express.json());
+app.use(bodyParser.json({ type: ['application/json', 'application/fhir+json'] }));
+
+
+// Routes for collections
+Object.values(collections).forEach(collectionName => {
+  app.use(
+    `/collection/${collectionName}`,  
+    genericController(collectionName)
+  );
+});
+
+// frontend
+app.get('/', (req, res) => res.sendFile('index.html', { root: __dirname + '/../public' }));
+
+
+module.exports = app;
