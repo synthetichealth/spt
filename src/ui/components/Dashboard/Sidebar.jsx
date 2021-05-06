@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import useStyles from './styles';
 import Drawer from '@material-ui/core/Drawer';
 import ListItem from '@material-ui/core/ListItem';
@@ -9,19 +9,22 @@ import PropTypes from 'prop-types';
 
 function Sidebar(props) {
   const { tabs, callback, selected } = props;
+  const [open, setOpen] = useState(true);
+
   const classes = useStyles();
   return (
-    <div>
+    <div style={{ visibility: open ? 'visible' : 'collapse' }}>
       <Drawer
         className={classes.drawer}
-        variant="permanent"
+        open={open}
+        variant="persistent"
         classes={{
           paper: classes.drawerPaper
         }}
         anchor="left"
       >
         <div className={`${classes.spacer} ${classes.corner}`}>
-          <div className={classes.cornerText} onClick={callback.bind(this, 'dashboard')}>
+          <div className={classes.cornerText} onClick={() => setOpen(false)}>
             SPT
           </div>
         </div>
