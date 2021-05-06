@@ -9,6 +9,7 @@ import Collections from '../Collections';
 import Dashboard from './Dashboard';
 
 import PatientViewer from '../PatientViewer';
+import SyntheticMass from '../SyntheticMass';
 
 function DashboardLayout() {
   const classes = useStyles();
@@ -20,9 +21,9 @@ function DashboardLayout() {
   // can do useMemo to update labels like notifications
   const tabs = useMemo(() => {
     return [
-      { key: 'dashboard', label: 'Dashboard', component: (<div></div>) },
-      { key: 'patient_viewer', label: 'Patient Viewer', component: <PatientViewer /> },
-      
+      { key: 'dashboard', label: 'Dashboard', offline: true, component: (<div></div>) },
+      { key: 'record_viewer', label: 'Patient Viewer', offline: true, component: <PatientViewer /> },
+      { key: 'syntheticmass', label: 'SyntheticMass', offline: true, component: <SyntheticMass /> },
       { key: 'collections', label: 'Collections', component: null },
       { key: 'servers', label: 'Servers', component: <Collections selectedCollection="servers" /> },
       {

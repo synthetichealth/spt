@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const watch = process.env.WATCH !== 'false';
 module.exports = {
   entry: __dirname + '/src/ui/index.jsx',
@@ -8,6 +9,9 @@ module.exports = {
   },
   watch: watch,
   resolve: { extensions: ['.js', '.jsx'] },
+  plugins: [
+    new webpack.EnvironmentPlugin({ FRONTEND_ONLY: 'false', SYNTHETICMASS_API_KEY: '' }),
+  ],
   module: {
     rules: [
       {

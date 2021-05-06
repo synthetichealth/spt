@@ -7,6 +7,8 @@ import List from '@material-ui/core/List';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import PropTypes from 'prop-types';
 
+const offline = (process.env.FRONTEND_ONLY === 'true');
+
 function Sidebar(props) {
   const { tabs, callback, selected } = props;
   const [open, setOpen] = useState(true);
@@ -30,6 +32,8 @@ function Sidebar(props) {
         </div>
         <List component="nav" classes={{ root: classes.overflow }}>
           {tabs.map(tab => {
+            // don't show tabs that require a backend if there is none
+            if (offline && !tab.offline) return null;
             if (tab.component) {
               // return button
               const itemClass =
