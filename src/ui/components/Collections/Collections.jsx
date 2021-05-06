@@ -8,7 +8,6 @@ import SortedTableHead from './SortedTableHead';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import CollectionRow from './CollectionRow';
-import { v4 } from 'uuid';
 
 const Collections = props => {
   const classes = useStyles();
@@ -70,7 +69,6 @@ const Collections = props => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   });
-
 
   const { data } = useQuery(['collections', { selectedCollection }], () =>
     axios.get(`/collection/${selectedCollection}`)
@@ -199,9 +197,7 @@ const Collections = props => {
                   onRequestSort={handleRequestSort}
                   headers={infoBundle.headers}
                 />
-                <TableBody>
-                  {formatRows()}
-                </TableBody>
+                <TableBody>{formatRows()}</TableBody>
               </Table>
               <TablePagination
                 component="div"

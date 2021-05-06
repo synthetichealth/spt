@@ -22,8 +22,16 @@ function Menu(props) {
       .then(() => queryClient.invalidateQueries('authorized-user'));
   }, [queryClient]);
   const menu = [
-    { key: 'Settings', icon: <SettingsIcon fontSize="large" />, callback: null },
-    { key: 'Logout', icon: <ExitToAppIcon fontSize="large" />, callback: logout }
+    {
+      key: 'Settings',
+      icon: <SettingsIcon fontSize="large" />,
+      callback: null
+    },
+    {
+      key: 'Logout',
+      icon: <ExitToAppIcon fontSize="large" />,
+      callback: logout
+    }
   ];
 
   return (

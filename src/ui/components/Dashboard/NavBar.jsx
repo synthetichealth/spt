@@ -21,9 +21,7 @@ function NavBar(props) {
   return (
     <div>
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar className={classes.header}>
-
-        </Toolbar>
+        <Toolbar className={classes.header}></Toolbar>
       </AppBar>
     </div>
   );

@@ -15,7 +15,11 @@ describe('Test the internal data store', () => {
 
     result = db.select('stuff', row => row.name === 'john doe');
     expect(result).toHaveLength(1);
-    expect(result[0]).toMatchObject({ id: 1, name: 'john doe', email: 'jdoe@example.com' });
+    expect(result[0]).toMatchObject({
+      id: 1,
+      name: 'john doe',
+      email: 'jdoe@example.com'
+    });
     // note no strict equality test; the result contains a $loki field as well
   });
 
@@ -33,8 +37,16 @@ describe('Test the internal data store', () => {
 
     result = db.select('stuff', row => row.name === 'john doe');
     expect(result).toHaveLength(1);
-    expect(result[0]).not.toMatchObject({ id: 1, name: 'john doe', email: 'jdoe@example.com' });
-    expect(result[0]).toMatchObject({ id: 1, name: 'john doe', email: 'john_doe@example.com' });
+    expect(result[0]).not.toMatchObject({
+      id: 1,
+      name: 'john doe',
+      email: 'jdoe@example.com'
+    });
+    expect(result[0]).toMatchObject({
+      id: 1,
+      name: 'john doe',
+      email: 'john_doe@example.com'
+    });
   });
 
   test('It should support deleting an object', () => {

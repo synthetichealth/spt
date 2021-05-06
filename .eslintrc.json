@@ -1,0 +1,37 @@
+{
+  "env": {
+    "node": true,
+    "es6": true,
+    "jest": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "plugin:react/recommended"
+  ],
+  "settings": {
+      "react": {
+          "version": "detect"
+      }
+  },
+  "rules": {
+    "arrow-spacing": "warn",
+    "block-spacing": "warn",
+    "key-spacing": "warn",
+    "keyword-spacing": "warn",
+    "indent": ["warn", 2, { "SwitchCase": 1 }],
+    "max-len": ["warn", { "code": 100, "ignoreStrings": true }],
+    "no-console": "off",
+    "no-trailing-spaces": "warn",
+    "no-var": "warn",
+    "prefer-const": "warn",
+    "semi": "warn",
+    "semi-spacing": "warn",
+    "space-before-blocks": "warn",
+    "space-in-parens": "warn"
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module"
+  }
+}

@@ -16,13 +16,9 @@ import axios from 'axios';
 function Dashboard() {
   const classes = useStyles();
 
-
   return (
     <div className={classes.dashboardContainer}>
-      <Paper elevation={3} className={classes.dashboardCard}>
-       
-      </Paper>
-
+      <Paper elevation={3} className={classes.dashboardCard}></Paper>
     </div>
   );
 }

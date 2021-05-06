@@ -2,7 +2,6 @@ const express = require('express');
 const { StatusCodes } = require('http-status-codes');
 const db = require('../storage/DataAccess');
 const { default: base64url } = require('base64url');
-const { PLANDEFINITIONS, SUBSCRIPTIONS } = require('../storage/collections');
 
 function createHandler(collectionName, req, res) {
   const newItem = req.body;
@@ -56,7 +55,6 @@ function deleteHandler(collectionName, req, res) {
     res.send('Must include id or fullUrl').status(StatusCodes.BAD_REQUEST);
     return;
   }
-
 
   res.sendStatus(StatusCodes.OK);
 }

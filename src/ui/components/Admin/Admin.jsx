@@ -5,9 +5,9 @@ import theme from '../styles/theme';
 const Admin = () => {
   return (
     <ThemeProvider theme={theme}>
-        <div>
-          <DashboardLayout />
-        </div>
+      <div>
+        <DashboardLayout />
+      </div>
     </ThemeProvider>
   );
 };

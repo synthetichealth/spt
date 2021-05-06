@@ -2,9 +2,7 @@ import './app.css';
 import React from 'react';
 import Admin from './Admin';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import {
-  HashRouter,
-} from "react-router-dom";
+import { HashRouter } from 'react-router-dom';
 
 const queryClient = new QueryClient();
 

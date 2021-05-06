@@ -21,11 +21,30 @@ function DashboardLayout() {
   // can do useMemo to update labels like notifications
   const tabs = useMemo(() => {
     return [
-      { key: 'dashboard', label: 'Dashboard', offline: true, component: (<div></div>) },
-      { key: 'record_viewer', label: 'Patient Viewer', offline: true, component: <PatientViewer /> },
-      { key: 'syntheticmass', label: 'SyntheticMass', offline: true, component: <SyntheticMass /> },
+      {
+        key: 'dashboard',
+        label: 'Dashboard',
+        offline: true,
+        component: <div></div>
+      },
+      {
+        key: 'record_viewer',
+        label: 'Patient Viewer',
+        offline: true,
+        component: <PatientViewer />
+      },
+      {
+        key: 'syntheticmass',
+        label: 'SyntheticMass',
+        offline: true,
+        component: <SyntheticMass />
+      },
       { key: 'collections', label: 'Collections', component: null },
-      { key: 'servers', label: 'Servers', component: <Collections selectedCollection="servers" /> },
+      {
+        key: 'servers',
+        label: 'Servers',
+        component: <Collections selectedCollection="servers" />
+      },
       {
         key: 'endpoints',
         label: 'Endpoints',
@@ -41,7 +60,11 @@ function DashboardLayout() {
         label: 'Plan Definitions',
         component: <Collections selectedCollection="plandefinitions" />
       },
-      { key: 'logs', label: 'Logs', component: <Collections selectedCollection="logs" /> },
+      {
+        key: 'logs',
+        label: 'Logs',
+        component: <Collections selectedCollection="logs" />
+      },
       {
         key: 'completedreports',
         label: 'Completed Reports',
@@ -52,7 +75,11 @@ function DashboardLayout() {
         label: 'Reporting',
         component: <Collections selectedCollection="reporting" />
       },
-      { key: 'errors', label: 'Errors', component: <Collections selectedCollection="errors" /> },
+      {
+        key: 'errors',
+        label: 'Errors',
+        component: <Collections selectedCollection="errors" />
+      },
       {
         key: 'requests',
         label: 'Requests',
@@ -69,9 +96,11 @@ function DashboardLayout() {
   }, [location]);
 
   const content = useMemo(() => {
-    return tabs.find(tab => {
-      return tab.key === contentKey;
-    }) || tabs[0];
+    return (
+      tabs.find(tab => {
+        return tab.key === contentKey;
+      }) || tabs[0]
+    );
   }, [contentKey, tabs]);
 
   const redirectCallback = key => history.push(`/${key}`);
@@ -79,9 +108,7 @@ function DashboardLayout() {
   return (
     <div className={classes.container}>
       <Sidebar tabs={tabs} callback={redirectCallback} selected={contentKey} />
-      <main className={classes.content}>
-        {content.component}
-      </main>
+      <main className={classes.content}>{content.component}</main>
     </div>
   );
 }

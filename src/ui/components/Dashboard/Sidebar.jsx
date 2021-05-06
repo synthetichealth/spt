@@ -7,7 +7,7 @@ import List from '@material-ui/core/List';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import PropTypes from 'prop-types';
 
-const offline = (process.env.FRONTEND_ONLY === 'true');
+const offline = process.env.FRONTEND_ONLY === 'true';
 
 function Sidebar(props) {
   const { tabs, callback, selected } = props;
@@ -56,7 +56,9 @@ function Sidebar(props) {
               return (
                 <ListItem
                   key={tab.key}
-                  classes={{ root: `${classes.drawerHead} ${classes.drawerItem}` }}
+                  classes={{
+                    root: `${classes.drawerHead} ${classes.drawerItem}`
+                  }}
                 >
                   <div>{tab.label.toUpperCase()}</div>
                   <div className={classes.breakLine}></div>
