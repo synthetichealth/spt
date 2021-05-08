@@ -21,14 +21,14 @@ class Internal {
     // By default, persist unless we are in the test environment.
     // But this can be overridden by the given arg.
     if (persist) {
-      this.db = new loki('medmorph.db', {
+      this.db = new loki('spt.db', {
         autoload: true,
         autoloadCallback: markDBReady,
         autosave: true,
         serializationMethod: 'pretty'
       });
     } else {
-      this.db = new loki('medmorph.db');
+      this.db = new loki('spt.db');
     }
   }
 

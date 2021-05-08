@@ -1,4 +1,6 @@
 import React, { useReducer, useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import { TableCell, TableRow } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import CreateIcon from '@material-ui/icons/Create';
@@ -67,11 +69,19 @@ function CollectionRow(props) {
       <>
         {headers.map((header, j) => {
           const cellKey = `${j}`;
+          const isPatientId =
+            header.value === 'PATIENT' ||
+            (selectedCollection === 'patients' && header.value === 'Id');
           return (
             <TableCell key={cellKey} style={{ whiteSpace: 'nowrap' }}>
               {' '}
-              {header.value === 'resource' ? (
-                <ReactJson src={data} collapsed={true} enableClipboard={false} />
+              {isPatientId ? (
+                /* TODO: add some kind of clickable GO TO PATIENT here */
+                <Link
+                  to={{ pathname: '/record_viewer', search: `?patient=csv/${data[header.value]}` }}
+                >
+                  {data[header.value]}
+                </Link>
               ) : (
                 data[header.value || header.toLowerCase()]
               )}{' '}

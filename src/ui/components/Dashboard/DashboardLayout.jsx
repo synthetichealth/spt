@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useMemo, memo } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-import axios from 'axios';
-import { useQuery } from 'react-query';
 import useStyles from './styles';
 import Sidebar from './Sidebar';
-import NavBar from './NavBar';
 import Collections from '../Collections';
 import Dashboard from './Dashboard';
 
 import PatientViewer from '../PatientViewer';
 import SyntheticMass from '../SyntheticMass';
+// import CSVPatientViewer from '../CSVPatientViewer';
 
 function DashboardLayout() {
   const classes = useStyles();
@@ -25,7 +23,7 @@ function DashboardLayout() {
         key: 'dashboard',
         label: 'Dashboard',
         offline: true,
-        component: <div></div>
+        component: <Dashboard />
       },
       {
         key: 'record_viewer',
@@ -39,51 +37,93 @@ function DashboardLayout() {
         offline: true,
         component: <SyntheticMass />
       },
-      { key: 'collections', label: 'Collections', component: null },
+      { key: 'csv', label: 'CSV', component: null },
+      { key: 'load_csv', label: 'Load Files', component: null },
+      // {
+      //   key: 'csv_patient_viewer',
+      //   label: 'CSV Patient Viewer',
+      //   component: <CSVPatientViewer />
+      // },
       {
-        key: 'servers',
-        label: 'Servers',
-        component: <Collections selectedCollection="servers" />
+        key: 'patients',
+        label: 'Patients',
+        component: <Collections selectedCollection="patients" />
       },
       {
-        key: 'endpoints',
-        label: 'Endpoints',
-        component: <Collections selectedCollection="endpoints" />
+        key: 'allergies',
+        label: 'Allergies',
+        component: <Collections selectedCollection="allergies" />
       },
       {
-        key: 'subscriptions',
-        label: 'Subscriptions',
-        component: <Collections selectedCollection="subscriptions" />
+        key: 'careplans',
+        label: 'Careplans',
+        component: <Collections selectedCollection="careplans" />
       },
       {
-        key: 'plandefinitions',
-        label: 'Plan Definitions',
-        component: <Collections selectedCollection="plandefinitions" />
+        key: 'conditions',
+        label: 'Conditions',
+        component: <Collections selectedCollection="conditions" />
       },
       {
-        key: 'logs',
-        label: 'Logs',
-        component: <Collections selectedCollection="logs" />
+        key: 'devices',
+        label: 'Devices',
+        component: <Collections selectedCollection="devices" />
       },
       {
-        key: 'completedreports',
-        label: 'Completed Reports',
-        component: <Collections selectedCollection="completedreports" />
+        key: 'encounters',
+        label: 'Encounters',
+        component: <Collections selectedCollection="encounters" />
       },
       {
-        key: 'reporting',
-        label: 'Reporting',
-        component: <Collections selectedCollection="reporting" />
+        key: 'imaging_studies',
+        label: 'Imaging Studies',
+        component: <Collections selectedCollection="imaging_studies" />
       },
       {
-        key: 'errors',
-        label: 'Errors',
-        component: <Collections selectedCollection="errors" />
+        key: 'immunizations',
+        label: 'Immunizations',
+        component: <Collections selectedCollection="immunizations" />
       },
       {
-        key: 'requests',
-        label: 'Requests',
-        component: <Collections selectedCollection="requests" />
+        key: 'medications',
+        label: 'Medications',
+        component: <Collections selectedCollection="medications" />
+      },
+      {
+        key: 'observations',
+        label: 'Observations',
+        component: <Collections selectedCollection="observations" />
+      },
+      {
+        key: 'organizations',
+        label: 'Organizations',
+        component: <Collections selectedCollection="organizations" />
+      },
+
+      {
+        key: 'payer_transitions',
+        label: 'Payer Transitions',
+        component: <Collections selectedCollection="payer_transitions" />
+      },
+
+      { key: 'payers', label: 'Payers', component: <Collections selectedCollection="payers" /> },
+
+      {
+        key: 'procedures',
+        label: 'Procedures',
+        component: <Collections selectedCollection="procedures" />
+      },
+
+      {
+        key: 'providers',
+        label: 'Providers',
+        component: <Collections selectedCollection="providers" />
+      },
+
+      {
+        key: 'supplies',
+        label: 'Supplies',
+        component: <Collections selectedCollection="supplies" />
       }
     ];
   });

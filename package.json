@@ -40,11 +40,13 @@
     "axios": "^0.21.1",
     "babel-eslint": "^10.1.0",
     "base64url": "^3.0.1",
+    "csv-parse": "^4.15.4",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "eslint": "^7.19.0",
     "express": "^4.17.1",
     "fhir-visualizers": "0.0.3",
+    "glob": "^7.1.7",
     "http-status-codes": "^2.1.4",
     "leaflet": "^1.6.0",
     "lokijs": "^1.5.11",
@@ -75,5 +77,12 @@
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ]
-  }
+  },
+  "browserslist": [
+    "last 3 and_chr versions",
+    "last 3 chrome versions",
+    "last 3 opera versions",
+    "last 3 ios_saf versions",
+    "last 3 safari versions"
+  ]
 }

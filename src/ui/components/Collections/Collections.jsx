@@ -5,8 +5,6 @@ import { Table, TableBody, TableContainer, TablePagination } from '@material-ui/
 import PropTypes from 'prop-types';
 import useStyles from './styles';
 import SortedTableHead from './SortedTableHead';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 import CollectionRow from './CollectionRow';
 
 const Collections = props => {
@@ -36,10 +34,6 @@ const Collections = props => {
       return 1;
     }
     return 0;
-  }
-
-  function serverStatus(server) {
-    return server && true;
   }
 
   function getComparator(order, orderBy) {
@@ -79,58 +73,14 @@ const Collections = props => {
     switch (selectedCollection) {
       case '':
         return [];
-      case 'servers':
+      case 'allergies':
         headers = [
-          { value: 'icon', label: '', edit: false, viewOnly: true },
-          { value: 'name', label: 'name', edit: true },
-          { value: 'id', label: 'id', edit: false },
-          { value: 'endpoint', label: 'endpoint', edit: true },
-          { value: 'type', label: 'type', edit: false },
-          { value: 'clientId', label: 'clientId', edit: true }
-        ];
-        return {
-          headers,
-          data: data.data.map(element => {
-            const icon = serverStatus(element) ? classes.greenIcon : classes.redIcon;
-            element.icon = <a className={icon}></a>;
-            return element;
-          }),
-          addButton: true,
-          editable: true
-        };
-      case 'endpoints':
-      case 'plandefinitions':
-        headers = [
-          { value: 'id', label: 'id', edit: false },
-          { value: 'fullUrl', label: 'fullUrl', edit: true },
-          { value: 'name', label: 'name', edit: true },
-          { value: 'resource', label: 'resource', edit: true }
-        ];
-        return {
-          headers,
-          data: data.data,
-          addButton: true,
-          editable: true
-        };
-      case 'subscriptions':
-        headers = [
-          { value: 'id', label: 'id', edit: false },
-          { value: 'fullUrl', label: 'fullUrl', edit: true },
-          { value: 'criteria', label: 'criteria', edit: true },
-          { value: 'resource', label: 'resource', edit: true }
-        ];
-        return {
-          headers,
-          data: data.data,
-          addButton: true,
-          editable: true
-        };
-      case 'logs':
-        headers = [
-          { value: 'id', label: 'id', edit: false },
-          { value: 'timestamp', label: 'timestamp', edit: false },
-          { value: 'message', label: 'message', edit: false },
-          { value: 'location', label: 'location', edit: false }
+          { value: 'START', label: 'START', edit: false },
+          { value: 'STOP', label: 'STOP', edit: false },
+          { value: 'PATIENT', label: 'PATIENT', edit: false },
+          { value: 'ENCOUNTER', label: 'ENCOUNTER', edit: false },
+          { value: 'CODE', label: 'CODE', edit: false },
+          { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false }
         ];
         return {
           headers,
@@ -138,6 +88,319 @@ const Collections = props => {
           addButton: false,
           editable: false
         };
+
+      case 'careplans':
+        headers = [
+          { value: 'Id', label: 'Id', edit: false },
+          { value: 'START', label: 'START', edit: false },
+          { value: 'STOP', label: 'STOP', edit: false },
+          { value: 'PATIENT', label: 'PATIENT', edit: false },
+          { value: 'ENCOUNTER', label: 'ENCOUNTER', edit: false },
+          { value: 'CODE', label: 'CODE', edit: false },
+          { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false },
+          { value: 'REASONCODE', label: 'REASONCODE', edit: false },
+          { value: 'REASONDESCRIPTION', label: 'REASONDESCRIPTION', edit: false }
+        ];
+        return {
+          headers,
+          data: data.data,
+          addButton: false,
+          editable: false
+        };
+
+      case 'conditions':
+        headers = [
+          { value: 'START', label: 'START', edit: false },
+          { value: 'STOP', label: 'STOP', edit: false },
+          { value: 'PATIENT', label: 'PATIENT', edit: false },
+          { value: 'ENCOUNTER', label: 'ENCOUNTER', edit: false },
+          { value: 'CODE', label: 'CODE', edit: false },
+          { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false }
+        ];
+        return {
+          headers,
+          data: data.data,
+          addButton: false,
+          editable: false
+        };
+
+      case 'devices':
+        headers = [
+          { value: 'START', label: 'START', edit: false },
+          { value: 'STOP', label: 'STOP', edit: false },
+          { value: 'PATIENT', label: 'PATIENT', edit: false },
+          { value: 'ENCOUNTER', label: 'ENCOUNTER', edit: false },
+          { value: 'CODE', label: 'CODE', edit: false },
+          { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false },
+          { value: 'UDI', label: 'UDI', edit: false }
+        ];
+        return {
+          headers,
+          data: data.data,
+          addButton: false,
+          editable: false
+        };
+
+      case 'encounters':
+        headers = [
+          { value: 'Id', label: 'Id', edit: false },
+          { value: 'START', label: 'START', edit: false },
+          { value: 'STOP', label: 'STOP', edit: false },
+          { value: 'PATIENT', label: 'PATIENT', edit: false },
+          { value: 'ORGANIZATION', label: 'ORGANIZATION', edit: false },
+          { value: 'PROVIDER', label: 'PROVIDER', edit: false },
+          { value: 'PAYER', label: 'PAYER', edit: false },
+          { value: 'ENCOUNTERCLASS', label: 'ENCOUNTERCLASS', edit: false },
+          { value: 'CODE', label: 'CODE', edit: false },
+          { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false },
+          { value: 'BASE_ENCOUNTER_COST', label: 'BASE_ENCOUNTER_COST', edit: false },
+          { value: 'TOTAL_CLAIM_COST', label: 'TOTAL_CLAIM_COST', edit: false },
+          { value: 'PAYER_COVERAGE', label: 'PAYER_COVERAGE', edit: false },
+          { value: 'REASONCODE', label: 'REASONCODE', edit: false },
+          { value: 'REASONDESCRIPTION', label: 'REASONDESCRIPTION', edit: false }
+        ];
+        return {
+          headers,
+          data: data.data,
+          addButton: false,
+          editable: false
+        };
+
+      case 'imaging_studies':
+        headers = [
+          { value: 'Id', label: 'Id', edit: false },
+          { value: 'DATE', label: 'DATE', edit: false },
+          { value: 'PATIENT', label: 'PATIENT', edit: false },
+          { value: 'ENCOUNTER', label: 'ENCOUNTER', edit: false },
+          { value: 'BODYSITE_CODE', label: 'BODYSITE_CODE', edit: false },
+          { value: 'BODYSITE_DESCRIPTION', label: 'BODYSITE_DESCRIPTION', edit: false },
+          { value: 'MODALITY_CODE', label: 'MODALITY_CODE', edit: false },
+          { value: 'MODALITY_DESCRIPTION', label: 'MODALITY_DESCRIPTION', edit: false },
+          { value: 'SOP_CODE', label: 'SOP_CODE', edit: false },
+          { value: 'SOP_DESCRIPTION', label: 'SOP_DESCRIPTION', edit: false }
+        ];
+        return {
+          headers,
+          data: data.data,
+          addButton: false,
+          editable: false
+        };
+
+      case 'immunizations':
+        headers = [
+          { value: 'DATE', label: 'DATE', edit: false },
+          { value: 'PATIENT', label: 'PATIENT', edit: false },
+          { value: 'ENCOUNTER', label: 'ENCOUNTER', edit: false },
+          { value: 'CODE', label: 'CODE', edit: false },
+          { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false },
+          { value: 'BASE_COST', label: 'BASE_COST', edit: false }
+        ];
+        return {
+          headers,
+          data: data.data,
+          addButton: false,
+          editable: false
+        };
+
+      case 'medications':
+        headers = [
+          { value: 'START', label: 'START', edit: false },
+          { value: 'STOP', label: 'STOP', edit: false },
+          { value: 'PATIENT', label: 'PATIENT', edit: false },
+          { value: 'PAYER', label: 'PAYER', edit: false },
+          { value: 'ENCOUNTER', label: 'ENCOUNTER', edit: false },
+          { value: 'CODE', label: 'CODE', edit: false },
+          { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false },
+          { value: 'BASE_COST', label: 'BASE_COST', edit: false },
+          { value: 'PAYER_COVERAGE', label: 'PAYER_COVERAGE', edit: false },
+          { value: 'DISPENSES', label: 'DISPENSES', edit: false },
+          { value: 'TOTALCOST', label: 'TOTALCOST', edit: false },
+          { value: 'REASONCODE', label: 'REASONCODE', edit: false },
+          { value: 'REASONDESCRIPTION', label: 'REASONDESCRIPTION', edit: false }
+        ];
+        return {
+          headers,
+          data: data.data,
+          addButton: false,
+          editable: false
+        };
+
+      case 'observations':
+        headers = [
+          { value: 'DATE', label: 'DATE', edit: false },
+          { value: 'PATIENT', label: 'PATIENT', edit: false },
+          { value: 'ENCOUNTER', label: 'ENCOUNTER', edit: false },
+          { value: 'CODE', label: 'CODE', edit: false },
+          { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false },
+          { value: 'VALUE', label: 'VALUE', edit: false },
+          { value: 'UNITS', label: 'UNITS', edit: false },
+          { value: 'TYPE', label: 'TYPE', edit: false }
+        ];
+        return {
+          headers,
+          data: data.data,
+          addButton: false,
+          editable: false
+        };
+
+      case 'organizations':
+        headers = [
+          { value: 'Id', label: 'Id', edit: false },
+          { value: 'NAME', label: 'NAME', edit: false },
+          { value: 'ADDRESS', label: 'ADDRESS', edit: false },
+          { value: 'CITY', label: 'CITY', edit: false },
+          { value: 'STATE', label: 'STATE', edit: false },
+          { value: 'ZIP', label: 'ZIP', edit: false },
+          { value: 'LAT', label: 'LAT', edit: false },
+          { value: 'LON', label: 'LON', edit: false },
+          { value: 'PHONE', label: 'PHONE', edit: false },
+          { value: 'REVENUE', label: 'REVENUE', edit: false },
+          { value: 'UTILIZATION', label: 'UTILIZATION', edit: false }
+        ];
+        return {
+          headers,
+          data: data.data,
+          addButton: false,
+          editable: false
+        };
+
+      case 'patients':
+        headers = [
+          { value: 'Id', label: 'Id', edit: false },
+          { value: 'BIRTHDATE', label: 'BIRTHDATE', edit: false },
+          { value: 'DEATHDATE', label: 'DEATHDATE', edit: false },
+          { value: 'SSN', label: 'SSN', edit: false },
+          { value: 'DRIVERS', label: 'DRIVERS', edit: false },
+          { value: 'PASSPORT', label: 'PASSPORT', edit: false },
+          { value: 'PREFIX', label: 'PREFIX', edit: false },
+          { value: 'FIRST', label: 'FIRST', edit: false },
+          { value: 'LAST', label: 'LAST', edit: false },
+          { value: 'SUFFIX', label: 'SUFFIX', edit: false },
+          { value: 'MAIDEN', label: 'MAIDEN', edit: false },
+          { value: 'MARITAL', label: 'MARITAL', edit: false },
+          { value: 'RACE', label: 'RACE', edit: false },
+          { value: 'ETHNICITY', label: 'ETHNICITY', edit: false },
+          { value: 'GENDER', label: 'GENDER', edit: false },
+          { value: 'BIRTHPLACE', label: 'BIRTHPLACE', edit: false },
+          { value: 'ADDRESS', label: 'ADDRESS', edit: false },
+          { value: 'CITY', label: 'CITY', edit: false },
+          { value: 'STATE', label: 'STATE', edit: false },
+          { value: 'COUNTY', label: 'COUNTY', edit: false },
+          { value: 'ZIP', label: 'ZIP', edit: false },
+          { value: 'LAT', label: 'LAT', edit: false },
+          { value: 'LON', label: 'LON', edit: false },
+          { value: 'HEALTHCARE_EXPENSES', label: 'HEALTHCARE_EXPENSES', edit: false },
+          { value: 'HEALTHCARE_COVERAGE', label: 'HEALTHCARE_COVERAGE', edit: false }
+        ];
+        return {
+          headers,
+          data: data.data,
+          addButton: false,
+          editable: false
+        };
+
+      case 'payer_transitions':
+        headers = [
+          { value: 'PATIENT', label: 'PATIENT', edit: false },
+          { value: 'START_YEAR', label: 'START_YEAR', edit: false },
+          { value: 'END_YEAR', label: 'END_YEAR', edit: false },
+          { value: 'PAYER', label: 'PAYER', edit: false },
+          { value: 'OWNERSHIP', label: 'OWNERSHIP', edit: false }
+        ];
+        return {
+          headers,
+          data: data.data,
+          addButton: false,
+          editable: false
+        };
+
+      case 'payers':
+        headers = [
+          { value: 'Id', label: 'Id', edit: false },
+          { value: 'NAME', label: 'NAME', edit: false },
+          { value: 'ADDRESS', label: 'ADDRESS', edit: false },
+          { value: 'CITY', label: 'CITY', edit: false },
+          { value: 'STATE_HEADQUARTERED', label: 'STATE_HEADQUARTERED', edit: false },
+          { value: 'ZIP', label: 'ZIP', edit: false },
+          { value: 'PHONE', label: 'PHONE', edit: false },
+          { value: 'AMOUNT_COVERED', label: 'AMOUNT_COVERED', edit: false },
+          { value: 'AMOUNT_UNCOVERED', label: 'AMOUNT_UNCOVERED', edit: false },
+          { value: 'REVENUE', label: 'REVENUE', edit: false },
+          { value: 'COVERED_ENCOUNTERS', label: 'COVERED_ENCOUNTERS', edit: false },
+          { value: 'UNCOVERED_ENCOUNTERS', label: 'UNCOVERED_ENCOUNTERS', edit: false },
+          { value: 'COVERED_MEDICATIONS', label: 'COVERED_MEDICATIONS', edit: false },
+          { value: 'UNCOVERED_MEDICATIONS', label: 'UNCOVERED_MEDICATIONS', edit: false },
+          { value: 'COVERED_PROCEDURES', label: 'COVERED_PROCEDURES', edit: false },
+          { value: 'UNCOVERED_PROCEDURES', label: 'UNCOVERED_PROCEDURES', edit: false },
+          { value: 'COVERED_IMMUNIZATIONS', label: 'COVERED_IMMUNIZATIONS', edit: false },
+          { value: 'UNCOVERED_IMMUNIZATIONS', label: 'UNCOVERED_IMMUNIZATIONS', edit: false },
+          { value: 'UNIQUE_CUSTOMERS', label: 'UNIQUE_CUSTOMERS', edit: false },
+          { value: 'QOLS_AVG', label: 'QOLS_AVG', edit: false },
+          { value: 'MEMBER_MONTHS', label: 'MEMBER_MONTHS', edit: false }
+        ];
+        return {
+          headers,
+          data: data.data,
+          addButton: false,
+          editable: false
+        };
+
+      case 'procedures':
+        headers = [
+          { value: 'DATE', label: 'DATE', edit: false },
+          { value: 'PATIENT', label: 'PATIENT', edit: false },
+          { value: 'ENCOUNTER', label: 'ENCOUNTER', edit: false },
+          { value: 'CODE', label: 'CODE', edit: false },
+          { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false },
+          { value: 'BASE_COST', label: 'BASE_COST', edit: false },
+          { value: 'REASONCODE', label: 'REASONCODE', edit: false },
+          { value: 'REASONDESCRIPTION', label: 'REASONDESCRIPTION', edit: false }
+        ];
+        return {
+          headers,
+          data: data.data,
+          addButton: false,
+          editable: false
+        };
+
+      case 'providers':
+        headers = [
+          { value: 'Id', label: 'Id', edit: false },
+          { value: 'ORGANIZATION', label: 'ORGANIZATION', edit: false },
+          { value: 'NAME', label: 'NAME', edit: false },
+          { value: 'GENDER', label: 'GENDER', edit: false },
+          { value: 'SPECIALITY', label: 'SPECIALITY', edit: false },
+          { value: 'ADDRESS', label: 'ADDRESS', edit: false },
+          { value: 'CITY', label: 'CITY', edit: false },
+          { value: 'STATE', label: 'STATE', edit: false },
+          { value: 'ZIP', label: 'ZIP', edit: false },
+          { value: 'LAT', label: 'LAT', edit: false },
+          { value: 'LON', label: 'LON', edit: false },
+          { value: 'UTILIZATION', label: 'UTILIZATION', edit: false }
+        ];
+        return {
+          headers,
+          data: data.data,
+          addButton: false,
+          editable: false
+        };
+
+      case 'supplies':
+        headers = [
+          { value: 'DATE', label: 'DATE', edit: false },
+          { value: 'PATIENT', label: 'PATIENT', edit: false },
+          { value: 'ENCOUNTER', label: 'ENCOUNTER', edit: false },
+          { value: 'CODE', label: 'CODE', edit: false },
+          { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false },
+          { value: 'QUANTITY', label: 'QUANTITY', edit: false }
+        ];
+        return {
+          headers,
+          data: data.data,
+          addButton: false,
+          editable: false
+        };
+
       default:
         headers = [
           { value: 'id', label: 'id', edit: false },

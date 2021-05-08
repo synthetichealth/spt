@@ -12,7 +12,7 @@ import {
   ImmunizationsVisualizer,
   DocumentReferencesVisualizer
 } from 'fhir-visualizers';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import {
   Accordion,
@@ -28,6 +28,7 @@ import 'react-accessible-accordion/dist/fancy-example.css';
 import Dropzone from 'react-dropzone';
 
 import { getPatientById } from '../SyntheticMass/api';
+import csvToFhir from './csvToFhir';
 
 const isMatchingReference = (entry, reference, resourceType) => {
   return (
@@ -107,8 +108,19 @@ const obsValue = entry => {
   return '';
 };
 
+function getPatient(id) {
+  if (id.startsWith('csv/')) {
+    return csvToFhir(id.slice(4)); // slice off the "csv/" bit
+  } else {
+    return getPatientById(id);
+  }
+}
+
 const PatientViewer = props => {
-  const { id } = props;
+  const location = useLocation();
+  const urlParams = new URLSearchParams(location.search);
+
+  const id = props.id || urlParams.get('patient');
 
   const [bundle, setBundle] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -118,7 +130,7 @@ const PatientViewer = props => {
   useEffect(() => {
     if (id && !bundle) {
       setIsLoading(true);
-      getPatientById(id).then(patientEverythingBundle => {
+      getPatient(id).then(patientEverythingBundle => {
         setBundle(patientEverythingBundle);
         setIsLoading(false);
       });

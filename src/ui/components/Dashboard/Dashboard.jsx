@@ -1,17 +1,6 @@
-import React, { useState, memo, useCallback, useRef } from 'react';
-import {
-  Button,
-  FormControl,
-  Input,
-  InputLabel,
-  MenuItem,
-  Paper,
-  Select,
-  Snackbar
-} from '@material-ui/core';
-import MuiAlert from '@material-ui/lab/Alert';
+import React, { memo } from 'react';
+import { Paper } from '@material-ui/core';
 import useStyles from './styles';
-import axios from 'axios';
 
 function Dashboard() {
   const classes = useStyles();
