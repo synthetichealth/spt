@@ -41,7 +41,7 @@ The app will now be running locally at http://localhost:3000
 | ENV | Description |
 | --- | -------- | 
 | SYNTHETICMASS_API_KEY | The API key to use for accessing the SyntheticMass API. Not required except for the SyntheticMass Browser |
-| FRONTEND_ONLY | When `true` this disables the backend server and the features that depend on it. This is primarily used to allow for deploying only a static UI, for example to GitHub Pahes |
+| FRONTEND_ONLY | When `true` this disables the backend server and the features that depend on it. This is primarily used to allow for deploying only a static UI, for example to GitHub Pages |
 
 
 # License
