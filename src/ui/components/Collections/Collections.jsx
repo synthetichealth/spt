@@ -348,6 +348,8 @@ const Collections = props => {
       case 'procedures':
         headers = [
           { value: 'DATE', label: 'DATE', edit: false },
+          { value: 'START', label: 'START', edit: false },
+          { value: 'STOP', label: 'STOP', edit: false },
           { value: 'PATIENT', label: 'PATIENT', edit: false },
           { value: 'ENCOUNTER', label: 'ENCOUNTER', edit: false },
           { value: 'CODE', label: 'CODE', edit: false },
