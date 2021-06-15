@@ -12,7 +12,11 @@ import {
   ImmunizationsVisualizer,
   DocumentReferencesVisualizer
 } from 'fhir-visualizers';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
+import { HashLink as Link } from 'react-router-hash-link';
+
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import {
   Accordion,
@@ -145,6 +149,10 @@ const PatientViewer = props => {
   const allResources = bundle.entry.map(e => e.resource);
   const patient = allResources.find(r => r.resourceType === 'Patient');
 
+  // hack for now
+  if (!patient.address) 
+    patient.address = [{ line: [], city: undefined, state: undefined, postalCode: undefined }];
+
   const toggleGroup = event => {
     event.preventDefault();
     setIsGroupByEncounter(!isGroupByEncounter);
@@ -157,6 +165,7 @@ const PatientViewer = props => {
         <a href="#" onClick={toggleGroup}>
           Ungroup by Encounter
         </a>
+
         <EncounterGroupedRecord allResources={allResources} />
       </div>
     );
@@ -167,10 +176,39 @@ const PatientViewer = props => {
         <a href="#" onClick={toggleGroup}>
           Group by Encounter (Work in Progress)
         </a>
+        <LinksByType />
         <EntireRecord allResources={allResources} />
       </div>
     );
   }
+};
+
+const LinksByType = () => {
+  const types = [
+    'Conditions',
+    'Medications',
+    'Observations',
+    'Reports',
+    'CarePlans',
+    'Procedures',
+    'Encounters',
+    'Allergies',
+    'Vaccinations',
+    'Documents'
+  ];
+
+  return (
+    <div>
+      Jump To:
+      <ul>
+        {types.map(t => (
+          <li key={t}>
+            <Link to={{ hash: '#' + t }}>{t}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 const EntireRecord = props => {
@@ -224,6 +262,28 @@ const EntireRecord = props => {
   );
 };
 
+const LinksByEncounter = props => {
+  const { encounters } = props;
+
+  const history = useHistory();
+
+  return (
+    <Autocomplete
+      id="combo-box-demo"
+      options={encounters}
+      getOptionLabel={e =>
+        `${e.period.start} - ${e.type[0].coding[0].code} ${e.type[0].coding[0].display}`
+      }
+      onChange={(_event, value, _reason) => {
+        history.push({ hash: '#' + value.period.start });
+        document.getElementById(value.period.start).scrollIntoView();
+      }}
+      style={{ width: 900 }}
+      renderInput={params => <TextField {...params} label="Jump To Encounter" variant="outlined" />}
+    />
+  );
+};
+
 const EncounterGroupedRecord = props => {
   const { allResources } = props;
   const encounters = allResources.filter(r => r.resourceType === 'Encounter').reverse(); // reverse chrono order
@@ -241,6 +301,8 @@ const EncounterGroupedRecord = props => {
     const conditions = getByType('Condition');
 
     const observations = getByType('Observation');
+
+    const procedures = getByType('Procedure');
     // const reports = getByType('DiagnosticReport');
 
     // reports.forEach(r => {
@@ -255,24 +317,30 @@ const EncounterGroupedRecord = props => {
     e.conditions = conditions;
     e.medications = medications;
     e.observations = observations;
+    e.procedures = procedures;
 
     encounterSections.push(
-      <div>
+      <div key={title}>
         <ReportsVisualizer
           title={e.period.start}
           columns={[
             {
-              title: 'SNOMED',
+              title: 'Type',
+              versions: '*',
+              getter: () => 'Encounter'
+            },
+            {
+              title: 'Code',
               versions: '*',
               getter: n => n.type[0].coding[0].code
             },
             {
-              title: 'Encounter',
+              title: 'Description',
               versions: '*',
               getter: n => n.type[0].coding[0].display
             },
             {
-              title: 'Start Time',
+              title: 'Details',
               versions: '*',
               format: 'dateTime',
               getter: n => n.period.start
@@ -281,10 +349,14 @@ const EncounterGroupedRecord = props => {
           ]}
           nestedRows={[
             {
-              title: 'Conditions',
               getter: r => r.conditions,
               keyFn: o => o.id,
               columns: [
+                {
+                  title: 'Type',
+                  versions: '*',
+                  getter: () => 'Condition'
+                },
                 {
                   title: 'SNOMED',
                   versions: '*',
@@ -300,9 +372,42 @@ const EncounterGroupedRecord = props => {
               ]
             },
             {
+              getter: r => r.procedures,
+              keyFn: o => o.id,
+              columns: [
+                {
+                  title: 'Type',
+                  versions: '*',
+                  getter: () => 'Procedure'
+                },
+                {
+                  title: 'SNOMED',
+                  versions: '*',
+                  getter: p => p.code.coding[0].code
+                },
+                {
+                  title: 'Procedure',
+                  versions: '*',
+                  getter: p => p.code.coding[0].display
+                },
+                {
+                  title: 'Date Performed',
+                  versions: '*',
+                  format: 'date',
+                  getter: p => p.performedPeriod.start
+                },
+                SPACER
+              ]
+            },
+            {
               getter: r => r.medications,
               keyFn: o => o.id,
               columns: [
+                {
+                  title: 'Type',
+                  versions: '*',
+                  getter: () => 'Medication'
+                },
                 {
                   title: 'RxNorm',
                   versions: '*',
@@ -327,6 +432,11 @@ const EncounterGroupedRecord = props => {
               keyFn: o => o.id,
               columns: [
                 {
+                  title: 'Type',
+                  versions: '*',
+                  getter: () => 'Observation'
+                },
+                {
                   title: 'LOINC',
                   versions: '*',
                   getter: o => o.code.coding[0].code
@@ -347,7 +457,12 @@ const EncounterGroupedRecord = props => {
     );
   }
 
-  return <Accordion allowMultipleExpanded={true}>{encounterSections}</Accordion>;
+  return (
+    <React.Fragment>
+      <LinksByEncounter encounters={encounters} />
+      <Accordion allowMultipleExpanded={true}>{encounterSections}</Accordion>;
+    </React.Fragment>
+  );
 };
 
 const isNotEmpty = rows => rows != null && rows.length > 0;
