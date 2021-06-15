@@ -150,7 +150,7 @@ const PatientViewer = props => {
   const patient = allResources.find(r => r.resourceType === 'Patient');
 
   // hack for now
-  if (!patient.address) 
+  if (!patient.address)
     patient.address = [{ line: [], city: undefined, state: undefined, postalCode: undefined }];
 
   const toggleGroup = event => {
@@ -196,16 +196,20 @@ const LinksByType = () => {
     'Vaccinations',
     'Documents'
   ];
-
+  const location = useLocation();
   return (
     <div>
       Jump To:
       <ul>
-        {types.map(t => (
-          <li key={t}>
-            <Link to={{ hash: '#' + t }}>{t}</Link>
-          </li>
-        ))}
+        {types.map(t => {
+          // newLocation preserves any query, like if we're in a patient via syntheticmass
+          const newLocation = { ...location, hash: '#' + t };
+          return (
+            <li key={t}>
+              <Link to={newLocation}>{t}</Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
@@ -264,7 +268,7 @@ const EntireRecord = props => {
 
 const LinksByEncounter = props => {
   const { encounters } = props;
-
+  const location = useLocation();
   const history = useHistory();
 
   return (
@@ -275,7 +279,8 @@ const LinksByEncounter = props => {
         `${e.period.start} - ${e.type[0].coding[0].code} ${e.type[0].coding[0].display}`
       }
       onChange={(_event, value, _reason) => {
-        history.push({ hash: '#' + value.period.start });
+        const newLocation = { ...location, hash: '#' + value.period.start };
+        history.push(newLocation);
         document.getElementById(value.period.start).scrollIntoView();
       }}
       style={{ width: 900 }}
