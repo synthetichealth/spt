@@ -149,10 +149,6 @@ const PatientViewer = props => {
   const allResources = bundle.entry.map(e => e.resource);
   const patient = allResources.find(r => r.resourceType === 'Patient');
 
-  // hack for now
-  if (!patient.address)
-    patient.address = [{ line: [], city: undefined, state: undefined, postalCode: undefined }];
-
   const toggleGroup = event => {
     event.preventDefault();
     setIsGroupByEncounter(!isGroupByEncounter);
