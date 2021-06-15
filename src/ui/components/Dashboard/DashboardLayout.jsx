@@ -7,6 +7,7 @@ import Dashboard from './Dashboard';
 
 import PatientViewer from '../PatientViewer';
 import SyntheticMass from '../SyntheticMass';
+import CSVFileManager from '../CSVFileManager';
 // import CSVPatientViewer from '../CSVPatientViewer';
 
 function DashboardLayout() {
@@ -37,8 +38,8 @@ function DashboardLayout() {
         offline: true,
         component: <SyntheticMass />
       },
-      { key: 'csv', label: 'CSV', component: null },
-      { key: 'load_csv', label: 'Load Files', component: null },
+      { key: 'csv_section', label: 'CSV', component: null },
+      { key: 'csv', label: 'Manage CSV Files', component: <CSVFileManager /> },
       // {
       //   key: 'csv_patient_viewer',
       //   label: 'CSV Patient Viewer',
