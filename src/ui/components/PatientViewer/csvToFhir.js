@@ -7,13 +7,15 @@ async function csvToFhir(id) {
     conditionsResp,
     medicationsResp,
     proceduresResp,
-    encountersResp
+    encountersResp,
+    observationsResp
   ] = await Promise.all([
     axios.get(`/collection/patients?Id=${id}`),
     axios.get(`/collection/conditions?PATIENT=${id}`),
     axios.get(`/collection/medications?PATIENT=${id}`),
     axios.get(`/collection/procedures?PATIENT=${id}`),
-    axios.get(`/collection/encounters?PATIENT=${id}`)
+    axios.get(`/collection/encounters?PATIENT=${id}`),
+    axios.get(`/collection/observations?PATIENT=${id}`)
   ]);
 
   // for testing, map these into FHIR
@@ -23,6 +25,7 @@ async function csvToFhir(id) {
   const medicationsCSV = medicationsResp.data;
   const proceduresCSV = proceduresResp.data;
   const encountersCSV = encountersResp.data;
+  const observationsCSV = observationsResp.data;
 
   const bundle = {
     resourceType: 'Bundle',
@@ -152,6 +155,43 @@ async function csvToFhir(id) {
 
     bundle.entry.push({ fullUrl: `urn:uuid:${m.ID}`, resource: medicationFHIR });
   });
+
+
+  // DATE,PATIENT,ENCOUNTER,CODE,DESCRIPTION,VALUE,UNITS,TYPE
+  observationsCSV.forEach(o => {
+    const newId = uuidv4();
+    const observationFHIR = {
+      resourceType: 'Observation',
+      id: newId,
+      code: {
+        coding: [
+          {
+            system: 'http://loinc.org',
+            code: o.CODE,
+            display: o.DESCRIPTION
+          }
+        ],
+        text: o.DESCRIPTION
+      },
+      subject: {
+        reference: patientURI
+      },
+      encounter: {
+        reference: `urn:uuid:${o.ENCOUNTER}`
+      },
+      effectiveDateTime: o.DATE
+    };
+
+    if (o.type === 'numeric') {
+      observationFHIR.valueQuantity = { value: o.VALUE, code: o.UNITS };
+    } else {
+      observationFHIR.valueString = o.VALUE;
+    }
+
+    bundle.entry.push({ fullUrl: `urn:uuid:${newId}`, resource: observationFHIR });
+  });
+
+  bundle.entry.reverse(); // reverse chrono order
 
   return bundle;
 }
