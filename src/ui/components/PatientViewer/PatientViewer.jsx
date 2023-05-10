@@ -12,6 +12,8 @@ import {
   ImmunizationsVisualizer,
   DocumentReferencesVisualizer
 } from 'fhir-visualizers';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
 import { useLocation, useHistory } from 'react-router-dom';
 import { HashLink as Link } from 'react-router-hash-link';
 
@@ -474,6 +476,7 @@ const Section = props => {
     <div>
       {show(props.conditions) && <ConditionsVisualizer rows={props.conditions} />}
       {show(props.medications) && <MedicationsVisualizer rows={props.medications} />}
+      {show(props.observations) && <BPGraph observations={props.observations} />}
       {show(props.observations) && <ObservationsVisualizer rows={props.observations} />}
       {show(props.reports) && <ReportsVisualizer rows={props.reports} />}
       {show(props.careplans) && <CarePlansVisualizer rows={props.careplans} />}
@@ -485,5 +488,46 @@ const Section = props => {
     </div>
   );
 };
+
+const BPGraph = props => {
+  const observations = props.observations;
+  const data = [];
+  const multiObsBPs = observations.filter(o => o?.code?.coding?.[0]?.code === '85354-9');
+  const singleObsBPs = observations.filter(o => ['8462-4', '8480-6'].includes(o?.code?.coding?.[0]?.code));
+
+  multiObsBPs.forEach(o => {
+    const sysBP = o.component.find(c => c.code.coding[0].code === '8480-6').valueQuantity.value;
+    const diaBP = o.component.find(c => c.code.coding[0].code === '8462-4').valueQuantity.value;
+
+    data.push({ date: o.effectiveDateTime, sysBP, diaBP });
+  });
+
+  const singleObsGrouper = {};
+
+  singleObsBPs.forEach(o => {
+    const date = o.effectiveDateTime;
+    if (!singleObsGrouper[date]) singleObsGrouper[date] = {};
+    const code = o.code.coding[0].code;
+    if (code === '8480-6') singleObsGrouper[date]['sysBP'] = o.valueQuantity?.value || Number(o.valueString);
+    if (code === '8462-4') singleObsGrouper[date]['diaBP'] = o.valueQuantity?.value || Number(o.valueString);
+  });
+
+  Object.keys(singleObsGrouper).forEach(date => {
+    data.push({ date, ...singleObsGrouper[date]});
+  });
+
+  return (
+    <LineChart width={730} height={250} data={data}
+      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="date" />
+      <YAxis />
+      <Tooltip />
+      <Legend />
+      <Line type="monotone" dataKey="sysBP" stroke="#8884d8" />
+      <Line type="monotone" dataKey="diaBP" stroke="#82ca9d" />
+    </LineChart>
+    );
+}
 
 export default PatientViewer;

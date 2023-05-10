@@ -20,6 +20,7 @@ async function loadCsvFromDirectory(dir) {
         // console.log(`inserting record into ${filename}`);
         db.insert(filename, record);
       }
+      console.log(`done ${f}`);
     });
   });
 }

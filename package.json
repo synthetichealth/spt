@@ -68,6 +68,7 @@
     "react-router-hash-link": "^2.4.3",
     "react-select": "^4.2.1",
     "react-transition-group": "^4.3.0",
+    "recharts": "^2.0.9",
     "uuid": "^8.3.2"
   },
   "engines": {

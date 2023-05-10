@@ -86,7 +86,7 @@ async function csvToFhir(id) {
       abatementDateTime: c.STOP
     };
 
-    bundle.entry.push({ fullUrl: `urn:uuid:${c.ID}`, resource: conditionFHIR });
+    bundle.entry.push({ fullUrl: `urn:uuid:${conditionFHIR.id}`, resource: conditionFHIR });
   });
 
   // Id,START,STOP,PATIENT,ORGANIZATION,PROVIDER,PAYER,
@@ -97,7 +97,7 @@ async function csvToFhir(id) {
   encountersCSV.forEach(e => {
     const encounterFHIR = {
       resourceType: 'Encounter',
-      id: e.ID,
+      id: e.Id,
       class: {
         code: e.ENCOUNTERCLASS
       },
@@ -122,7 +122,7 @@ async function csvToFhir(id) {
       }
     };
 
-    bundle.entry.push({ fullUrl: `urn:uuid:${e.ID}`, resource: encounterFHIR });
+    bundle.entry.push({ fullUrl: `urn:uuid:${e.Id}`, resource: encounterFHIR });
   });
 
   // START,STOP,PATIENT,PAYER,ENCOUNTER,CODE,DESCRIPTION,
