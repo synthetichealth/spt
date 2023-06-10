@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 const drawerWidth = 20.8;
 const toolbarHeight = 95;
 export default makeStyles(

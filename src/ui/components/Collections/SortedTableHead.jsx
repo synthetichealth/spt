@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { TableCell, TableHead, TableRow, TableSortLabel } from '@material-ui/core';
+import { TableCell, TableHead, TableRow, TableSortLabel } from '@mui/material';
 import PropTypes from 'prop-types';
 
 function SortedTableHead(props) {

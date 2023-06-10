@@ -84,8 +84,14 @@ export default makeStyles(
       borderColor: theme.palette.common.grayHighlight,
       padding: '2px',
       color: 'inherit'
+    },
+    customizerContainer: {
+      padding: '15px 35px'
+    },
+    dashboardCard: {
+      padding: 10
     }
   }),
 
-  { name: 'Collection', index: 1 }
+  { name: 'Customizer', index: 1 }
 );

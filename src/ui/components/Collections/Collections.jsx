@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { Table, TableBody, TableContainer, TablePagination } from '@material-ui/core';
+import { Table, TableBody, TableContainer, TablePagination } from '@mui/material';
 import PropTypes from 'prop-types';
 import useStyles from './styles';
 import SortedTableHead from './SortedTableHead';
@@ -467,11 +467,11 @@ const Collections = props => {
                 count={infoBundle.data.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                onChangePage={handleChangePage}
+                onPageChange={handleChangePage}
                 backIconButtonProps={{
                   classes: classes.backButton
                 }}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
               />
             </TableContainer>
           ) : (

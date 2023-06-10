@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import useStyles from './styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
 
 function NavBar() {
   const classes = useStyles();

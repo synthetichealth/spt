@@ -1,13 +1,13 @@
 import React, { useReducer, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { TableCell, TableRow } from '@material-ui/core';
+import { TableCell, TableRow } from '@mui/material';
 import PropTypes from 'prop-types';
-import CreateIcon from '@material-ui/icons/Create';
+import CreateIcon from '@mui/icons-material/Create';
 import ReactJson from 'react-json-view';
 import useStyles from './styles';
-import SaveIcon from '@material-ui/icons/Save';
-import CancelIcon from '@material-ui/icons/Cancel';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Cancel';
 import axios from 'axios';
 import { useQueryClient } from 'react-query';
 import AlertDialog from './AlertDialog';

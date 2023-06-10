@@ -7,6 +7,7 @@ import Dashboard from './Dashboard';
 
 import PatientViewer from '../PatientViewer';
 import SyntheticMass from '../SyntheticMass';
+import Customizer from '../Customizer';
 // import CSVPatientViewer from '../CSVPatientViewer';
 
 function DashboardLayout() {
@@ -32,11 +33,17 @@ function DashboardLayout() {
         component: <PatientViewer />
       },
       {
-        key: 'syntheticmass',
-        label: 'SyntheticMass',
+        key: 'customizer',
+        label: 'Synthea Customizer',
         offline: true,
-        component: <SyntheticMass />
+        component: <Customizer />
       },
+      // {
+      //   key: 'syntheticmass',
+      //   label: 'SyntheticMass',
+      //   offline: true,
+      //   component: <SyntheticMass />
+      // },
       { key: 'csv', label: 'CSV', component: null },
       { key: 'load_csv', label: 'Load Files', component: null },
       // {
