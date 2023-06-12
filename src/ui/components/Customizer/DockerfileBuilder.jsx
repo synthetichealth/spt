@@ -1,10 +1,13 @@
 import React, { memo, useState, Fragment } from 'react';
 import useStyles from './styles';
 
+import { saveFile } from './utils';
 
 import { Paper, TextField, Autocomplete, Button, Switch, Select, MenuItem } from '@mui/material';
 
 import ArgBuilder, { renderArgs } from './ArgBuilder';
+
+import { buildConfigFile } from './ConfigFileBuilder';
 
 // https://github.com/squirrellyjs/squirrelly if we need something more robust
 const DOCKERFILE_TEMPLATE = `
@@ -13,18 +16,50 @@ FROM eclipse-temurin:20-jdk
 # --insecure is for mitre only
 # -L means follow redirects
 RUN curl --insecure -L -O https://github.com/synthetichealth/synthea/releases/download/master-branch-latest/synthea-with-dependencies.jar
-
-
-
+%%CONFIG_FILE%% %%KEEP_MODULE%%
 CMD %%ARGS%%
 `
+
+const buildFileInDockerRun = (fileContent, targetFileName) => {
+  const fileLines = fileContent.split('\n');
+
+  const runCmdLines = fileLines.map((line, i) => {
+    if (i == 0) {
+      return `\nRUN echo ${line} \\`;
+    } else {
+      return `${line} \\`
+    }
+  });
+
+  runCmdLines.push(` > ${targetFileName}\n`);
+  return runCmdLines.join('\n');
+}
 
 const DockerfileBuilder = (props) => {
   const classes = useStyles();
 
-  const { args, config, configAsArgs } = props;
+  const { args, config, configAsArgs, keepModuleString } = props;
 
-  const dockerfile = DOCKERFILE_TEMPLATE.replace("%%ARGS%%", renderArgs(args, configAsArgs ? config : undefined));
+  let dockerfile = DOCKERFILE_TEMPLATE;
+
+  if (keepModuleString) {
+    dockerfile = dockerfile.replace("%%KEEP_MODULE%%", buildFileInDockerRun(keepModuleString, "keep.json"));
+
+    args['keepModule'] = 'keep.json';
+  } else {
+     dockerfile = dockerfile.replace("%%KEEP_MODULE%%", "");
+  }
+
+  if (configAsArgs || Object.keys(config).length === 0) {
+    dockerfile = dockerfile.replace("%%CONFIG_FILE%%", "");
+  } else {
+    const configFileString = buildConfigFile(config);
+    dockerfile = dockerfile.replace("%%CONFIG_FILE%%", buildFileInDockerRun(configFileString, "custom.properties"));
+
+    args['configFile'] = 'custom.properties';
+  }
+
+  dockerfile = dockerfile.replace("%%ARGS%%", renderArgs(args, configAsArgs ? config : undefined));
 
   return (<div className={classes.collection}> 
     <h3>Dockerfile</h3> <br />
@@ -48,16 +83,6 @@ const DockerfileBuilder = (props) => {
    </div>);
 }
 
-const saveFile = async (content, filename) => {
-  // from: https://stackoverflow.com/a/66079045
-  const a = document.createElement('a');
-  a.download = filename;
-  const blob = new Blob([content], { type: 'text/plain' });
-  a.href = URL.createObjectURL(blob);
-  a.addEventListener('click', (e) => {
-    setTimeout(() => URL.revokeObjectURL(a.href), 30 * 1000);
-  });
-  a.click();
-};
+
 
 export default memo(DockerfileBuilder);

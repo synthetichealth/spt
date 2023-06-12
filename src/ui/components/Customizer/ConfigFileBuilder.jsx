@@ -1,12 +1,15 @@
 import React, { memo, useState, Fragment } from 'react';
 import useStyles from './styles';
 
+import { saveFile } from './utils';
 
-import { Paper, TextField, Autocomplete, Button, Switch, Select, MenuItem } from '@mui/material';
 
+import { Paper, TextField, Autocomplete, Button, Checkbox, Switch, Select, MenuItem, Tooltip } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
 
 export const CONFIG_OPTIONS = [
-  { key: "exporter.baseDirectory", defaultValue: "./output/" },
+  { key: "exporter.baseDirectory", defaultValue: "./output/", 
+    description: "This is the base folder in which all patient records will be exported. Files will be exported to subfolders based on their type. (For example FHIR records will be stored in the /fhir/ subfolder under this folder." },
   { key: "exporter.use_uuid_filenames", defaultValue: "false", type: "boolean" },
   { key: "exporter.subfolders_by_id_substring", defaultValue: "false", type: "boolean" },
   { key: "exporter.years_of_history", defaultValue: "0", type: "number" },
@@ -159,7 +162,7 @@ export const CONFIG_OPTIONS = [
 
 ];
 
-const buildConfigFile = (configState) => {
+export const buildConfigFile = (configState) => {
   const configLines = [];
   for (const configOpt of CONFIG_OPTIONS) {
       const key = configOpt.key;
@@ -183,16 +186,24 @@ const ConfigFileBuilder = (props) => {
 
   const addSelectedConfigAsModified = () => {
     if (!selected) return;
-    const defaultValue = CONFIG_OPTIONS.find(e => e.key === selected).defaultValue;
+    const defaultValue = CONFIG_OPTIONS.find(e => e.key === selected.key).defaultValue;
     setConfig({
       ...config,
-      [selected]: defaultValue
+      [selected.key]: defaultValue
     });
   };
-  const handleChange = (evt) => {
+  const handleChangeText = (evt) => {
+    debugger;
     setConfig({
       ...config,
-      [selected]: evt.target.value
+      [evt.target.name]: evt.target.value
+    });
+  }
+
+  const handleChangeBoolean = (evt) => {
+    setConfig({
+      ...config,
+      [evt.target.name]: evt.target.checked.toString()
     });
   }
 
@@ -204,18 +215,42 @@ const ConfigFileBuilder = (props) => {
       continue;
     }
 
-    fields.push((<Fragment key={key} >
-                   <TextField 
-                      id={key} 
-                      name={key} 
-                      type={configOpt.type} 
-                      label={key}
-                      defaultValue={configOpt.defaultValue}
-                      variant="outlined"
-                      onChange={handleChange} 
-                      />
-                    <br />
-                  </Fragment>));
+    if (configOpt.type == 'boolean') {
+      fields.push((<Fragment key={key}>
+                    {key}
+                      <Checkbox 
+                        id={key} 
+                        name={key} 
+                        label={key}
+                        defaultValue={configOpt.defaultValue}
+                        onChange={handleChangeBoolean} />
+                      <Tooltip title={configOpt.description} disableInteractive>
+                        <span>
+                          <Button disabled><InfoIcon fontSize="small" /></Button>
+                        </span>
+                      </Tooltip>
+                      <br />
+                    </Fragment>));
+    } else {
+      fields.push((<Fragment key={key} >
+                     <TextField 
+                        id={key} 
+                        name={key} 
+                        type={configOpt.type} 
+                        label={key}
+                        defaultValue={configOpt.defaultValue}
+                        variant="outlined"
+                        onChange={handleChangeText} 
+                        />
+                      <Tooltip title={configOpt.description} disableInteractive>
+                        <span>
+                          <Button disabled><InfoIcon fontSize="small" /></Button>
+                        </span>
+                      </Tooltip>
+                      <br />
+                    </Fragment>));
+
+    }
   }
 
   return (<div className={classes.collection}> 
@@ -231,8 +266,10 @@ const ConfigFileBuilder = (props) => {
       sx={{ width: 600 }}
       onChange={(event, value) => setSelected(value)}
       id="combo-box-demo"
-      options={CONFIG_OPTIONS.map(o => o.key)}
+      options={CONFIG_OPTIONS}
       renderInput={(params) => <TextField {...params} label="Choose Setting" />}
+      getOptionLabel={(option) => option.key}
+      renderOption={(props, option, state) => <li {...props}>{option.key}&nbsp;&nbsp;&nbsp;<br /><span style={{fontSize:"0.8em"}}>{option.description || ""}</span></li> }
     />
     <Button variant="text" onClick={addSelectedConfigAsModified}>+</Button></div>
     <br/>

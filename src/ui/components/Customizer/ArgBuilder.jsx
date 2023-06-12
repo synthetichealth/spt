@@ -1,38 +1,58 @@
 import React, { memo, useState, Fragment } from 'react';
 import useStyles from './styles';
 
+import { STATES } from './constants';
 
-import { TextField } from '@mui/material';
+import { Autocomplete, TextField } from '@mui/material';
 
 import { CONFIG_OPTIONS } from './ConfigFileBuilder';
 
+const ageArrayToString = array => {
+  if (!Array.isArray(array)) return undefined;
+
+  if (!array[0] || !array[1]) return undefined;
+
+  return array[0] + "-" + array[1];
+}
 
 const COMMAND_LINE_ARGS = {
-  population: { display: "Population", type: "number", flag: "-p" },
-  seed: { display: "Seed", type: "number", flag: "-s" },
-  state: { display: "State", type: "text", flag: null },
-  city: { display: "City", type: "text", flag: null }
+  population: { display: "Population", type: "number", flag: "-p", group: "Basic" },
+  state: { display: "State", type: "select", options: STATES, flag: null, group: "Basic" },
+  city: { display: "City", type: "text", flag: null, group: "Basic" },
+  gender: { display: "Gender", type: "select", options: ['M', 'F'], flag: "-g", group: "Basic" },
+  age: { display: "Age", type: "range", flag: "-a", group: "Basic", rangeToString: ageArrayToString},
 
-         // [-cs clinicianSeed]
-         // [-r referenceDate as YYYYMMDD]
-         // [-g gender]
-         // [-a minAge-maxAge]
-         // [-o overflowPopulation]
-         // [-c localConfigFilePath]
-         // [-d localModulesDirPath]
-         // [-i initialPopulationSnapshotPath]
-         // [-u updatedPopulationSnapshotPath]
-         // [-t updateTimePeriodInDays]
-         // [-f fixedRecordPath]
-         // [-k keepMatchingPatientsPath]
+  seed: { display: "Seed", type: "number", flag: "-s", group: "Reproducibility" },
+  clinicianSeed: { display: "Clinician Seed", type: "number", flag: "-cs", group: "Reproducibility" },
+  referenceDate: { display: "Reference Date (YYYYMMDD)", type: "text", flag: "-r", group: "Reproducibility" },
+
+   // [-o overflowPopulation] (boolean)
+
+  keepModule: { flag: "-k", group: "Hidden" },
+  configFile: { flag: "-c", group: "Hidden" },
+  
+   // [-d localModulesDirPath]
+   // [-i initialPopulationSnapshotPath]
+   // [-u updatedPopulationSnapshotPath]
+   // [-t updateTimePeriodInDays]
+   // [-k keepMatchingPatientsPath]
+   // [-ps singlePatientSeed]
+   // [-e endDate] // [-E futureEndDate]
+   // -m flag oh no
 };
 
 export const renderArgs = (argsState, configState = undefined) => {
   let argString = 'java -jar synthea-with-dependencies.jar';
 
   for (const [key, argDef] of Object.entries(COMMAND_LINE_ARGS)) {
-    const value = argsState[key];
+    let value = argsState[key];
+    if (Array.isArray(value) && argDef['rangeToString']) {
+      value = argDef['rangeToString'](value);
+    }
     if (value) {
+
+
+
       const argDef = COMMAND_LINE_ARGS[key];
       if (argDef.flag) {
         argString = argString + ' ' + argDef.flag + ' ' + value.trim();
@@ -49,6 +69,7 @@ export const renderArgs = (argsState, configState = undefined) => {
       if (!value) {
         continue;
       }
+
 
       argString = argString + ' --' + key + '=' + value.trim();
 
@@ -74,6 +95,27 @@ const ArgBuilder = (props) => {
     });
   }
 
+  const handleChangeSelect = (name, value) => {
+    // force all falsy values to undefined, so the setArgs below deletes this key
+    if (!value) {
+      value = undefined;
+    }
+    setArgs({
+      ...args,
+      [name]: value
+    });
+  }
+
+  const handleChangeRange = (name, index, value) => {
+    const valueArray = name in args ? args[name] : [];
+    valueArray[index] = value;
+
+    setArgs({
+      ...args,
+      [name]: valueArray
+    });
+  }
+
   const shouldBeDisabled = (key, args) => {
     if (key != "city") return false;
     if (args.state) return false;
@@ -82,17 +124,66 @@ const ArgBuilder = (props) => {
 
   const fields = [];
 
+  const argGroups = {};
+
   for (const [key, arg] of Object.entries(COMMAND_LINE_ARGS)) {
-    fields.push((<TextField 
-                    key={key} 
-                    id={key} 
-                    name={key} 
-                    disabled={shouldBeDisabled(key, args)} 
-                    type={arg.type} 
-                    label={arg.display} 
-                    variant="outlined"
-                    onChange={handleChange} 
-                    />));
+    const group = arg.group;
+    if (!(group in argGroups)) {
+      argGroups[group] = {};
+    }
+    argGroups[group][key] = arg;
+  }
+
+  for (const [groupName, group] of Object.entries(argGroups)) { 
+    if (groupName == 'Hidden') continue;
+
+    fields.push(<h5>{groupName} Settings</h5>);
+    for (const [key, arg] of Object.entries(group)) {
+
+      if (arg.type == 'select') {
+        fields.push((<Autocomplete
+            disablePortal
+            sx={{ width: 200 }}
+            key={key} 
+            name={key} 
+            onChange={(evt, value) => handleChangeSelect(key, value)}
+            options={arg.options}
+            renderInput={(params) => <TextField {...params} label={arg.display} />}
+          />));
+      } else if (arg.type == 'range') {
+            fields.push((<TextField 
+                      key={`${key} Min`}  
+                      id={`${key} Min`}  
+                      name={`${key} Min`}  
+                      disabled={shouldBeDisabled(key, args)} 
+                      type="number"
+                      label={`${arg.display} Min`} 
+                      variant="outlined"
+                      onChange={(evt) => handleChangeRange(key, 0, evt.target.value)} 
+                      />));
+            fields.push((<TextField 
+                      key={`${key} Max`} 
+                      id={`${key} Max`} 
+                      name={`${key} Max`} 
+                      disabled={shouldBeDisabled(key, args)} 
+                      type="number"
+                      label={`${arg.display} Max`} 
+                      variant="outlined"
+                      onChange={(evt) => handleChangeRange(key, 1, evt.target.value)} 
+                      />));
+      } else {
+            fields.push((<TextField 
+                      key={key} 
+                      id={key} 
+                      name={key} 
+                      disabled={shouldBeDisabled(key, args)} 
+                      type={arg.type} 
+                      label={arg.display} 
+                      variant="outlined"
+                      onChange={handleChange} 
+                      />));
+      }
+    }
   }
 
   return (<div className={classes.collection}>
