@@ -110,7 +110,7 @@ const KeepModuleBuilder = (props) => {
   const [type, setType] = useState('condition');
   const [value, setValue] = useState('');
 
-  const { setKeepModuleString } = props;
+  const { setKeepModuleString, showDownload } = props;
 
   const handleChange = () => {};
   const addCurrent = () => {
@@ -172,7 +172,7 @@ const KeepModuleBuilder = (props) => {
     <li> Keep patients matching <b>{ any ? "Any" : "All" }</b> of the following criteria: </li>
     { keeps.map((k, i) => <DisplayForKeep index={i} keep={k} />) } 
     </ul>
-    <Button variant="text" onClick={() => saveFile(buildKeepModule(keeps, any), 'keep.json')}>Download</Button> 
+    { showDownload && <Button variant="text" onClick={() => saveFile(buildKeepModule(keeps, any), 'keep.json')}>Download</Button> }
     </div>);
 }
 

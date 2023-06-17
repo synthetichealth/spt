@@ -17,10 +17,10 @@ const ageArrayToString = array => {
 
 const COMMAND_LINE_ARGS = {
   population: { display: "Population", type: "number", flag: "-p", group: "Basic" },
-  state: { display: "State", type: "select", options: STATES, flag: null, group: "Basic" },
-  city: { display: "City", type: "text", flag: null, group: "Basic" },
-  gender: { display: "Gender", type: "select", options: ['M', 'F'], flag: "-g", group: "Basic" },
-  age: { display: "Age", type: "range", flag: "-a", group: "Basic", rangeToString: ageArrayToString},
+  state: { display: "State", type: "select", options: STATES, flag: null, group: "Geographic" },
+  city: { display: "City", type: "text", flag: null, group: "Geographic" },
+  gender: { display: "Gender", type: "select", options: ['M', 'F'], flag: "-g", group: "Demographic" },
+  age: { display: "Age", type: "range", flag: "-a", group: "Demographic", rangeToString: ageArrayToString},
 
   seed: { display: "Seed", type: "number", flag: "-s", group: "Reproducibility" },
   clinicianSeed: { display: "Clinician Seed", type: "number", flag: "-cs", group: "Reproducibility" },
@@ -82,7 +82,7 @@ export const renderArgs = (argsState, configState = undefined) => {
 const ArgBuilder = (props) => {
   const classes = useStyles();
 
-  const { args, setArgs } = props;
+  const { args, setArgs, shouldRenderArgs=true, onlyGroup=undefined } = props;
   const handleChange = (evt) => {
     let value = evt.target.value;
     // force all falsy values to undefined, so the setArgs below deletes this key
@@ -137,7 +137,12 @@ const ArgBuilder = (props) => {
   for (const [groupName, group] of Object.entries(argGroups)) { 
     if (groupName == 'Hidden') continue;
 
-    fields.push(<h5>{groupName} Settings</h5>);
+    if (onlyGroup) {
+      if (groupName != onlyGroup) continue;
+    } else {
+      fields.push(<h5>{groupName} Settings</h5>);
+    }
+
     for (const [key, arg] of Object.entries(group)) {
 
       if (arg.type == 'select') {
@@ -190,7 +195,7 @@ const ArgBuilder = (props) => {
      <h3>Command-line Argument Builder</h3> <br />
      { fields }
      <br />
-     <pre>{ renderArgs(args) }</pre>
+     <pre>{ shouldRenderArgs && renderArgs(args) }</pre>
    </div>);
 }
 
