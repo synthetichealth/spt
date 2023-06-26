@@ -82,7 +82,7 @@ export const renderArgs = (argsState, configState = undefined) => {
 const ArgBuilder = (props) => {
   const classes = useStyles();
 
-  const { args, setArgs, shouldRenderArgs=true, onlyGroup=undefined } = props;
+  const { args, setArgs, onlyRenderFields=false, onlyGroup=undefined } = props;
   const handleChange = (evt) => {
     let value = evt.target.value;
     // force all falsy values to undefined, so the setArgs below deletes this key
@@ -192,10 +192,10 @@ const ArgBuilder = (props) => {
   }
 
   return (<div className={classes.collection}>
-     <h3>Command-line Argument Builder</h3> <br />
+     { !onlyRenderFields && <h3>Command-line Argument Builder</h3> } <br />
      { fields }
      <br />
-     <pre>{ shouldRenderArgs && renderArgs(args) }</pre>
+     <pre>{ !onlyRenderFields && renderArgs(args) }</pre>
    </div>);
 }
 

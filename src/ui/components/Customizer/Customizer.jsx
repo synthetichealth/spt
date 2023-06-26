@@ -77,10 +77,11 @@ const GuidedMode = props => {
     <React.Fragment>
       <ExportFormatsQuestion exportFormats={exportFormats} setExportFormats={setExportFormats} /> <br/> <br/>
       { exportFormats.length > 0 && <DataReqsQuestion dataReqs={dataReqs} setDataReqs={setDataReqs} /> }
-      { dataReqs.length > 0 && <ArgBuilder args={args} setArgs={setArgs} onlyGroup="Basic" shouldRenderArgs={false} /> }
+      { dataReqs.length > 0 && <ArgBuilder args={args} setArgs={setArgs} onlyGroup="Basic" onlyRenderFields={true} /> }
       { dataReqs.includes("keep") && <KeepModuleBuilder setKeepModuleString={setKeepModuleString} showDownload={false} /> }
-      { dataReqs.includes("demographic") && <ArgBuilder args={args} setArgs={setArgs} onlyGroup="Demographic" shouldRenderArgs={false} /> }
-      { dataReqs.includes("geographic") && <ArgBuilder args={args} setArgs={setArgs} onlyGroup="Geographic" shouldRenderArgs={false} /> }
+      { dataReqs.includes("geographic") && <ArgBuilder args={args} setArgs={setArgs} onlyGroup="Geographic" onlyRenderFields={true} /> }
+      { dataReqs.includes("demographic") && <ArgBuilder args={args} setArgs={setArgs} onlyGroup="Demographic" onlyRenderFields={true} /> }
+      { dataReqs.includes("reproducibility") && <ArgBuilder args={args} setArgs={setArgs} onlyGroup="Reproducibility" onlyRenderFields={true} /> }
       { dataReqs.length > 0 && <GuidedModeHowToRun mode={mode} setMode={setMode} /> }
       { mode && <Instructions mode={mode} args={args} keepModuleString={keepModuleString} exportFormats={exportFormats} dataReqs={dataReqs} /> }
     </React.Fragment>
