@@ -3,7 +3,7 @@ import useStyles from './styles';
 
 import { STATES } from './constants';
 
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, TextField, Stack } from '@mui/material';
 
 import { CONFIG_OPTIONS } from './ConfigFileBuilder';
 
@@ -30,7 +30,7 @@ const COMMAND_LINE_ARGS = {
 
   keepModule: { flag: "-k", group: "Hidden" },
   configFile: { flag: "-c", group: "Hidden" },
-  
+
    // [-d localModulesDirPath]
    // [-i initialPopulationSnapshotPath]
    // [-u updatedPopulationSnapshotPath]
@@ -124,8 +124,8 @@ const ArgBuilder = (props) => {
 
   const fields = [];
 
+  // map args/fields into groups
   const argGroups = {};
-
   for (const [key, arg] of Object.entries(COMMAND_LINE_ARGS)) {
     const group = arg.group;
     if (!(group in argGroups)) {
@@ -134,13 +134,13 @@ const ArgBuilder = (props) => {
     argGroups[group][key] = arg;
   }
 
-  for (const [groupName, group] of Object.entries(argGroups)) { 
+  for (const [groupName, group] of Object.entries(argGroups)) {
     if (groupName == 'Hidden') continue;
 
     if (onlyGroup) {
       if (groupName != onlyGroup) continue;
     } else {
-      fields.push(<h5>{groupName} Settings</h5>);
+      fields.push(<h5 style={{margin: "2rem 0 0.5rem 0"}}>{groupName} Settings</h5>);
     }
 
     for (const [key, arg] of Object.entries(group)) {
@@ -149,54 +149,60 @@ const ArgBuilder = (props) => {
         fields.push((<Autocomplete
             disablePortal
             sx={{ width: 200 }}
-            key={key} 
-            name={key} 
+            key={key}
+            name={key}
+            display="inline"
             onChange={(evt, value) => handleChangeSelect(key, value)}
             options={arg.options}
             renderInput={(params) => <TextField {...params} label={arg.display} />}
           />));
       } else if (arg.type == 'range') {
-            fields.push((<TextField 
-                      key={`${key} Min`}  
-                      id={`${key} Min`}  
-                      name={`${key} Min`}  
-                      disabled={shouldBeDisabled(key, args)} 
+            fields.push((<TextField
+                      key={`${key} Min`}
+                      id={`${key} Min`}
+                      name={`${key} Min`}
+                      disabled={shouldBeDisabled(key, args)}
                       type="number"
-                      label={`${arg.display} Min`} 
+                      label={`${arg.display} Min`}
                       variant="outlined"
-                      onChange={(evt) => handleChangeRange(key, 0, evt.target.value)} 
+                      display="inline"
+                      onChange={(evt) => handleChangeRange(key, 0, evt.target.value)}
                       />));
-            fields.push((<TextField 
-                      key={`${key} Max`} 
-                      id={`${key} Max`} 
-                      name={`${key} Max`} 
-                      disabled={shouldBeDisabled(key, args)} 
+            fields.push((<TextField
+                      key={`${key} Max`}
+                      id={`${key} Max`}
+                      name={`${key} Max`}
+                      disabled={shouldBeDisabled(key, args)}
                       type="number"
-                      label={`${arg.display} Max`} 
+                      label={`${arg.display} Max`}
                       variant="outlined"
-                      onChange={(evt) => handleChangeRange(key, 1, evt.target.value)} 
+                      display="inline"
+                      onChange={(evt) => handleChangeRange(key, 1, evt.target.value)}
                       />));
       } else {
-            fields.push((<TextField 
-                      key={key} 
-                      id={key} 
-                      name={key} 
-                      disabled={shouldBeDisabled(key, args)} 
-                      type={arg.type} 
-                      label={arg.display} 
+            fields.push((<TextField
+                      key={key}
+                      id={key}
+                      name={key}
+                      disabled={shouldBeDisabled(key, args)}
+                      type={arg.type}
+                      label={arg.display}
                       variant="outlined"
-                      onChange={handleChange} 
+                      display="inline"
+                      onChange={handleChange}
                       />));
       }
     }
   }
 
-  return (<div className={classes.collection}>
-     { !onlyRenderFields && <h3>Command-line Argument Builder</h3> } <br />
-     { fields }
-     <br />
-     <pre>{ !onlyRenderFields && renderArgs(args) }</pre>
-   </div>);
+  return (
+    <div className={classes.collection}>
+      { !onlyRenderFields && <h3>Command-line Argument Builder</h3> }
+      { fields }
+      <br />
+      <pre>{ !onlyRenderFields && renderArgs(args) }</pre>
+    </div>
+  );
 }
 
 export default memo(ArgBuilder);
