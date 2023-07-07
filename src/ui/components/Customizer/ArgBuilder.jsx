@@ -200,7 +200,7 @@ const ArgBuilder = (props) => {
       { !onlyRenderFields && <h3>Command-line Argument Builder</h3> }
       { fields }
       <br />
-      <pre>{ !onlyRenderFields && renderArgs(args) }</pre>
+      { !onlyRenderFields && <pre>{renderArgs(args)}</pre> }
     </div>
   );
 }
