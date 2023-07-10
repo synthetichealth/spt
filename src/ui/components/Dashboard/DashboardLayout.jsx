@@ -3,7 +3,6 @@ import { useLocation, useHistory } from 'react-router-dom';
 import useStyles from './styles';
 import Sidebar from './Sidebar';
 import Collections from '../Collections';
-import Dashboard from './Dashboard';
 
 import PatientViewer from '../PatientViewer';
 import SyntheticMass from '../SyntheticMass';
@@ -12,7 +11,7 @@ import Customizer from '../Customizer';
 
 function DashboardLayout() {
   const classes = useStyles();
-  const [contentKey, setContentKey] = useState('dashboard');
+  const [contentKey, setContentKey] = useState('record_viewer');
 
   const location = useLocation();
   const history = useHistory();
@@ -20,12 +19,6 @@ function DashboardLayout() {
   // can do useMemo to update labels like notifications
   const tabs = useMemo(() => {
     return [
-      {
-        key: 'dashboard',
-        label: 'Dashboard',
-        offline: true,
-        component: <Dashboard />
-      },
       {
         key: 'record_viewer',
         label: 'Patient Viewer',

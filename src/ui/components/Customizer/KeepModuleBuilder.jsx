@@ -3,8 +3,9 @@ import useStyles from './styles';
 
 import { saveFile } from './utils';
 
-
 import { Paper, TextField, Autocomplete, Button, Switch, Select, MenuItem } from '@mui/material';
+
+import CodeSearchPopup from './CodeSearchPopup';
 
 const KEEP_TEMPLATE = {
   "name": "Generated Keep Module",
@@ -44,7 +45,7 @@ const CONDITION_TEMPLATE = {
       {
         "system": "SNOMED-CT",
         "code": "1234",
-        "display": "" // set display to empty string so it doesn't crash the UI
+        "display": "" // set display to empty string so it doesn't crash the module builder UI
       }
     ]
   };
@@ -118,9 +119,9 @@ const KeepModuleBuilder = (props) => {
       let string;
 
       if (type == 'medication') {
-        string = `Active Medication: RxNorm ${value}`
+        string = `Active Medication: [RxNorm] ${value.code}: ${value.display}`
       } else {
-        string = `Active ${type[0].toUpperCase()}${type.slice(1)}: SNOMED-CT ${value}`;
+        string = `Active ${type[0].toUpperCase()}${type.slice(1)}: [SNOMED-CT] ${value.code}: ${value.display}`;
       }
       const newKeep = { type, value, string };
 
@@ -133,14 +134,6 @@ const KeepModuleBuilder = (props) => {
       setValue('');
     }
   };
-
-  // TODO: read from concepts? 
-
-  // ALL OF vs ANY OF
-
-  // Active Condition or Procedure
-  // Active Allergy
-  // Active Medication
 
   // Attributes and Observations would be nice, but those need 2 parameters (code/value)
   // whereas the above only need one (code)
@@ -160,13 +153,9 @@ const KeepModuleBuilder = (props) => {
       <MenuItem value="medication">Active Medication</MenuItem>
       <MenuItem value="procedure">Procedure Performed</MenuItem>
     </Select>
-    <TextField 
-            name="value"
-            label="Code"
-            variant="outlined"
-            value={value}
-            onChange={e => setValue(e.target.value)} 
-            />
+
+    <CodeSearchPopup value={value} setValue={setValue} type={type} />
+
     <Button variant="text" onClick={addCurrent}>+</Button>
     <ul>
     <li> Keep patients matching <b>{ any ? "Any" : "All" }</b> of the following criteria: </li>

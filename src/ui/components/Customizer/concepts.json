@@ -1,0 +1,6942 @@
+[
+  {
+    "system": "RxNorm",
+    "code": "1000126",
+    "display": "1 ML medroxyprogesterone acetate 150 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1014676",
+    "display": "cetirizine hydrochloride 5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1014678",
+    "display": "cetirizine hydrochloride 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1043400",
+    "display": "Acetaminophen 21.7 MG/ML / Dextromethorphan Hydrobromide 1 MG/ML / doxylamine succinate 0.417 MG/ML Oral Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1049221",
+    "display": "Acetaminophen 325 MG / oxyCODONE Hydrochloride 5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1049504",
+    "display": "Abuse-Deterrent 12 HR Oxycodone Hydrochloride 10 MG Extended Release Oral Tablet [Oxycontin]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1049625",
+    "display": "Acetaminophen 325 MG / Oxycodone Hydrochloride 10 MG Oral Tablet [Percocet]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1049630",
+    "display": "diphenhydrAMINE Hydrochloride 25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1049635",
+    "display": "Acetaminophen 325 MG / oxyCODONE Hydrochloride 2.5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1049683",
+    "display": "oxyCODONE Hydrochloride 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "105078",
+    "display": "Penicillin G 375 MG/ML Injectable Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "105585",
+    "display": "Methotrexate 2.5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "106258",
+    "display": "Hydrocortisone 10 MG/ML Topical Cream"
+  },
+  {
+    "system": "RxNorm",
+    "code": "106892",
+    "display": "insulin isophane  human 70 UNT/ML / insulin  regular  human 30 UNT/ML Injectable Suspension [Humulin]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "10831",
+    "display": "Sulfamethoxazole / Trimethoprim"
+  },
+  {
+    "system": "RxNorm",
+    "code": "108515",
+    "display": "1 ML tacrolimus 5 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1091392",
+    "display": "Methylphenidate Hydrochloride 20 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1094107",
+    "display": "Phenazopyridine hydrochloride 100 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1100184",
+    "display": "Donepezil hydrochloride 23 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1114085",
+    "display": "100 ML zoledronic acid 0.04 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1116635",
+    "display": "ticagrelor 90 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1116758",
+    "display": "chloroquine phosphate 500 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1147334",
+    "display": "emtricitabine 200 MG / rilpivirine 25 MG / tenofovir disoproxil fumarate 300 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1190766",
+    "display": "atropine sulfate 0.31 MG/ML Ophthalmic Solution (used Sublingual)"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1191",
+    "display": "Aspirin"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1191222",
+    "display": "naloxone hydrochloride 0.4 MG/ML Injectable Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1234995",
+    "display": "Rocuronium bromide 10 MG/ML Injectable Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1243052",
+    "display": "Kalydeco 150 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1245441",
+    "display": "ezetimibe 10 MG / simvastatin 40 MG Oral Tablet [Vytorin]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1306292",
+    "display": "cobicistat 150 MG / elvitegravir 150 MG / emtricitabine 200 MG / tenofovir disoproxil fumarate 300 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1359133",
+    "display": "Estrostep Fe 28 Day Pack"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1359269",
+    "display": "darunavir 800 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1361048",
+    "display": "heparin sodium  porcine 100 UNT/ML Injectable Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1361226",
+    "display": "heparin sodium  porcine 1000 UNT/ML Injectable Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1363309",
+    "display": "Chlorpheniramine Maleate 4 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1366343",
+    "display": "Levonorgestrel 0.00354 MG/HR Drug Implant"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1367439",
+    "display": "NuvaRing 0.12/0.015 MG per 24HR 21 Day Vaginal System"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1373463",
+    "display": "canagliflozin 100 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "141918",
+    "display": "Terfenadine 60 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "141962",
+    "display": "Azithromycin 250 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1431987",
+    "display": "24 HR tacrolimus 5 MG Extended Release Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1433873",
+    "display": "dolutegravir 50 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1435630",
+    "display": "enalapril maleate 1 MG/ML Oral Solution [Epaned]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1437975",
+    "display": "Glycopyrrolate 1.5 MG Oral Tablet [Glycate]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "143975",
+    "display": "glycopyrrolate 1.5 MG Oral Tablet [Glycate]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1483744",
+    "display": "Naltrexone hydrochloride 50 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1534809",
+    "display": "168 HR Ethinyl Estradiol 0.00146 MG/HR / norelgestromin 0.00625 MG/HR Transdermal System"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1536144",
+    "display": "120 ACTUAT mometasone furoate 0.1 MG/ACTUAT Metered Dose Inhaler [Asmanex]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1536148",
+    "display": "120 ACTUAT mometasone furoate 0.2 MG/ACTUAT Metered Dose Inhaler [Asmanex]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1547660",
+    "display": "30 ACTUAT fluticasone furoate 0.1 MG/ACTUAT Dry Powder Inhaler [Arnuity]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1547672",
+    "display": "30 ACTUAT fluticasone furoate 0.2 MG/ACTUAT Dry Powder Inhaler [Arnuity]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1599803",
+    "display": "24 HR Donepezil hydrochloride 10 MG / Memantine hydrochloride 28 MG Extended Release Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1601380",
+    "display": "palbociclib 100 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1605257",
+    "display": "Liletta 52 MG Intrauterine System"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1649485",
+    "display": "ivabradine 5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1649987",
+    "display": "doxycycline hyclate 100 MG"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1650142",
+    "display": "Doxycycline Monohydrate 100 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1652673",
+    "display": "Doxycycline Monohydrate 50 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1656318",
+    "display": "Cefotaxime 2000 MG Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1656346",
+    "display": "sacubitril 24 MG / valsartan 26 MG Oral Tablet [Entresto]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1656351",
+    "display": "sacubitril 49 MG / valsartan 51 MG Oral Tablet [Entresto]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1656356",
+    "display": "sacubitril 97 MG / valsartan 103 MG Oral Tablet [Entresto]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1657981",
+    "display": "20 ML tocilizumab 20 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1658084",
+    "display": "ado-trastuzumab emtansine 100 MG Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1659131",
+    "display": "piperacillin 2000 MG / tazobactam 250 MG Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1659149",
+    "display": "piperacillin 4000 MG / tazobactam 500 MG Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1659263",
+    "display": "1 ML heparin sodium  porcine 5000 UNT/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1664463",
+    "display": "24 HR tacrolimus 1 MG Extended Release Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1664986",
+    "display": "Aztreonam 2000 MG Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1665060",
+    "display": "cefazolin 2000 MG Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1665227",
+    "display": "20 ML Ciprofloxacin 10 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1719286",
+    "display": "10 ML Furosemide 10 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1721613",
+    "display": "cobicistat 150 MG / elvitegravir 150 MG / emtricitabine 200 MG / tenofovir alafenamide 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1723208",
+    "display": "10 ML Alfentanil 0.5 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1728805",
+    "display": "2 ML morphine sulfate 1 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1729584",
+    "display": "remifentanil 2 MG Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1732136",
+    "display": "1 ML Morphine Sulfate 5 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1732186",
+    "display": "100 ML Epirubicin Hydrochloride 2 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1734919",
+    "display": "Cyclophosphamide 1000 MG Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1735006",
+    "display": "10 ML Fentanyl 0.05 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1736776",
+    "display": "10 ML oxaliplatin 5 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1736854",
+    "display": "Cisplatin 50 MG Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1737449",
+    "display": "10 ML Pamidronate Disodium 3 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1737466",
+    "display": "100 ML tirofiban 0.05 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1740467",
+    "display": "2 ML Ondansetron 2 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1744259",
+    "display": "5 ML metoprolol tartrate 1 MG/ML Cartridge"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1747691",
+    "display": "emtricitabine 200 MG / tenofovir alafenamide 25 MG Oral Table"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1789958",
+    "display": "Dysport botulinum toxin A 300 UNT Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1790099",
+    "display": "10 ML Doxorubicin Hydrochloride 2 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1791701",
+    "display": "10 ML Fluorouracil 50 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1796676",
+    "display": "25 ML protamine sulfate (USP) 10 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1803932",
+    "display": "Leucovorin 100 MG Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1804799",
+    "display": "alteplase 100 MG Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1806890",
+    "display": "lisinopril 1 MG/ML Oral Solution [Qbrelis]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1807510",
+    "display": "150 ML vancomycin 5 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1807513",
+    "display": "vancomycin 1000 MG Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1808217",
+    "display": "100 ML Propofol 10 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1809104",
+    "display": "5 ML SUFentanil 0.05 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1856546",
+    "display": "Kyleena 19.5 MG Intrauterine System"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1860154",
+    "display": "Abuse-Deterrent 12 HR Oxycodone Hydrochloride 15 MG Extended Release Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1860480",
+    "display": "1 ML DOCEtaxel 20 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1860491",
+    "display": "12 HR Hydrocodone Bitartrate 10 MG Extended Release Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1870230",
+    "display": "NDA020800 0.3 ML Epinephrine 1 MG/ML Auto-Injector"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1873983",
+    "display": "ribociclib 200 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "18867",
+    "display": "benazepril"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1940648",
+    "display": "neratinib 40 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1946840",
+    "display": "Verzenio 100 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197319",
+    "display": "Allopurinol 100 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197378",
+    "display": "Astemizole 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197379",
+    "display": "atenolol 100 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197380",
+    "display": "atenolol 25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197381",
+    "display": "atenolol 50 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197517",
+    "display": "clarithromycin 500 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197541",
+    "display": "Colchicine 0.6 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197558",
+    "display": "dapsone 25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197591",
+    "display": "Diazepam 5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197604",
+    "display": "digoxin 0.125 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197862",
+    "display": "leucovorin 25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197884",
+    "display": "lisinopril 40 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197885",
+    "display": "hydrochlorothiazide 12.5 MG / lisinopril 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197886",
+    "display": "hydrochlorothiazide 12.5 MG / lisinopril 20 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197887",
+    "display": "hydrochlorothiazide 25 MG / lisinopril 20 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197903",
+    "display": "lovastatin 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197904",
+    "display": "lovastatin 20 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "197905",
+    "display": "lovastatin 40 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "198014",
+    "display": "Naproxen 500 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "198031",
+    "display": "nicotine 7 MG/Day 24HR Transdermal System"
+  },
+  {
+    "system": "RxNorm",
+    "code": "198039",
+    "display": "nitroglycerin 0.4 MG Sublingual Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "198182",
+    "display": "pyrimethamine 25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "198188",
+    "display": "ramipril 2.5 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "198189",
+    "display": "ramipril 5 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "198211",
+    "display": "simvastatin 40 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "198240",
+    "display": "Tamoxifen 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "198334",
+    "display": "sulfamethoxazole 400 MG / trimethoprim 80 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "198335",
+    "display": "sulfamethoxazole 800 MG / trimethoprim 160 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "198405",
+    "display": "Ibuprofen 100 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "198440",
+    "display": "Acetaminophen 500 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "198767",
+    "display": "Pancreatin 600 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "199224",
+    "display": "anastrozole 1 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "199663",
+    "display": "zidovudine 300 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1997015",
+    "display": "bivalirudin 50 ML; 5 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1998",
+    "display": "Captopril"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1998772",
+    "display": "Breath-Actuated 120 ACTUAT beclomethasone dipropionate 0.08 MG/ACTUAT Metered Dose Inhaler [Qvar]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1998774",
+    "display": "Breath-Actuated 120 ACTUAT beclomethasone dipropionate 0.04 MG/ACTUAT Metered Dose Inhaler [Qvar]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "199885",
+    "display": "levofloxacin 500 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "1999667",
+    "display": "bictegravir 50 MG / emtricitabine 200 MG / tenofovir alafenamide 25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "200031",
+    "display": "carvedilol 6.25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "200032",
+    "display": "carvedilol 12.5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "200033",
+    "display": "carvedilol 25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "200064",
+    "display": "letrozole 2.5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "200082",
+    "display": "lamivudine 150 MG / zidovudine 300 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "200094",
+    "display": "irbesartan 75 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "200095",
+    "display": "irbesartan 150 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "200096",
+    "display": "irbesartan 300 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "2001499",
+    "display": "Vitamin B12 5 MG/ML Injectable Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "200243",
+    "display": "sevoflurane 1000 MG/ML Inhalation Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "200284",
+    "display": "hydrochlorothiazide 12.5 MG / valsartan 80 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "200285",
+    "display": "hydrochlorothiazide 12.5 MG / valsartan 160 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "2003249",
+    "display": "lamivudine 300 MG / tenofovir disoproxil fumarate 300 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "200345",
+    "display": "simvastatin 80 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "200346",
+    "display": "Cefdinir"
+  },
+  {
+    "system": "RxNorm",
+    "code": "200349",
+    "display": "100 ML eptifibatide 0.75 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "2047241",
+    "display": "baricitinib 2 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "20481",
+    "display": "cefepime"
+  },
+  {
+    "system": "RxNorm",
+    "code": "204844",
+    "display": "azithromycin 600 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "20489",
+    "display": "cefpodoxime"
+  },
+  {
+    "system": "RxNorm",
+    "code": "204892",
+    "display": "clonazePAM 0.25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "205304",
+    "display": "telmisartan 40 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "205305",
+    "display": "telmisartan 80 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "205326",
+    "display": "lisinopril 30 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "205532",
+    "display": "Pulmozyme (Dornase Alfa)"
+  },
+  {
+    "system": "RxNorm",
+    "code": "205923",
+    "display": "1 ML Epoetin Alfa 4000 UNT/ML Injection [Epogen]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "206905",
+    "display": "Ibuprofen 400 MG Oral Tablet [Ibu]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "209387",
+    "display": "Acetaminophen 325 MG Oral Tablet [Tylenol]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "2103182",
+    "display": "1 ML Vasopressin (USP) 20 UNT/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "2119714",
+    "display": "5 ML hyaluronidase-oysk 2000 UNT/ML / trastuzumab 120 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "212033",
+    "display": "aspirin 325 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "2122519",
+    "display": "dolutegravir 50 MG / lamivudine 300 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "2123111",
+    "display": "NDA020503 200 ACTUAT Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler"
+  },
+  {
+    "system": "RxNorm",
+    "code": "212388",
+    "display": "carvedilol 6.25 MG Oral Tablet [Coreg]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "212389",
+    "display": "carvedilol 12.5 MG Oral Tablet [Coreg]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "212390",
+    "display": "carvedilol 25 MG Oral Tablet [Coreg]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "212446",
+    "display": "Azithromycin 250mg"
+  },
+  {
+    "system": "RxNorm",
+    "code": "213432",
+    "display": "telmisartan 80 MG Oral Tablet [Micardis]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "2176",
+    "display": "Cefaclor"
+  },
+  {
+    "system": "RxNorm",
+    "code": "2180",
+    "display": "Cefazolin"
+  },
+  {
+    "system": "RxNorm",
+    "code": "2189",
+    "display": "Cefoxitin"
+  },
+  {
+    "system": "RxNorm",
+    "code": "2191",
+    "display": "Ceftazidime"
+  },
+  {
+    "system": "RxNorm",
+    "code": "2193",
+    "display": "Ceftriaxone"
+  },
+  {
+    "system": "RxNorm",
+    "code": "2194",
+    "display": "Cefuroxime"
+  },
+  {
+    "system": "RxNorm",
+    "code": "2231",
+    "display": "Cephalexin"
+  },
+  {
+    "system": "RxNorm",
+    "code": "226719",
+    "display": "Etoposide 100 MG Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "2284960",
+    "display": "remdesivir 100 MG Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "235389",
+    "display": "Mestranol / Norethynodrel"
+  },
+  {
+    "system": "RxNorm",
+    "code": "238100",
+    "display": "Lorazepam 2 MG/ML Injectable Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "241834",
+    "display": "cycloSPORINE  modified 100 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "242754",
+    "display": "levalbuterol 0.417 MG/ML Inhalation Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "242969",
+    "display": "4 ML Norepinephrine 1 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "243670",
+    "display": "Aspirin 81 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "245134",
+    "display": "72 HR Fentanyl 0.025 MG/HR Transdermal System"
+  },
+  {
+    "system": "RxNorm",
+    "code": "245314",
+    "display": "Albuterol 5 MG/ML Inhalation Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "25033",
+    "display": "Cefixime"
+  },
+  {
+    "system": "RxNorm",
+    "code": "25037",
+    "display": "cefdinir"
+  },
+  {
+    "system": "RxNorm",
+    "code": "252559",
+    "display": "budesonide 0.5 MG/ML Inhalation Suspension"
+  },
+  {
+    "system": "RxNorm",
+    "code": "2563431",
+    "display": "aspirin 81 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "259255",
+    "display": "atorvastatin 80 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "261962",
+    "display": "ramipril 10 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "282755",
+    "display": "telmisartan 20 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "284215",
+    "display": "Clindamycin 300mg"
+  },
+  {
+    "system": "RxNorm",
+    "code": "284531",
+    "display": "telmisartan 20 MG Oral Tablet [Micardis]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "284988",
+    "display": "didanosine 400 MG Delayed Release Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "29046",
+    "display": "Lisinopril"
+  },
+  {
+    "system": "RxNorm",
+    "code": "308136",
+    "display": "amLODIPine 2.5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "308182",
+    "display": "Amoxicillin 250 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "308192",
+    "display": "Amoxicillin 500 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "308429",
+    "display": "atovaquone 150 MG/ML Oral Suspension"
+  },
+  {
+    "system": "RxNorm",
+    "code": "308460",
+    "display": "Azithromycin 250 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "308971",
+    "display": "carbamazepine 20 MG/ML Oral Suspension [Tegretol]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "309043",
+    "display": "12 HR Cefaclor 500 MG Extended Release Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "309045",
+    "display": "Cefaclor 250 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "309097",
+    "display": "Cefuroxime 250 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "309362",
+    "display": "clopidogrel 75 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "309845",
+    "display": "Diazepam 5 MG/ML Injectable Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "310261",
+    "display": "exemestane 25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "310325",
+    "display": "ferrous sulfate 325 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "310385",
+    "display": "FLUoxetine 20 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "310436",
+    "display": "Galantamine 4 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "310798",
+    "display": "Hydrochlorothiazide 25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "310965",
+    "display": "Ibuprofen 200 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "310988",
+    "display": "indinavir 400 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "311034",
+    "display": "insulin  regular  human 100 UNT/ML Injectable Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "311353",
+    "display": "lisinopril 2.5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "311354",
+    "display": "lisinopril 5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "311372",
+    "display": "Loratadine 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "311700",
+    "display": "Midazolam 1 MG/ML Injectable Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "311989",
+    "display": "Nitrofurantoin 5 MG/ML Oral Suspension"
+  },
+  {
+    "system": "RxNorm",
+    "code": "311995",
+    "display": "NITROFURANTOIN  MACROCRYSTALS 50 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "312615",
+    "display": "predniSONE 20 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "312617",
+    "display": "predniSONE 5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "312748",
+    "display": "quinapril 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "312749",
+    "display": "quinapril 20 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "312750",
+    "display": "quinapril 5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "312938",
+    "display": "Sertraline 100 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "312961",
+    "display": "simvastatin 20 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "312962",
+    "display": "simvastatin 5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "313002",
+    "display": "Sodium Chloride 9 MG/ML Injectable Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "313096",
+    "display": "spironolactone 25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "313110",
+    "display": "stavudine 40 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "313185",
+    "display": "Tacrine 10 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "313212",
+    "display": "tenecteplase 50 MG Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "313572",
+    "display": "Vancomycin 50 MG/ML Injectable Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "313760",
+    "display": "zalcitabine 0.75 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "313782",
+    "display": "Acetaminophen 325 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "313820",
+    "display": "Acetaminophen 160 MG Chewable Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "313988",
+    "display": "Furosemide 40 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "314076",
+    "display": "lisinopril 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "314077",
+    "display": "lisinopril 20 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "314203",
+    "display": "quinapril 40 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "314231",
+    "display": "simvastatin 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "317150",
+    "display": "ritonavir 100 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "349094",
+    "display": "budesonide 0.125 MG/ML Inhalation Suspension"
+  },
+  {
+    "system": "RxNorm",
+    "code": "349199",
+    "display": "valsartan 80 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "349200",
+    "display": "valsartan 320 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "349201",
+    "display": "valsartan 160 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "349251",
+    "display": "tenofovir disoproxil fumarate 300 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "349353",
+    "display": "hydrochlorothiazide 25 MG / valsartan 160 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "349477",
+    "display": "efavirenz 600 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "349483",
+    "display": "valsartan 40 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "349491",
+    "display": "lamivudine 300 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "351109",
+    "display": "budesonide 0.25 MG/ML Inhalation Suspension"
+  },
+  {
+    "system": "RxNorm",
+    "code": "351136",
+    "display": "albuterol 0.417 MG/ML Inhalation Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "351137",
+    "display": "albuterol 0.21 MG/ML Inhalation Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "351266",
+    "display": "buprenorphine 2 MG / naloxone 0.5 MG Sublingual Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "351875",
+    "display": "72 HR Scopolamine 0.0139 MG/HR Transdermal System [Transdermal Scop]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "352001",
+    "display": "valsartan 320 MG Oral Tablet [Diovan]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "35208",
+    "display": "quinapril"
+  },
+  {
+    "system": "RxNorm",
+    "code": "35296",
+    "display": "Ramipril"
+  },
+  {
+    "system": "RxNorm",
+    "code": "360110",
+    "display": "Sirolimus 2 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "3827",
+    "display": "Enalapril"
+  },
+  {
+    "system": "RxNorm",
+    "code": "389221",
+    "display": "Etonogestrel 68 MG Drug Implant"
+  },
+  {
+    "system": "RxNorm",
+    "code": "402109",
+    "display": "fosamprenavir 700 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "403875",
+    "display": "emtricitabine 200 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "403978",
+    "display": "nelfinavir 625 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "476349",
+    "display": "ezetimibe 10 MG / simvastatin 20 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "476350",
+    "display": "ezetimibe 10 MG / simvastatin 40 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "476351",
+    "display": "ezetimibe 10 MG / simvastatin 80 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "476556",
+    "display": "emtricitabine 200 MG / tenofovir disoproxil fumarate 300 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "477045",
+    "display": "Chlorpheniramine Maleate 2 MG/ML Oral Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "483438",
+    "display": "pregabalin 100 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "542347",
+    "display": "isoflurane 99.9 % Inhalation Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "562251",
+    "display": "Amoxicillin 250 MG / Clavulanate 125 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "562366",
+    "display": "desflurane 1000 MG/ML Inhalation Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "5640",
+    "display": "Ibuprofen"
+  },
+  {
+    "system": "RxNorm",
+    "code": "583214",
+    "display": "PACLitaxel 100 MG Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "596926",
+    "display": "duloxetine 20 MG Delayed Release Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "597195",
+    "display": "Carboplatin 10 MG/ML Injectable Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "597730",
+    "display": "lopinavir 200 MG / Ritonavir 50 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "608139",
+    "display": "atomoxetine 100 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "616830",
+    "display": "budesonide 0.125 MG/ML Inhalation Suspension [Pulmicort]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "617310",
+    "display": "atorvastatin 20 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "617311",
+    "display": "atorvastatin 40 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "617312",
+    "display": "atorvastatin 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "617314",
+    "display": "atorvastatin 10 MG Oral Tablet [Lipitor]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "617320",
+    "display": "atorvastatin 40 MG Oral Tablet [Lipitor]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "630208",
+    "display": "albuterol 0.83 MG/ML Inhalation Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "636042",
+    "display": "hydrochlorothiazide 12.5 MG / valsartan 320 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "636045",
+    "display": "hydrochlorothiazide 25 MG / valsartan 320 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "643066",
+    "display": "efavirenz 600 MG / emtricitabine 200 MG / tenofovir disoproxil fumarate 300 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "664741",
+    "display": "atazanavir 300 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "665078",
+    "display": "Loratadine 5 MG Chewable Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "672149",
+    "display": "lapatinib 250 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "686924",
+    "display": "carvedilol 3.125 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "705129",
+    "display": "Nitroglycerin 0.4 MG/ACTUAT Mucosal Spray"
+  },
+  {
+    "system": "RxNorm",
+    "code": "727711",
+    "display": "0.67 ML anakinra 149 MG/ML Prefilled Syringe"
+  },
+  {
+    "system": "RxNorm",
+    "code": "727762",
+    "display": "5 ML fulvestrant 50 MG/ML Prefilled Syringe"
+  },
+  {
+    "system": "RxNorm",
+    "code": "744842",
+    "display": "raltegravir 400 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "745752",
+    "display": "NDA021457 200 ACTUAT albuterol 0.09 MG/ACTUAT Metered Dose Inhaler [ProAir]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "745791",
+    "display": "200 ACTUAT levalbuterol 0.045 MG/ACTUAT Metered Dose Inhaler"
+  },
+  {
+    "system": "RxNorm",
+    "code": "746466",
+    "display": "200 ACTUAT levalbuterol 0.045 MG/ACTUAT Metered Dose Inhaler [Xopenex]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "746763",
+    "display": "NDA020503 200 ACTUAT albuterol 0.09 MG/ACTUAT Metered Dose Inhaler [Proventil]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "746804",
+    "display": "120 ACTUAT mometasone furoate 0.22 MG/ACTUAT Dry Powder Inhaler [Asmanex]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "746811",
+    "display": "14 ACTUAT mometasone furoate 0.22 MG/ACTUAT Dry Powder Inhaler [Asmanex]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "746815",
+    "display": "60 ACTUAT mometasone furoate 0.22 MG/ACTUAT Dry Powder Inhaler [Asmanex]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "748856",
+    "display": "Yaz 28 Day Pack"
+  },
+  {
+    "system": "RxNorm",
+    "code": "748879",
+    "display": "Levora 0.15/30 28 Day Pack"
+  },
+  {
+    "system": "RxNorm",
+    "code": "748962",
+    "display": "Camila 28 Day Pack"
+  },
+  {
+    "system": "RxNorm",
+    "code": "749196",
+    "display": "clopidogrel 300 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "749762",
+    "display": "Seasonique 91 Day Pack"
+  },
+  {
+    "system": "RxNorm",
+    "code": "749785",
+    "display": "Ortho Tri-Cyclen 28 Day Pack"
+  },
+  {
+    "system": "RxNorm",
+    "code": "749882",
+    "display": "Norinyl 1+50 28 Day Pack"
+  },
+  {
+    "system": "RxNorm",
+    "code": "751616",
+    "display": "nebivolol 10 MG Oral Tablet [Bystolic]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "751620",
+    "display": "nebivolol 2.5 MG Oral Tablet [Bystolic]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "751623",
+    "display": "nebivolol 5 MG Oral Tablet [Bystolic]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "751905",
+    "display": "Trinessa 28 Day Pack"
+  },
+  {
+    "system": "RxNorm",
+    "code": "752899",
+    "display": "0.25 ML Leuprolide Acetate 30 MG/ML Prefilled Syringe"
+  },
+  {
+    "system": "RxNorm",
+    "code": "757594",
+    "display": "Jolivette 28 Day Pack"
+  },
+  {
+    "system": "RxNorm",
+    "code": "763138",
+    "display": "reteplase 10 UNT Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "789980",
+    "display": "Ampicillin 100 MG/ML Injectable Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "7984",
+    "display": "Penicillin V"
+  },
+  {
+    "system": "RxNorm",
+    "code": "801095",
+    "display": "NDA020983 60 ACTUAT albuterol 0.09 MG/ACTUAT Metered Dose Inhaler [Ventolin]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "807283",
+    "display": "Mirena 52 MG Intrauterine System"
+  },
+  {
+    "system": "RxNorm",
+    "code": "827075",
+    "display": "nebivolol 20 MG Oral Tablet [Bystolic]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "831533",
+    "display": "Errin 28 Day Pack"
+  },
+  {
+    "system": "RxNorm",
+    "code": "833135",
+    "display": "Milnacipran hydrochloride 100 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "834061",
+    "display": "Penicillin V Potassium 250 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "834102",
+    "display": "Penicillin V Potassium 500 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "835603",
+    "display": "tramadol hydrochloride 50 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "845488",
+    "display": "ramipril 1.25 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "849574",
+    "display": "Naproxen sodium 220 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "854228",
+    "display": "0.3 ML Enoxaparin sodium 100 MG/ML Prefilled Syringe"
+  },
+  {
+    "system": "RxNorm",
+    "code": "854235",
+    "display": "0.4 ML Enoxaparin sodium 100 MG/ML Prefilled Syringe"
+  },
+  {
+    "system": "RxNorm",
+    "code": "854252",
+    "display": "1 ML Enoxaparin sodium 150 MG/ML Prefilled Syringe"
+  },
+  {
+    "system": "RxNorm",
+    "code": "854255",
+    "display": "enoxaparin sodium 100 MG/ML Injectable Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "854901",
+    "display": "bisoprolol fumarate 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "854905",
+    "display": "bisoprolol fumarate 5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "854908",
+    "display": "bisoprolol fumarate 10 MG / hydrochlorothiazide 6.25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "854916",
+    "display": "bisoprolol fumarate 2.5 MG / hydrochlorothiazide 6.25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "854919",
+    "display": "bisoprolol fumarate 5 MG / hydrochlorothiazide 6.25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "855332",
+    "display": "warfarin sodium 5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "855812",
+    "display": "prasugrel 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "856448",
+    "display": "propranolol hydrochloride 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "856457",
+    "display": "propranolol hydrochloride 20 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "856460",
+    "display": "24 HR propranolol hydrochloride 120 MG Extended Release Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "856481",
+    "display": "24 HR propranolol hydrochloride 160 MG Extended Release Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "856519",
+    "display": "propranolol hydrochloride 40 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "856535",
+    "display": "24 HR propranolol hydrochloride 60 MG Extended Release Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "856556",
+    "display": "propranolol hydrochloride 60 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "856569",
+    "display": "24 HR propranolol hydrochloride 80 MG Extended Release Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "856578",
+    "display": "propranolol hydrochloride 80 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "856980",
+    "display": "Acetaminophen/Hydrocodone"
+  },
+  {
+    "system": "RxNorm",
+    "code": "856987",
+    "display": "Acetaminophen 300 MG / Hydrocodone Bitartrate 5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "857005",
+    "display": "Acetaminophen 325 MG / HYDROcodone Bitartrate 7.5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "858804",
+    "display": "enalapril maleate 2.5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "858810",
+    "display": "enalapril maleate 20 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "858813",
+    "display": "enalapril maleate 5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "858817",
+    "display": "enalapril maleate 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "859088",
+    "display": "NDA020983 200 ACTUAT albuterol 0.09 MG/ACTUAT Metered Dose Inhaler [Ventolin]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "859419",
+    "display": "rosuvastatin calcium 40 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "859421",
+    "display": "rosuvastatin calcium 40 MG Oral Tablet [Crestor]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "859424",
+    "display": "rosuvastatin calcium 5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "859426",
+    "display": "rosuvastatin calcium 5 MG Oral Tablet [Crestor]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "859747",
+    "display": "rosuvastatin calcium 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "859749",
+    "display": "rosuvastatin calcium 10 MG Oral Tablet [Crestor]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "859751",
+    "display": "rosuvastatin calcium 20 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "859753",
+    "display": "rosuvastatin calcium 20 MG Oral Tablet [Crestor]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "859863",
+    "display": "saquinavir mesylate 500 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "860182",
+    "display": "rimabotulinumtoxinB 5000 UNT/ML [Myobloc]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "860510",
+    "display": "24 HR carvedilol phosphate 10 MG Extended Release Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "860516",
+    "display": "24 HR carvedilol phosphate 20 MG Extended Release Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "860518",
+    "display": "24 HR carvedilol phosphate 20 MG Extended Release Oral Capsule [Coreg]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "860975",
+    "display": "24 HR Metformin hydrochloride 500 MG Extended Release Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "861356",
+    "display": "0.8 ML fondaparinux sodium 12.5 MG/ML Prefilled Syringe"
+  },
+  {
+    "system": "RxNorm",
+    "code": "861467",
+    "display": "Meperidine Hydrochloride 50 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "861646",
+    "display": "pitavastatin calcium 1 MG Oral Tablet [Livalo]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "861650",
+    "display": "pitavastatin calcium 2 MG Oral Tablet [Livalo]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "861654",
+    "display": "pitavastatin calcium 4 MG Oral Tablet [Livalo]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "864706",
+    "display": "methadone hydrochloride 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "864718",
+    "display": "Methadone Hydrochloride 5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "865098",
+    "display": "Insulin Lispro 100 UNT/ML Injectable Solution [Humalog]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "866412",
+    "display": "24 HR metoprolol succinate 100 MG Extended Release Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "866419",
+    "display": "24 HR metoprolol succinate 200 MG Extended Release Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "866427",
+    "display": "24 HR metoprolol succinate 25 MG Extended Release Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "866429",
+    "display": "24 HR metoprolol succinate 25 MG Extended Release Oral Tablet [Toprol]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "866436",
+    "display": "24 HR metoprolol succinate 50 MG Extended Release Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "866438",
+    "display": "24 HR metoprolol succinate 50 MG Extended Release Oral Tablet [Toprol]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "866508",
+    "display": "5 ML metoprolol tartrate 1 MG/ML Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "866511",
+    "display": "metoprolol tartrate 100 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "866514",
+    "display": "metoprolol tartrate 50 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "866516",
+    "display": "metoprolol tartrate 50 MG Oral Tablet [Lopressor]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "866924",
+    "display": "metoprolol tartrate 25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "883826",
+    "display": "Tranexamic Acid 650 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "885219",
+    "display": "Benztropine mesylate 0.5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "895996",
+    "display": "120 ACTUAT fluticasone propionate 0.044 MG/ACTUAT Metered Dose Inhaler [Flovent]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "896001",
+    "display": "120 ACTUAT fluticasone propionate 0.11 MG/ACTUAT Metered Dose Inhaler [Flovent]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "896006",
+    "display": "120 ACTUAT fluticasone propionate 0.22 MG/ACTUAT Metered Dose Inhaler [Flovent]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "896019",
+    "display": "60 ACTUAT fluticasone propionate 0.05 MG/ACTUAT Dry Powder Inhaler [Flovent]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "896023",
+    "display": "60 ACTUAT fluticasone propionate 0.1 MG/ACTUAT Dry Powder Inhaler [Flovent]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "896027",
+    "display": "60 ACTUAT fluticasone propionate 0.25 MG/ACTUAT Dry Powder Inhaler [Flovent]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "896209",
+    "display": "60 ACTUAT Fluticasone propionate 0.25 MG/ACTUAT / salmeterol 0.05 MG/ACTUAT Dry Powder Inhaler"
+  },
+  {
+    "system": "RxNorm",
+    "code": "896758",
+    "display": "labetalol hydrochloride 100 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "896762",
+    "display": "labetalol hydrochloride 200 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "896766",
+    "display": "labetalol hydrochloride 300 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "897122",
+    "display": "3 ML liraglutide 6 MG/ML Pen Injector"
+  },
+  {
+    "system": "RxNorm",
+    "code": "897685",
+    "display": "verapamil hydrochloride 80 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "898342",
+    "display": "amlodipine 10 MG / benazepril hydrochloride 20 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "898346",
+    "display": "amlodipine 10 MG / benazepril hydrochloride 40 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "898350",
+    "display": "amlodipine 2.5 MG / benazepril hydrochloride 10 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "898353",
+    "display": "amlodipine 5 MG / benazepril hydrochloride 10 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "898356",
+    "display": "amlodipine 5 MG / benazepril hydrochloride 20 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "898359",
+    "display": "amlodipine 5 MG / benazepril hydrochloride 40 MG Oral Capsule"
+  },
+  {
+    "system": "RxNorm",
+    "code": "898362",
+    "display": "benazepril hydrochloride 10 MG / hydrochlorothiazide 12.5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "898367",
+    "display": "benazepril hydrochloride 20 MG / hydrochlorothiazide 12.5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "898372",
+    "display": "benazepril hydrochloride 20 MG / hydrochlorothiazide 25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "898687",
+    "display": "benazepril hydrochloride 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "898690",
+    "display": "benazepril hydrochloride 20 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "898719",
+    "display": "benazepril hydrochloride 40 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "898723",
+    "display": "benazepril hydrochloride 5 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "904419",
+    "display": "Alendronic acid 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "904458",
+    "display": "pravastatin sodium 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "904467",
+    "display": "pravastatin sodium 20 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "904475",
+    "display": "pravastatin sodium 40 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "904477",
+    "display": "pravastatin sodium 40 MG Oral Tablet [Pravachol]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "904481",
+    "display": "pravastatin sodium 80 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "905269",
+    "display": "Trihexyphenidyl Hydrochloride 2 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "905377",
+    "display": "hydralazine hydrochloride 37.5 MG / isosorbide dinitrate 20 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "966222",
+    "display": "Levothyroxine Sodium 0.075 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "966524",
+    "display": "120 ACTUAT budesonide 0.18 MG/ACTUAT Dry Powder Inhaler [Pulmicort]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "966529",
+    "display": "60 ACTUAT budesonide 0.09 MG/ACTUAT Dry Powder Inhaler [Pulmicort]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "978950",
+    "display": "Natazia 28 Day Pack"
+  },
+  {
+    "system": "RxNorm",
+    "code": "979092",
+    "display": "Hydroxychloroquine Sulfate 200 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "979464",
+    "display": "hydrochlorothiazide 12.5 MG / losartan potassium 100 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "979466",
+    "display": "hydrochlorothiazide 12.5 MG / losartan potassium 100 MG Oral Tablet [Hyzaar]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "979468",
+    "display": "hydrochlorothiazide 12.5 MG / losartan potassium 50 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "979470",
+    "display": "hydrochlorothiazide 12.5 MG / losartan potassium 50 MG Oral Tablet [Hyzaar]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "979471",
+    "display": "hydrochlorothiazide 25 MG / losartan potassium 100 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "979473",
+    "display": "hydrochlorothiazide 25 MG / losartan potassium 100 MG Oral Tablet [Hyzaar]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "979480",
+    "display": "losartan potassium 100 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "979485",
+    "display": "Losartan Potassium 25 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "979487",
+    "display": "losartan potassium 25 MG Oral Tablet [Cozaar]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "979492",
+    "display": "losartan potassium 50 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "979494",
+    "display": "losartan potassium 50 MG Oral Tablet [Cozaar]"
+  },
+  {
+    "system": "RxNorm",
+    "code": "993452",
+    "display": "1 ML denosumab 60 MG/ML Prefilled Syringe"
+  },
+  {
+    "system": "RxNorm",
+    "code": "993770",
+    "display": "Acetaminophen 300 MG / Codeine Phosphate 15 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "996740",
+    "display": "Memantine hydrochloride 2 MG/ML Oral Solution"
+  },
+  {
+    "system": "RxNorm",
+    "code": "997223",
+    "display": "Donepezil hydrochloride 10 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "997488",
+    "display": "Fexofenadine hydrochloride 30 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "997501",
+    "display": "Fexofenadine hydrochloride 60 MG Oral Tablet"
+  },
+  {
+    "system": "RxNorm",
+    "code": "999998",
+    "display": "Leronlimab 700 MG Injection"
+  },
+  {
+    "system": "RxNorm",
+    "code": "999999",
+    "display": "Lenzilumab 200 MG IV"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "10029008",
+    "display": "Suicide precautions"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "102263004",
+    "display": "Eggs (edible) (substance)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "103744005",
+    "display": "Administration of intravenous fluids"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "103746007",
+    "display": "Heparin therapy (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "103750000",
+    "display": "Sleep apnea assessment (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "10383002",
+    "display": "Counseling for termination of pregnancy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "104091002",
+    "display": "Hemogram  automated  with RBC  WBC  Hgb  Hct  Indices  Platelet count  and manual WBC differential"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "104173009",
+    "display": "Sputum Culture"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "104308009",
+    "display": "Serologic test for Toxoplasma gondii (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "104326007",
+    "display": "Measurement of Varicella-zoster virus antibody"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "104375008",
+    "display": "Hepatitis C antibody  confirmatory test"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "104435004",
+    "display": "Screening for occult blood in feces (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "10509002",
+    "display": "Acute bronchitis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "105531004",
+    "display": "Housing unsatisfactory (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "108219001",
+    "display": "Physician visit with evaluation AND/OR management service (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "108243003",
+    "display": "Sleep disorder test AND/OR procedure (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "108290001",
+    "display": "Radiation oncology AND/OR radiotherapy (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "10888001",
+    "display": "Liquid diet"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "10939881000119105",
+    "display": "Unhealthy alcohol drinking behavior (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "109838007",
+    "display": "Overlapping malignant neoplasm of colon"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "110030002",
+    "display": "Concussion injury of brain (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "110359009",
+    "display": "Intellectual disability (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "110467000",
+    "display": "Pre-surgery testing (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "111088007",
+    "display": "Latex (substance)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "111282000",
+    "display": "Acute respiratory insufficiency (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "111287006",
+    "display": "Tricuspid valve regurgitation (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "112001000119100",
+    "display": "positive screening for PHQ-9"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "112011000119102",
+    "display": "negative screening for PHQ9"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "1121000119107",
+    "display": "Chronic neck pain (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "11218009",
+    "display": "Infection caused by Pseudomonas aeruginosa"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "112790001",
+    "display": "Nasal sinus endoscopy (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "112798008",
+    "display": "Insertion of endotracheal tube (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "113076002",
+    "display": "Oral Glucose Tolerance Test"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "113120007",
+    "display": "Interstitial brachytherapy (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "11466000",
+    "display": "Cesarean section"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "1151000175103",
+    "display": "Dietary approaches to stop hypertension diet"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "1155885007",
+    "display": "Repair of aortic valve (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "1156892006",
+    "display": "Scheduling of follow up appointment (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "116861002",
+    "display": "Transfusion of fresh frozen plasma (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "116863004",
+    "display": "Transfusion of red blood cells (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "117010004",
+    "display": "Urine culture"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "117015009",
+    "display": "Throat culture (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "1171000175109",
+    "display": "Increased physical activity"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "118001005",
+    "display": "Streptococcus pneumoniae group B antigen assay"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "11816003",
+    "display": "Diet education (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "119481000119105",
+    "display": "History of aortic valve repair (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "120991000119102",
+    "display": "History of undergoing in utero procedure while a fetus (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "122460008",
+    "display": "Reexploration procedure (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "122548005",
+    "display": "Biopsy of breast (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "1231000119100",
+    "display": "History of aortic valve replacement (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "124171000119105",
+    "display": "Chronic intractable migraine without aura"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "125601008",
+    "display": "Injury of knee (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "125605004",
+    "display": "Fracture of bone (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "126906006",
+    "display": "Neoplasm of prostate"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "127013003",
+    "display": "Disorder of kidney due to diabetes mellitus (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "12719002",
+    "display": "Platelet transfusion (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "127295002",
+    "display": "Traumatic brain injury (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "127783003",
+    "display": "Spirometry (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "128188000",
+    "display": "Cerebral palsy (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "128302006",
+    "display": "Chronic hepatitis C (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "128613002",
+    "display": "Seizure disorder"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "129574000",
+    "display": "Postoperative myocardial infarction (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "129721000119106",
+    "display": "Acute renal failure on dialysis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "132281000119108",
+    "display": "Acute deep venous thrombosis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "133899007",
+    "display": "Postoperative care (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "133900002",
+    "display": "Intraoperative care (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "133901003",
+    "display": "Burn care"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "133918004",
+    "display": "Comfort measures"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "134435003",
+    "display": "Routine antenatal care"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "13569004",
+    "display": "Transfusion of plasma (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "135892000",
+    "display": "Antenatal education"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "13995008",
+    "display": "Amputation of right arm"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "14152002",
+    "display": "Intravenous infusion (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "14760008",
+    "display": "Constipation (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "14768001",
+    "display": "Peripheral blood smear interpretation"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "1501000119109",
+    "display": "Proliferative diabetic retinopathy due to type II diabetes mellitus (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "1505002",
+    "display": "Hospital admission for isolation (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "15081005",
+    "display": "Pulmonary rehabilitation (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "15220000",
+    "display": "Laboratory test (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "1551000119108",
+    "display": "Nonproliferative diabetic retinopathy due to type 2 diabetes mellitus (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "156073000",
+    "display": "Complete miscarriage (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "1571000087109",
+    "display": "Ultrasonography of bilateral breasts (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "157141000119108",
+    "display": "Proteinuria due to type 2 diabetes mellitus (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "15724005",
+    "display": "Fracture of vertebral column without spinal cord injury"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "157265008",
+    "display": "Dislocation of hip joint (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "15777000",
+    "display": "Prediabetes"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "15802004",
+    "display": "Dystonia (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "160670007",
+    "display": "Diabetic diet"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "160701002",
+    "display": "Social migrant (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "160903007",
+    "display": "Full-time employment (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "160904001",
+    "display": "Part-time employment (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "160968000",
+    "display": "Risk activity involvement (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "16114001",
+    "display": "Fracture of ankle"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "161621004",
+    "display": "History of upper limb amputation (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "161622006",
+    "display": "History of lower limb amputation (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "161665007",
+    "display": "History of renal transplant (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "161679004",
+    "display": "History of artificial joint (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "162573006",
+    "display": "Suspected lung cancer (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "162673000",
+    "display": "General examination of patient (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "162676008",
+    "display": "Brief general examination (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "162864005",
+    "display": "Body mass index 30+ - obesity (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "165197003",
+    "display": "Diagnostic assessment (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "165829005",
+    "display": "Gonorrhea infection titer test (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "166001",
+    "display": "Behavioral therapy (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "16602611000119108",
+    "display": "Awaiting transplantation of lung (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "167252002",
+    "display": "Urine pregnancy test (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "167271000",
+    "display": "Urine protein test"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "167995008",
+    "display": "Sputum microscopy (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "169230002",
+    "display": "Ultrasound scan for fetal viability"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "169553002",
+    "display": "Insertion of subcutaneous contraceptive"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "169673001",
+    "display": "Antenatal RhD antibody screening"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "169690007",
+    "display": "Rubella screening"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "169762003",
+    "display": "Postnatal visit"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "16983000",
+    "display": "Death in hospital (event)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "170615005",
+    "display": "Home nebulizer (physical object)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "170836005",
+    "display": "Allergic disorder monitoring"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "170837001",
+    "display": "Allergic disorder initial assessment"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "170838006",
+    "display": "Allergic disorder follow-up assessment"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "171122006",
+    "display": "Hepatitis B screening (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "171126009",
+    "display": "Tuberculosis screening (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "171128005",
+    "display": "Venereal disease screening (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "171131006",
+    "display": "Meningocele (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "171207006",
+    "display": "Depression screening"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "171231001",
+    "display": "Asthma screening"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "171245007",
+    "display": "Urine screening"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "173160006",
+    "display": "Diagnostic fiberoptic bronchoscopy (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "1734006",
+    "display": "Fracture of the vertebral column with spinal cord injury"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "173521004",
+    "display": "Transposition of submandibular duct (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "177157003",
+    "display": "Spontaneous breech delivery"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "177765008",
+    "display": "Opening of chest (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "17881005",
+    "display": "Cauterization of choroid plexus (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "180030006",
+    "display": "Amputation of left foot"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "180178009",
+    "display": "Continuous subcutaneous infusion of insulin (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "180207008",
+    "display": "Intravenous blood transfusion of packed cells (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "180256009",
+    "display": "Subcutaneous immunotherapy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "180325003",
+    "display": "Direct current cardioversion (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "182678001",
+    "display": "Allergen immunotherapy (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "182777000",
+    "display": "Monitoring of patient (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "182809008",
+    "display": "Renal function monitoring (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "182810003",
+    "display": "Intensive care monitoring (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "182813001",
+    "display": "Emergency treatment (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "182836005",
+    "display": "Review of Medication (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "18286008",
+    "display": "Catheter ablation of tissue of heart (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "182964004",
+    "display": "Terminal care"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183051005",
+    "display": "Recommendation to rest"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183063000",
+    "display": "Low salt diet education"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "1831000175103",
+    "display": "Every twelve hours as required (qualifier value)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183301007",
+    "display": "Physical exercises (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183401008",
+    "display": "Anti-suicide psychotherapy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183402001",
+    "display": "Potential suicide care (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183418007",
+    "display": "Social case work (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183450002",
+    "display": "Admission to burn unit"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183452005",
+    "display": "Emergency hospital admission (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183460006",
+    "display": "Obstetric emergency hospital admission"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183478001",
+    "display": "Emergency hospital admission for asthma"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183495009",
+    "display": "Non-urgent orthopedic admission"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183519002",
+    "display": "Referral to cardiology service (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183646003",
+    "display": "Postoperative visit (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183801001",
+    "display": "Inpatient stay 3 days"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183835003",
+    "display": "Refer for angiogram (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183856001",
+    "display": "Referral to hypertension clinic"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183976008",
+    "display": "Operative procedure planned (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "183996000",
+    "display": "Sterilization requested (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "185086009",
+    "display": "Chronic obstructive bronchitis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "185087000",
+    "display": "Notifications (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "185317003",
+    "display": "Telephone encounter (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "185345009",
+    "display": "Encounter for symptom (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "185347001",
+    "display": "Encounter for problem (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "185349003",
+    "display": "Encounter for check up"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "185389009",
+    "display": "Follow-up visit (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "1871000124103",
+    "display": "Transition from acute care to home-health care (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "18946005",
+    "display": "Epidural anesthesia"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "190905008",
+    "display": "Cystic Fibrosis"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "19169002",
+    "display": "Miscarriage in first trimester"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "192127007",
+    "display": "Child attention deficit disorder"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "195662009",
+    "display": "Acute viral pharyngitis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "195967001",
+    "display": "Asthma"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "196416002",
+    "display": "Impacted molars"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "197927001",
+    "display": "Recurrent urinary tract infection"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "198992004",
+    "display": "Antepartum eclampsia"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "200619008",
+    "display": "Comprehensive interview and evaluation (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "200936003",
+    "display": "Lupus erythematosus"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "201834006",
+    "display": "Localized  primary osteoarthritis of the hand"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "203082005",
+    "display": "Fibromyalgia (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "204949001",
+    "display": "Renal dysplasia (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "206523001",
+    "display": "Meconium Ileus"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "210098006",
+    "display": "Domiciliary or rest home patient evaluation and management"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "213150003",
+    "display": "Kidney transplant failure and rejection (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "221360009",
+    "display": "Spasticity (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "22253000",
+    "display": "Pain (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "22298006",
+    "display": "Myocardial infarction (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "223472008",
+    "display": "Discussion about hygiene"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "223484005",
+    "display": "Discussion about treatment (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "223487003",
+    "display": "Discussion about options (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "223495004",
+    "display": "Preparation of patient for procedure (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "224295006",
+    "display": "Only received primary school education (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "224299000",
+    "display": "Received higher education (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "224355006",
+    "display": "Served in armed forces (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "225130001",
+    "display": "Application of moisturizer to skin"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "225158009",
+    "display": "Auscultation of the fetal heart"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "22523008",
+    "display": "Vasectomy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "225297008",
+    "display": "Care planning and problem solving actions (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "225302006",
+    "display": "Insulin Therapy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "225317005",
+    "display": "Restriction of movement"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "225323000",
+    "display": "Smoking cessation education"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "225337009",
+    "display": "Suicide Risk Assessment"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "225338004",
+    "display": "Risk assessment (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "225358003",
+    "display": "Wound care"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "225386006",
+    "display": "Pre-discharge assessment (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "225415001",
+    "display": "Close observation (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "225444004",
+    "display": "At risk for suicide (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "225756002",
+    "display": "Every four hours (qualifier value)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "225757006",
+    "display": "Every four to six hours (qualifier value)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "226007004",
+    "display": "Post-surgical wound care (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "226029000",
+    "display": "Exercise Therapy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "226060000",
+    "display": "Stress management"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "226138001",
+    "display": "Alcohol-free diet"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "226164007",
+    "display": "Very low sodium diet (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "226234005",
+    "display": "Healthy diet"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "228557008",
+    "display": "Cognitive and behavioral therapy (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "229064008",
+    "display": "Movement therapy (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "229065009",
+    "display": "Exercise therapy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "229069003",
+    "display": "Posture training (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "229070002",
+    "display": "Stretching exercises"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "229095001",
+    "display": "Exercise class"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "229152003",
+    "display": "Lower limb exercises (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "229298005",
+    "display": "Breathing control"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "229578001",
+    "display": "Ice bath treatment"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "229580007",
+    "display": "Ice therapy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "229586001",
+    "display": "Rest  ice  compression and elevation treatment program (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "22972009",
+    "display": "Advance diet as tolerated (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "230265002",
+    "display": "Familial Alzheimer's disease of early onset (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "230690007",
+    "display": "Stroke"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "230745008",
+    "display": "Hydrocephalus (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "231181000000100",
+    "display": "Delivery of rehabilitation for spinal cord injury"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "232347008",
+    "display": "Dander (animal) allergy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "232350006",
+    "display": "House dust mite allergy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "232353008",
+    "display": "Perennial allergic rhinitis with seasonal variation"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "232657004",
+    "display": "Lung Transplant"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "232717009",
+    "display": "Coronary artery bypass grafting (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "232816009",
+    "display": "Aortic valve and adjacent structure operations (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "232965003",
+    "display": "Implantation of ventricular assist device (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "232967006",
+    "display": "Implantation of left ventricular assist device (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "233174007",
+    "display": "Cardiac pacemaker procedure (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "233553003",
+    "display": "Vascular cannula removal (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "233604007",
+    "display": "Pneumonia"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "233678006",
+    "display": "Childhood asthma"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "23426006",
+    "display": "Measurement of respiratory function (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "234262008",
+    "display": "Excision of axillary lymph node (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "234466008",
+    "display": "Acquired coagulation disorder (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "234817001",
+    "display": "Insertion of oral appliance for the handicapped (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "235595009",
+    "display": "Gastroesophageal reflux disease (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "235919008",
+    "display": "Cholelithiasis"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "236077008",
+    "display": "Protracted diarrhea"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "236931002",
+    "display": "Methotrexate injection into tubal pregnancy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "236974004",
+    "display": "Instrumental delivery"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "237001001",
+    "display": "Augmentation of labor"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "23745001",
+    "display": "Documentation procedure (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "237602007",
+    "display": "Metabolic syndrome X (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "239720000",
+    "display": "Tear of meniscus of knee"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "239872002",
+    "display": "Osteoarthritis of hip"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "239873007",
+    "display": "Osteoarthritis of knee"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "24079001",
+    "display": "Atopic dermatitis"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "241055006",
+    "display": "Mammogram - symptomatic (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "241149003",
+    "display": "Videofluoroscopy swallow (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "241615005",
+    "display": "Magnetic resonance imaging of breast (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "241645008",
+    "display": "Magnetic resonance imaging of spine (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "24165007",
+    "display": "Alcoholism counseling"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "241929008",
+    "display": "Acute allergic reaction"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "243063003",
+    "display": "Postoperative procedure education (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "243072006",
+    "display": "Cancer education"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "243077000",
+    "display": "Recommendation to limit sexual activity"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "243174005",
+    "display": "Weaning from mechanically assisted ventilation (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "24623002",
+    "display": "Screening mammography (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "246677007",
+    "display": "Passive conjunctival congestion (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "248595008",
+    "display": "Sputum finding (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "249497008",
+    "display": "Vomiting symptom (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "25064002",
+    "display": "Headache (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "252160004",
+    "display": "Standard pregnancy test"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "252480006",
+    "display": "Simple walk test (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "252482003",
+    "display": "Stair-climbing test (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "252895004",
+    "display": "Urodynamic studies (procedure"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "254632001",
+    "display": "Small cell carcinoma of lung (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "254637007",
+    "display": "Non-small cell lung cancer (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "254837009",
+    "display": "Malignant neoplasm of breast (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "256277009",
+    "display": "Grass pollen (substance)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "256355007",
+    "display": "Soy bean"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "25656009",
+    "display": "Physical examination  complete (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "25675004",
+    "display": "Patient transfer to skilled nursing facility (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "260147004",
+    "display": "House dust mite (organism)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "261323006",
+    "display": "Portable oxygen cylinder (physical object)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "261352009",
+    "display": "Face mask (physical object)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "261554009",
+    "display": "Reoperation (qualifier value)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "261754007",
+    "display": "Continuous infusion (qualifier value)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "26212005",
+    "display": "Replacement of aortic valve (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "262521009",
+    "display": "Traumatic injury of spinal cord and/or vertebral column (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "262574004",
+    "display": "Bullet wound"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "263102004",
+    "display": "Fracture subluxation of wrist"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "264287008",
+    "display": "Animal dander (substance)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "265764009",
+    "display": "Renal dialysis (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "266694003",
+    "display": "Heat therapy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "266707007",
+    "display": "Drug addiction therapy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "266753000",
+    "display": "Referral for laboratory tests (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "266934004",
+    "display": "Transport problem (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "266948004",
+    "display": "Has a criminal record (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "267020005",
+    "display": "History of tubal ligation (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "267036007",
+    "display": "Dyspnea (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "267060006",
+    "display": "Diarrhea symptom (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "267064002",
+    "display": "Retention of urine (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "267102003",
+    "display": "Sore throat symptom (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "267253006",
+    "display": "Fetus with chromosomal abnormality"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "26763009",
+    "display": "Controlled ventilation procedure and therapy  initiation and management (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "268400002",
+    "display": "12 lead electrocardiogram (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "268533009",
+    "display": "Sterilization education (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "268556000",
+    "display": "Urine screening for glucose"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "26929004",
+    "display": "Alzheimer's disease (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "269828009",
+    "display": "Syphilis infectious titer test (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "269911007",
+    "display": "Sputum examination (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "270427003",
+    "display": "Patient-initiated encounter"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "271280005",
+    "display": "Removal of endotracheal tube (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "271442007",
+    "display": "Fetal anatomy study"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "271737000",
+    "display": "Anemia (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "271825005",
+    "display": "Respiratory distress (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "272265001",
+    "display": "Appliance for sleep apnea (physical object)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "274031008",
+    "display": "Rectal polypectomy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "274474001",
+    "display": "Bone immobilization"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "274531002",
+    "display": "Abnormal findings diagnostic imaging heart+coronary circulat (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "274804006",
+    "display": "Evaluation of uterine fundal height"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "275272006",
+    "display": "Brain damage - traumatic"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "275408006",
+    "display": "Postoperative renal failure (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "275833003",
+    "display": "AFP test - antenatal"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "276239002",
+    "display": "Therapy (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "278365007",
+    "display": "Anticoagulant-induced bleeding (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "278860009",
+    "display": "Chronic low back pain (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "27942005",
+    "display": "Shock (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "28163009",
+    "display": "Skin test for tuberculosis  Tine test (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "281790008",
+    "display": "Intravenous antibiotic therapy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "283371005",
+    "display": "Laceration of forearm"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "283385000",
+    "display": "Laceration of thigh"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "283545005",
+    "display": "Gunshot wound (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "284549007",
+    "display": "Laceration of hand"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "284551006",
+    "display": "Laceration of foot"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "287182007",
+    "display": "Attempted suicide - suffocation"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "287185009",
+    "display": "Attempted suicide - cut/stab"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "287191006",
+    "display": "Suicide - suffocation"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "287193009",
+    "display": "Suicide - firearms"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "287664005",
+    "display": "Bilateral tubal ligation"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "288086009",
+    "display": "Suture open wound"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "288328004",
+    "display": "Bee venom (substance)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "288959006",
+    "display": "Unable to swallow saliva (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "290045001",
+    "display": "Kitchen practice"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "29240004",
+    "display": "Autopsy examination"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "29303009",
+    "display": "Electrocardiographic procedure"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "298382003",
+    "display": "Scoliosis deformity of spine (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "300916003",
+    "display": "Allergy to latex (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "301011002",
+    "display": "Escherichia coli urinary tract infection"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "301807007",
+    "display": "Removal of subcutaneous contraceptive"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "301882004",
+    "display": "Placement of aortic cross clamp (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "301884003",
+    "display": "Removal of aortic cross clamp (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "302297009",
+    "display": "Congenital deformity of foot (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "302351005",
+    "display": "Ligation of salivary duct (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "302497006",
+    "display": "Hemodialysis (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "302761001",
+    "display": "Walking exercise test (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "302870006",
+    "display": "Hypertriglyceridemia (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "303653007",
+    "display": "Computed tomography of head (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "304510005",
+    "display": "Recommendation to avoid exercise"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "304822001",
+    "display": "Psychodynamic Interpersonal Therapy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "305336008",
+    "display": "Admission to hospice (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "305340004",
+    "display": "Admission to long stay hospital"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "305342007",
+    "display": "Admission to ward (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "305351004",
+    "display": "Admission to intensive care unit (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "305408004",
+    "display": "Admission to surgical department"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "305411003",
+    "display": "Admission to thoracic surgery department"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "305425002",
+    "display": "Admission to neurosurgical department"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "305428000",
+    "display": "Admission to orthopedic department"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "305432006",
+    "display": "Admission to surgical transplant department (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "305433001",
+    "display": "Admission to trauma surgery department"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "306185001",
+    "display": "Referral to cardiac surgery service (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "306206005",
+    "display": "Referral to service (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "306237005",
+    "display": "Referral to palliative care service (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "306316000",
+    "display": "Referral to transplant surgeon (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "306706006",
+    "display": "Discharge to ward (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "307468000",
+    "display": "Every six hours (qualifier value)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "307731004",
+    "display": "Injury of tendon of the rotator cuff of shoulder"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "308113006",
+    "display": "Self Monitoring of Blood Glucose"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "308283009",
+    "display": "Discharge from hospital (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "30832001",
+    "display": "Rupture of patellar tendon"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "308335008",
+    "display": "Patient encounter procedure (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "308461008",
+    "display": "Referral to radiology service (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "308540004",
+    "display": "Inpatient stay (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "308646001",
+    "display": "Death Certification"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "310061009",
+    "display": "Gynecology service (qualifier value)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "310417005",
+    "display": "Certification procedure (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "310861008",
+    "display": "Chlamydia antigen test"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "310965",
+    "display": "Ibuprofen 200 MG Oral Tablet"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "311401005",
+    "display": "Patient education (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "311555007",
+    "display": "Speech and language therapy regime (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "311707005",
+    "display": "Oromotor Exercises"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "311791003",
+    "display": "Information gathering (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "311834001",
+    "display": "Fiberoptic Endoscopic Evaluation of Swallowing"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "31208007",
+    "display": "Medical induction of labor"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "312157006",
+    "display": "Infectious mediastinitis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "312384001",
+    "display": "Multidisciplinary assessment (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "312404004",
+    "display": "Antenatal blood tests"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "312421008",
+    "display": "Radionuclide Imaging"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "312608009",
+    "display": "Laceration - injury (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "312681000",
+    "display": "Bone density scan (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "312853008",
+    "display": "Medical records review (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "313071005",
+    "display": "Counseling for substance abuse (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "313077009",
+    "display": "Human immunodeficiency virus counseling (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "313191000",
+    "display": "Injection of epinephrine (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "313613002",
+    "display": "Hepatitis A antibody test (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "313660005",
+    "display": "Absolute CD4 count procedure (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "314529007",
+    "display": "Medication review due (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "314994000",
+    "display": "Metastasis from malignant tumor of prostate (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "315043002",
+    "display": "Long term social support"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "315124004",
+    "display": "Human immunodeficiency virus viral load (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "315268008",
+    "display": "Suspected prostate cancer (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "315639002",
+    "display": "Initial patient assessment (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "316744009",
+    "display": "Office Visit"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "31676001",
+    "display": "Human immunodeficiency virus antigen test"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "32413006",
+    "display": "Transplantation of heart (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "32485007",
+    "display": "Hospital admission (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "32911000",
+    "display": "Homeless (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "33195004",
+    "display": "External beam radiation therapy procedure (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "3336700",
+    "display": "Coronary angiography (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "33367005",
+    "display": "Angiography of coronary artery (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "336621006",
+    "display": "Oxygen concentrator (physical object)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "33737001",
+    "display": "Fracture of rib"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "34043003",
+    "display": "Dental consultation and report (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "3457005",
+    "display": "Patient referral (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "34896006",
+    "display": "Incision (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "35025007",
+    "display": "Manual pelvic examination (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "359672006",
+    "display": "Median sternotomy (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "359817006",
+    "display": "Closed fracture of hip"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "35999006",
+    "display": "Blighted ovum"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "361055000",
+    "display": "Misuses drugs (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "361235007",
+    "display": "Isolation of infected patient (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "36321500",
+    "display": "Musculoskeletal system physical examination (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "363406005",
+    "display": "Malignant tumor of colon"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "36576007",
+    "display": "Infusion (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "367336001",
+    "display": "Chemotherapy (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "367498001",
+    "display": "Seasonal allergic rhinitis"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "368581000119106",
+    "display": "Neuropathy due to type 2 diabetes mellitus (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "36923009",
+    "display": "Major depression  single episode"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "36955009",
+    "display": "Loss of taste (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "36971009",
+    "display": "Sinusitis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "370143000",
+    "display": "Major depression disorder"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "370247008",
+    "display": "Facial laceration"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "370771002",
+    "display": "Maintenance of invasive device (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "370789001",
+    "display": "Development of individualized plan of care (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "370864003",
+    "display": "Activity care (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "370995009",
+    "display": "Health risks education (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "371605008",
+    "display": "Deep breathing and coughing exercises"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "3718001",
+    "display": "Cow's milk (substance)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "371883000",
+    "display": "Outpatient Procedure (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "371908008",
+    "display": "Oxygen administration by mask (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "373587001",
+    "display": "Chiari malformation type II (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "373786007",
+    "display": "Reasons for treatment delay (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "37729005",
+    "display": "Patient transfer  in-hospital (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "37849005",
+    "display": "Congenital uterine anomaly"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "38102005",
+    "display": "Open Removal of Gall Bladder"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "384682003",
+    "display": "Multidisciplinary care conference (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "384692006",
+    "display": "Intracavitary brachytherapy (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "384700001",
+    "display": "Injection of tetanus antitoxin"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "384709000",
+    "display": "Sprain (morphologic abnormality)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "384758001",
+    "display": "Self-care interventions (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "385186005",
+    "display": "Enema"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "385486001",
+    "display": "Postoperative complication"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "385488000",
+    "display": "Surgical procedure on chest wall (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "385691007",
+    "display": "Fracture care"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "385715006",
+    "display": "Cardiac care (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "385724002",
+    "display": "Coping Support Management"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "385763009",
+    "display": "Hospice care (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "385781007",
+    "display": "Home health aide service (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "385798007",
+    "display": "Radiation therapy care (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "385892002",
+    "display": "Mental health screening (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "385949008",
+    "display": "Dressing change management (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "386257007",
+    "display": "Dementia management"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "386294003",
+    "display": "Joint mobility exercises"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "386373004",
+    "display": "Nutrition Plan"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "386394001",
+    "display": "Pregnancy termination care"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "386463000",
+    "display": "Prescribed activity/exercise education"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "386490009",
+    "display": "Urinary retention care (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "386510005",
+    "display": "Amputation care (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "386516004",
+    "display": "Anticipatory guidance (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "386522008",
+    "display": "Overactivity/inattention behavior management"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "386619000",
+    "display": "Low sodium diet (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "386661006",
+    "display": "Fever (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "387607004",
+    "display": "Construction of diverting colostomy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "387685009",
+    "display": "Surgical manipulation of shoulder joint"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "387713003",
+    "display": "Surgical procedure (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "387760006",
+    "display": "Infusion care (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "38822007",
+    "display": "Cystitis"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "388976009",
+    "display": "Weight reduction regimen (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "389082000",
+    "display": "Constipation Care (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "389087006",
+    "display": "Hypoxemia (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "390791001",
+    "display": "Referral for echocardiography (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "390906007",
+    "display": "Follow-Up Encounter"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "392020005",
+    "display": "PICC care"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "392021009",
+    "display": "Lumpectomy of breast (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "392091000",
+    "display": "Care regimes assessment (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "392247006",
+    "display": "Insertion of catheter into artery (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "394701000",
+    "display": "Asthma follow-up"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "395082007",
+    "display": "Cancer care plan"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "395123002",
+    "display": "Urine screening test for diabetes"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "395142003",
+    "display": "Allergy screening test"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "396143001",
+    "display": "Every seventy two hours (qualifier value)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "396487001",
+    "display": "Sentinel lymph node biopsy (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "397821002",
+    "display": "Patient transfer to intensive care unit (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "398152000",
+    "display": "Poor muscle tone (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "398171003",
+    "display": "Hearing examination (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "398254007",
+    "display": "Preeclampsia"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "39848009",
+    "display": "Whiplash injury to neck"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "39898005",
+    "display": "Sleep disorder (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "399014008",
+    "display": "Administration of diphtheria  pertussis  and tetanus vaccine"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "399208008",
+    "display": "Plain chest X-ray (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "399211009",
+    "display": "History of myocardial infarction (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "399217008",
+    "display": "Cardioassist by aortic balloon pump (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "399261000",
+    "display": "History of coronary artery bypass grafting (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "399912005",
+    "display": "Pressure ulcer (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "40055000",
+    "display": "Chronic sinusitis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "40095003",
+    "display": "Injury of kidney (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "401303003",
+    "display": "Acute ST segment elevation myocardial infarction (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "401314000",
+    "display": "Acute non-ST segment elevation myocardial infarction (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "40274000",
+    "display": "General outpatient clinic admission (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "40275004",
+    "display": "Contact dermatitis"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "403190006",
+    "display": "Epidermal burn of skin (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "403191005",
+    "display": "Second degree burn"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "403192003",
+    "display": "Third degree burn"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "404909007",
+    "display": "Injection of botulinum toxin (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "405783006",
+    "display": "Psychological assessment"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "405784000",
+    "display": "Pharmacological assessment (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "40617009",
+    "display": "Artificial respiration (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "406185000",
+    "display": "Trauma Therapy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "406602003",
+    "display": "Infection caused by Staphylococcus aureus"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "40701008",
+    "display": "Echocardiography (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "408512008",
+    "display": "Body mass index 40+ - severely obese (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "408580007",
+    "display": "Physical activity target light exercise"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "408869004",
+    "display": "Musculoskeletal care"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "408919008",
+    "display": "Psychosocial care (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "408935001",
+    "display": "Substance abuse prevention education (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "408936000",
+    "display": "Substance abuse prevention management (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "408957008",
+    "display": "Chronic pain control management"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "409002",
+    "display": "Food allergy diet"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "409023009",
+    "display": "Professional / ancillary services care (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "409063005",
+    "display": "Counseling"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "409066002",
+    "display": "Education  guidance and counseling (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "409089005",
+    "display": "Febrile neutropenia (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "409524006",
+    "display": "Airborne precautions (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "409526008",
+    "display": "Personal protective equipment (physical object)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "410006001",
+    "display": "Digital examination of rectum"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "410011004",
+    "display": "Administration of anesthesia AND/OR sedation (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "410207002",
+    "display": "Respiratory care management (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "410401003",
+    "display": "Nursing care/supplementary surveillance (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "410410006",
+    "display": "Screening surveillance (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "410429000",
+    "display": "Cardiac arrest (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "410538000",
+    "display": "Scheduling (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "410620009",
+    "display": "Well child visit (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "410770002",
+    "display": "Administration of anesthesia for procedure (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "412071004",
+    "display": "Wheat (substance)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "412776001",
+    "display": "Chronic obstructive pulmonary disease clinical management plan"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "412809002",
+    "display": "Viral hepatitis screening test (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "413107006",
+    "display": "Hepatitis C screening (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "413473000",
+    "display": "Counseling about alcohol consumption"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "414088005",
+    "display": "Emergency coronary artery bypass graft (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "414545008",
+    "display": "Ischemic heart disease (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "414564002",
+    "display": "Kyphosis deformity of spine (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "414667000",
+    "display": "Meningomyelocele (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "415070008",
+    "display": "Percutaneous coronary intervention (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "415300000",
+    "display": "Review of systems (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "415665002",
+    "display": "Suicide prevention"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "417511005",
+    "display": "Referral to home health care service (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "418577003",
+    "display": "Take at regular intervals. Complete the prescribed course unless otherwise directed (qualifier value)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "418689008",
+    "display": "Allergy to grass pollen"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "418824004",
+    "display": "Off-pump coronary artery bypass (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "418891003",
+    "display": "Computed tomography of chest and abdomen"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "419115000",
+    "display": "Do not take milk  indigestion remedies  or medicines containing iron or zinc at the same time of day as this medicine"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "419199007",
+    "display": "Allergy to substance (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "419263009",
+    "display": "Allergy to tree pollen"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "419474003",
+    "display": "Allergy to mould"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "419822006",
+    "display": "Warning. Avoid alcoholic drink (qualifier value)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "420174000",
+    "display": "Allergy to wheat"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "421399004",
+    "display": "Dilute - dosing instruction imperative (qualifier value)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "422034002",
+    "display": "Retinopathy due to type 2 diabetes mellitus (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "422587007",
+    "display": "Nausea (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "422650009",
+    "display": "Social isolation (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "422968005",
+    "display": "Non-small cell carcinoma of lung  TNM stage 3 (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "423121009",
+    "display": "Non-small cell carcinoma of lung  TNM stage 4 (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "423315002",
+    "display": "Limited social contact (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "423475008",
+    "display": "Heart failure education (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "424132000",
+    "display": "Non-small cell carcinoma of lung  TNM stage 1 (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "424393004",
+    "display": "Reports of violence in the environment (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "424441002",
+    "display": "Prenatal initial visit"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "424619006",
+    "display": "Prenatal visit"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "425048006",
+    "display": "Non-small cell carcinoma of lung  TNM stage 2 (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "425525006",
+    "display": "Allergy to dairy product"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "425680009",
+    "display": "Cognitive behavioral therapy by multidisciplinary team"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "426990007",
+    "display": "Home oxygen therapy (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "427089005",
+    "display": "Diabetes from Cystic Fibrosis"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "427419006",
+    "display": "Transformed migraine (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "428211000124100",
+    "display": "Assessment of substance use (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "42825003",
+    "display": "Cannulation (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "428251008",
+    "display": "History of appendectomy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "42839003",
+    "display": "Repair of myelomeningocele (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "428830000",
+    "display": "Pretransplant evaluation of kidney recipient (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "428915008",
+    "display": "Toxoplasma gondii antibody positive (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "429280009",
+    "display": "History of amputation of foot (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "429609002",
+    "display": "Lung volume reduction surgery (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "430193006",
+    "display": "Medication Reconciliation (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "43060002",
+    "display": "Intravenous injection (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "430701006",
+    "display": "Resuscitation using intravenous fluid (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "43075005",
+    "display": "Partial resection of colon"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "431182000",
+    "display": "Placing subject in prone position (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "431855005",
+    "display": "Chronic kidney disease stage 1 (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "431856006",
+    "display": "Chronic kidney disease stage 2 (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "431857002",
+    "display": "Chronic kidney disease stage 4 (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "432231006",
+    "display": "Fine needle aspiration biopsy of lung (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "433112001",
+    "display": "Percutaneous mechanical thrombectomy of portal vein using fluoroscopic guidance with contrast (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "433114000",
+    "display": "Human epidermal growth factor receptor 2 gene detection by immunohistochemistry (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "433144002",
+    "display": "Chronic kidney disease stage 3 (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "433236007",
+    "display": "Transthoracic echocardiography (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "434363004",
+    "display": "Human epidermal growth factor receptor 2 gene detection by fluorescence in situ hybridization (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "436861000124104",
+    "display": "Decreased fat diet"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "43724002",
+    "display": "Chill (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "43878008",
+    "display": "Streptococcal sore throat (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "439708006",
+    "display": "Home visit (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "439740005",
+    "display": "Postoperative follow-up visit (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "439830001",
+    "display": "Behavior to prevent infection"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "440381005",
+    "display": "Behavior to prevent sun exposure"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "44054006",
+    "display": "Diabetes mellitus type 2 (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "441763001",
+    "display": "Endoscopic third ventriculostomy (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "442571000124108",
+    "display": "Tree nut (substance)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "44301001",
+    "display": "Suicide"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "443165006",
+    "display": "Pathological fracture due to osteoporosis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "443402002",
+    "display": "Lifestyle education regarding hypertension"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "443497002",
+    "display": "Excision of sentinel lymph node (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "443529005",
+    "display": "Detection of chromosomal aneuploidy in prenatal amniotic fluid specimen using fluorescence in situ hybridization screening technique (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "444260001",
+    "display": "20 Gene mutation test"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "444448004",
+    "display": "Injury of medial collateral ligament of knee"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "444470001",
+    "display": "Injury of anterior cruciate ligament"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "44465007",
+    "display": "Sprain of ankle"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "444814009",
+    "display": "Viral sinusitis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "444908001",
+    "display": "Isolation nursing in negative pressure isolation environment (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "445912000",
+    "display": "Excision of fallopian tube and surgical removal of ectopic pregnancy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "445988008",
+    "display": "Assessment using health assessment questionnaire (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "44608003",
+    "display": "Blood group typing (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "446096008",
+    "display": "Perennial allergic rhinitis"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "446573003",
+    "display": "Continuous positive airway pressure titration (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "446654005",
+    "display": "Refugee (person)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "446987006",
+    "display": "Determination of susceptibility of Human immunodeficiency virus 1 to panel of antiretroviral drugs using genotypic technique (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "447759004",
+    "display": "Brachytherapy of breast (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "448337001",
+    "display": "Telemedicine consultation with patient"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "448417001",
+    "display": "Sepsis caused by Staphylococcus aureus"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "448813005",
+    "display": "Sepsis caused by Pseudomonas (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "449214001",
+    "display": "Transfer to stepdown unit (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "449381000124108",
+    "display": "Discharge from skilled nursing facility (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "449411000124106",
+    "display": "Admission to skilled nursing facility (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "449868002",
+    "display": "Smokes tobacco daily"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "452331000124102",
+    "display": "Review of imaging finding (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "4525004",
+    "display": "Emergency department patient visit (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "454711000124102",
+    "display": "Depression screening using Patient Health Questionnaire Two-Item score (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "4557003",
+    "display": "Preinfarction syndrome (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "45595009",
+    "display": "Laparoscopic Removal of Gall Bladder"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "457551000124104",
+    "display": "Acute cerebrovascular accident (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "45816000",
+    "display": "Pyelonephritis"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "46028000",
+    "display": "Amputation of left hand"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "46177005",
+    "display": "End-stage renal disease (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "464173000",
+    "display": "Portable oxygen concentrator (physical object)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "46706006",
+    "display": "Replacement of contraceptive intrauterine device"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "47020004",
+    "display": "Ventriculoperitoneal shunt (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "47200007",
+    "display": "Non-low risk pregnancy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "47318007",
+    "display": "Neutropenia (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "473231009",
+    "display": "Renal disorder medication review (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "47387005",
+    "display": "Head injury rehabilitation"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "47505003",
+    "display": "Posttraumatic stress disorder"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "47545007",
+    "display": "Continuous positive airway pressure ventilation treatment (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "47693006",
+    "display": "Rupture of appendix"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "47758006",
+    "display": "Hepatitis B Surface Antigen Measurement"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "48333001",
+    "display": "Burn injury (morphologic abnormality)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "48387007",
+    "display": "Incision of trachea (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "48428001",
+    "display": "Cardiovascular monitoring (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "48724000",
+    "display": "Mitral valve regurgitation (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "49436004",
+    "display": "Atrial fibrillation (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "49727002",
+    "display": "Cough (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "49915006",
+    "display": "Tricuspid valve stenosis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "50849002",
+    "display": "Emergency room admission (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "51116004",
+    "display": "Passive immunization (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "52052004",
+    "display": "Rehabilitation therapy (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "5251000175109",
+    "display": "Received certificate of high school equivalency (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "52734007",
+    "display": "Total replacement of hip"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "52765003",
+    "display": "Intubation"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "53827007",
+    "display": "Excessive salivation (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "53950000",
+    "display": "Respiratory therapy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "54550000",
+    "display": "Electroencephalogram (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "55680006",
+    "display": "Drug overdose (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "55822004",
+    "display": "Hyperlipidemia"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "56018004",
+    "display": "Wheezing (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "5602001",
+    "display": "Opioid abuse (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "56251003",
+    "display": "Nebulizer Therapy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "56786000",
+    "display": "Pulmonic valve stenosis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "56876005",
+    "display": "Drug rehabilitation and detoxification"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "5758002",
+    "display": "Bacteremia (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "57676002",
+    "display": "Joint pain (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "58000006",
+    "display": "Patient discharge (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "58150001",
+    "display": "Fracture of clavicle"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "58332002",
+    "display": "Allergy education"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "5880005",
+    "display": "Physical examination procedure (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "58828004",
+    "display": "Application of dressing  sterile (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "59621000",
+    "display": "Essential hypertension (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "60112009",
+    "display": "Drug addiction counseling"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "60151004",
+    "display": "Neonatal Screening"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "60234000",
+    "display": "Aortic valve regurgitation (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "60554003",
+    "display": "Polysomnography (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "60573004",
+    "display": "Aortic valve stenosis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "6072007",
+    "display": "Bleeding from anus"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "609496007",
+    "display": "Complication occuring during pregnancy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "60951000119105",
+    "display": "Blindness due to type 2 diabetes mellitus (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "609588000",
+    "display": "Total knee replacement"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "61480009",
+    "display": "Drug detoxification"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "61594008",
+    "display": "Microbial culture (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "61977001",
+    "display": "Chronic type B viral hepatitis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "62106007",
+    "display": "Concussion with no loss of consciousness"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "62479008",
+    "display": "Acquired immune deficiency syndrome (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "62564004",
+    "display": "Concussion with loss of consciousness"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "62718007",
+    "display": "Dribbling from mouth (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "63332003",
+    "display": "History AND physical examination (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "63697000",
+    "display": "Cardiopulmonary bypass operation (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "6471006",
+    "display": "Suicidal thoughts (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "64859006",
+    "display": "Osteoporosis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "65200003",
+    "display": "Insertion of intrauterine contraceptive device"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "6525002",
+    "display": "Dependent drug abuse (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "65275009",
+    "display": "Acute Cholecystitis"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "65363002",
+    "display": "Otitis media"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "65546002",
+    "display": "Extraction of wisdom tooth"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "65575008",
+    "display": "Biopsy of prostate"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "65588006",
+    "display": "Premature birth of newborn"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "65677008",
+    "display": "Pulmonary catheterization with Swan-Ganz catheter (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "65710008",
+    "display": "Acute respiratory failure (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "65966004",
+    "display": "Fracture of forearm"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "66348005",
+    "display": "Childbirth"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "66857006",
+    "display": "Hemoptysis (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "67782005",
+    "display": "Acute respiratory distress syndrome (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "67799006",
+    "display": "Diagnosis of cystic fibrosis using sweat test and gene test"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "67811000119102",
+    "display": "Primary small cell malignant neoplasm of lung  TNM stage 1 (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "67821000119109",
+    "display": "Primary small cell malignant neoplasm of lung  TNM stage 2 (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "67831000119107",
+    "display": "Primary small cell malignant neoplasm of lung  TNM stage 3 (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "67841000119103",
+    "display": "Primary small cell malignant neoplasm of lung  TNM stage 4 (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "67879005",
+    "display": "History and physical examination  limited (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "68235000",
+    "display": "Nasal congestion (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "68254000",
+    "display": "Removal of intrauterine device"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "68496003",
+    "display": "Polyp of colon"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "68566005",
+    "display": "Urinary tract infectious disease (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "68962001",
+    "display": "Muscle pain (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "69031006",
+    "display": "Excision of breast tissue (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "698306007",
+    "display": "Awaiting transplantation of kidney (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "698314001",
+    "display": "Consultation for treatment (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "698354004",
+    "display": "Magnetic resonance imaging for measurement of brain volume (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "698360004",
+    "display": "Diabetes self management plan"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "698423002",
+    "display": "History of disarticulation at wrist (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "698560000",
+    "display": "Referral to sleep apnea clinic (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "698754002",
+    "display": "Chronic paralysis due to lesion of spinal cord"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "698819004",
+    "display": "Postoperative sepsis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "69896004",
+    "display": "Rheumatoid arthritis"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "699253003",
+    "display": "Surgical manipulation of joint of knee"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "699728000",
+    "display": "Asthma self management"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "702172008",
+    "display": "Home continuous positive airway pressure unit (physical object)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "702927004",
+    "display": "Urgent care clinic (environment)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "703040004",
+    "display": "Agreeing on diabetes care plan"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "703151001",
+    "display": "History of single seizure (situation)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "703423002",
+    "display": "Combined chemotherapy and radiation therapy (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "703993001",
+    "display": "Colonoscopy planned"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "70536003",
+    "display": "Transplant of kidney (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "706180003",
+    "display": "Respiratory humidifier (physical object)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "706870000",
+    "display": "Acute pulmonary embolism (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "706893006",
+    "display": "Victim of intimate partner abuse (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "70704007",
+    "display": "Sprain of wrist"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "707418001",
+    "display": "Male infertility due to cystic fibrosis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "707577004",
+    "display": "Female Infertility"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "708409001",
+    "display": "Home nebulizer therapy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "709010006",
+    "display": "Liaising with referral source (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "709138001",
+    "display": "Notification of treatment plan (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "709506004",
+    "display": "Assessment of readiness for disclosure of health status (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "709640007",
+    "display": "Doppler ultrasonography of renal vein (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "710081004",
+    "display": "smoking cessation therapy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "710125008",
+    "display": "Promotion of use of memory skills"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "710818004",
+    "display": "Inhaled steroid therapy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "710824005",
+    "display": "Assessment of health and social care needs (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "710839006",
+    "display": "Assessment of cardiac status using monitoring device (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "710841007",
+    "display": "Assessment of anxiety (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "710971000",
+    "display": "Airway Clearance"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "711018006",
+    "display": "Assessment of social support (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "711069006",
+    "display": "Coordination of care plan (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "71121004",
+    "display": "Human immunodeficiency virus screening (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "711282006",
+    "display": "Skin condition care"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "711446003",
+    "display": "Transplantation of kidney regime (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "711495003",
+    "display": "Patient transfer to coronary care unit (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "713076009",
+    "display": "Antenatal risk assessment"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "713106006",
+    "display": "Screening for drug abuse (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "713197008",
+    "display": "Recurrent rectal polyp"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "713458007",
+    "display": "Lack of access to transportation (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "714035009",
+    "display": "Allergy to soya"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "714812005",
+    "display": "Induced termination of pregnancy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "71493000",
+    "display": "Transfusion of packed red blood cells (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "715252007",
+    "display": "Depression screening using Patient Health Questionnaire Nine Item score (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "71651007",
+    "display": "Mammography (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "717778001",
+    "display": "Mouth care (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "718347000",
+    "display": "Mental health care plan (record artifact)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "718361005",
+    "display": "Weight management program"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "718451004",
+    "display": "Management of vascular system care (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "719858009",
+    "display": "Telehealth monitoring (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "7200002",
+    "display": "Alcoholism"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "7227006",
+    "display": "Excision of submandibular gland (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "725351001",
+    "display": "Transcatheter aortic valve replacement (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "72892002",
+    "display": "Normal pregnancy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "733863009",
+    "display": "Assessment of readiness for self-management (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "734163000",
+    "display": "Care plan (record artifact)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "73430006",
+    "display": "Sleep apnea (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "73438004",
+    "display": "Unemployed (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "735029006",
+    "display": "Shellfish (substance)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "735321000",
+    "display": "Surgical inpatient care plan (record artifact)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "73595000",
+    "display": "Stress (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "735971005",
+    "display": "Fish (substance)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "735984001",
+    "display": "Heart failure self management plan"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "736169004",
+    "display": "Post anesthesia care management (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "736252007",
+    "display": "Cancer care plan"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "736254008",
+    "display": "Psychiatry care plan"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "736285004",
+    "display": "Hyperlipidemia clinical management plan"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "736353004",
+    "display": "Inpatient care plan (record artifact)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "736372004",
+    "display": "Discharge care plan (record artifact)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "736376001",
+    "display": "Infectious disease care plan (record artifact)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "736690008",
+    "display": "Dialysis care plan (record artifact)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "736767005",
+    "display": "Perioperative care management (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "737434004",
+    "display": "Major depressive disorder clinical management plan"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "737471002",
+    "display": "Minor surgery care management (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "737567002",
+    "display": "Major surgery care management (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "73761001",
+    "display": "Colonoscopy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "741062008",
+    "display": "Not in labor force (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "74400008",
+    "display": "Appendicitis"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "74857009",
+    "display": "Hospital admission  short-term  24 hours"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "75162002",
+    "display": "Spinal cord injury rehabilitation"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "75498004",
+    "display": "Acute bacterial sinusitis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "76164006",
+    "display": "Biopsy of colon"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "76168009",
+    "display": "Group psychotherapy (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "762952008",
+    "display": "Peanut (substance)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "762993000",
+    "display": "Assessment using Morse Fall Scale (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "762998009",
+    "display": "Assessment using New York Heart Association Classification (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "763228001",
+    "display": "Assessment using Canadian Study of Health and Aging Clinical Frailty Scale (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "763302001",
+    "display": "Assessment using Alcohol Use Disorders Identification Test - Consumption (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "76464004",
+    "display": "Hospital admission  for observation (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "76571007",
+    "display": "Septic shock (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "76601001",
+    "display": "Intramuscular injection"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "76746007",
+    "display": "Cardiovascular stress testing (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "76916001",
+    "display": "Spina bifida occulta (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "770349000",
+    "display": "Sepsis caused by virus (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "773513001",
+    "display": "Physiotherapy care plan (record artifact)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "773593000",
+    "display": "Urology care plan (record artifact)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "77476009",
+    "display": "Application of back brace"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "77806000",
+    "display": "Low calorie diet"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "781087000",
+    "display": "Medical care (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "782576004",
+    "display": "Tree pollen (substance)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "78275009",
+    "display": "Obstructive sleep apnea syndrome (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "784051000000106",
+    "display": "Depression care management"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "79094001",
+    "display": "Initial psychiatric interview with mental status and evaluation"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "79586000",
+    "display": "Tubal pregnancy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "79619009",
+    "display": "Mitral valve stenosis (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "79733001",
+    "display": "Amputation of left leg"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "80146002",
+    "display": "Appendectomy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "80394007",
+    "display": "Hyperglycemia (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "80583007",
+    "display": "Severe anxiety (panic) (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "82078001",
+    "display": "Take blood sample"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "82423001",
+    "display": "Chronic pain (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "82808001",
+    "display": "Sleep apnea monitoring with alarm (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "8290005",
+    "display": "Induced cardioplegia (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "83664006",
+    "display": "Idiopathic atrophic hypothyroidism"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "840539006",
+    "display": "COVID-19"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "840544004",
+    "display": "Suspected COVID-19"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "84114007",
+    "display": "Heart failure (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "84229001",
+    "display": "Fatigue (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "84478008",
+    "display": "Occupational therapy (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "84489001",
+    "display": "Mold (organism)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "84728005",
+    "display": "Neurological examination (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "84757009",
+    "display": "Epilepsy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "85116003",
+    "display": "Miscarriage in second trimester"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "85548006",
+    "display": "Episiotomy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "86013001",
+    "display": "Periodic reevaluation and management of healthy individual (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "86175003",
+    "display": "Injury of heart (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "86406008",
+    "display": "Human immunodeficiency virus infection (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "866148006",
+    "display": "Screening for domestic abuse (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "868187001",
+    "display": "Assessment using Car  Relax  Alone  Forget  Friends  Trouble Screening Test (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "86849004",
+    "display": "Suicidal deliberate poisoning"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "86964003",
+    "display": "Sweat Test"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "87433001",
+    "display": "Pulmonary emphysema (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "87628006",
+    "display": "Bacterial infectious disease (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "876882001",
+    "display": "Died in hospice (finding)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "88039007",
+    "display": "Transplant of lung (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "88805009",
+    "display": "Chronic congestive heart failure (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "88848003",
+    "display": "Psychiatric follow-up"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "9002005",
+    "display": "Manual testing of muscle function (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "90226004",
+    "display": "Cytopathology procedure  preparation of smear  genital source"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "90407005",
+    "display": "Evaluation of psychiatric state of patient"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "90460009",
+    "display": "Injury of neck (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "90470006",
+    "display": "Prostatectomy"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "90560007",
+    "display": "Gout"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "90781000119102",
+    "display": "Microalbuminuria due to type 2 diabetes mellitus (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "91251008",
+    "display": "Physical therapy procedure (regime/therapy)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "91302008",
+    "display": "Death due to sepsis"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "91434003",
+    "display": "Pulmonic valve regurgitation (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "91602002",
+    "display": "Thoracentesis (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "91861009",
+    "display": "Acute myeloid leukemia  disease (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "91930004",
+    "display": "Allergy to eggs"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "92691004",
+    "display": "Carcinoma in situ of prostate (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "93761005",
+    "display": "Primary malignant neoplasm of colon"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "94260004",
+    "display": "Secondary malignant neoplasm of colon"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "95281009",
+    "display": "Sudden Cardiac Death"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "95417003",
+    "display": "Primary fibromyalgia syndrome"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "9564003",
+    "display": "Complete blood count with white cell differential  automated (procedure)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "97331000119101",
+    "display": "Macular edema and retinopathy due to type 2 diabetes mellitus (disorder)"
+  },
+  {
+    "system": "SNOMED-CT",
+    "code": "9855000",
+    "display": "Natural death with unknown cause"
+  }
+]

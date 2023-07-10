@@ -8,6 +8,7 @@ import ArgBuilder from './ArgBuilder';
 import KeepModuleBuilder from './KeepModuleBuilder';
 import ConfigFileBuilder from './ConfigFileBuilder';
 import DockerfileBuilder from './DockerfileBuilder';
+import SetupInstructions from './SetupInstructions';
 
 
 const Customizer = props => {
@@ -215,7 +216,6 @@ const GuidedModeHowToRun = props => {
 
     </ToggleButtonGroup>
      <br/> <br/>
-    mode is {mode}
     </React.Fragment>
     );
 }
@@ -223,15 +223,36 @@ const GuidedModeHowToRun = props => {
 const Instructions = props => {
   const { mode, args, keepModuleString, exportFormats, dataReqs } = props;
 
-  // TODO: build up config based on exprotFormats
+  const configForExport = {
+      "exporter.fhir.export": exportFormats.includes("fhir"),
+      "exporter.ccda.export": exportFormats.includes("ccda"),
+      "exporter.csv.export": exportFormats.includes("csv"),
+      "exporter.json.export": exportFormats.includes("json"),
+      "exporter.fhir_stu3.export": exportFormats.includes("fhir_stu3"),
+      "exporter.fhir_dstu2.export": exportFormats.includes("fhir_dstu2"),
+      "exporter.text.export": exportFormats.includes("text"),
+      "exporter.cpcds.export": exportFormats.includes("cpcds"),
+      "exporter.bfd.export": exportFormats.includes("bfd"),
+      "exporter.symptoms.csv.export": exportFormats.includes("symptoms"),
+      "exporter.cdw.export": exportFormats.includes("cdw")
+  };
 
-  if (mode == 'docker') {
-    return <DockerfileBuilder args={args} config={{}} configAsArgs={false} keepModuleString={keepModuleString} />
-  } else if (mode == 'basic') {
-    return "java -jar etc";
-  } else {
-    return "sorry about your gradle";
+  if (exportFormats.includes("bulk_fhir")) {
+    configForExport["exporter.fhir.bulk_data"] = true;
+
+    if (!(configForExport["exporter.fhir.export"]) &&
+        !(configForExport["exporter.fhir_stu3.export"]) && 
+        !(configForExport["exporter.fhir_dstu2.export"])) {
+      // if the user chose bulk fhir but didn't pick any
+      // of the fhir versions, enable the r4 exporter
+      configForExport["exporter.fhir.export"] = true;
+    }
   }
+
+  return <SetupInstructions mode={mode} args={args} config={configForExport} configAsArgs={false} keepModuleString={keepModuleString} />
 }
+
+
+
 
 export default memo(Customizer);

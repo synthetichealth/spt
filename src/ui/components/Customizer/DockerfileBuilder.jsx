@@ -40,12 +40,14 @@ const DockerfileBuilder = (props) => {
 
   const { args, config, configAsArgs, keepModuleString } = props;
 
+  const myArgs = JSON.parse(JSON.stringify(args)); // deep copy
+
   let dockerfile = DOCKERFILE_TEMPLATE;
 
   if (keepModuleString) {
     dockerfile = dockerfile.replace("%%KEEP_MODULE%%", buildFileInDockerRun(keepModuleString, "keep.json"));
 
-    args['keepModule'] = 'keep.json';
+    myArgs['keepModule'] = 'keep.json';
   } else {
      dockerfile = dockerfile.replace("%%KEEP_MODULE%%", "");
   }
@@ -56,10 +58,10 @@ const DockerfileBuilder = (props) => {
     const configFileString = buildConfigFile(config);
     dockerfile = dockerfile.replace("%%CONFIG_FILE%%", buildFileInDockerRun(configFileString, "custom.properties"));
 
-    args['configFile'] = 'custom.properties';
+    myArgs['configFile'] = 'custom.properties';
   }
 
-  dockerfile = dockerfile.replace("%%ARGS%%", renderArgs(args, configAsArgs ? config : undefined));
+  dockerfile = dockerfile.replace("%%ARGS%%", renderArgs('java -jar synthea-with-dependencies.jar', myArgs, configAsArgs ? config : undefined));
 
   return (<div className={classes.collection}> 
     <h3>Dockerfile</h3> <br />

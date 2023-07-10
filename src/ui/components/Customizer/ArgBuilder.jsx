@@ -41,38 +41,38 @@ const COMMAND_LINE_ARGS = {
    // -m flag oh no
 };
 
-export const renderArgs = (argsState, configState = undefined) => {
-  let argString = 'java -jar synthea-with-dependencies.jar';
+export const renderArgs = (command, argsState, configState = undefined, ) => {
+  let argString = command;
 
   for (const [key, argDef] of Object.entries(COMMAND_LINE_ARGS)) {
     let value = argsState[key];
     if (Array.isArray(value) && argDef['rangeToString']) {
       value = argDef['rangeToString'](value);
     }
-    if (value) {
-
-
-
-      const argDef = COMMAND_LINE_ARGS[key];
-      if (argDef.flag) {
-        argString = argString + ' ' + argDef.flag + ' ' + value.trim();
-      } else {
-        argString = argString + ' ' + value.trim();
-      }
+    if (value == null) {
+      continue;
     }
+    // value might be a boolean
+    const trimmedValue = value.trim ? value.trim() : value;
+
+    if (argDef.flag) {
+      argString = argString + ' ' + argDef.flag + ' ' + trimmedValue;
+    } else {
+      argString = argString + ' ' + trimmedValue;
+    } 
   }
 
   if (configState) {
     for (const configOpt of CONFIG_OPTIONS) {
       const key = configOpt.key;
       const value = configState[key];
-      if (!value) {
+      // don't bother listing it if it's just the default value
+      if (value == null || value === configOpt.defaultValue) {
         continue;
       }
 
-
-      argString = argString + ' --' + key + '=' + value.trim();
-
+      const trimmedValue = value.trim ? value.trim() : value;
+      argString = argString + ' --' + key + '=' + trimmedValue;
     }
   }
 
@@ -200,7 +200,7 @@ const ArgBuilder = (props) => {
       { !onlyRenderFields && <h3>Command-line Argument Builder</h3> }
       { fields }
       <br />
-      { !onlyRenderFields && <pre>{renderArgs(args)}</pre> }
+      { !onlyRenderFields && <pre>{renderArgs('java -jar synthea-with-dependencies.jar', args)}</pre> }
     </div>
   );
 }
