@@ -2,7 +2,7 @@ import React, { memo, useState, Fragment } from 'react';
 import useStyles from './styles';
 
 
-import { Paper, TextField, Autocomplete, Button, ButtonGroup, ToggleButtonGroup, ToggleButton, Switch, Select, MenuItem } from '@mui/material';
+import { Paper, TextField, Autocomplete, Grid, Stack, Button, ButtonGroup, ToggleButtonGroup, ToggleButton, Switch, Select, MenuItem } from '@mui/material';
 
 import ArgBuilder from './ArgBuilder';
 import KeepModuleBuilder from './KeepModuleBuilder';
@@ -13,27 +13,38 @@ import DockerfileBuilder from './DockerfileBuilder';
 const Customizer = props => {
   const classes = useStyles();
 
-  const [guidedMode, setGuidedMode] = useState(null);
+  const [mode, setMode] = useState(0);
+  const GUIDED_MODE = 1;
+  const ADVANCED_MODE = 2;
 
   return (
     <div className={classes.customizerContainer}>
-    <Paper elevation={3} className={classes.dashboardCard}>
-      <h1>Synthea Customizer</h1>
-      { guidedMode == null && (<ButtonGroup variant="contained" aria-label="outlined primary button group">
-        <Button onClick={() => setGuidedMode(true)} style={{ display: "block", textTransform: "none", maxWidth: '300px'}}>
-          <b>Use Guided Mode</b><br /><br />
-          Guided Mode will step you through the most common Synthea configuration options and allow you to choose the ones that are relevant to you.<br/>
-          This mode is recommended for first-time users or people who are not already familiar with all of the Synthea options.
-        </Button>
-        <Button onClick={() => setGuidedMode(false)} style={{ display: "block", textTransform: "none", maxWidth: '300px'}}>
-        <b>Use Advanced Mode</b><br /><br />
-        Advanced Mode shows all customization options on one page. Recommended for users who know exactly what customizations they want.
-        </Button>
-      </ButtonGroup>) }
-      { guidedMode == true && <GuidedMode /> }
-      { guidedMode == false && <AdvancedMode /> }
-    </Paper>
-  </div>);
+      <Paper elevation={3} className={classes.dashboardCard}>
+
+        <h1 style={{textAlign: 'center', width: '100%', margin: '2rem 0'}}>Synthea Customizer</h1>
+
+        { mode == 0 && (
+          <Stack direction={{xs: "column", md: "row"}} justifyContent="space-evenly" alignItems="center">
+              <Button variant="contained" onClick={() => setMode(GUIDED_MODE)} style={{ display: "block", textTransform: "none", maxWidth: '300px', minHeight: '300px', textAlign: 'center', margin: '1rem'}}>
+                <h3>Use Guided Mode</h3>
+                <br />
+                Guided Mode will walk you through the most common Synthea configuration options.
+                This mode is recommended for first-time users and beginners.
+              </Button>
+
+              <Button variant="contained" onClick={() => setMode(ADVANCED_MODE)} style={{ display: "block", textTransform: "none", maxWidth: '300px', minHeight: '300px', textAlign: 'center', margin: '1rem'}}>
+                <h3>Use Advanced Mode</h3>
+                <br />
+                Advanced Mode shows all customization options on one page. Recommended for users who know exactly what customizations they want.
+              </Button>
+          </Stack>
+        ) }
+        { mode == GUIDED_MODE && <GuidedMode /> }
+        { mode == ADVANCED_MODE && <AdvancedMode /> }
+
+      </Paper>
+    </div>
+  );
 }
 
 const AdvancedMode = props => {
@@ -51,7 +62,7 @@ const AdvancedMode = props => {
       <KeepModuleBuilder setKeepModuleString={setKeepModuleString} />
       <DockerfileBuilder args={args} config={config} configAsArgs={configAsArgs} keepModuleString={keepModuleString}  />
     </React.Fragment>);
-} 
+}
 
 // questions:
 // 1. wizard vs advanced "show me every option"
@@ -60,7 +71,7 @@ const AdvancedMode = props => {
 //  - yes I need a certain condition
 //  - yes i need a specific geographic location
 // last. do you want to use docker?
-//    
+//
 
 const GuidedMode = props => {
 
@@ -128,7 +139,7 @@ const ExportFormatsQuestion = props => {
                               </ToggleButton>)) }
 
     </ToggleButtonGroup>
-    { !showLessCommonOptions && 
+    { !showLessCommonOptions &&
         <Button onClick={() => setShowLessCommonOptions(true)} style={{ textTransform: "none" }}>
           Show less common options
         </Button>
