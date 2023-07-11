@@ -3,7 +3,7 @@ import useStyles from './styles';
 
 import { saveFile } from './utils';
 
-import { Paper, TextField, Autocomplete, Button, Switch, Select, MenuItem } from '@mui/material';
+import { Paper, TextField, Autocomplete, Button, Switch, Select, MenuItem, Stack } from '@mui/material';
 
 import CodeSearchPopup from './CodeSearchPopup';
 
@@ -138,31 +138,41 @@ const KeepModuleBuilder = (props) => {
   // Attributes and Observations would be nice, but those need 2 parameters (code/value)
   // whereas the above only need one (code)
 
-  return (<div className={classes.collection}> <h3>Keep Module Builder</h3> 
-    This is only for basic keep modules. For anything more complex than this, 
-    please use the <a href="https://synthetichealth.github.io/module-builder">Module Builder</a>.<br/>
+  return (
+    <div className={classes.collection}>
+      <h3>Keep Module Builder</h3>
 
-    ALL OF <Switch onChange={e => setAny(e.target.checked)} /> ANY OF <br />
-    <Select
-      label="Type"
-      defaultValue="condition"
-      onChange={e => setType(e.target.value)}
-    >
-      <MenuItem value="allergy">Active Allergy</MenuItem>
-      <MenuItem value="condition">Active Condition</MenuItem>
-      <MenuItem value="medication">Active Medication</MenuItem>
-      <MenuItem value="procedure">Procedure Performed</MenuItem>
-    </Select>
+      <div m={3}>
+        Keep modules allow you to require certain clinical criteria in the generated data. This builder is only for basic set of requirements, for anything more complex
+        please use the <a href="https://synthetichealth.github.io/module-builder">Module Builder</a>.
+      </div>
 
-    <CodeSearchPopup value={value} setValue={setValue} type={type} />
+      <br />
 
-    <Button variant="text" onClick={addCurrent}>+</Button>
-    <ul>
-    <li> Keep patients matching <b>{ any ? "Any" : "All" }</b> of the following criteria: </li>
-    { keeps.map((k, i) => <DisplayForKeep index={i} keep={k} />) } 
-    </ul>
-    { showDownload && <Button variant="text" onClick={() => saveFile(buildKeepModule(keeps, any), 'keep.json')}>Download</Button> }
-    </div>);
+      <Stack direction="row" spacing={3}>
+        <Select label="Type" defaultValue="condition" onChange={e => setType(e.target.value)}>
+          <MenuItem value="allergy">Active Allergy</MenuItem>
+          <MenuItem value="condition">Active Condition</MenuItem>
+          <MenuItem value="medication">Active Medication</MenuItem>
+          <MenuItem value="procedure">Procedure Performed</MenuItem>
+        </Select>
+
+        <CodeSearchPopup value={value} setValue={setValue} type={type} />
+
+        <Button variant="outlined" onClick={addCurrent} style={{textTransform: "none"}}>Add Keep Module</Button>
+      </Stack>
+
+      <br />
+
+      ALL OF <Switch onChange={e => setAny(e.target.checked)} /> ANY OF <br />
+
+      <div>Keep patients matching <b>{ any ? "Any" : "All" }</b> of the following criteria:</div>
+      <ul>
+        { keeps.map((k, i) => <DisplayForKeep index={i} keep={k} />) }
+      </ul>
+      { showDownload && <Button variant="outlined" onClick={() => saveFile(buildKeepModule(keeps, any), 'keep.json')} style={{textTransform: "none"}}>Download Keep File</Button> }
+      </div>
+  );
 }
 
 const DisplayForKeep = props => {
