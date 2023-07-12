@@ -9,6 +9,8 @@ import ArgBuilder, { renderArgs } from './ArgBuilder';
 
 import { buildConfigFile } from './ConfigFileBuilder';
 
+import { BashCodeBlock } from './BashCodeBlock';
+
 // https://github.com/squirrellyjs/squirrelly if we need something more robust
 const DOCKERFILE_TEMPLATE = `
 FROM eclipse-temurin:20-jdk
@@ -68,10 +70,9 @@ const DockerfileBuilder = (props) => {
       <h3>Dockerfile</h3>
       <br />
 
-      <Paper elevation={3} >
-        <pre>
-          {dockerfile}
-        </pre>
+      <Paper elevation={2} >
+        <BashCodeBlock code={dockerfile} lineNumbers={true} />
+        {/* use Bash since no Docker highlighting supported */}
       </Paper>
       <br/>
 
@@ -84,11 +85,11 @@ const DockerfileBuilder = (props) => {
 
       <p>Open powershell or terminal to where you downloaded the above Dockerfile and run the following commands to execute Synthea:</p>
 
-      <pre>
-        docker build --tag syntheadocker - &lt; Dockerfile <br/>
-        mkdir docker_output <br/>
-        docker run -v ./docker_output:/output -it syntheadocker <br/>
-      </pre>
+      <BashCodeBlock code={`
+docker build --tag syntheadocker - < Dockerfile
+mkdir docker_output
+docker run -v ./docker_output:/output -it syntheadocker
+      `} />
     </div>
   );
 }
