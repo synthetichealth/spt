@@ -63,26 +63,34 @@ const DockerfileBuilder = (props) => {
 
   dockerfile = dockerfile.replace("%%ARGS%%", renderArgs('java -jar synthea-with-dependencies.jar', myArgs, configAsArgs ? config : undefined));
 
-  return (<div className={classes.collection}> 
-    <h3>Dockerfile</h3> <br />
+  return (
+    <div className={classes.collection}>
+      <h3>Dockerfile</h3>
+      <br />
 
-    <Paper elevation={3} >
+      <Paper elevation={3} >
+        <pre>
+          {dockerfile}
+        </pre>
+      </Paper>
+      <br/>
+
+      <Button variant="contained" onClick={() => saveFile(dockerfile, 'Dockerfile')} style={{textTransform: "none"}}>Download Dockerfile</Button>
+
+      <br/>
+      <hr />
+
+      <h3>Run Synthea on Docker:</h3>
+
+      <p>Open powershell or terminal to where you downloaded the above Dockerfile and run the following commands to execute Synthea:</p>
+
       <pre>
-        {dockerfile}
+        docker build --tag syntheadocker - &lt; Dockerfile <br/>
+        mkdir docker_output <br/>
+        docker run -v ./docker_output:/output -it syntheadocker <br/>
       </pre>
-    </Paper>
-    <br/>
-    <Button variant="text" onClick={() => saveFile(dockerfile, 'Dockerfile')}>Download</Button>
-    <br/>
-    ---
-    <br />
-    Create and run with 
-    <pre>
-    docker build --tag syntheadocker - &lt; Dockerfile <br/>
-    mkdir docker_output <br/>
-    docker run -v ./docker_output:/output -it syntheadocker <br/>
-    </pre>
-   </div>);
+    </div>
+  );
 }
 
 

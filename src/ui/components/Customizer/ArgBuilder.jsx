@@ -122,7 +122,7 @@ const ArgBuilder = (props) => {
     return true;
   }
 
-  const fields = [];
+  const fields = {}; // String (groupTitle) => Array<InputField (argField)>
 
   // map args/fields into groups
   const argGroups = {};
@@ -137,16 +137,15 @@ const ArgBuilder = (props) => {
   for (const [groupName, group] of Object.entries(argGroups)) {
     if (groupName == 'Hidden') continue;
 
-    if (onlyGroup) {
-      if (groupName != onlyGroup) continue;
-    } else {
-      fields.push(<h5 style={{margin: "2rem 0 0.5rem 0"}}>{groupName} Settings</h5>);
-    }
+    if (onlyGroup && (groupName != onlyGroup)) continue;
+
+    var groupTitle = groupName + " Settings";
+    fields[groupTitle] = [];
 
     for (const [key, arg] of Object.entries(group)) {
 
       if (arg.type == 'select') {
-        fields.push((<Autocomplete
+        fields[groupTitle].push((<Autocomplete
             disablePortal
             sx={{ width: 200 }}
             key={key}
@@ -157,7 +156,7 @@ const ArgBuilder = (props) => {
             renderInput={(params) => <TextField {...params} label={arg.display} />}
           />));
       } else if (arg.type == 'range') {
-            fields.push((<TextField
+            fields[groupTitle].push((<TextField
                       key={`${key} Min`}
                       id={`${key} Min`}
                       name={`${key} Min`}
@@ -168,7 +167,7 @@ const ArgBuilder = (props) => {
                       display="inline"
                       onChange={(evt) => handleChangeRange(key, 0, evt.target.value)}
                       />));
-            fields.push((<TextField
+            fields[groupTitle].push((<TextField
                       key={`${key} Max`}
                       id={`${key} Max`}
                       name={`${key} Max`}
@@ -180,7 +179,7 @@ const ArgBuilder = (props) => {
                       onChange={(evt) => handleChangeRange(key, 1, evt.target.value)}
                       />));
       } else {
-            fields.push((<TextField
+            fields[groupTitle].push((<TextField
                       key={key}
                       id={key}
                       name={key}
@@ -198,7 +197,12 @@ const ArgBuilder = (props) => {
   return (
     <div className={classes.collection}>
       { !onlyRenderFields && <h3>Command-line Argument Builder</h3> }
-      { fields }
+      { Object.entries(fields).map(([groupTitle, argFieldArray]) => { return <div key={groupTitle}>
+        <h5 style={{margin: "2rem 0 0.5rem 0"}}>{groupTitle}</h5>
+        <Stack direction="row" spacing={3}>
+            {argFieldArray}
+        </Stack>
+      </div>}) }
       <br />
       { !onlyRenderFields && <pre>{renderArgs('java -jar synthea-with-dependencies.jar', args)}</pre> }
     </div>

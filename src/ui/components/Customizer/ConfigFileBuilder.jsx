@@ -4,7 +4,7 @@ import useStyles from './styles';
 import { saveFile } from './utils';
 
 
-import { Paper, TextField, Autocomplete, Button, Checkbox, Switch, Select, MenuItem, Tooltip } from '@mui/material';
+import { Paper, TextField, Autocomplete, Button, Checkbox, Switch, Select, MenuItem, Tooltip, Stack } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 
 export const CONFIG_OPTIONS = [
@@ -384,14 +384,14 @@ const ConfigFileBuilder = (props) => {
                     </Fragment>));
     } else {
       fields.push((<Fragment key={key} >
-                     <TextField 
-                        id={key} 
-                        name={key} 
-                        type={configOpt.type} 
+                     <TextField
+                        id={key}
+                        name={key}
+                        type={configOpt.type}
                         label={key}
                         defaultValue={configOpt.defaultValue}
                         variant="outlined"
-                        onChange={handleChangeText} 
+                        onChange={handleChangeText}
                         />
                       <Tooltip title={configOpt.description} disableInteractive>
                         <span>
@@ -404,30 +404,35 @@ const ConfigFileBuilder = (props) => {
     }
   }
 
-  return (<div className={classes.collection}> 
-   <h3>Config Builder</h3> 
-   <br />
-   Use Custom Config File <Switch onChange={e => setConfigAsArgs(e.target.checked)} /> Set Config via Command Line Args <br />
-   <div style={{
-          display: 'flex',
-          alignItems: 'center'
-         }}>
-   <Autocomplete
-      disablePortal
-      sx={{ width: 600 }}
-      onChange={(event, value) => setSelected(value)}
-      id="combo-box-demo"
-      options={CONFIG_OPTIONS}
-      renderInput={(params) => <TextField {...params} label="Choose Setting" />}
-      getOptionLabel={(option) => option.key}
-      renderOption={(props, option, state) => <li {...props}>{option.key}&nbsp;&nbsp;&nbsp;<br /><span style={{fontSize:"0.8em"}}>{option.description || ""}</span></li> }
-    />
-    <Button variant="text" onClick={addSelectedConfigAsModified}>+</Button></div>
-    <br/>
-    { fields }
-    <br/>
-    { !configAsArgs && <Button variant="text" onClick={() => saveFile(buildConfigFile(config), 'synthea.properties')}>Download</Button> }
-    </div>);
+  return (
+    <div className={classes.collection}>
+     <h3>Config Builder</h3>
+     <br />
+     <Stack direction="row" spacing={3}>
+       <Autocomplete
+          disablePortal
+          sx={{ width: 600 }}
+          onChange={(event, value) => setSelected(value)}
+          id="combo-box-demo"
+          options={CONFIG_OPTIONS}
+          renderInput={(params) => <TextField {...params} label="Choose Setting" />}
+          getOptionLabel={(option) => option.key}
+          renderOption={(props, option, state) => <li {...props}>{option.key}&nbsp;&nbsp;&nbsp;<br /><span style={{fontSize:"0.8em"}}>{option.description || ""}</span></li> }
+        />
+
+        <Button variant="outlined" onClick={addSelectedConfigAsModified} style={{textTransform: "none"}}>Add Config</Button>
+      </Stack>
+
+      <br/>
+      { fields }
+      <br/>
+
+      Use Custom Config File <Switch onChange={e => setConfigAsArgs(e.target.checked)} /> Set Config Directly in Dockerfile
+      <br />
+      <br />
+      { !configAsArgs && <Button variant="outlined" onClick={() => saveFile(buildConfigFile(config), 'synthea.properties')} style={{textTransform: "none"}}>Download Config File</Button> }
+    </div>
+  );
 }
 
 export default memo(ConfigFileBuilder);
