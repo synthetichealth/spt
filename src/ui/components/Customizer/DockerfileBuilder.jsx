@@ -71,7 +71,7 @@ const DockerfileBuilder = (props) => {
       <br />
 
       <Paper elevation={2} >
-        <BashCodeBlock code={dockerfile} lineNumbers={true} />
+        <BashCodeBlock code={dockerfile} singleLine={true}/>
         {/* use Bash since no Docker highlighting supported */}
       </Paper>
       <br/>
@@ -83,13 +83,19 @@ const DockerfileBuilder = (props) => {
 
       <h3>Run Synthea on Docker:</h3>
 
-      <p>Open powershell or terminal to where you downloaded the above Dockerfile and run the following commands to execute Synthea:</p>
+      <p>Open powershell or terminal to where you downloaded the above Dockerfile and run the following commands:</p>
 
-      <BashCodeBlock code={`
-docker build --tag syntheadocker - < Dockerfile
-mkdir docker_output
-docker run -v ./docker_output:/output -it syntheadocker
-      `} />
+      <p>1. Create your customized Syntea Docker container:</p>
+      <BashCodeBlock code="docker build --tag syntheadocker - < Dockerfile" />
+      <br />
+
+      <p>2. Create an output folder for synthetic data:</p>
+      <BashCodeBlock code="mkdir docker_output" singleLine={true} />
+      <br />
+
+      <p>3. Execute the container with your output folder:</p>
+      <BashCodeBlock code="docker run -v ./docker_output:/output -it syntheadocker" />
+      <br />
     </div>
   );
 }

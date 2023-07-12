@@ -20,6 +20,8 @@ pre {
 }
 */
 
-span code span {
-    color: white !important;
+/* sets BashCodeBlock color, required to overright some upstream css library */
+span code span, span code {
+    font-size: 1.05rem;
+    color: #ecf8ff !important;
 }

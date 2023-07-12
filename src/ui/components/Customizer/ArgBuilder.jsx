@@ -206,7 +206,7 @@ const ArgBuilder = (props) => {
         </Stack>
       </div>}) }
       <br />
-      { !onlyRenderFields && <BashCodeBlock singleLine={true} code={renderArgs('java -jar synthea-with-dependencies.jar', args)} /> }
+      { !onlyRenderFields && <BashCodeBlock code={renderArgs('java -jar synthea-with-dependencies.jar', args)} /> }
     </div>
   );
 }
