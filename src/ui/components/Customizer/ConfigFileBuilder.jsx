@@ -316,15 +316,19 @@ export const CONFIG_OPTIONS = [
 export const buildConfigFile = (configState) => {
   const configLines = [];
   for (const configOpt of CONFIG_OPTIONS) {
-      const key = configOpt.key;
-      const value = configState[key];
-      if (value == null) {
-        continue;
-      }
-
-      configLines.push(key + ' = ' + value.toString().trim());
+    const key = configOpt.key;
+    const value = configState[key];
+    if (value == null || value === configOpt.defaultValue) {
+      continue;
     }
+
+    configLines.push(key + ' = ' + value.toString().trim());
+  }
+  if (configLines.length > 0) {
     return configLines.join('\n');
+  } else {
+    return null;
+  }
 };
 
 const ConfigFileBuilder = (props) => {

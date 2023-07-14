@@ -141,7 +141,7 @@ const ArgBuilder = (props) => {
 
     if (onlyGroup && (groupName != onlyGroup)) continue;
 
-    var groupTitle = groupName + " Settings";
+    const groupTitle = groupName + " Settings";
     fields[groupTitle] = [];
 
     for (const [key, arg] of Object.entries(group)) {

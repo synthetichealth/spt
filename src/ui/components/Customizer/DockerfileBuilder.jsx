@@ -23,6 +23,8 @@ CMD %%ARGS%%
 `
 
 const buildFileInDockerRun = (fileContent, targetFileName) => {
+  if (!fileContent) return "";
+
   const fileLines = fileContent.replaceAll('"', '\\"').split('\n');
 
   const runCmdLines = fileLines.map((line, i) => {
@@ -58,9 +60,12 @@ const DockerfileBuilder = (props) => {
     dockerfile = dockerfile.replace("%%CONFIG_FILE%%", "");
   } else {
     const configFileString = buildConfigFile(config);
-    dockerfile = dockerfile.replace("%%CONFIG_FILE%%", buildFileInDockerRun(configFileString, "custom.properties"));
-
-    myArgs['configFile'] = 'custom.properties';
+    if (configFileString) {
+      dockerfile = dockerfile.replace("%%CONFIG_FILE%%", buildFileInDockerRun(configFileString, "custom.properties"));
+      myArgs['configFile'] = 'custom.properties';
+    } else {
+      dockerfile = dockerfile.replace("%%CONFIG_FILE%%", "");
+    }
   }
 
   dockerfile = dockerfile.replace("%%ARGS%%", renderArgs('java -jar synthea-with-dependencies.jar', myArgs, configAsArgs ? config : undefined));

@@ -159,7 +159,7 @@ const KeepModuleBuilder = (props) => {
 
         <CodeSearchPopup value={value} setValue={setValue} type={type} />
 
-        <Button variant="outlined" onClick={addCurrent} style={{textTransform: "none"}}>Add Keep Module</Button>
+        <Button variant="outlined" onClick={addCurrent} style={{textTransform: "none"}}>Add Criteria</Button>
       </Stack>
 
       <br />
