@@ -7,6 +7,8 @@ import { Autocomplete, TextField, Stack } from '@mui/material';
 
 import { CONFIG_OPTIONS } from './ConfigFileBuilder';
 
+import { BashCodeBlock } from './BashCodeBlock'
+
 const ageArrayToString = array => {
   if (!Array.isArray(array)) return undefined;
 
@@ -204,7 +206,7 @@ const ArgBuilder = (props) => {
         </Stack>
       </div>}) }
       <br />
-      { !onlyRenderFields && <pre>{renderArgs('java -jar synthea-with-dependencies.jar', args)}</pre> }
+      { !onlyRenderFields && <BashCodeBlock code={renderArgs('java -jar synthea-with-dependencies.jar', args)} /> }
     </div>
   );
 }

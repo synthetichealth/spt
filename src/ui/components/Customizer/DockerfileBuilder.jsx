@@ -9,6 +9,8 @@ import ArgBuilder, { renderArgs } from './ArgBuilder';
 
 import { buildConfigFile } from './ConfigFileBuilder';
 
+import { BashCodeBlock } from './BashCodeBlock';
+
 // https://github.com/squirrellyjs/squirrelly if we need something more robust
 const DOCKERFILE_TEMPLATE = `
 FROM eclipse-temurin:20-jdk
@@ -68,10 +70,9 @@ const DockerfileBuilder = (props) => {
       <h3>Dockerfile</h3>
       <br />
 
-      <Paper elevation={3} >
-        <pre>
-          {dockerfile}
-        </pre>
+      <Paper elevation={2} >
+        <BashCodeBlock code={dockerfile} singleLine={true}/>
+        {/* use Bash since no Docker highlighting supported */}
       </Paper>
       <br/>
 
@@ -82,13 +83,19 @@ const DockerfileBuilder = (props) => {
 
       <h3>Run Synthea on Docker:</h3>
 
-      <p>Open powershell or terminal to where you downloaded the above Dockerfile and run the following commands to execute Synthea:</p>
+      <p>Open powershell or terminal to where you downloaded the above Dockerfile and run the following commands:</p>
 
-      <pre>
-        docker build --tag syntheadocker - &lt; Dockerfile <br/>
-        mkdir docker_output <br/>
-        docker run -v ./docker_output:/output -it syntheadocker <br/>
-      </pre>
+      <p>1. Create your customized Syntea Docker container:</p>
+      <BashCodeBlock code="docker build --tag syntheadocker - < Dockerfile" />
+      <br />
+
+      <p>2. Create an output folder for synthetic data:</p>
+      <BashCodeBlock code="mkdir docker_output" singleLine={true} />
+      <br />
+
+      <p>3. Execute the container with your output folder:</p>
+      <BashCodeBlock code="docker run -v ./docker_output:/output -it syntheadocker" />
+      <br />
     </div>
   );
 }

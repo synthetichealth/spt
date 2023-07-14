@@ -61,6 +61,7 @@
     "query-string": "^6.13.8",
     "react": "^17.0.0",
     "react-accessible-accordion": "^3.3.4",
+    "react-code-blocks": "^0.1.0",
     "react-dom": "^17.0.0",
     "react-dropzone": "^11.3.2",
     "react-json-editor-ajrm": "^2.5.13",
