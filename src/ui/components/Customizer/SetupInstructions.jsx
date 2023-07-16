@@ -1,9 +1,14 @@
 import React, { memo, useState, Fragment } from 'react';
-import { Switch } from '@mui/material';
+import { Button, Switch } from '@mui/material';
 
 import DockerfileBuilder from './DockerfileBuilder';
 
 import { renderArgs } from './ArgBuilder';
+import { buildConfigFile } from './ConfigFileBuilder';
+import { BashCodeBlock } from './BashCodeBlock';
+
+import { saveFile } from './utils';
+
 
 // props = args, config, configAsArgs, keepModuleString
 const SetupInstructions = props => {
@@ -20,8 +25,19 @@ const SetupInstructions = props => {
 
 
 const BasicSetupInstructions = props => {
+  const { args, config, configAsArgs, keepModuleString } = props;
 
-  const { args, config, configAsArgs } = props;
+  const myArgs = JSON.parse(JSON.stringify(args)); // deep copy
+
+
+  if (keepModuleString) {
+    myArgs['keepModule'] = 'keep.json';
+  }
+
+  const configFileString = buildConfigFile(config);
+  if (configAsArgs && configFileString) {
+    myArgs['configFile'] = 'custom.properties';
+  } 
 
   return (<div>
 <h3>Basic Setup</h3>
@@ -45,19 +61,33 @@ const BasicSetupInstructions = props => {
     https://github.com/synthetichealth/synthea/releases/download/master-branch-latest/synthea-with-dependencies.jar</a> . 
     This guide assumes the name is left as the default: 
     <code>synthea-with-dependencies.jar</code>.
+
+    { keepModuleString && (<div>
+    Download the Keep Module to the same synthea folder: <Button variant="outlined" onClick={() => saveFile(keepModuleString, 'keep.json')} style={{textTransform: "none"}}>Download Keep Module</Button>
+  </div>) }
+
 <br /><br />
 <h5>Running</h5>
     Open a command-line prompt/terminal window and run Synthea 
-    by running the command <br/>
-    <code>{renderArgs('java -jar synthea-with-dependencies.jar', args, config)}</code>. <br/>
-    Additional command-line options may be appended at the end of the command, 
-    see Common Configuration below for details.
+    by running the command below with your specified configuration as arguments: <br/>
+    <BashCodeBlock code={renderArgs('java -jar synthea-with-dependencies.jar', myArgs, config)} />. <br/>
+
 
 </div>);
 }
 
 const DeveloperSetupInstructions = props => {
-  const { args, config, configAsArgs } = props;
+  const { args, config, configAsArgs, keepModuleString } = props;
+
+  const myArgs = JSON.parse(JSON.stringify(args)); // deep copy
+  if (keepModuleString) {
+    myArgs['keepModule'] = 'keep.json';
+  }
+
+  const configFileString = buildConfigFile(config);
+  if (configAsArgs && configFileString) {
+    myArgs['configFile'] = 'custom.properties';
+  } 
 
   const [isWindows, setIsWindows] = useState(false);
 
@@ -79,17 +109,21 @@ const DeveloperSetupInstructions = props => {
 
 To copy the repository locally, install the necessary dependencies, and run the full test suite, open a terminal window and run the following commands:
 <br/>
-<code>git clone https://github.com/synthetichealth/synthea.git<br/>
-cd synthea<br/>
-{ isWindows ? '.\\gradlew.bat build check' : './gradlew build check' }</code>
+<BashCodeBlock code={`git clone https://github.com/synthetichealth/synthea.git
+cd synthea
+${ isWindows ? '.\\gradlew.bat build check' : './gradlew build check' }`} />
 <br/>
+
+  { keepModuleString && (<div>
+    Download the Keep Module to the same synthea folder: <Button variant="outlined" onClick={() => saveFile(keepModuleString, 'keep.json')} style={{textTransform: "none"}}>Download Keep Module</Button>
+  </div>) }
 
 <br /><br />
 <h5>Running</h5>
 
-The primary entry point of Synthea is the provided run_synthea script. Additional command-line options may be appended at the end of the command, see Common Configuration below for details.
+To run Synthea with your desired settings, use the <code>run_synthea</code> script and provide your specified configuration as arguments:
 
-<code>{ renderArgs(isWindows ? '.\\run_synthea.bat' : './run_synthea', args, config) }</code>
+<BashCodeBlock code={renderArgs(isWindows ? '.\\run_synthea.bat' : './run_synthea', myArgs, config)} />
 <br /><br />
 
 

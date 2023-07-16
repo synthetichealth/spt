@@ -88,17 +88,17 @@ const DockerfileBuilder = (props) => {
 
       <h3>Run Synthea on Docker:</h3>
 
-      <p>Open powershell or terminal to where you downloaded the above Dockerfile and run the following commands:</p>
+      <p>Open powershell or terminal, navigate to where you downloaded the above Dockerfile, and run the following commands:</p>
 
-      <p>1. Create your customized Syntea Docker container:</p>
+      <p>1. Create your customized Synthea Docker container, we'll call it <code>syntheadocker</code>:</p>
       <BashCodeBlock code="docker build --tag syntheadocker - < Dockerfile" />
       <br />
 
-      <p>2. Create an output folder for synthetic data:</p>
+      <p>2. Create an output folder for synthetic data called <code>docker_output</code>:</p>
       <BashCodeBlock code="mkdir docker_output" singleLine={true} />
       <br />
 
-      <p>3. Execute the container with your output folder:</p>
+      <p>3. Run the container pointing to your output folder:</p>
       <BashCodeBlock code="docker run -v ./docker_output:/output -it syntheadocker" />
       <br />
     </div>
