@@ -56,10 +56,10 @@ const BasicSetupInstructions = props => {
     <a href="https://adoptium.net/" target="_blank">https://adoptium.net/</a>.
 <br /><br />
 <h5>Setup</h5>
-    Download the binary distribution to a file from 
+    Download the binary distribution to a file from&nbsp;
     <a href="https://github.com/synthetichealth/synthea/releases/download/master-branch-latest/synthea-with-dependencies.jar" target="_blank">
-    https://github.com/synthetichealth/synthea/releases/download/master-branch-latest/synthea-with-dependencies.jar</a> . 
-    This guide assumes the name is left as the default: 
+    https://github.com/synthetichealth/synthea/releases/download/master-branch-latest/synthea-with-dependencies.jar</a>.
+    This guide assumes the name is left as the default:&nbsp;
     <code>synthea-with-dependencies.jar</code>.
 
     { keepModuleString && (<div>
@@ -69,9 +69,10 @@ const BasicSetupInstructions = props => {
 <br /><br />
 <h5>Running</h5>
     Open a command-line prompt/terminal window and run Synthea 
-    by running the command below with your specified configuration as arguments: <br/>
-    <BashCodeBlock code={renderArgs('java -jar synthea-with-dependencies.jar', myArgs, config)} />. <br/>
-
+    by running the command below with your specified configuration as arguments:
+    <br/>
+    <BashCodeBlock code={renderArgs('java -jar synthea-with-dependencies.jar', myArgs, config)} />
+    <br />
 
 </div>);
 }
