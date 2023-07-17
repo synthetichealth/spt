@@ -3,15 +3,15 @@ import { useLocation, useHistory } from 'react-router-dom';
 import useStyles from './styles';
 import Sidebar from './Sidebar';
 import Collections from '../Collections';
-import Dashboard from './Dashboard';
 
 import PatientViewer from '../PatientViewer';
 import SyntheticMass from '../SyntheticMass';
+import Customizer from '../Customizer';
 // import CSVPatientViewer from '../CSVPatientViewer';
 
 function DashboardLayout() {
   const classes = useStyles();
-  const [contentKey, setContentKey] = useState('dashboard');
+  const [contentKey, setContentKey] = useState('record_viewer');
 
   const location = useLocation();
   const history = useHistory();
@@ -20,23 +20,23 @@ function DashboardLayout() {
   const tabs = useMemo(() => {
     return [
       {
-        key: 'dashboard',
-        label: 'Dashboard',
-        offline: true,
-        component: <Dashboard />
-      },
-      {
         key: 'record_viewer',
         label: 'Patient Viewer',
         offline: true,
         component: <PatientViewer />
       },
       {
-        key: 'syntheticmass',
-        label: 'SyntheticMass',
+        key: 'customizer',
+        label: 'Synthea Customizer',
         offline: true,
-        component: <SyntheticMass />
+        component: <Customizer />
       },
+      // {
+      //   key: 'syntheticmass',
+      //   label: 'SyntheticMass',
+      //   offline: true,
+      //   component: <SyntheticMass />
+      // },
       { key: 'csv', label: 'CSV', component: null },
       { key: 'load_csv', label: 'Load Files', component: null },
       // {

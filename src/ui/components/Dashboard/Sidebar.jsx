@@ -1,10 +1,10 @@
 import React, { memo, useState } from 'react';
 import useStyles from './styles';
-import Drawer from '@material-ui/core/Drawer';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import List from '@material-ui/core/List';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Drawer from '@mui/material/Drawer';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import List from '@mui/material/List';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import PropTypes from 'prop-types';
 
 const offline = process.env.FRONTEND_ONLY === 'true';

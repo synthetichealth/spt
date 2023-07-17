@@ -1,4 +1,5 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme, adaptV4Theme } from "@mui/material/styles";
+
 const colors = {
   white: '#fff',
   offWhite: '#f5f5fa',
@@ -92,9 +93,9 @@ const materialUiOverridesBase = {
   }
 };
 
-const theme = createMuiTheme({
+const theme = createTheme(adaptV4Theme({
   palette: { ...paletteBase },
   overrides: { ...materialUiOverridesBase }
-});
+}));
 
 export default theme;

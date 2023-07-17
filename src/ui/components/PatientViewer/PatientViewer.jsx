@@ -15,8 +15,8 @@ import {
 import { useLocation, useHistory } from 'react-router-dom';
 import { HashLink as Link } from 'react-router-hash-link';
 
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/lab/Autocomplete';
 
 import {
   Accordion,

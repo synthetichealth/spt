@@ -3,10 +3,10 @@ import axios from 'axios';
 import { useQueryClient } from 'react-query';
 
 import PropTypes from 'prop-types';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import HistoryIcon from '@material-ui/icons/History';
-import DoneIcon from '@material-ui/icons/Done';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import HistoryIcon from '@mui/icons-material/History';
+import DoneIcon from '@mui/icons-material/Done';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import useStyles from './styles';
 import moment from 'moment';
 
