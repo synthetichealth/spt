@@ -26,14 +26,14 @@ const Customizer = props => {
 
         { mode == 0 && (
           <Stack direction={{xs: "column", md: "row"}} justifyContent="space-evenly" alignItems="center">
-              <Button variant="contained" onClick={() => setMode(GUIDED_MODE)} style={{ display: "block", textTransform: "none", maxWidth: '300px', minHeight: '300px', textAlign: 'center', margin: '1rem'}}>
+              <Button variant="contained" onClick={() => setMode(GUIDED_MODE)} style={{ display: "block", textTransform: "none", minWidth: 'min-content', width: '50%', minHeight: '300px', textAlign: 'center', margin: '1rem'}}>
                 <h3>Use Guided Mode</h3>
                 <br />
                 Guided Mode will walk you through the most common Synthea configuration options.
                 This mode is recommended for first-time users and beginners.
               </Button>
 
-              <Button variant="contained" onClick={() => setMode(ADVANCED_MODE)} style={{ display: "block", textTransform: "none", maxWidth: '300px', minHeight: '300px', textAlign: 'center', margin: '1rem'}}>
+              <Button variant="contained" onClick={() => setMode(ADVANCED_MODE)} style={{ display: "block", textTransform: "none", minWidth: 'min-content', width: '50%', minHeight: '300px', textAlign: 'center', margin: '1rem'}}>
                 <h3>Use Advanced Mode</h3>
                 <br />
                 Advanced Mode shows all customization options on one page. Recommended for users who know exactly what customizations they want.
