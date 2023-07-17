@@ -27,7 +27,7 @@ function Sidebar(props) {
       >
         <div className={`${classes.spacer} ${classes.corner}`}>
           <div className={classes.cornerText} onClick={() => setOpen(false)}>
-            SPT
+            Synthea Toolkit
           </div>
         </div>
         <List component="nav" classes={{ root: classes.overflow }}>
