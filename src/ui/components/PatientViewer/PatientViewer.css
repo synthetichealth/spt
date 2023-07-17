@@ -16,10 +16,10 @@
     display: -ms-flexbox;
     display: flex;
     color: #6b8eb6;
-    font-size: 1em;
+    font-size: 2em;
     font-weight: bold;
     text-transform: uppercase;
-    margin: 40px 0;
+    margin: 1rem 0;
 }
 
 .health-record__header .header-divider {

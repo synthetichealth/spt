@@ -17,6 +17,8 @@ import { HashLink as Link } from 'react-router-hash-link';
 
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/lab/Autocomplete';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 
 import {
   Accordion,
@@ -62,11 +64,21 @@ const getDropzone = (setLoading, callback) => {
         <section>
           <div
             {...getRootProps({
-              style: { height: '100vh', width: '100%', background: '#F0F8FF' }
+              style: { height: '100vh', width: '100%', background: '#F0F8FF', padding: "2rem" }
             })}
           >
             <input {...getInputProps()} />
-            <p>Drag n drop a FHIR JSON file here, or click to select a file</p>
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              minHeight="100%"
+            >
+              <Box sx={{ p: 2, border: '1px dashed grey', textAlign: 'center' }}>
+                <h2>Drag &amp; drop a FHIR JSON file here</h2>
+                <h2>or click to select a file.</h2>
+              </Box>
+            </Box>
           </div>
         </section>
       )}
@@ -156,25 +168,25 @@ const PatientViewer = props => {
 
   if (isGroupByEncounter) {
     return (
-      <div style={{ background: '#fff' }}>
+      <Paper style={{margin: "1rem", padding: "1rem"}}>
         <PatientVisualizer patient={patient} />
         <a href="#" onClick={toggleGroup}>
           Ungroup by Encounter
         </a>
 
         <EncounterGroupedRecord allResources={allResources} />
-      </div>
+      </Paper>
     );
   } else {
     return (
-      <div style={{ background: '#fff' }}>
+      <Paper style={{margin: "1rem", padding: "1rem"}}>
         <PatientVisualizer patient={patient} />
         <a href="#" onClick={toggleGroup}>
           Group by Encounter (Work in Progress)
         </a>
         <LinksByType />
         <EntireRecord allResources={allResources} />
-      </div>
+      </Paper>
     );
   }
 };
