@@ -76,7 +76,7 @@ const getDropzone = (setLoading, callback) => {
             >
               <Box sx={{ p: 2, border: '1px dashed grey', textAlign: 'center' }}>
                 <h2>Drag &amp; drop a FHIR JSON file here</h2>
-                <h2>or click to select a file.</h2>
+                <h2>or <span style={{textDecoration: 'underline', color: 'blue'}}>click to select a file</span>.</h2>
               </Box>
             </Box>
           </div>
