@@ -106,7 +106,9 @@ export default makeStyles(
       color: theme.palette.common.grayVeryDark
     },
     overflow: {
-      overflowY: 'scroll'
+      overflowY: 'scroll',
+      scrollbarWidth: 'thin',
+      scrollbarColor: `${theme.palette.common.grayVeryLight} ${theme.palette.common.grayVeryDark}`
     },
     searchInput: {
       '&::placeholder': {
