@@ -473,7 +473,7 @@ const EncounterGroupedRecord = props => {
   return (
     <React.Fragment>
       <LinksByEncounter encounters={encounters} />
-      <Accordion allowMultipleExpanded={true}>{encounterSections}</Accordion>;
+      <Accordion allowMultipleExpanded={true}>{encounterSections}</Accordion>
     </React.Fragment>
   );
 };
