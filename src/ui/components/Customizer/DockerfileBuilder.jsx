@@ -25,7 +25,10 @@ CMD %%ARGS%%
 const buildFileInDockerRun = (fileContent, targetFileName) => {
   if (!fileContent) return "";
 
-  const fileLines = fileContent.replaceAll('"', '\\"').split('\n');
+  const fileLines = fileContent.replaceAll('"', '\\"')
+                               .replaceAll('(', '\\(')
+                               .replaceAll(')', '\\)')
+                               .split('\n');
 
   const runCmdLines = fileLines.map((line, i) => {
     if (i == 0) {

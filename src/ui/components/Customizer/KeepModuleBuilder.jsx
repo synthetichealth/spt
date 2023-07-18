@@ -70,27 +70,23 @@ const buildKeepModule = (keeps, any) => {
     const newCondition = clone(CONDITION_TEMPLATE);
 
 
-    newCondition['codes'][0]['code'] = keep.value;
+    newCondition['codes'][0] = keep.value;
 
     switch (keep.type) {
     case 'allergy':
       newCondition['condition_type'] = 'Active Allergy';
-      newCondition['codes'][0]['system'] = 'SNOMED-CT';
       break;
     case 'condition':
       newCondition['condition_type'] = 'Active Condition';
-      newCondition['codes'][0]['system'] = 'SNOMED-CT';
       break;
     case 'medication':
       newCondition['condition_type'] = 'Active Medication';
-      newCondition['codes'][0]['system'] = 'RxNorm';
       break;
     case 'procedure':
       // technically we do not have "Procedure Performed"
       // but the way they are stored in the HealthRecodrd means
       // we can use Active Condition instead
       newCondition['condition_type'] = 'Active Condition';
-      newCondition['codes'][0]['system'] = 'SNOMED-CT';
       break;
 
     }
