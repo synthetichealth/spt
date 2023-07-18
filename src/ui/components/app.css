@@ -22,6 +22,11 @@ pre {
 
 /* sets BashCodeBlock color, required to overright some upstream css library */
 span code span, span code {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
     font-size: 1.05rem;
     color: #ecf8ff !important;
+}
+
+code {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
 }
