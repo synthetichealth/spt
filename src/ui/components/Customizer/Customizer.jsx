@@ -2,7 +2,12 @@ import React, { memo, useState, Fragment } from 'react';
 import useStyles from './styles';
 
 
-import { Paper, TextField, Autocomplete, Grid, Stack, Button, ButtonGroup, ToggleButtonGroup, ToggleButton, Switch, Select, MenuItem } from '@mui/material';
+import { Paper, TextField, Autocomplete,
+         Grid, Stack, Button, ButtonGroup, ToggleButtonGroup, ToggleButton,
+         Switch, Select, MenuItem,
+         Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import ArgBuilder from './ArgBuilder';
 import KeepModuleBuilder from './KeepModuleBuilder';
@@ -80,10 +85,18 @@ const GuidedMode = props => {
   const [args, setArgs] = useState({});
 
   const [keepModuleString, setKeepModuleString] = useState();
+  const [config, setConfig] = useState({});
+  const [configAsArgs, setConfigAsArgs] = useState(false);
 
   const [exportFormats, setExportFormats] = useState([]);
   const [dataReqs, setDataReqs] = useState([]);
   const [mode, setMode] = useState();
+
+  const targetedCategories = ['commnon', ...exportFormats];
+
+  if (keepModuleString) {
+    targetedCategories.push('keep');
+  }
 
   return (
     <React.Fragment>
@@ -94,8 +107,9 @@ const GuidedMode = props => {
       { dataReqs.includes("geographic") && <ArgBuilder args={args} setArgs={setArgs} onlyGroup="Geographic" onlyRenderFields={true} /> }
       { dataReqs.includes("demographic") && <ArgBuilder args={args} setArgs={setArgs} onlyGroup="Demographic" onlyRenderFields={true} /> }
       { dataReqs.includes("reproducibility") && <ArgBuilder args={args} setArgs={setArgs} onlyGroup="Reproducibility" onlyRenderFields={true} /> }
+      { dataReqs.length > 0 && <TargetedConfigWrapper config={config} setConfig={setConfig} configAsArgs={configAsArgs} setConfigAsArgs={setConfigAsArgs} targetedCategories={targetedCategories} /> }
       { dataReqs.length > 0 && <GuidedModeHowToRun mode={mode} setMode={setMode} /> }
-      { mode && <Instructions mode={mode} args={args} keepModuleString={keepModuleString} exportFormats={exportFormats} dataReqs={dataReqs} /> }
+      { mode && <Instructions mode={mode} args={args} config={config} keepModuleString={keepModuleString} exportFormats={exportFormats} dataReqs={dataReqs} /> }
     </React.Fragment>
     );
 }
@@ -221,9 +235,10 @@ const GuidedModeHowToRun = props => {
 }
 
 const Instructions = props => {
-  const { mode, args, keepModuleString, exportFormats, dataReqs } = props;
+  const { mode, args, keepModuleString, exportFormats, dataReqs, config } = props;
 
   const configForExport = {
+      ...config,
       "exporter.fhir.export": exportFormats.includes("fhir"),
       "exporter.ccda.export": exportFormats.includes("ccda"),
       "exporter.csv.export": exportFormats.includes("csv"),
@@ -252,7 +267,23 @@ const Instructions = props => {
   return <SetupInstructions mode={mode} args={args} config={configForExport} configAsArgs={false} keepModuleString={keepModuleString} />
 }
 
-
+const TargetedConfigWrapper = props => {
+  return (<Fragment>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <h5>Advanced Configuration Options</h5>
+        </AccordionSummary>
+        <AccordionDetails>
+          <ConfigFileBuilder {...props} />
+        </AccordionDetails>
+      </Accordion>
+      <br/><br/>
+      </Fragment>);
+}
 
 
 export default memo(Customizer);

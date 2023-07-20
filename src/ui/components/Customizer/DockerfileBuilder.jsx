@@ -3,7 +3,10 @@ import useStyles from './styles';
 
 import { saveFile } from './utils';
 
-import { Paper, TextField, Autocomplete, Button, Switch, Select, MenuItem } from '@mui/material';
+import { Paper, TextField, Autocomplete, Button, Switch, Select, MenuItem,
+         Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 
 import ArgBuilder, { renderArgs } from './ArgBuilder';
 
@@ -78,8 +81,19 @@ const DockerfileBuilder = (props) => {
       <br />
 
       <Paper elevation={2} >
-        <BashCodeBlock code={dockerfile} singleLine={true}/>
-        {/* use Bash since no Docker highlighting supported */}
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            View Dockerfile
+          </AccordionSummary>
+          <AccordionDetails>
+            <BashCodeBlock code={dockerfile} singleLine={true}/>
+            {/* use Bash since no Docker highlighting supported */}
+          </AccordionDetails>
+        </Accordion>
       </Paper>
       <br/>
 
