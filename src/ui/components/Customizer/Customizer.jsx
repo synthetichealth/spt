@@ -127,7 +127,7 @@ const ExportFormatsQuestion = props => {
 
   return (
     <React.Fragment>
-    Which data formats do you need?<br/>
+    <h3>Which data formats do you need?</h3><br/>
     <ToggleButtonGroup
       size="large"
       color="primary"
@@ -155,7 +155,7 @@ const DataReqsQuestion = props => {
 
   return (
     <React.Fragment>
-    Which of the following data requirements apply to you?<br/>
+    <h3>Which of the following data requirements apply to you?</h3><br/>
     <ToggleButtonGroup
       size="large"
       color="primary"
@@ -190,7 +190,7 @@ const GuidedModeHowToRun = props => {
 
   return (
     <React.Fragment>
-    How do you want to run Synthea?<br/>
+    <h3>How do you want to run Synthea?</h3><br/>
     <ToggleButtonGroup
       size="large"
       color="primary"

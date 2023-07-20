@@ -15,9 +15,9 @@ import { BashCodeBlock } from './BashCodeBlock';
 const DOCKERFILE_TEMPLATE = `
 FROM eclipse-temurin:20-jdk
 
-# --insecure is for mitre only
+# add --insecure for a quick fix if your network requires certificates
 # -L means follow redirects
-RUN curl --insecure -L -O https://github.com/synthetichealth/synthea/releases/download/master-branch-latest/synthea-with-dependencies.jar
+RUN curl -L -O https://github.com/synthetichealth/synthea/releases/download/master-branch-latest/synthea-with-dependencies.jar
 %%CONFIG_FILE%% %%KEEP_MODULE%%
 CMD %%ARGS%%
 `
@@ -25,20 +25,19 @@ CMD %%ARGS%%
 const buildFileInDockerRun = (fileContent, targetFileName) => {
   if (!fileContent) return "";
 
-  const fileLines = fileContent.replaceAll('"', '\\"')
-                               .replaceAll('(', '\\(')
-                               .replaceAll(')', '\\)')
+  const fileLines = fileContent.replaceAll("'", "'\"'\"'") // yes this is real. https://stackoverflow.com/a/1250279
                                .split('\n');
 
   const runCmdLines = fileLines.map((line, i) => {
     if (i == 0) {
-      return `\nRUN echo ${line} \\`;
+      // if line is `abc` --> `RUN printf 'abc \n\`
+      return `\nRUN printf '${line}\\n\\`;
     } else {
-      return `${line} \\`
+      return `${line} \\n\\`
     }
   });
 
-  runCmdLines.push(` > ${targetFileName}\n`);
+  runCmdLines.push(` ' > ${targetFileName}\n`);
   return runCmdLines.join('\n');
 }
 
