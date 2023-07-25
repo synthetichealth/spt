@@ -5,7 +5,7 @@ import Sidebar from './Sidebar';
 import Collections from '../Collections';
 
 import PatientViewer from '../PatientViewer';
-import SyntheticMass from '../SyntheticMass';
+// import SyntheticMass from '../SyntheticMass';
 import Customizer from '../Customizer';
 // import CSVPatientViewer from '../CSVPatientViewer';
 
@@ -154,3 +154,5 @@ function DashboardLayout() {
 }
 
 export default memo(DashboardLayout);
+
+
