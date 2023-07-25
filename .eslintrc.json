@@ -30,8 +30,12 @@
     "space-before-blocks": "warn",
     "space-in-parens": "warn"
   },
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "sourceType": "module"
+    "sourceType": "module",
+    "requireConfigFile": false,
+    "babelOptions": {
+       "presets": ["@babel/preset-react"]
+    }
   }
 }
