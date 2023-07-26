@@ -10,9 +10,6 @@ import './app.css';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import ConstructionIcon from '@mui/icons-material/Construction';
 
-//import DashboardLayout from './Dashboard';
-//import Admin from './Admin';
-
 import Layout from './Layout';
 import PatientViewer from './PatientViewer';
 import Customizer from './Customizer';
@@ -50,8 +47,8 @@ const routes = [
     { path: '/procedures',        label: offline ? false : 'Procedures',        element: <Collections selectedCollection="procedures" />        },
     { path: '/providers',         label: offline ? false : 'Providers',         element: <Collections selectedCollection="providers" />         },
     { path: '/supplies',          label: offline ? false : 'Supplies',          element: <Collections selectedCollection="supplies" />          },
-    
-    // this should be last:
+
+    // this must be last:
     { path: '/*',                label: false,                                 element: <NotFound />}
 ];
 

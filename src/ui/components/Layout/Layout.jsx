@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
-//import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -23,10 +22,6 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import GitHubIcon from '@mui/icons-material/GitHub';
-//import { mainListItems, secondaryListItems } from './listItems';
-//import Chart from './Chart';
-//import Deposits from './Deposits';
-//import Orders from './Orders';
 
 function Copyright(props) {
   return (
@@ -172,9 +167,11 @@ export default function Layout({ routes }) {
           }}
         >
           <Toolbar />
-          <Container sx={{ mt: 4, mb: 4 }} style={{width: "100%"}}>
+          <Container sx={{ mt: 4, mb: 4 }} style={{width: "100%"}} >
             <Grid container spacing={3} style={{width: "100%"}}>
-              <RouterProvider router={hashRouter} />
+              <center style={{width: "100%"}}>
+                <RouterProvider router={hashRouter} />
+              </center>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
