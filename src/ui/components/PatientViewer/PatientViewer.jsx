@@ -12,7 +12,7 @@ import {
   ImmunizationsVisualizer,
   DocumentReferencesVisualizer
 } from 'fhir-visualizers';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { HashLink as Link } from 'react-router-hash-link';
 
 import TextField from '@mui/material/TextField';
@@ -61,7 +61,7 @@ const getDropzone = (setLoading, callback) => {
   return (
     <Dropzone onDrop={onDrop}>
       {({ getRootProps, getInputProps }) => (
-        <>
+        <section>
           <div
             {...getRootProps({
               style: { height: '100vh', width: '100%', background: '#F0F8FF', padding: "2rem" }
@@ -80,7 +80,7 @@ const getDropzone = (setLoading, callback) => {
               </Box>
             </Box>
           </div>
-        </>
+        </section>
       )}
     </Dropzone>
   );
@@ -277,7 +277,7 @@ const EntireRecord = props => {
 const LinksByEncounter = props => {
   const { encounters } = props;
   const location = useLocation();
-  //const history = useHistory();
+  const history = useHistory();
 
   return (
     <Autocomplete
@@ -288,7 +288,7 @@ const LinksByEncounter = props => {
       }
       onChange={(_event, value, _reason) => {
         const newLocation = { ...location, hash: '#' + value.period.start };
-        // history.push(newLocation);
+        history.push(newLocation);
         document.getElementById(value.period.start).scrollIntoView();
       }}
       style={{ width: 900 }}
