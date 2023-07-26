@@ -145,7 +145,7 @@ export default function Layout({ routes }) {
           <Divider />
           <List component="nav">
             { routes.filter((route) => !!route.label).map((route) => {
-              return <ListItemButton href={'/#' + route.path} key={route.path}>
+              return <ListItemButton href={'/spt/#' + route.path} key={route.path}>
                       <ListItemIcon>
                         {route.icon || <DashboardIcon color="primary" fontSize="large" />}
                       </ListItemIcon>

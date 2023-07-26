@@ -20,6 +20,7 @@ Object.values(collections).forEach(collectionName => {
 });
 
 // frontend
-app.get('/', (req, res) => res.sendFile('index.html', { root: __dirname + '/../public' }));
+app.get('/', (req, res) => res.redirect('/spt'));
+app.get('/spt', (req, res) => res.sendFile('index.html', { root: __dirname + '/../public' }));
 
 module.exports = app;
