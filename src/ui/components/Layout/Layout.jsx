@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { RouterProvider, createHashRouter } from 'react-router-dom';
 //import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -7,6 +8,10 @@ import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -17,8 +22,8 @@ import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import GitHubIcon from '@mui/icons-material/GitHub';
+//import { mainListItems, secondaryListItems } from './listItems';
 //import Chart from './Chart';
 //import Deposits from './Deposits';
 //import Orders from './Orders';
@@ -59,6 +64,8 @@ const AppBar = styled(MuiAppBar, {
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     '& .MuiDrawer-paper': {
+      backgroundColor: theme.palette.background.primary,
+      color: theme.palette.text.gray,
       position: 'relative',
       whiteSpace: 'nowrap',
       width: drawerWidth,
@@ -82,14 +89,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-// TODO remove, this demo shouldn't need to reset the theme.
-//const defaultTheme = createTheme();
-
-export default function Dashboard() {
+export default function Layout({ routes }) {
   const [open, setOpen] = React.useState(true);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const hashRouter = createHashRouter(routes);
 
   return (
       <Box sx={{ display: 'flex' }}>
@@ -105,6 +112,7 @@ export default function Dashboard() {
               color="inherit"
               aria-label="open drawer"
               onClick={toggleDrawer}
+              fontSize="large"
               sx={{
                 marginRight: '36px',
                 ...(open && { display: 'none' }),
@@ -113,18 +121,16 @@ export default function Dashboard() {
               <MenuIcon />
             </IconButton>
             <Typography
-              component="h1"
-              variant="h6"
+              component="h5"
+              variant="h5"
               color="inherit"
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              Synthea Toolkit
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
+            <IconButton href="https://github.com/synthetichealth/spt" color="inherit">
+              <GitHubIcon fontSize="large" />
             </IconButton>
           </Toolbar>
         </AppBar>
@@ -138,14 +144,21 @@ export default function Dashboard() {
             }}
           >
             <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
+              <ChevronLeftIcon fontSize="large" color="primary" />
             </IconButton>
           </Toolbar>
           <Divider />
           <List component="nav">
-            {mainListItems}
+            { routes.filter((route) => !!route.label).map((route) => {
+              return <ListItemButton href={'/#' + route.path} key={route.path}>
+                      <ListItemIcon>
+                        {route.icon || <DashboardIcon color="primary" fontSize="large" />}
+                      </ListItemIcon>
+                      <ListItemText primary={route.label} sx={{fontWeight: "bold", color: "white"}} />
+                    </ListItemButton>
+            }) }
             <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
+            {/* TODO: add dividers within in nav list */}
           </List>
         </Drawer>
         <Box
@@ -159,40 +172,9 @@ export default function Dashboard() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <h2>Something here</h2>
-                </Paper>
-              </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <h2>TODO</h2>
-                </Paper>
-              </Grid>
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <h2>TODO</h2>
-                </Paper>
-              </Grid>
+          <Container sx={{ mt: 4, mb: 4 }} style={{width: "100%"}}>
+            <Grid container spacing={3} style={{width: "100%"}}>
+              <RouterProvider router={hashRouter} />
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
@@ -200,3 +182,4 @@ export default function Dashboard() {
       </Box>
   );
 }
+
