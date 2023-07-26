@@ -16,6 +16,7 @@ export default makeStyles(
     collection: {
       margin: '60px auto',
       width: '75vw',
+      maxWidth: '100%',
       backgroundColor: 'white'
     },
     visuallyHidden: {
