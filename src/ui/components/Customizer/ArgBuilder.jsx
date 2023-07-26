@@ -43,25 +43,6 @@ const COMMAND_LINE_ARGS = {
    // -m flag oh no
 };
 
-const GROUP_DESCRIPTIONS = {
-  'Basic': "Enter the desired number of records in your population. Defaults to 1 if not specified.",
-  'Geographic': "Select the geographic region to generate patients for. Synthea can only run for one state or one city" +
-  " at a time, defaulting to the state of Massachusetts",
-  'Demographic': "By default Synthea will generate patients matching the demographic characteristics " + 
-  " of the selected geographic region based on the US Census. These settings allow you to define alternate demographics.",
-  'Reproducibility': (
-    <Fragment>Synthea allows users to exactly recreate a dataset when the same input parameters 
-      are provided to the same version of Synthea. 
-      At minimum, a <code>seed</code>, <code>clinician seed</code>, and <code>reference date</code> must be provided.
-      The <code>seed</code> and <code>clinician seed</code> are used to pick random numbers used in the simulation, so
-      the seeds chosen do not translate directly into specific results; they just need to be kept the same between runs.
-      Some examples for using this are to grow/age a population over time, or to change something else in the simulation 
-      and see how that change impacts the results over time.
-      <br/>
-      See <a href="https://github.com/synthetichealth/synthea/wiki/Recreating-a-Dataset" target="_blank">
-      https://github.com/synthetichealth/synthea/wiki/Recreating-a-Dataset</a> for more information.</Fragment>),
-};
-
 export const renderArgs = (command, argsState, configState = undefined, ) => {
   let argString = command;
 
@@ -143,7 +124,7 @@ const ArgBuilder = (props) => {
     return true;
   }
 
-  const fields = {}; // String (groupName) => Array<InputField (argField)>
+  const fields = {}; // String (groupTitle) => Array<InputField (argField)>
 
   // map args/fields into groups
   const argGroups = {};
@@ -160,12 +141,13 @@ const ArgBuilder = (props) => {
 
     if (onlyGroup && (groupName != onlyGroup)) continue;
 
-    fields[groupName] = [];
+    const groupTitle = groupName + " Settings";
+    fields[groupTitle] = [];
 
     for (const [key, arg] of Object.entries(group)) {
 
       if (arg.type == 'select') {
-        fields[groupName].push((<Autocomplete
+        fields[groupTitle].push((<Autocomplete
             disablePortal
             sx={{ width: 200 }}
             key={key}
@@ -176,7 +158,7 @@ const ArgBuilder = (props) => {
             renderInput={(params) => <TextField {...params} label={arg.display} />}
           />));
       } else if (arg.type == 'range') {
-            fields[groupName].push((<TextField
+            fields[groupTitle].push((<TextField
                       key={`${key} Min`}
                       id={`${key} Min`}
                       name={`${key} Min`}
@@ -187,7 +169,7 @@ const ArgBuilder = (props) => {
                       display="inline"
                       onChange={(evt) => handleChangeRange(key, 0, evt.target.value)}
                       />));
-            fields[groupName].push((<TextField
+            fields[groupTitle].push((<TextField
                       key={`${key} Max`}
                       id={`${key} Max`}
                       name={`${key} Max`}
@@ -199,7 +181,7 @@ const ArgBuilder = (props) => {
                       onChange={(evt) => handleChangeRange(key, 1, evt.target.value)}
                       />));
       } else {
-            fields[groupName].push((<TextField
+            fields[groupTitle].push((<TextField
                       key={key}
                       id={key}
                       name={key}
@@ -217,9 +199,8 @@ const ArgBuilder = (props) => {
   return (
     <div className={classes.collection}>
       { !onlyRenderFields && <h3>Command-line Argument Builder</h3> }
-      { Object.entries(fields).map(([groupName, argFieldArray]) => { return <div key={groupName}>
-        <h5 style={{margin: "2rem 0 0.5rem 0"}}>{groupName} Settings</h5>
-        {GROUP_DESCRIPTIONS[groupName]}
+      { Object.entries(fields).map(([groupTitle, argFieldArray]) => { return <div key={groupTitle}>
+        <h5 style={{margin: "2rem 0 0.5rem 0"}}>{groupTitle}</h5>
         <Stack direction="row" spacing={3}>
             {argFieldArray}
         </Stack>

@@ -30,23 +30,20 @@ const Customizer = props => {
         <h1 style={{textAlign: 'center', width: '100%', margin: '2rem 0'}}>Synthea Customizer</h1>
 
         { mode == 0 && (
-          <Fragment>
-          Welcome to the Synthea™ customizer. This page is meant to help users install, configure, and run Synthea for common use cases.
           <Stack direction={{xs: "column", md: "row"}} justifyContent="space-evenly" alignItems="center">
               <Button variant="contained" onClick={() => setMode(GUIDED_MODE)} style={{ display: "block", textTransform: "none", minWidth: 'min-content', width: '50%', minHeight: '300px', textAlign: 'center', margin: '1rem'}}>
                 <h3>Use Guided Mode</h3>
                 <br />
-                Guided Mode will walk you through common Synthea configuration options with a series of questions.
+                Guided Mode will walk you through the most common Synthea configuration options.
                 This mode is recommended for first-time users and beginners.
               </Button>
 
               <Button variant="contained" onClick={() => setMode(ADVANCED_MODE)} style={{ display: "block", textTransform: "none", minWidth: 'min-content', width: '50%', minHeight: '300px', textAlign: 'center', margin: '1rem'}}>
                 <h3>Use Advanced Mode</h3>
                 <br />
-                Advanced Mode shows all customization options right away. Recommended for users who know exactly what customizations they want.
+                Advanced Mode shows all customization options on one page. Recommended for users who know exactly what customizations they want.
               </Button>
           </Stack>
-          </Fragment>
         ) }
         { mode == GUIDED_MODE && <GuidedMode /> }
         { mode == ADVANCED_MODE && <AdvancedMode /> }
@@ -72,6 +69,15 @@ const AdvancedMode = props => {
       <DockerfileBuilder args={args} config={config} configAsArgs={configAsArgs} keepModuleString={keepModuleString}  />
     </React.Fragment>);
 }
+
+// questions:
+// 1. wizard vs advanced "show me every option"
+// 2. what format of data do you need? FHIR, CSV, CCDA
+// 3. specific data requirements?
+//  - yes I need a certain condition
+//  - yes i need a specific geographic location
+// last. do you want to use docker?
+//
 
 const GuidedMode = props => {
 

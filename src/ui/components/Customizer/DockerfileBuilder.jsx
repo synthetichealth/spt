@@ -117,33 +117,6 @@ const DockerfileBuilder = (props) => {
       <p>3. Run the container pointing to your output folder:</p>
       <BashCodeBlock code="docker run -v ./docker_output:/output -it syntheadocker" />
       <br />
-      you should see output similar to the following:
-    <pre>
-    Scanned 60 modules and 36 submodules.<br/>
-    Loading submodule modules/breast_cancer/tnm_diagnosis.json<br/>
-    Loading submodule modules/allergies/allergy_incidence.json<br/>
-    Loading submodule modules/dermatitis/moderate_cd_obs.json<br/>
-    ...<br/>
-    Loading module modules/opioid_addiction.json<br/>
-    Loading module modules/dialysis.json<br/>
-    ...<br/>
-    Loading module modules/hypertension.json<br/>
-    Running with options:<br/>
-    Population: 1<br/>
-    Seed: 1570658792125<br/>
-    Provider Seed:1570658792125<br/>
-    Location: Massachusetts<br/>
-    Min Age: 0<br/>
-    Max Age: 140<br/>
-    1 -- Arthur650 Carroll471 (39 y/o M) Southwick, Massachusetts <br/>
-    {"{alive=1, dead=0}"}
-    </pre>
-    <br/>
-    Once the process completes, your <code>docker_output</code> folder will contain a subfolder for each output format selected. 
-
-    You can review these files in your text editor of choice, 
-    or use the <a href="#/record_viewer" target="_blank">Patient Viewer</a> 
-    to quickly view the contents of a FHIR JSON file.
     </div>
   );
 }
