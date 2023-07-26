@@ -10,7 +10,7 @@ A demo is available at https://synthetichealth.github.io/spt/#/
 ### FHIR Patient Viewer*
 Drag & drop a FHIR JSON patient Bundle onto the Patient Viewer to get an overview of the patient's Conditions, Medications, Procedures, and other resources in their record. The visualization is based on the [fhir-visualizers library](https://github.com/synthetichealth/fhir-visualizers/).
 
-### Synthea Customizer
+### Synthea Customizer*
 Guided tool to help install, configure, and run Synthea with appropriate settings for common use cases.
 
 ### SyntheticMass Browser
