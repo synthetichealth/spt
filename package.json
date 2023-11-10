@@ -41,7 +41,7 @@
     "@mui/material": "^5.13.4",
     "@mui/styles": "^5.12.3",
     "@welldone-software/why-did-you-render": "^6.1.1",
-    "axios": "^0.21.1",
+    "axios": "^1.6.0",
     "base64url": "^3.0.1",
     "csv-parse": "^5.4.0",
     "debug": "~2.6.9",
