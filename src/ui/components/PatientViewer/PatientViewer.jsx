@@ -228,6 +228,16 @@ const EntireRecord = props => {
   const getByType = type => allResources.filter(r => r.resourceType === type);
   const conditions = getByType('Condition');
   const medications = getByType('MedicationRequest');
+  const meds = getByType('Medication');
+  medications.forEach(m => {
+    if (m.medicationReference) {
+      const referencedMed = meds.find(med => isMatchingReference(med, m.medicationReference.reference, 'Medication'));
+      if (referencedMed) {
+        m.medicationCodeableConcept = referencedMed.code;
+      }
+    }
+  });
+
   let observations = getByType('Observation');
   const reports = getByType('DiagnosticReport');
 
