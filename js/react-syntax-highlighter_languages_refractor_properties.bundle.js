@@ -13,7 +13,7 @@
 /*!***************************************************!*\
   !*** ./node_modules/refractor/lang/properties.js ***!
   \***************************************************/
-/***/ (function(module) {
+/***/ ((module) => {
 
 eval("\n\nmodule.exports = properties\nproperties.displayName = 'properties'\nproperties.aliases = []\nfunction properties(Prism) {\n  Prism.languages.properties = {\n    comment: /^[ \\t]*[#!].*$/m,\n    'attr-value': {\n      pattern:\n        /(^[ \\t]*(?:\\\\(?:\\r\\n|[\\s\\S])|[^\\\\\\s:=])+(?: *[=:] *(?! )| ))(?:\\\\(?:\\r\\n|[\\s\\S])|[^\\\\\\r\\n])+/m,\n      lookbehind: true\n    },\n    'attr-name': /^[ \\t]*(?:\\\\(?:\\r\\n|[\\s\\S])|[^\\\\\\s:=])+(?= *[=:]| )/m,\n    punctuation: /[=:]/\n  }\n}\n\n\n//# sourceURL=webpack://spt/./node_modules/refractor/lang/properties.js?");
 

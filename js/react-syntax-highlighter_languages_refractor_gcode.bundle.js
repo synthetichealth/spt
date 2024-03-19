@@ -13,7 +13,7 @@
 /*!**********************************************!*\
   !*** ./node_modules/refractor/lang/gcode.js ***!
   \**********************************************/
-/***/ (function(module) {
+/***/ ((module) => {
 
 eval("\n\nmodule.exports = gcode\ngcode.displayName = 'gcode'\ngcode.aliases = []\nfunction gcode(Prism) {\n  Prism.languages.gcode = {\n    comment: /;.*|\\B\\(.*?\\)\\B/,\n    string: {\n      pattern: /\"(?:\"\"|[^\"])*\"/,\n      greedy: true\n    },\n    keyword: /\\b[GM]\\d+(?:\\.\\d+)?\\b/,\n    property: /\\b[A-Z]/,\n    checksum: {\n      pattern: /(\\*)\\d+/,\n      lookbehind: true,\n      alias: 'number'\n    },\n    // T0:0:0\n    punctuation: /[:*]/\n  }\n}\n\n\n//# sourceURL=webpack://spt/./node_modules/refractor/lang/gcode.js?");
 

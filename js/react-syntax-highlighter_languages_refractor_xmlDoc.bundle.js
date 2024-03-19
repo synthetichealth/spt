@@ -13,7 +13,7 @@
 /*!************************************************!*\
   !*** ./node_modules/refractor/lang/xml-doc.js ***!
   \************************************************/
-/***/ (function(module) {
+/***/ ((module) => {
 
 eval("\n\nmodule.exports = xmlDoc\nxmlDoc.displayName = 'xmlDoc'\nxmlDoc.aliases = []\nfunction xmlDoc(Prism) {\n  ;(function (Prism) {\n    /**\n     * If the given language is present, it will insert the given doc comment grammar token into it.\n     *\n     * @param {string} lang\n     * @param {any} docComment\n     */\n    function insertDocComment(lang, docComment) {\n      if (Prism.languages[lang]) {\n        Prism.languages.insertBefore(lang, 'comment', {\n          'doc-comment': docComment\n        })\n      }\n    }\n    var tag = Prism.languages.markup.tag\n    var slashDocComment = {\n      pattern: /\\/\\/\\/.*/,\n      greedy: true,\n      alias: 'comment',\n      inside: {\n        tag: tag\n      }\n    }\n    var tickDocComment = {\n      pattern: /'''.*/,\n      greedy: true,\n      alias: 'comment',\n      inside: {\n        tag: tag\n      }\n    }\n    insertDocComment('csharp', slashDocComment)\n    insertDocComment('fsharp', slashDocComment)\n    insertDocComment('vbnet', tickDocComment)\n  })(Prism)\n}\n\n\n//# sourceURL=webpack://spt/./node_modules/refractor/lang/xml-doc.js?");
 

@@ -13,7 +13,7 @@
 /*!**************************************************!*\
   !*** ./node_modules/refractor/lang/brainfuck.js ***!
   \**************************************************/
-/***/ (function(module) {
+/***/ ((module) => {
 
 eval("\n\nmodule.exports = brainfuck\nbrainfuck.displayName = 'brainfuck'\nbrainfuck.aliases = []\nfunction brainfuck(Prism) {\n  Prism.languages.brainfuck = {\n    pointer: {\n      pattern: /<|>/,\n      alias: 'keyword'\n    },\n    increment: {\n      pattern: /\\+/,\n      alias: 'inserted'\n    },\n    decrement: {\n      pattern: /-/,\n      alias: 'deleted'\n    },\n    branching: {\n      pattern: /\\[|\\]/,\n      alias: 'important'\n    },\n    operator: /[.,]/,\n    comment: /\\S+/\n  }\n}\n\n\n//# sourceURL=webpack://spt/./node_modules/refractor/lang/brainfuck.js?");
 

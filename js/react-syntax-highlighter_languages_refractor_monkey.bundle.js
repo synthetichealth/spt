@@ -13,7 +13,7 @@
 /*!***********************************************!*\
   !*** ./node_modules/refractor/lang/monkey.js ***!
   \***********************************************/
-/***/ (function(module) {
+/***/ ((module) => {
 
 eval("\n\nmodule.exports = monkey\nmonkey.displayName = 'monkey'\nmonkey.aliases = []\nfunction monkey(Prism) {\n  Prism.languages.monkey = {\n    comment: {\n      pattern: /^#Rem\\s[\\s\\S]*?^#End|'.+/im,\n      greedy: true\n    },\n    string: {\n      pattern: /\"[^\"\\r\\n]*\"/,\n      greedy: true\n    },\n    preprocessor: {\n      pattern: /(^[ \\t]*)#.+/m,\n      lookbehind: true,\n      greedy: true,\n      alias: 'property'\n    },\n    function: /\\b\\w+(?=\\()/,\n    'type-char': {\n      pattern: /\\b[?%#$]/,\n      alias: 'class-name'\n    },\n    number: {\n      pattern:\n        /((?:\\.\\.)?)(?:(?:\\b|\\B-\\.?|\\B\\.)\\d+(?:(?!\\.\\.)\\.\\d*)?|\\$[\\da-f]+)/i,\n      lookbehind: true\n    },\n    keyword:\n      /\\b(?:Abstract|Array|Bool|Case|Catch|Class|Const|Continue|Default|Eachin|Else|ElseIf|End|EndIf|Exit|Extends|Extern|False|Field|Final|Float|For|Forever|Function|Global|If|Implements|Import|Inline|Int|Interface|Local|Method|Module|New|Next|Null|Object|Private|Property|Public|Repeat|Return|Select|Self|Step|Strict|String|Super|Then|Throw|To|True|Try|Until|Void|Wend|While)\\b/i,\n    operator:\n      /\\.\\.|<[=>]?|>=?|:?=|(?:[+\\-*\\/&~|]|\\b(?:Mod|Shl|Shr)\\b)=?|\\b(?:And|Not|Or)\\b/i,\n    punctuation: /[.,:;()\\[\\]]/\n  }\n}\n\n\n//# sourceURL=webpack://spt/./node_modules/refractor/lang/monkey.js?");
 

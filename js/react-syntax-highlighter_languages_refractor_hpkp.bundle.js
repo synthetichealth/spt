@@ -13,7 +13,7 @@
 /*!*********************************************!*\
   !*** ./node_modules/refractor/lang/hpkp.js ***!
   \*********************************************/
-/***/ (function(module) {
+/***/ ((module) => {
 
 eval("\n\nmodule.exports = hpkp\nhpkp.displayName = 'hpkp'\nhpkp.aliases = []\nfunction hpkp(Prism) {\n  /**\n   * Original by Scott Helme.\n   *\n   * Reference: https://scotthelme.co.uk/hpkp-cheat-sheet/\n   */\n  Prism.languages.hpkp = {\n    directive: {\n      pattern:\n        /\\b(?:includeSubDomains|max-age|pin-sha256|preload|report-to|report-uri|strict)(?=[\\s;=]|$)/i,\n      alias: 'property'\n    },\n    operator: /=/,\n    punctuation: /;/\n  }\n}\n\n\n//# sourceURL=webpack://spt/./node_modules/refractor/lang/hpkp.js?");
 

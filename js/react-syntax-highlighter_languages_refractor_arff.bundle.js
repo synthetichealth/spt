@@ -13,7 +13,7 @@
 /*!*********************************************!*\
   !*** ./node_modules/refractor/lang/arff.js ***!
   \*********************************************/
-/***/ (function(module) {
+/***/ ((module) => {
 
 eval("\n\nmodule.exports = arff\narff.displayName = 'arff'\narff.aliases = []\nfunction arff(Prism) {\n  Prism.languages.arff = {\n    comment: /%.*/,\n    string: {\n      pattern: /([\"'])(?:\\\\.|(?!\\1)[^\\\\\\r\\n])*\\1/,\n      greedy: true\n    },\n    keyword: /@(?:attribute|data|end|relation)\\b/i,\n    number: /\\b\\d+(?:\\.\\d+)?\\b/,\n    punctuation: /[{},]/\n  }\n}\n\n\n//# sourceURL=webpack://spt/./node_modules/refractor/lang/arff.js?");
 

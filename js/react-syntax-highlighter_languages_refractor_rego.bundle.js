@@ -13,7 +13,7 @@
 /*!*********************************************!*\
   !*** ./node_modules/refractor/lang/rego.js ***!
   \*********************************************/
-/***/ (function(module) {
+/***/ ((module) => {
 
 eval("\n\nmodule.exports = rego\nrego.displayName = 'rego'\nrego.aliases = []\nfunction rego(Prism) {\n  // https://www.openpolicyagent.org/docs/latest/policy-reference/\n  Prism.languages.rego = {\n    comment: /#.*/,\n    property: {\n      pattern:\n        /(^|[^\\\\.])(?:\"(?:\\\\.|[^\\\\\"\\r\\n])*\"|`[^`]*`|\\b[a-z_]\\w*\\b)(?=\\s*:(?!=))/i,\n      lookbehind: true,\n      greedy: true\n    },\n    string: {\n      pattern: /(^|[^\\\\])\"(?:\\\\.|[^\\\\\"\\r\\n])*\"|`[^`]*`/,\n      lookbehind: true,\n      greedy: true\n    },\n    keyword:\n      /\\b(?:as|default|else|import|not|null|package|set(?=\\s*\\()|some|with)\\b/,\n    boolean: /\\b(?:false|true)\\b/,\n    function: {\n      pattern: /\\b[a-z_]\\w*\\b(?:\\s*\\.\\s*\\b[a-z_]\\w*\\b)*(?=\\s*\\()/i,\n      inside: {\n        namespace: /\\b\\w+\\b(?=\\s*\\.)/,\n        punctuation: /\\./\n      }\n    },\n    number: /-?\\b\\d+(?:\\.\\d+)?(?:e[+-]?\\d+)?\\b/i,\n    operator: /[-+*/%|&]|[<>:=]=?|!=|\\b_\\b/,\n    punctuation: /[,;.\\[\\]{}()]/\n  }\n}\n\n\n//# sourceURL=webpack://spt/./node_modules/refractor/lang/rego.js?");
 

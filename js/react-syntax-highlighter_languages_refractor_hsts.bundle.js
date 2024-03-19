@@ -13,7 +13,7 @@
 /*!*********************************************!*\
   !*** ./node_modules/refractor/lang/hsts.js ***!
   \*********************************************/
-/***/ (function(module) {
+/***/ ((module) => {
 
 eval("\n\nmodule.exports = hsts\nhsts.displayName = 'hsts'\nhsts.aliases = []\nfunction hsts(Prism) {\n  /**\n   * Original by Scott Helme.\n   *\n   * Reference: https://scotthelme.co.uk/hsts-cheat-sheet/\n   */\n  Prism.languages.hsts = {\n    directive: {\n      pattern: /\\b(?:includeSubDomains|max-age|preload)(?=[\\s;=]|$)/i,\n      alias: 'property'\n    },\n    operator: /=/,\n    punctuation: /;/\n  }\n}\n\n\n//# sourceURL=webpack://spt/./node_modules/refractor/lang/hsts.js?");
 

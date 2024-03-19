@@ -13,7 +13,7 @@
 /*!********************************************!*\
   !*** ./node_modules/refractor/lang/csv.js ***!
   \********************************************/
-/***/ (function(module) {
+/***/ ((module) => {
 
 eval("\n\nmodule.exports = csv\ncsv.displayName = 'csv'\ncsv.aliases = []\nfunction csv(Prism) {\n  // https://tools.ietf.org/html/rfc4180\n  Prism.languages.csv = {\n    value: /[^\\r\\n,\"]+|\"(?:[^\"]|\"\")*\"(?!\")/,\n    punctuation: /,/\n  }\n}\n\n\n//# sourceURL=webpack://spt/./node_modules/refractor/lang/csv.js?");
 

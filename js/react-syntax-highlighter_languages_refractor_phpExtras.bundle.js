@@ -13,7 +13,7 @@
 /*!***************************************************!*\
   !*** ./node_modules/refractor/lang/php-extras.js ***!
   \***************************************************/
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 eval("\nvar refractorPhp = __webpack_require__(/*! ./php.js */ \"./node_modules/refractor/lang/php.js\")\nmodule.exports = phpExtras\nphpExtras.displayName = 'phpExtras'\nphpExtras.aliases = []\nfunction phpExtras(Prism) {\n  Prism.register(refractorPhp)\n  Prism.languages.insertBefore('php', 'variable', {\n    this: {\n      pattern: /\\$this\\b/,\n      alias: 'keyword'\n    },\n    global:\n      /\\$(?:GLOBALS|HTTP_RAW_POST_DATA|_(?:COOKIE|ENV|FILES|GET|POST|REQUEST|SERVER|SESSION)|argc|argv|http_response_header|php_errormsg)\\b/,\n    scope: {\n      pattern: /\\b[\\w\\\\]+::/,\n      inside: {\n        keyword: /\\b(?:parent|self|static)\\b/,\n        punctuation: /::|\\\\/\n      }\n    }\n  })\n}\n\n\n//# sourceURL=webpack://spt/./node_modules/refractor/lang/php-extras.js?");
 

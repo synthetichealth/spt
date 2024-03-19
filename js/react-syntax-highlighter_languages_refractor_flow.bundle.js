@@ -13,7 +13,7 @@
 /*!*********************************************!*\
   !*** ./node_modules/refractor/lang/flow.js ***!
   \*********************************************/
-/***/ (function(module) {
+/***/ ((module) => {
 
 eval("\n\nmodule.exports = flow\nflow.displayName = 'flow'\nflow.aliases = []\nfunction flow(Prism) {\n  ;(function (Prism) {\n    Prism.languages.flow = Prism.languages.extend('javascript', {})\n    Prism.languages.insertBefore('flow', 'keyword', {\n      type: [\n        {\n          pattern:\n            /\\b(?:[Bb]oolean|Function|[Nn]umber|[Ss]tring|any|mixed|null|void)\\b/,\n          alias: 'tag'\n        }\n      ]\n    })\n    Prism.languages.flow['function-variable'].pattern =\n      /(?!\\s)[_$a-z\\xA0-\\uFFFF](?:(?!\\s)[$\\w\\xA0-\\uFFFF])*(?=\\s*=\\s*(?:function\\b|(?:\\([^()]*\\)(?:\\s*:\\s*\\w+)?|(?!\\s)[_$a-z\\xA0-\\uFFFF](?:(?!\\s)[$\\w\\xA0-\\uFFFF])*)\\s*=>))/i\n    delete Prism.languages.flow['parameter']\n    Prism.languages.insertBefore('flow', 'operator', {\n      'flow-punctuation': {\n        pattern: /\\{\\||\\|\\}/,\n        alias: 'punctuation'\n      }\n    })\n    if (!Array.isArray(Prism.languages.flow.keyword)) {\n      Prism.languages.flow.keyword = [Prism.languages.flow.keyword]\n    }\n    Prism.languages.flow.keyword.unshift(\n      {\n        pattern: /(^|[^$]\\b)(?:Class|declare|opaque|type)\\b(?!\\$)/,\n        lookbehind: true\n      },\n      {\n        pattern:\n          /(^|[^$]\\B)\\$(?:Diff|Enum|Exact|Keys|ObjMap|PropertyType|Record|Shape|Subtype|Supertype|await)\\b(?!\\$)/,\n        lookbehind: true\n      }\n    )\n  })(Prism)\n}\n\n\n//# sourceURL=webpack://spt/./node_modules/refractor/lang/flow.js?");
 
