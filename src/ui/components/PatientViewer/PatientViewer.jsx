@@ -124,6 +124,38 @@ const obsValue = entry => {
   return '';
 };
 
+const getNoteText = dr => {
+  return atob( dr['content'][0]['attachment']['data'] );
+};
+
+const renderNote = text => {
+  return (
+  <Accordion allowZeroExpanded>
+    <AccordionItem key={text}>
+        <AccordionItemHeading>
+            <AccordionItemButton>
+                View Note
+            </AccordionItemButton>
+        </AccordionItemHeading>
+        <AccordionItemPanel>
+          {text}
+        </AccordionItemPanel>
+    </AccordionItem>
+  </Accordion>
+  );
+}
+
+const extractMedia = m => {
+  if (!m || !m.content) return undefined;
+
+  const contentType = m.content.contentType;
+  const data = m.content.data;
+  const url = `data:${contentType};base64, ${data}`;
+  return (
+    <a href={url} target="_blank"> <img src={url} class="imagemedia" title="Click to open full-size" /> </a>
+    )
+};
+
 function getPatient(id) {
   if (id.startsWith('csv/')) {
     return csvToFhir(id.slice(4)); // slice off the "csv/" bit
@@ -326,6 +358,12 @@ const EncounterGroupedRecord = props => {
     const observations = getByType('Observation');
 
     const procedures = getByType('Procedure');
+    const notes = allResources.filter(
+        r => r.resourceType === 'DocumentReference' && 
+        Array.isArray(r.context?.encounter) && 
+        isMatchingReference(e, r.context.encounter[0]?.reference, 'Encounter')
+      );
+    const medias = getByType('Media');
     // const reports = getByType('DiagnosticReport');
 
     // reports.forEach(r => {
@@ -341,6 +379,8 @@ const EncounterGroupedRecord = props => {
     e.medications = medications;
     e.observations = observations;
     e.procedures = procedures;
+    e.notes = notes;
+    e.medias = medias;
 
     encounterSections.push(
       <div key={title}>
@@ -470,6 +510,36 @@ const EncounterGroupedRecord = props => {
                   getter: o => o.code.coding[0].display
                 },
                 { title: 'Value', versions: '*', getter: o => obsValue(o) },
+                SPACER
+              ]
+            },
+            {
+              getter: r => r.notes,
+              keyFn: dr => dr.id,
+              columns: [
+                {
+                  title: 'Type',
+                  versions: '*',
+                  getter: () => 'Note'
+                },
+                SPACER,
+                { title: 'Text', versions: '*', getter: dr => renderNote(getNoteText(dr)) },
+                SPACER,
+                SPACER
+              ]
+            },
+            {
+              getter: r => r.medias,
+              keyFn: m => m.id,
+              columns: [
+                {
+                  title: 'Type',
+                  versions: '*',
+                  getter: () => 'Media'
+                },
+                SPACER,
+                { title: 'Media', versions: '*', getter: m => extractMedia(m) },
+                SPACER,
                 SPACER
               ]
             }
