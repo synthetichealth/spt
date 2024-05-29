@@ -30,3 +30,8 @@ span code span, span code {
 code {
     font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
 }
+
+
+.imagemedia {
+  max-width: 200px
+}
