@@ -1,5 +1,5 @@
-import { makeStyles } from '@mui/styles';
-export default makeStyles(
+import { styled } from "@mui/system";
+export default styled(
   theme => ({
     collection: {
       color: 'red'

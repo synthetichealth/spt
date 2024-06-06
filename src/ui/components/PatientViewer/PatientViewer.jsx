@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from "react-router-dom";
+import useLocalStorage from "use-local-storage";
 import {
-  PatientVisualizer,
-  ConditionsVisualizer,
-  ObservationsVisualizer,
-  ReportsVisualizer,
-  MedicationsVisualizer,
-  AllergiesVisualizer,
-  CarePlansVisualizer,
-  ProceduresVisualizer,
-  EncountersVisualizer,
-  ImmunizationsVisualizer,
-  DocumentReferencesVisualizer
+  PatientVisualizer
 } from 'fhir-visualizers';
+import {
+  ConditionsTable,
+  ObservationsTable,
+  ReportsTable,
+  MedicationRequestsTable,
+  AllergiesTable,
+  CarePlansTable,
+  ProceduresTable,
+  EncountersTable,
+  ImmunizationsTable,
+  DocumentReferencesTable
+} from '../ResourceTables/ResourceTables';
 import { useLocation } from 'react-router-dom';
 import { HashLink as Link } from 'react-router-hash-link';
 
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/lab/Autocomplete';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 
 import {
   Accordion,
@@ -28,21 +31,22 @@ import {
   AccordionItemPanel
 } from 'react-accessible-accordion';
 
+import EncounterGroupedRecord from './EncounterGroupedRecord';
+
+import Settings from './Settings';
+
+import { isMatchingReference } from './utils';
+
 // Demo styles, see 'Styles' section below for some notes on use.
 import 'react-accessible-accordion/dist/fancy-example.css';
 
 import Dropzone from 'react-dropzone';
 
 import { getPatientById } from '../SyntheticMass/api';
+import { getPatientOnGitHub } from '../../github';
 import csvToFhir from './csvToFhir';
 
-const isMatchingReference = (entry, reference, resourceType) => {
-  return (
-    entry.id === reference ||
-    'urn:uuid:' + entry.id === reference ||
-    resourceType + '/' + entry.id === reference
-  );
-};
+import { evaluateResource, appliesToResource } from '../../fhirpath_utils';
 
 const getDropzone = (setLoading, callback) => {
   const onDrop = files => {
@@ -86,79 +90,11 @@ const getDropzone = (setLoading, callback) => {
   );
 };
 
-const SPACER = { title: '', versions: '*', getter: () => '' };
-
-const round = function(num, digits) {
-  return Number.parseFloat(num).toFixed(digits);
-};
-
-const obsValue = entry => {
-  if (entry == null) {
-    return '';
-  } else if (entry.valueQuantity) {
-    return round(entry.valueQuantity.value, 2) + ' ' + entry.valueQuantity.code;
-  } else if (entry.valueCodeableConcept) {
-    return entry.valueCodeableConcept.coding[0].display;
-  } else if (entry.valueString) {
-    return entry.valueString;
-  }
-
-  if (entry.code.coding[0].display === 'Blood Pressure') {
-    if (!entry.component[0].valueQuantity) {
-      return ''; // WTF!!
-    }
-
-    const v1 = Number.parseFloat(entry.component[0].valueQuantity.value);
-    const v2 = Number.parseFloat(entry.component[1].valueQuantity.value);
-
-    const s1 = v1.toFixed(0);
-    const s2 = v2.toFixed(0);
-
-    if (v1 > v2) {
-      return s1 + ' / ' + s2 + ' mmHg';
-    } else {
-      return s2 + ' / ' + s1 + ' mmHg';
-    }
-  }
-
-  return '';
-};
-
-const getNoteText = dr => {
-  return atob( dr['content'][0]['attachment']['data'] );
-};
-
-const renderNote = text => {
-  return (
-  <Accordion allowZeroExpanded>
-    <AccordionItem key={text}>
-        <AccordionItemHeading>
-            <AccordionItemButton>
-                View Note
-            </AccordionItemButton>
-        </AccordionItemHeading>
-        <AccordionItemPanel>
-          {text}
-        </AccordionItemPanel>
-    </AccordionItem>
-  </Accordion>
-  );
-}
-
-const extractMedia = m => {
-  if (!m || !m.content) return undefined;
-
-  const contentType = m.content.contentType;
-  const data = m.content.data;
-  const url = `data:${contentType};base64, ${data}`;
-  return (
-    <a href={url} target="_blank"> <img src={url} class="imagemedia" title="Click to open full-size" /> </a>
-    )
-};
-
 function getPatient(id) {
   if (id.startsWith('csv/')) {
     return csvToFhir(id.slice(4)); // slice off the "csv/" bit
+  } else if (id.startsWith('github/')) {
+    return getPatientOnGitHub(id);
   } else {
     return getPatientById(id);
   }
@@ -166,31 +102,66 @@ function getPatient(id) {
 
 const PatientViewer = props => {
   const location = useLocation();
-  const urlParams = new URLSearchParams(location.search);
+  const [urlParams, setUrlParams] = useSearchParams();
 
   const id = props.id || urlParams.get('patient');
 
-  const [bundle, setBundle] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+  const [bundle, _setBundle] = useState();
+  const [previousBundle, setPreviousBundle] = useLocalStorage("previousBundle", bundle);
+  const [isLoading, setIsLoading] = useState(!bundle);
 
-  const [isGroupByEncounter, setIsGroupByEncounter] = useState(false);
+  const setBundle = (bundle) => {
+    _setBundle(bundle);
+    setPreviousBundle(bundle);
+    setIsLoading(false);
+  }
+
+
+
+  const [isGroupByEncounter, setIsGroupByEncounter] = useLocalStorage("group-by-encounter", false);
+  const [filters, setFilters] = useLocalStorage("filters", {});
+  const [filterMode, setFilterMode] = useLocalStorage("filter-mode", "include");
+
+  // TODO: probably a better way to make these generic. don't want to pass around 100 variables for different settings
+  const [hideStoppedMeds, setHideStoppedMeds] = useLocalStorage("Hide Stopped Medications", false);
+  const [hideResolvedConditions, setHideResolvedConditions] = useLocalStorage("Hide Resolved Conditions", false);
 
   useEffect(() => {
     if (id && !bundle) {
       setIsLoading(true);
       getPatient(id).then(patientEverythingBundle => {
         setBundle(patientEverythingBundle);
-        setIsLoading(false);
       });
     }
   }, [id, bundle]);
 
-  if (!id && !bundle) return getDropzone(setIsLoading, setBundle);
+  if (!id && !bundle) {
+    return (
+      <>
+      { previousBundle && 
+        <Button variant="contained" onClick={() => setBundle(previousBundle)} style={{textTransform: "none"}}>Reload Last Patient</Button>
+      } 
+      { getDropzone(setIsLoading, setBundle) }
+      </>
+
+    );
+  }
 
   if (isLoading)
     return <img src="https://i.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.webp" alt="loading..." />;
 
-  const allResources = bundle.entry.map(e => e.resource);
+  let allResources = bundle.entry.map(e => e.resource);
+
+  if (Object.keys(filters).length) {
+    allResources = allResources.filter(r => {
+      const filtersByResourceType = filters[r.resourceType];
+      if (!filtersByResourceType) return true;
+
+      const anyMatch = filtersByResourceType.some(f => appliesToResource(r, f));
+      return filterMode === 'exclude' ? !anyMatch : anyMatch;
+    });
+  }
+
   const patient = allResources.find(r => r.resourceType === 'Patient');
 
   const toggleGroup = event => {
@@ -198,29 +169,32 @@ const PatientViewer = props => {
     setIsGroupByEncounter(!isGroupByEncounter);
   };
 
-  if (isGroupByEncounter) {
-    return (
-      <Paper style={{margin: "1rem", padding: "1rem"}}>
-        <PatientVisualizer patient={patient} />
-        <a href="#" onClick={toggleGroup}>
-          Ungroup by Encounter
-        </a>
+  return (
+    <Paper style={{margin: "1rem", padding: "1rem"}}>
+      <Settings />
+      <PatientVisualizer patient={patient} />
 
-        <EncounterGroupedRecord allResources={allResources} />
-      </Paper>
-    );
-  } else {
-    return (
-      <Paper style={{margin: "1rem", padding: "1rem"}}>
-        <PatientVisualizer patient={patient} />
-        <a href="#" onClick={toggleGroup}>
-          Group by Encounter (Work in Progress)
-        </a>
-        <LinksByType />
-        <EntireRecord allResources={allResources} />
-      </Paper>
-    );
-  }
+      <a href="#" onClick={toggleGroup}>
+        { isGroupByEncounter ? "Ungroup" : "Group" } by Encounter
+      </a>
+      <br/>
+
+      { isGroupByEncounter ? (
+          <EncounterGroupedRecord allResources={allResources} />
+        ) : (
+        // !isGroupByEncounter
+        <>
+          <LinksByType />
+          <EntireRecord 
+            allResources={allResources} 
+            hideResolvedConditions={hideResolvedConditions}
+            hideStoppedMeds={hideStoppedMeds} />
+        </>
+        )}
+
+    </Paper>
+  );
+
 };
 
 const LinksByType = () => {
@@ -233,33 +207,40 @@ const LinksByType = () => {
     'Procedures',
     'Encounters',
     'Allergies',
-    'Vaccinations',
+    'Immunizations',
     'Documents'
   ];
   const location = useLocation();
   return (
     <div>
-      Jump To:
-      <ul>
-        {types.map(t => {
+      Jump To:<br />
+        {types.map((t, i) => {
           // newLocation preserves any query, like if we're in a patient via syntheticmass
           const newLocation = { ...location, hash: '#' + t };
           return (
-            <li key={t}>
+              <>
+              { i > 0 && ' | ' }
               <Link to={newLocation}>{t}</Link>
-            </li>
+              </>
           );
         })}
-      </ul>
     </div>
   );
 };
 
 const EntireRecord = props => {
-  const { allResources } = props;
+  const { allResources, hideStoppedMeds, hideResolvedConditions } = props;
   const getByType = type => allResources.filter(r => r.resourceType === type);
-  const conditions = getByType('Condition');
-  const medications = getByType('MedicationRequest');
+  let conditions = getByType('Condition');
+  if (hideResolvedConditions) {
+    conditions = conditions.filter(c => !c.abatementDateTime);
+  }
+
+  let medications = getByType('MedicationRequest');
+  if (hideStoppedMeds) {
+    medications = medications.filter(m => m.status !== 'stopped');
+  }
+
   const meds = getByType('Medication');
   medications.forEach(m => {
     if (m.medicationReference) {
@@ -316,247 +297,6 @@ const EntireRecord = props => {
   );
 };
 
-const LinksByEncounter = props => {
-  const { encounters } = props;
-  const location = useLocation();
-  //const history = useHistory();
-
-  return (
-    <Autocomplete
-      id="combo-box-demo"
-      options={encounters}
-      getOptionLabel={e =>
-        `${e.period.start} - ${e.type[0].coding[0].code} ${e.type[0].coding[0].display}`
-      }
-      onChange={(_event, value, _reason) => {
-        const newLocation = { ...location, hash: '#' + value.period.start };
-        // history.push(newLocation);
-        document.getElementById(value.period.start).scrollIntoView();
-      }}
-      style={{ width: 900 }}
-      renderInput={params => <TextField {...params} label="Jump To Encounter" variant="outlined" />}
-    />
-  );
-};
-
-const EncounterGroupedRecord = props => {
-  const { allResources } = props;
-  const encounters = allResources.filter(r => r.resourceType === 'Encounter').reverse(); // reverse chrono order
-
-  const encounterSections = [];
-
-  for (const e of encounters) {
-    const getByType = type =>
-      allResources.filter(
-        r => r.resourceType === type && isMatchingReference(e, r.encounter?.reference, 'Encounter')
-      );
-
-    const medications = getByType('MedicationRequest');
-
-    const conditions = getByType('Condition');
-
-    const observations = getByType('Observation');
-
-    const procedures = getByType('Procedure');
-    const notes = allResources.filter(
-        r => r.resourceType === 'DocumentReference' && 
-        Array.isArray(r.context?.encounter) && 
-        isMatchingReference(e, r.context.encounter[0]?.reference, 'Encounter')
-      );
-    const medias = getByType('Media');
-    // const reports = getByType('DiagnosticReport');
-
-    // reports.forEach(r => {
-    //   if (r.result) {
-    //     r.observations = r.result.map(res => observations.find(o => isMatchingReference(o, res.reference, 'Observation')));
-    //     observations = observations.filter(o => !r.observations.includes(o));
-    //   }
-    // });
-
-    const title = `${e.period.start} - ${e.type[0].coding[0].code} ${e.type[0].coding[0].display}`;
-
-    e.conditions = conditions;
-    e.medications = medications;
-    e.observations = observations;
-    e.procedures = procedures;
-    e.notes = notes;
-    e.medias = medias;
-
-    encounterSections.push(
-      <div key={title}>
-        <ReportsVisualizer
-          title={e.period.start}
-          columns={[
-            {
-              title: 'Type',
-              versions: '*',
-              getter: () => 'Encounter'
-            },
-            {
-              title: 'Code',
-              versions: '*',
-              getter: n => n.type[0].coding[0].code
-            },
-            {
-              title: 'Description',
-              versions: '*',
-              getter: n => n.type[0].coding[0].display
-            },
-            {
-              title: 'Details',
-              versions: '*',
-              format: 'dateTime',
-              getter: n => n.period.start
-            },
-            SPACER
-          ]}
-          nestedRows={[
-            {
-              getter: r => r.conditions,
-              keyFn: o => o.id,
-              columns: [
-                {
-                  title: 'Type',
-                  versions: '*',
-                  getter: () => 'Condition'
-                },
-                {
-                  title: 'SNOMED',
-                  versions: '*',
-                  getter: c => c.code.coding[0].code
-                },
-                {
-                  title: 'Condition',
-                  versions: '*',
-                  getter: c => c.code.coding[0].display
-                },
-                SPACER,
-                SPACER
-              ]
-            },
-            {
-              getter: r => r.procedures,
-              keyFn: o => o.id,
-              columns: [
-                {
-                  title: 'Type',
-                  versions: '*',
-                  getter: () => 'Procedure'
-                },
-                {
-                  title: 'SNOMED',
-                  versions: '*',
-                  getter: p => p.code.coding[0].code
-                },
-                {
-                  title: 'Procedure',
-                  versions: '*',
-                  getter: p => p.code.coding[0].display
-                },
-                {
-                  title: 'Date Performed',
-                  versions: '*',
-                  format: 'date',
-                  getter: p => p.performedPeriod.start
-                },
-                SPACER
-              ]
-            },
-            {
-              getter: r => r.medications,
-              keyFn: o => o.id,
-              columns: [
-                {
-                  title: 'Type',
-                  versions: '*',
-                  getter: () => 'Medication'
-                },
-                {
-                  title: 'RxNorm',
-                  versions: '*',
-                  getter: c => c.medicationCodeableConcept.coding[0].code
-                },
-                {
-                  title: 'Medication',
-                  versions: '*',
-                  getter: c => c.medicationCodeableConcept.coding[0].display
-                },
-                {
-                  title: 'Date Prescribed',
-                  versions: '*',
-                  format: 'date',
-                  getter: c => c.authoredOn
-                },
-                { title: 'Status', versions: '*', getter: c => c.status }
-              ]
-            },
-            {
-              getter: r => r.observations,
-              keyFn: o => o.id,
-              columns: [
-                {
-                  title: 'Type',
-                  versions: '*',
-                  getter: () => 'Observation'
-                },
-                {
-                  title: 'LOINC',
-                  versions: '*',
-                  getter: o => o.code.coding[0].code
-                },
-                {
-                  title: 'Report/Observation',
-                  versions: '*',
-                  getter: o => o.code.coding[0].display
-                },
-                { title: 'Value', versions: '*', getter: o => obsValue(o) },
-                SPACER
-              ]
-            },
-            {
-              getter: r => r.notes,
-              keyFn: dr => dr.id,
-              columns: [
-                {
-                  title: 'Type',
-                  versions: '*',
-                  getter: () => 'Note'
-                },
-                SPACER,
-                { title: 'Text', versions: '*', getter: dr => renderNote(getNoteText(dr)) },
-                SPACER,
-                SPACER
-              ]
-            },
-            {
-              getter: r => r.medias,
-              keyFn: m => m.id,
-              columns: [
-                {
-                  title: 'Type',
-                  versions: '*',
-                  getter: () => 'Media'
-                },
-                SPACER,
-                { title: 'Media', versions: '*', getter: m => extractMedia(m) },
-                SPACER,
-                SPACER
-              ]
-            }
-          ]}
-          rows={[e]}
-        />
-      </div>
-    );
-  }
-
-  return (
-    <React.Fragment>
-      <LinksByEncounter encounters={encounters} />
-      <Accordion allowMultipleExpanded={true}>{encounterSections}</Accordion>
-    </React.Fragment>
-  );
-};
 
 const isNotEmpty = rows => rows != null && rows.length > 0;
 
@@ -564,16 +304,16 @@ const Section = props => {
   const show = props.showEmptySections ? _rows => true : rows => isNotEmpty(rows);
   return (
     <div>
-      {show(props.conditions) && <ConditionsVisualizer rows={props.conditions} />}
-      {show(props.medications) && <MedicationsVisualizer rows={props.medications} />}
-      {show(props.observations) && <ObservationsVisualizer rows={props.observations} />}
-      {show(props.reports) && <ReportsVisualizer rows={props.reports} />}
-      {show(props.careplans) && <CarePlansVisualizer rows={props.careplans} />}
-      {show(props.procedures) && <ProceduresVisualizer rows={props.procedures} />}
-      {show(props.encounters) && <EncountersVisualizer rows={props.encounters} />}
-      {show(props.allergies) && <AllergiesVisualizer rows={props.allergies} />}
-      {show(props.immunizations) && <ImmunizationsVisualizer rows={props.immunizations} />}
-      {show(props.documents) && <DocumentReferencesVisualizer rows={props.documents} />}
+      {show(props.conditions) && <ConditionsTable rows={props.conditions} />}
+      {show(props.medications) && <MedicationRequestsTable rows={props.medications} />}
+      {show(props.observations) && <ObservationsTable rows={props.observations} />}
+      {show(props.reports) && <ReportsTable rows={props.reports} />}
+      {show(props.careplans) && <CarePlansTable rows={props.careplans} />}
+      {show(props.procedures) && <ProceduresTable rows={props.procedures} />}
+      {show(props.encounters) && <EncountersTable rows={props.encounters} />}
+      {show(props.allergies) && <AllergiesTable rows={props.allergies} />}
+      {show(props.immunizations) && <ImmunizationsTable rows={props.immunizations} />}
+      {show(props.documents) && <DocumentReferencesTable rows={props.documents} />}
     </div>
   );
 };

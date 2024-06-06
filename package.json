@@ -34,13 +34,13 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.129",
     "@mui/material": "^5.13.4",
-    "@mui/styles": "^5.12.3",
-    "@welldone-software/why-did-you-render": "^6.1.1",
+    "@mui/system": "^5.15.15",
+    "@welldone-software/why-did-you-render": "^8.0.1",
     "axios": "^0.21.1",
     "base64url": "^3.0.1",
     "csv-parse": "^5.4.0",
@@ -49,6 +49,7 @@
     "eslint": "^8.45.0",
     "express": "^4.17.1",
     "fhir-visualizers": "0.0.5",
+    "fhirpath": "^3.13.3",
     "glob": "^7.1.7",
     "http-status-codes": "^2.1.4",
     "leaflet": "^1.6.0",
@@ -59,20 +60,28 @@
     "nodemon": "^2.0.7",
     "prop-types": "^15.7.2",
     "query-string": "^6.13.8",
-    "react": "^17.0.0",
-    "react-accessible-accordion": "^3.3.4",
+    "react": "^18.0.0",
+    "react-accessible-accordion": "^5.0.0",
     "react-code-blocks": "^0.1.0",
-    "react-dom": "^17.0.0",
+    "react-data-grid": "^7.0.0-beta.44",
+    "react-dom": "^18.0.0",
     "react-dropzone": "^11.3.2",
     "react-json-editor-ajrm": "^2.5.13",
     "react-json-view": "^1.21.3",
-    "react-leaflet": "^2.6.1",
+    "react-leaflet": "^4.2.1",
     "react-query": "^3.12.2",
     "react-router-dom": "^6.14.2",
     "react-router-hash-link": "^2.4.3",
-    "react-select": "^4.2.1",
+    "react-select": "^5.8.0",
     "react-transition-group": "^4.3.0",
+    "use-local-storage": "^3.0.0",
     "uuid": "^8.3.2"
+  },
+  "overrides": {
+    "react-json-view": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
   },
   "engines": {
     "node": ">=14.0.0"

@@ -504,7 +504,6 @@ const ConfigFileBuilder = (props) => {
     });
   };
   const handleChangeText = (evt) => {
-    debugger;
     setConfig({
       ...config,
       [evt.target.name]: evt.target.value
