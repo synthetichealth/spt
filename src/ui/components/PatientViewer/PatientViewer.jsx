@@ -48,6 +48,9 @@ import csvToFhir from './csvToFhir';
 
 import { evaluateResource, appliesToResource } from '../../fhirpath_utils';
 
+import FILTER_PRESETS from './FilterPresets';
+
+
 const getDropzone = (setLoading, callback) => {
   const onDrop = files => {
     const reader = new FileReader();
@@ -116,15 +119,16 @@ const PatientViewer = props => {
     setIsLoading(false);
   }
 
-
-
   const [isGroupByEncounter, setIsGroupByEncounter] = useLocalStorage("group-by-encounter", false);
-  const [filters, setFilters] = useLocalStorage("filters", {});
-  const [filterMode, setFilterMode] = useLocalStorage("filter-mode", "include");
 
-  // TODO: probably a better way to make these generic. don't want to pass around 100 variables for different settings
-  const [hideStoppedMeds, setHideStoppedMeds] = useLocalStorage("Hide Stopped Medications", false);
-  const [hideResolvedConditions, setHideResolvedConditions] = useLocalStorage("Hide Resolved Conditions", false);
+  const loadedPresets = [];
+  for (const presetKey of Object.keys(FILTER_PRESETS)) {
+    const [isPresetLoaded,] = useLocalStorage(presetKey, false);
+
+    if (isPresetLoaded) {
+      loadedPresets.push(presetKey);
+    }
+  }
 
   useEffect(() => {
     if (id && !bundle) {
@@ -152,14 +156,17 @@ const PatientViewer = props => {
 
   let allResources = bundle.entry.map(e => e.resource);
 
-  if (Object.keys(filters).length) {
+  for (const presetKey of loadedPresets) {
+    const preset = FILTER_PRESETS[presetKey];
+    if (isGroupByEncounter && !preset.filterOnGroupByEncounter) continue;
     allResources = allResources.filter(r => {
-      const filtersByResourceType = filters[r.resourceType];
+      const filtersByResourceType = preset.filters[r.resourceType];
       if (!filtersByResourceType) return true;
 
       const anyMatch = filtersByResourceType.some(f => appliesToResource(r, f));
-      return filterMode === 'exclude' ? !anyMatch : anyMatch;
+      return preset.mode === 'exclude' ? !anyMatch : anyMatch;
     });
+
   }
 
   const patient = allResources.find(r => r.resourceType === 'Patient');
@@ -186,9 +193,7 @@ const PatientViewer = props => {
         <>
           <LinksByType />
           <EntireRecord 
-            allResources={allResources} 
-            hideResolvedConditions={hideResolvedConditions}
-            hideStoppedMeds={hideStoppedMeds} />
+            allResources={allResources} />
         </>
         )}
 
@@ -229,18 +234,10 @@ const LinksByType = () => {
 };
 
 const EntireRecord = props => {
-  const { allResources, hideStoppedMeds, hideResolvedConditions } = props;
+  const { allResources } = props;
   const getByType = type => allResources.filter(r => r.resourceType === type);
-  let conditions = getByType('Condition');
-  if (hideResolvedConditions) {
-    conditions = conditions.filter(c => !c.abatementDateTime);
-  }
-
-  let medications = getByType('MedicationRequest');
-  if (hideStoppedMeds) {
-    medications = medications.filter(m => m.status !== 'stopped');
-  }
-
+  const conditions = getByType('Condition');
+  const medications = getByType('MedicationRequest');
   const meds = getByType('Medication');
   medications.forEach(m => {
     if (m.medicationReference) {

@@ -15,6 +15,7 @@ import TextField from '@mui/material/TextField';
 
 import InfoIcon from '@mui/icons-material/Info';
 
+import FILTER_PRESETS from './FilterPresets';
 
 const style = {
   position: 'absolute',
@@ -31,10 +32,11 @@ const style = {
 const CONFIG_OPTIONS = [
   // { key: "filters", defaultValue: "{}", 
   //   description: "TBD" },
-  { key: "Hide Resolved Conditions", defaultValue: false, type: "boolean",
-    description: "If true, conditions with an abatement date will be hidden" },  
-  { key: "Hide Stopped Medications", defaultValue: false, type: "boolean",
-    description: "If true, medications with a status of 'stopped' will be hidden" },
+  // { key: "Hide Resolved Conditions", defaultValue: false, type: "boolean",
+  //   description: "If true, conditions with an abatement date will be hidden" },  
+  // { key: "Hide Stopped Medications", defaultValue: false, type: "boolean",
+  //   description: "If true, medications with a status of 'stopped' will be hidden" },
+  ...Object.entries(FILTER_PRESETS).map(([key, value]) => ({ key, description: value.description, type: "boolean" }))
 ];
 
 const Settings = () => {
@@ -61,7 +63,11 @@ const Settings = () => {
   for (const configOpt of CONFIG_OPTIONS) {
     const key = configOpt.key;
 
-    if (configOpt.type == 'boolean') {
+    if (configOpt.type == 'separator') {
+      fields.push((<hr />));
+    } else if (configOpt.type == 'header') {
+      fields.push((<Typography component="h4"> { configOpt.key }</Typography>));
+    } else if (configOpt.type == 'boolean') {
       fields.push((<Fragment key={key}>
                     {key}
                       <Checkbox 
