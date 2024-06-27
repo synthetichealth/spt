@@ -12,6 +12,20 @@ const DR_CONDITIONS = [
   '60951000119105', // blindness
 ];
 
+const DR_OBSERVATIONS = [
+  '413078003', // visual acuity
+  '41633001', // iop
+  '71491-5', '71490-7', // severity L / R,
+  '4548-4', // hba1c
+  '79819-9', '79818-1', // OCT obs L/R
+
+  // OCT measurements
+  '57119-0','57108-3','57109-1','57110-9',
+  '57111-7','57112-5','57113-3','57114-1',
+  '57115-8','57116-6','57117-4','57118-2'
+
+];
+
 const SDOH_CONDITIONS = [
   '314529007',
   '5251000175109',
@@ -53,7 +67,9 @@ const FILTER_PRESETS = Object.freeze({
     filters: {
       Encounter: ["Encounter.type.coding.code = '185349003'"],
       Condition: [`Condition.code.coding.code in (${fhirList(DR_CONDITIONS)})`],
-      Observation: []
+      Observation: [`Observation.code.coding.where($this.code in (${fhirList(DR_OBSERVATIONS)}))`],
+      CarePlan: [],
+      Immunization: []
     }
   },
   'Hide SDOH Conditions': {

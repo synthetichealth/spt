@@ -229,7 +229,7 @@ const ROW_FUNCTIONS =
         key: 'description',
         getter: m => extractMedia(m) 
       },
-      VIEW_FHIR
+      // VIEW_FHIR // temporarily disabled
     ]
   }
 ]

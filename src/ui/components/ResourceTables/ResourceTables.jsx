@@ -182,7 +182,7 @@ class ReportsTable extends GenericTable {
         },
         { name: 'Value', getter: () => '' },
         { name: 'Effective', getter: r => attributeXTime(r,'effective'), defaultValue: 'N/A' },
-        VIEW_FHIR
+        // VIEW_FHIR // temporarily disabled
       ],
     rowClass: 'report-line',
     nestedRows: [
@@ -355,6 +355,19 @@ class MedicationRequestsTable extends GenericTable {
   };
 }
 
+class MediasTable extends GenericTable {
+  static defaultProps = {
+    title: 'Images',
+    columns: [
+        { name: 'Code', getter: m => m.partOf[0].resource.procedureCode[0].coding[0].display },
+        { name: 'Media', getter: m => extractMedia(m) },
+        { name: 'Date', getter: m => m.partOf[0].resource.started },
+        // VIEW_FHIR // temporarily disabled
+    ],
+    keyFn: m => m.id,
+    rowHeight: () => 200,
+  };
+}
 
 export {
   ConditionsTable,
@@ -366,6 +379,7 @@ export {
   EncountersTable,
   ImmunizationsTable,
   DocumentReferencesTable,
-  MedicationRequestsTable
+  MedicationRequestsTable,
+  MediasTable
 };
 

@@ -30,19 +30,19 @@ export function evaluateResource(resource, path, variables={}) {
  *     return raw values from FHIRPath engine
  * @return Differs based on input - see above
  */
-export function evaluateBundle(bundle, fhirpath, variables, returnResources) {
-  if (fhirpath.startsWith("Bundle")) {
+export function evaluateBundle(bundle, path, variables, returnResources) {
+  if (path.startsWith("Bundle")) {
     // run it on the entire bundle
 
     // NOTE: this doesn't check returnResources -- would that be useful here?
-    return evaluateResource(bundle, fhirpath, variables);
+    return evaluateResource(bundle, path, variables);
   } else {
     // the fhirpath doesn't start with "Bundle"
     //  so we'll apply it to each resource within the bundle
     results = [];
 
     for (const entry of bundle.entry) {
-      const resourceResults = evaluateResource(entry.resource, fhirpath);
+      const resourceResults = evaluateResource(entry.resource, path);
 
       if (returnResources) {
         if (isTruthy(resourceResults)) {
@@ -59,12 +59,12 @@ export function evaluateBundle(bundle, fhirpath, variables, returnResources) {
 
 
 
-export function appliesToResource(resource, fhirpath) {
-  return isTruthy(evaluateResource(resource, fhirpath));
+export function appliesToResource(resource, path) {
+  return isTruthy(evaluateResource(resource, path));
 }
 
-export function appliesToBundle(bundle, fhirpath, variables) {
-  return isTruthy(evaluateBundle(bundle, fhirpath, variables, false));
+export function appliesToBundle(bundle, path, variables) {
+  return isTruthy(evaluateBundle(bundle, path, variables, false));
 }
 
 /**

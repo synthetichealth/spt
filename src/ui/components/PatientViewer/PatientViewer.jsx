@@ -14,7 +14,8 @@ import {
   ProceduresTable,
   EncountersTable,
   ImmunizationsTable,
-  DocumentReferencesTable
+  DocumentReferencesTable,
+  MediasTable
 } from '../ResourceTables/ResourceTables';
 import { useLocation } from 'react-router-dom';
 import { HashLink as Link } from 'react-router-hash-link';
@@ -213,7 +214,8 @@ const LinksByType = () => {
     'Encounters',
     'Allergies',
     'Immunizations',
-    'Documents'
+    'Documents',
+    'Images'
   ];
   const location = useLocation();
   return (
@@ -278,6 +280,18 @@ const EntireRecord = props => {
   const immunizations = getByType('Immunization');
   const documents = getByType('DocumentReference');
 
+  const medias = getByType('Media');
+
+  medias.forEach(m => {
+    if (m.partOf && m.partOf[0]) {
+      const partOf = allResources.find(r => `urn:uuid:${r.id}` === m.partOf[0].reference);
+
+      if (partOf?.resourceType === 'ImagingStudy') {
+        m.partOf[0].resource = partOf;
+      }
+    }
+  });
+
   return (
     <Section
       conditions={conditions}
@@ -290,6 +304,7 @@ const EntireRecord = props => {
       allergies={allergies}
       immunizations={immunizations}
       documents={documents}
+      medias={medias}
     />
   );
 };
@@ -311,6 +326,7 @@ const Section = props => {
       {show(props.allergies) && <AllergiesTable rows={props.allergies} />}
       {show(props.immunizations) && <ImmunizationsTable rows={props.immunizations} />}
       {show(props.documents) && <DocumentReferencesTable rows={props.documents} />}
+      {show(props.medias) && <MediasTable rows={props.medias} />}
     </div>
   );
 };
