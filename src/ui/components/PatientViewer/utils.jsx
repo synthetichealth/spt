@@ -57,6 +57,6 @@ export const extractMedia = m => {
   const data = m.content.data;
   const url = `data:${contentType};base64, ${data}`;
   return (
-    <a href={url} target="_blank"> <img src={url} class="imagemedia" title="Click to open full-size" /> </a>
+    <a href={url} target="_blank"> <img src={url} className="imagemedia" title="Click to open full-size" /> </a>
     )
 };

@@ -167,7 +167,7 @@ export default function Layout({ routes }) {
           }}
         >
           <Toolbar />
-          <Container sx={{ mt: 4, mb: 4 }} style={{width: "100%"}} >
+          <Container sx={{ mt: 4, mb: 4 }} style={{width: "100%"}} maxWidth={false} >
             <Grid container spacing={3} style={{width: "100%"}}>
               <center style={{width: "100%"}}>
                 <RouterProvider router={hashRouter} />

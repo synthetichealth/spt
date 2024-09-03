@@ -56,6 +56,16 @@ const EncounterGroupedRecord = props => {
         isMatchingReference(e, r.context.encounter[0]?.reference, 'Encounter')
       );
     const medias = getByType('Media');
+
+    medias.forEach(m => {
+      if (m.partOf && m.partOf[0]) {
+        const partOf = allResources.find(r => `urn:uuid:${r.id}` === m.partOf[0].reference);
+
+        if (partOf?.resourceType === 'ImagingStudy') {
+          m.partOf[0].resource = partOf;
+        }
+      }
+    });
     // const reports = getByType('DiagnosticReport');
 
     // reports.forEach(r => {

@@ -27,7 +27,7 @@ const COLUMNS = [
   { key: 'code', name: 'Code' },
   { key: 'description', name: 'Description',
     colSpan: (args) => {
-      if (args.type === 'ROW' && (args.row.type === 'Media' || args.row.type === 'Note')) {
+      if (args.type === 'ROW' && args.row.type === 'Note') {
         return 3;
       }
       return 1;
@@ -225,8 +225,28 @@ const ROW_FUNCTIONS =
         key: 'type',
         getter: () => 'Media'
       },
+      {
+        key: 'description', 
+        getter: m => {
+          let codeDisplay = '';
+          try {
+            codeDisplay = m.partOf[0].resource.procedureCode[0].coding[0].display + '\n';
+          } catch (e) {}
+
+          let title = '';
+          try {
+            const myIdentifer = m.identifier[0].value; // "urn:oid:1.2.840.99999999.1.1.33607723.407560999967"
+            const instance = m.partOf[0].resource.series[0].instance.find(i => `urn:oid:${i.uid}` === myIdentifer);
+            if (instance?.title) {
+              title = instance.title;
+            }
+          } catch (e) {}
+
+          return codeDisplay + title;
+        }
+      },
       { 
-        key: 'description',
+        key: 'details',
         getter: m => extractMedia(m) 
       },
       // VIEW_FHIR // temporarily disabled
@@ -258,7 +278,7 @@ const EncounterSection = ({encounterData}) => {
           const formatter = FORMATTERS[c.format];
           let result;
           try {
-            result = c.getter(rawRow);
+            result = c.getter(rawRow, encounterData);
           } catch (e) {
             console.error(e);
             result = undefined;

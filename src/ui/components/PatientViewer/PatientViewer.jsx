@@ -294,6 +294,7 @@ const EntireRecord = props => {
 
   return (
     <Section
+      allResources={allResources}
       conditions={conditions}
       medications={medications}
       observations={observations}
@@ -314,19 +315,20 @@ const isNotEmpty = rows => rows != null && rows.length > 0;
 
 const Section = props => {
   const show = props.showEmptySections ? _rows => true : rows => isNotEmpty(rows);
+  const allResources = props.allResources;
   return (
     <div>
-      {show(props.conditions) && <ConditionsTable rows={props.conditions} />}
-      {show(props.medications) && <MedicationRequestsTable rows={props.medications} />}
-      {show(props.observations) && <ObservationsTable rows={props.observations} />}
-      {show(props.reports) && <ReportsTable rows={props.reports} />}
-      {show(props.careplans) && <CarePlansTable rows={props.careplans} />}
-      {show(props.procedures) && <ProceduresTable rows={props.procedures} />}
-      {show(props.encounters) && <EncountersTable rows={props.encounters} />}
-      {show(props.allergies) && <AllergiesTable rows={props.allergies} />}
-      {show(props.immunizations) && <ImmunizationsTable rows={props.immunizations} />}
-      {show(props.documents) && <DocumentReferencesTable rows={props.documents} />}
-      {show(props.medias) && <MediasTable rows={props.medias} />}
+      {show(props.conditions) && <ConditionsTable rows={props.conditions} allResources={allResources} />}
+      {show(props.medications) && <MedicationRequestsTable rows={props.medications} allResources={allResources} />}
+      {show(props.observations) && <ObservationsTable rows={props.observations} allResources={allResources} />}
+      {show(props.reports) && <ReportsTable rows={props.reports} allResources={allResources} />}
+      {show(props.careplans) && <CarePlansTable rows={props.careplans} allResources={allResources} />}
+      {show(props.procedures) && <ProceduresTable rows={props.procedures} allResources={allResources} />}
+      {show(props.encounters) && <EncountersTable rows={props.encounters} allResources={allResources} />}
+      {show(props.allergies) && <AllergiesTable rows={props.allergies} allResources={allResources} />}
+      {show(props.immunizations) && <ImmunizationsTable rows={props.immunizations} allResources={allResources} />}
+      {show(props.documents) && <DocumentReferencesTable rows={props.documents} allResources={allResources} />}
+      {show(props.medias) && <MediasTable rows={props.medias} allResources={allResources} />}
     </div>
   );
 };

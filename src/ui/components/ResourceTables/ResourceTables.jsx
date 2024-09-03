@@ -360,6 +360,18 @@ class MediasTable extends GenericTable {
     title: 'Images',
     columns: [
         { name: 'Code', getter: m => m.partOf[0].resource.procedureCode[0].coding[0].display },
+        { name: 'Title', getter: m => {
+            let title = '';
+            try {
+              const myIdentifer = m.identifier[0].value; // "urn:oid:1.2.840.99999999.1.1.33607723.407560999967"
+              const instance = m.partOf[0].resource.series[0].instance.find(i => `urn:oid:${i.uid}` === myIdentifer);
+              if (instance?.title) {
+                title = instance.title;
+              }
+            } catch (e) {}
+            return title;
+          }
+        },
         { name: 'Media', getter: m => extractMedia(m) },
         { name: 'Date', getter: m => m.partOf[0].resource.started },
         // VIEW_FHIR // temporarily disabled

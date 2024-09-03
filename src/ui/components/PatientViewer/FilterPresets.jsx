@@ -13,7 +13,7 @@ const DR_CONDITIONS = [
 ];
 
 const DR_OBSERVATIONS = [
-  '413078003', // visual acuity
+  '413077008', '413078003', // visual acuity L/R
   '41633001', // iop
   '71491-5', '71490-7', // severity L / R,
   '4548-4', // hba1c
@@ -65,7 +65,7 @@ const FILTER_PRESETS = Object.freeze({
     mode: 'include',
     filterOnGroupByEncounter: true,
     filters: {
-      Encounter: ["Encounter.type.coding.code = '185349003'"],
+      Encounter: ["Encounter.type.coding.code = '36228007'"],
       Condition: [`Condition.code.coding.code in (${fhirList(DR_CONDITIONS)})`],
       Observation: [`Observation.code.coding.where($this.code in (${fhirList(DR_OBSERVATIONS)}))`],
       CarePlan: [],
