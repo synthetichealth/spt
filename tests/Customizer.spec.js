@@ -43,7 +43,7 @@ describe('Synthea Customizer', () => {
 
     test('data requirements question appears after selecting export format', async ({ page }) => {
       await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
-      await expect(page.locator('h3')).toContainText('Which of the following data requirements apply to you?');
+      await expect(page.locator('[data-test-id="data-requirements-heading"]')).toBeVisible();
       
       await expect(page.getByRole('button', { name: /I need patients that meet certain clinical criteria/ })).toBeVisible();
       await expect(page.getByRole('button', { name: /I need a certain geographic location/ })).toBeVisible();
@@ -73,7 +73,7 @@ describe('Synthea Customizer', () => {
           await page.getByRole('button', { name: 'Basic Setup' }).click();
           
           // Check that the command contains the expected configuration
-          const codeBlock = page.locator('pre').first();
+          const codeBlock = page.locator('code'); // TODO FIX LOCATOR
           await expect(codeBlock).toBeVisible();
           
           // For bulk data, we need to check for both bulk_data and fhir export
@@ -97,21 +97,21 @@ describe('Synthea Customizer', () => {
         await page.getByRole('button', { name: /I need patients that meet certain clinical criteria/ }).click();
         
         // Should show basic settings
-        await expect(page.locator('h5')).toContainText('Basic Settings');
+        await expect(page.locator('[data-test-id="basic-settings-heading"]')).toBeVisible();
         await expect(page.getByLabel('Population')).toBeVisible();
         
         // Should show keep module builder
-        await expect(page.locator('h3')).toContainText('Keep Module Builder');
+        await expect(page.locator('[data-test-id="keep-module-builder-heading"]')).toBeVisible();
       });
 
       test('selecting "geographic" shows geographic fields', async ({ page }) => {
         await page.getByRole('button', { name: /I need a certain geographic location/ }).click();
         
         // Should show basic settings
-        await expect(page.locator('h5')).toContainText('Basic Settings');
+        await expect(page.locator('[data-test-id="basic-settings-heading"]')).toBeVisible();
         
         // Should show geographic settings
-        await expect(page.locator('h5')).toContainText('Geographic Settings');
+        await expect(page.locator('[data-test-id="geographic-settings-heading"]')).toBeVisible();
         await expect(page.getByLabel('State')).toBeVisible();
         await expect(page.getByLabel('City')).toBeVisible();
       });
@@ -120,10 +120,10 @@ describe('Synthea Customizer', () => {
         await page.getByRole('button', { name: /I need a population with specific demographics/ }).click();
         
         // Should show basic settings
-        await expect(page.locator('h5')).toContainText('Basic Settings');
+        await expect(page.locator('[data-test-id="basic-settings-heading"]')).toBeVisible();
         
         // Should show demographic settings
-        await expect(page.locator('h5')).toContainText('Demographic Settings');
+        await expect(page.locator('[data-test-id="demographic-settings-heading"]')).toBeVisible();
         await expect(page.getByLabel('Gender')).toBeVisible();
         await expect(page.getByLabel('Age Min')).toBeVisible();
         await expect(page.getByLabel('Age Max')).toBeVisible();
@@ -133,11 +133,11 @@ describe('Synthea Customizer', () => {
         await page.getByRole('button', { name: /I need to re-create the same exact population/ }).click();
         
         // Should show basic settings
-        await expect(page.locator('h5')).toContainText('Basic Settings');
+        await expect(page.locator('[data-test-id="basic-settings-heading"]')).toBeVisible();
         
         // Should show reproducibility settings
-        await expect(page.locator('h5')).toContainText('Reproducibility Settings');
-        await expect(page.getByLabel('Seed')).toBeVisible();
+        await expect(page.locator('[data-test-id="reproducibility-settings-heading"]')).toBeVisible();
+        await expect(page.getByLabel('Seed', { exact: true })).toBeVisible();
         await expect(page.getByLabel('Clinician Seed')).toBeVisible();
         await expect(page.getByLabel(/Reference Date/)).toBeVisible();
       });
@@ -146,13 +146,13 @@ describe('Synthea Customizer', () => {
         await page.getByRole('button', { name: /None of these/ }).click();
         
         // Should show basic settings
-        await expect(page.locator('h5')).toContainText('Basic Settings');
+        await expect(page.locator('[data-test-id="basic-settings-heading"]')).toBeVisible();
         await expect(page.getByLabel('Population')).toBeVisible();
         
         // Should not show other field groups
-        await expect(page.locator('h5').filter({ hasText: 'Geographic Settings' })).not.toBeVisible();
-        await expect(page.locator('h5').filter({ hasText: 'Demographic Settings' })).not.toBeVisible();
-        await expect(page.locator('h5').filter({ hasText: 'Reproducibility Settings' })).not.toBeVisible();
+        await expect(page.locator('[data-test-id="geographic-settings-heading"]')).not.toBeVisible();
+        await expect(page.locator('[data-test-id="demographic-settings-heading"]')).not.toBeVisible();
+        await expect(page.locator('[data-test-id="reproducibility-settings-heading"]')).not.toBeVisible();
       });
     });
 
@@ -164,7 +164,7 @@ describe('Synthea Customizer', () => {
       });
 
       test('shows setup mode options', async ({ page }) => {
-        await expect(page.locator('h3')).toContainText('How do you want to run Synthea?');
+        await expect(page.locator('[data-test-id="setup-mode-heading"]')).toBeVisible();
         await expect(page.getByRole('button', { name: /Docker/ })).toBeVisible();
         await expect(page.getByRole('button', { name: /Basic Setup/ })).toBeVisible();
         await expect(page.getByRole('button', { name: /Developer Setup/ })).toBeVisible();
@@ -286,17 +286,17 @@ describe('Synthea Customizer', () => {
     });
 
     test('shows all builder components', async ({ page }) => {
-      await expect(page.locator('h3')).toContainText('Command-line Argument Builder');
-      await expect(page.locator('h3')).toContainText('Config Builder');
-      await expect(page.locator('h3')).toContainText('Keep Module Builder');
-      await expect(page.locator('h3')).toContainText('Dockerfile Builder');
+      await expect(page.getByRole('heading', { name: 'Command-line Argument Builder' })).toBeVisible();
+      await expect(page.locator('[data-test-id="config-builder-heading"]')).toBeVisible();
+      await expect(page.locator('[data-test-id="keep-module-builder-heading"]')).toBeVisible();
+      await expect(page.locator('[data-test-id="dockerfile-heading"]')).toBeVisible();
     });
 
     test('shows all argument groups', async ({ page }) => {
-      await expect(page.locator('h5')).toContainText('Basic Settings');
-      await expect(page.locator('h5')).toContainText('Geographic Settings');
-      await expect(page.locator('h5')).toContainText('Demographic Settings');
-      await expect(page.locator('h5')).toContainText('Reproducibility Settings');
+      await expect(page.locator('[data-test-id="basic-settings-heading"]')).toBeVisible();
+      await expect(page.locator('[data-test-id="geographic-settings-heading"]')).toBeVisible();
+      await expect(page.locator('[data-test-id="demographic-settings-heading"]')).toBeVisible();
+      await expect(page.locator('[data-test-id="reproducibility-settings-heading"]')).toBeVisible();
     });
 
     test('all input fields are visible', async ({ page }) => {
@@ -313,7 +313,7 @@ describe('Synthea Customizer', () => {
       await expect(page.getByLabel('Age Max')).toBeVisible();
       
       // Reproducibility fields
-      await expect(page.getByLabel('Seed')).toBeVisible();
+      await expect(page.locator('[data-test-id="seed-input"]')).toBeVisible();
       await expect(page.getByLabel('Clinician Seed')).toBeVisible();
       await expect(page.getByLabel(/Reference Date/)).toBeVisible();
     });

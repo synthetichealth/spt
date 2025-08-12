@@ -574,7 +574,7 @@ const ConfigFileBuilder = (props) => {
     <div className={classes.collection}>
      { !targetedCategories && (
      <Fragment>
-     <h3>Config Builder</h3> 
+     <h3 data-test-id="config-builder-heading">Config Builder</h3>
      <Stack direction="row" spacing={3}>
        <Autocomplete
           disablePortal

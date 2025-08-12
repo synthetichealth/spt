@@ -163,7 +163,7 @@ const DataReqsQuestion = props => {
 
   return (
     <React.Fragment>
-    <h3>Which of the following data requirements apply to you?</h3><br/>
+    <h3 data-test-id="data-requirements-heading">Which of the following data requirements apply to you?</h3><br/>
     <ToggleButtonGroup
       size="large"
       color="primary"
@@ -198,7 +198,7 @@ const GuidedModeHowToRun = props => {
 
   return (
     <React.Fragment>
-    <h3>How do you want to run Synthea?</h3><br/>
+    <h3 data-test-id="setup-mode-heading">How do you want to run Synthea?</h3><br/>
     <ToggleButtonGroup
       size="large"
       color="primary"

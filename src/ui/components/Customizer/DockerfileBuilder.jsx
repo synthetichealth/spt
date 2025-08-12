@@ -77,7 +77,7 @@ const DockerfileBuilder = (props) => {
 
   return (
     <div className={classes.collection}>
-      <h3>Dockerfile</h3>
+      <h3 data-test-id="dockerfile-heading">Dockerfile</h3>
       <br />
 
       <Paper elevation={2} >
