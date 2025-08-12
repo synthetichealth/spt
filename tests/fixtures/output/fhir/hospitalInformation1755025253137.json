@@ -1,0 +1,218 @@
+{
+  "resourceType": "Bundle",
+  "type": "batch",
+  "entry": [ {
+    "fullUrl": "urn:uuid:6e8b08fe-c746-3a5d-a11a-388cd17cd24d",
+    "resource": {
+      "resourceType": "Organization",
+      "id": "6e8b08fe-c746-3a5d-a11a-388cd17cd24d",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/us/core/StructureDefinition/us-core-organization" ]
+      },
+      "extension": [ {
+        "url": "http://synthetichealth.github.io/synthea/utilization-encounters-extension",
+        "valueInteger": 6
+      }, {
+        "url": "http://synthetichealth.github.io/synthea/utilization-procedures-extension",
+        "valueInteger": 0
+      }, {
+        "url": "http://synthetichealth.github.io/synthea/utilization-labs-extension",
+        "valueInteger": 0
+      }, {
+        "url": "http://synthetichealth.github.io/synthea/utilization-prescriptions-extension",
+        "valueInteger": 0
+      } ],
+      "identifier": [ {
+        "system": "https://github.com/synthetichealth/synthea",
+        "value": "6e8b08fe-c746-3a5d-a11a-388cd17cd24d"
+      } ],
+      "active": true,
+      "type": [ {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/organization-type",
+          "code": "prov",
+          "display": "Healthcare Provider"
+        } ],
+        "text": "Healthcare Provider"
+      } ],
+      "name": "CREEDMOOR PSYCHIATRIC CENTER",
+      "telecom": [ {
+        "system": "phone",
+        "value": "7184647500"
+      } ],
+      "address": [ {
+        "line": [ "7925 WINCHESTER BLVD" ],
+        "city": "QUEENS VILLAGE",
+        "state": "NY",
+        "postalCode": "114272199",
+        "country": "US"
+      } ]
+    },
+    "request": {
+      "method": "POST",
+      "url": "Organization",
+      "ifNoneExist": "identifier=https://github.com/synthetichealth/synthea|6e8b08fe-c746-3a5d-a11a-388cd17cd24d"
+    }
+  }, {
+    "fullUrl": "urn:uuid:a2c3d553-1ab5-3821-b01d-fc7079f3c64b",
+    "resource": {
+      "resourceType": "Location",
+      "id": "a2c3d553-1ab5-3821-b01d-fc7079f3c64b",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/us/core/StructureDefinition/us-core-location" ]
+      },
+      "identifier": [ {
+        "system": "https://github.com/synthetichealth/synthea",
+        "value": "a2c3d553-1ab5-3821-b01d-fc7079f3c64b"
+      } ],
+      "status": "active",
+      "name": "CREEDMOOR PSYCHIATRIC CENTER",
+      "telecom": [ {
+        "system": "phone",
+        "value": "7184647500"
+      } ],
+      "address": {
+        "line": [ "7925 WINCHESTER BLVD" ],
+        "city": "QUEENS VILLAGE",
+        "state": "NY",
+        "postalCode": "114272199",
+        "country": "US"
+      },
+      "position": {
+        "longitude": -73.7415208,
+        "latitude": 40.7267692
+      },
+      "managingOrganization": {
+        "identifier": {
+          "system": "https://github.com/synthetichealth/synthea",
+          "value": "6e8b08fe-c746-3a5d-a11a-388cd17cd24d"
+        },
+        "display": "CREEDMOOR PSYCHIATRIC CENTER"
+      }
+    },
+    "request": {
+      "method": "POST",
+      "url": "Location",
+      "ifNoneExist": "identifier=https://github.com/synthetichealth/synthea|a2c3d553-1ab5-3821-b01d-fc7079f3c64b"
+    }
+  }, {
+    "fullUrl": "urn:uuid:a62d3653-eb32-39a4-8745-9ed46185ad20",
+    "resource": {
+      "resourceType": "Organization",
+      "id": "a62d3653-eb32-39a4-8745-9ed46185ad20",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/us/core/StructureDefinition/us-core-organization" ]
+      },
+      "extension": [ {
+        "url": "http://synthetichealth.github.io/synthea/utilization-encounters-extension",
+        "valueInteger": 14
+      }, {
+        "url": "http://synthetichealth.github.io/synthea/utilization-procedures-extension",
+        "valueInteger": 21
+      }, {
+        "url": "http://synthetichealth.github.io/synthea/utilization-labs-extension",
+        "valueInteger": 1
+      }, {
+        "url": "http://synthetichealth.github.io/synthea/utilization-prescriptions-extension",
+        "valueInteger": 6
+      } ],
+      "identifier": [ {
+        "system": "https://github.com/synthetichealth/synthea",
+        "value": "a62d3653-eb32-39a4-8745-9ed46185ad20"
+      } ],
+      "active": true,
+      "type": [ {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/organization-type",
+          "code": "prov",
+          "display": "Healthcare Provider"
+        } ],
+        "text": "Healthcare Provider"
+      } ],
+      "name": "DR. KERN S. KOO, GENERAL &FAMILY MEDICINE, P.C.",
+      "telecom": [ {
+        "system": "phone",
+        "value": "7183573458"
+      } ],
+      "address": [ {
+        "line": [ "5133 MARATHON PKWY" ],
+        "city": "LITTLE NECK",
+        "state": "NY",
+        "postalCode": "113621716",
+        "country": "US"
+      } ]
+    },
+    "request": {
+      "method": "POST",
+      "url": "Organization",
+      "ifNoneExist": "identifier=https://github.com/synthetichealth/synthea|a62d3653-eb32-39a4-8745-9ed46185ad20"
+    }
+  }, {
+    "fullUrl": "urn:uuid:78fab1e5-3962-3e0e-9a63-090eb4482745",
+    "resource": {
+      "resourceType": "Location",
+      "id": "78fab1e5-3962-3e0e-9a63-090eb4482745",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/us/core/StructureDefinition/us-core-location" ]
+      },
+      "identifier": [ {
+        "system": "https://github.com/synthetichealth/synthea",
+        "value": "78fab1e5-3962-3e0e-9a63-090eb4482745"
+      } ],
+      "status": "active",
+      "name": "DR. KERN S. KOO, GENERAL &FAMILY MEDICINE, P.C.",
+      "telecom": [ {
+        "system": "phone",
+        "value": "7183573458"
+      } ],
+      "address": {
+        "line": [ "5133 MARATHON PKWY" ],
+        "city": "LITTLE NECK",
+        "state": "NY",
+        "postalCode": "113621716",
+        "country": "US"
+      },
+      "position": {
+        "longitude": -73.733716,
+        "latitude": 40.7627509
+      },
+      "managingOrganization": {
+        "identifier": {
+          "system": "https://github.com/synthetichealth/synthea",
+          "value": "a62d3653-eb32-39a4-8745-9ed46185ad20"
+        },
+        "display": "DR. KERN S. KOO, GENERAL &FAMILY MEDICINE, P.C."
+      }
+    },
+    "request": {
+      "method": "POST",
+      "url": "Location",
+      "ifNoneExist": "identifier=https://github.com/synthetichealth/synthea|78fab1e5-3962-3e0e-9a63-090eb4482745"
+    }
+  }, {
+    "fullUrl": "urn:uuid:bb1ad573-19b8-9cd8-68fb-0e6f684df992",
+    "resource": {
+      "resourceType": "Location",
+      "id": "bb1ad573-19b8-9cd8-68fb-0e6f684df992",
+      "identifier": [ {
+        "system": "https://github.com/synthetichealth/synthea",
+        "value": "bb1ad573-19b8-9cd8-68fb-0e6f684df992"
+      } ],
+      "status": "active",
+      "description": "Patient's Home",
+      "mode": "kind",
+      "physicalType": {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+          "code": "ho",
+          "display": "House"
+        } ]
+      }
+    },
+    "request": {
+      "method": "POST",
+      "url": "Location",
+      "ifNoneExist": "identifier=https://github.com/synthetichealth/synthea|bb1ad573-19b8-9cd8-68fb-0e6f684df992"
+    }
+  } ]
+}

@@ -1,0 +1,21 @@
+{
+  "runID": "95ea4034-16cf-466f-a972-dafa8e7451fe",
+  "seed": 1755025253137,
+  "clinicianSeed": 1755025253137,
+  "referenceTime": "20250812",
+  "endTime": "20250812",
+  "version": "master-branch-latest-4-g3a65f56f1\n",
+  "patientCount": 1,
+  "providerCount": 2894,
+  "payerCount": 9,
+  "javaVersion": "17.0.16",
+  "generate.thread_pool_size": -1,
+  "generatorThreads": 10,
+  "runStartTime": "2025-08-12T19:00:53Z",
+  "runTimeInSeconds": 8,
+  "exporter.years_of_history": "10",
+  "gender": "M",
+  "age": "4-6",
+  "state": "New York",
+  "modules": "*"
+}

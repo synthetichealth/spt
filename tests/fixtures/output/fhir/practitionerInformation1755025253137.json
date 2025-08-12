@@ -1,0 +1,219 @@
+{
+  "resourceType": "Bundle",
+  "type": "batch",
+  "entry": [ {
+    "fullUrl": "urn:uuid:5df6eeac-d4a3-3a57-b58c-eb77611e0bf0",
+    "resource": {
+      "resourceType": "Practitioner",
+      "id": "5df6eeac-d4a3-3a57-b58c-eb77611e0bf0",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner" ]
+      },
+      "extension": [ {
+        "url": "http://synthetichealth.github.io/synthea/utilization-encounters-extension",
+        "valueInteger": 6
+      } ],
+      "identifier": [ {
+        "system": "http://hl7.org/fhir/sid/us-npi",
+        "value": "9999972893"
+      } ],
+      "active": true,
+      "name": [ {
+        "family": "Lindgren255",
+        "given": [ "Lilliam592" ],
+        "prefix": [ "Dr." ]
+      } ],
+      "telecom": [ {
+        "extension": [ {
+          "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-direct",
+          "valueBoolean": true
+        } ],
+        "system": "email",
+        "value": "Lilliam592.Lindgren255@example.com",
+        "use": "work"
+      } ],
+      "address": [ {
+        "line": [ "7925 WINCHESTER BLVD" ],
+        "city": "QUEENS VILLAGE",
+        "state": "NY",
+        "postalCode": "114272199",
+        "country": "US"
+      } ],
+      "gender": "female"
+    },
+    "request": {
+      "method": "POST",
+      "url": "Practitioner",
+      "ifNoneExist": "identifier=http://hl7.org/fhir/sid/us-npi|9999972893"
+    }
+  }, {
+    "fullUrl": "urn:uuid:fd841171-cafd-0fff-b722-b319d7d2de14",
+    "resource": {
+      "resourceType": "PractitionerRole",
+      "id": "fd841171-cafd-0fff-b722-b319d7d2de14",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole" ]
+      },
+      "practitioner": {
+        "identifier": {
+          "system": "http://hl7.org/fhir/sid/us-npi",
+          "value": "9999972893"
+        },
+        "display": "Dr. Lilliam592 Lindgren255"
+      },
+      "organization": {
+        "identifier": {
+          "system": "https://github.com/synthetichealth/synthea",
+          "value": "6e8b08fe-c746-3a5d-a11a-388cd17cd24d"
+        },
+        "display": "CREEDMOOR PSYCHIATRIC CENTER"
+      },
+      "code": [ {
+        "coding": [ {
+          "system": "http://nucc.org/provider-taxonomy",
+          "code": "208D00000X",
+          "display": "General Practice Physician"
+        } ],
+        "text": "General Practice Physician"
+      } ],
+      "specialty": [ {
+        "coding": [ {
+          "system": "http://nucc.org/provider-taxonomy",
+          "code": "208D00000X",
+          "display": "General Practice Physician"
+        } ],
+        "text": "General Practice Physician"
+      } ],
+      "location": [ {
+        "identifier": {
+          "system": "https://github.com/synthetichealth/synthea",
+          "value": "a2c3d553-1ab5-3821-b01d-fc7079f3c64b"
+        },
+        "display": "CREEDMOOR PSYCHIATRIC CENTER"
+      } ],
+      "telecom": [ {
+        "system": "phone",
+        "value": "7184647500"
+      }, {
+        "extension": [ {
+          "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-direct",
+          "valueBoolean": true
+        } ],
+        "system": "email",
+        "value": "Lilliam592.Lindgren255@example.com",
+        "use": "work"
+      } ]
+    },
+    "request": {
+      "method": "POST",
+      "url": "PractitionerRole"
+    }
+  }, {
+    "fullUrl": "urn:uuid:766d57dc-3a63-3f5a-a93b-b95650869e34",
+    "resource": {
+      "resourceType": "Practitioner",
+      "id": "766d57dc-3a63-3f5a-a93b-b95650869e34",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner" ]
+      },
+      "extension": [ {
+        "url": "http://synthetichealth.github.io/synthea/utilization-encounters-extension",
+        "valueInteger": 14
+      } ],
+      "identifier": [ {
+        "system": "http://hl7.org/fhir/sid/us-npi",
+        "value": "9999872093"
+      } ],
+      "active": true,
+      "name": [ {
+        "family": "Concepción765",
+        "given": [ "Alfredo17" ],
+        "prefix": [ "Dr." ]
+      } ],
+      "telecom": [ {
+        "extension": [ {
+          "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-direct",
+          "valueBoolean": true
+        } ],
+        "system": "email",
+        "value": "Alfredo17.Concepción765@example.com",
+        "use": "work"
+      } ],
+      "address": [ {
+        "line": [ "5133 MARATHON PKWY" ],
+        "city": "LITTLE NECK",
+        "state": "NY",
+        "postalCode": "113621716",
+        "country": "US"
+      } ],
+      "gender": "male"
+    },
+    "request": {
+      "method": "POST",
+      "url": "Practitioner",
+      "ifNoneExist": "identifier=http://hl7.org/fhir/sid/us-npi|9999872093"
+    }
+  }, {
+    "fullUrl": "urn:uuid:3df8d3bc-5517-c8a7-b810-7b2ed9aefd6d",
+    "resource": {
+      "resourceType": "PractitionerRole",
+      "id": "3df8d3bc-5517-c8a7-b810-7b2ed9aefd6d",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole" ]
+      },
+      "practitioner": {
+        "identifier": {
+          "system": "http://hl7.org/fhir/sid/us-npi",
+          "value": "9999872093"
+        },
+        "display": "Dr. Alfredo17 Concepción765"
+      },
+      "organization": {
+        "identifier": {
+          "system": "https://github.com/synthetichealth/synthea",
+          "value": "a62d3653-eb32-39a4-8745-9ed46185ad20"
+        },
+        "display": "DR. KERN S. KOO, GENERAL &FAMILY MEDICINE, P.C."
+      },
+      "code": [ {
+        "coding": [ {
+          "system": "http://nucc.org/provider-taxonomy",
+          "code": "208D00000X",
+          "display": "General Practice Physician"
+        } ],
+        "text": "General Practice Physician"
+      } ],
+      "specialty": [ {
+        "coding": [ {
+          "system": "http://nucc.org/provider-taxonomy",
+          "code": "208D00000X",
+          "display": "General Practice Physician"
+        } ],
+        "text": "General Practice Physician"
+      } ],
+      "location": [ {
+        "identifier": {
+          "system": "https://github.com/synthetichealth/synthea",
+          "value": "78fab1e5-3962-3e0e-9a63-090eb4482745"
+        },
+        "display": "DR. KERN S. KOO, GENERAL &FAMILY MEDICINE, P.C."
+      } ],
+      "telecom": [ {
+        "system": "phone",
+        "value": "7183573458"
+      }, {
+        "extension": [ {
+          "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-direct",
+          "valueBoolean": true
+        } ],
+        "system": "email",
+        "value": "Alfredo17.Concepción765@example.com",
+        "use": "work"
+      } ]
+    },
+    "request": {
+      "method": "POST",
+      "url": "PractitionerRole"
+    }
+  } ]
+}

@@ -180,7 +180,9 @@ const PatientViewer = props => {
   return (
     <Paper style={{margin: "1rem", padding: "1rem"}}>
       <Settings />
-      <PatientVisualizer patient={patient} />
+      <div data-test-id="patient">
+        <PatientVisualizer patient={patient} />
+      </div>
 
       <a href="#" onClick={toggleGroup}>
         { isGroupByEncounter ? "Ungroup" : "Group" } by Encounter
