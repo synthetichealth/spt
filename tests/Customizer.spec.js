@@ -45,11 +45,11 @@ describe('Synthea Customizer', () => {
       await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
       await expect(page.locator('[data-test-id="data-requirements-heading"]')).toBeVisible();
       
-      await expect(page.getByRole('button', { name: /I need patients that meet certain clinical criteria/ })).toBeVisible();
-      await expect(page.getByRole('button', { name: /I need a certain geographic location/ })).toBeVisible();
-      await expect(page.getByRole('button', { name: /I need a population with specific demographics/ })).toBeVisible();
-      await expect(page.getByRole('button', { name: /I need to re-create the same exact population/ })).toBeVisible();
-      await expect(page.getByRole('button', { name: /None of these/ })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'I need patients that meet certain clinical criteria' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'I need a certain geographic location' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'I need a population with specific demographics' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'I need to re-create the same exact population' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'None of these' })).toBeVisible();
     });
 
     describe('Export Format Tests', () => {
@@ -67,7 +67,7 @@ describe('Synthea Customizer', () => {
           await page.getByRole('button', { name }).click();
           
           // Select "None of these" for data requirements to get to command generation
-          await page.getByRole('button', { name: /None of these/ }).click();
+          await page.getByRole('button', { name: 'None of these' }).click();
           
           // Select Basic Setup to generate the command
           await page.getByRole('button', { name: 'Basic Setup' }).click();
@@ -76,9 +76,6 @@ describe('Synthea Customizer', () => {
           const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
           await expect(codeBlock).toBeVisible();
           await expect(codeBlock).toContainText('java -jar synthea-with-dependencies.jar');
-          
-          // In guided mode, configuration is handled via config file, not command line args
-          // So we just verify the command is generated correctly
         });
       });
     });
@@ -90,35 +87,29 @@ describe('Synthea Customizer', () => {
       });
 
       test('selecting "keep" shows clinical criteria fields', async ({ page }) => {
-        await page.getByRole('button', { name: /I need patients that meet certain clinical criteria/ }).click();
+        await page.getByRole('button', { name: 'I need patients that meet certain clinical criteria' }).click();
         
-        // Should show basic settings
         await expect(page.locator('[data-test-id="basic-settings-heading"]')).toBeVisible();
         await expect(page.getByLabel('Population')).toBeVisible();
         
-        // Should show keep module builder
         await expect(page.locator('[data-test-id="keep-module-builder-heading"]')).toBeVisible();
       });
 
       test('selecting "geographic" shows geographic fields', async ({ page }) => {
-        await page.getByRole('button', { name: /I need a certain geographic location/ }).click();
+        await page.getByRole('button', { name: 'I need a certain geographic location' }).click();
         
-        // Should show basic settings
         await expect(page.locator('[data-test-id="basic-settings-heading"]')).toBeVisible();
         
-        // Should show geographic settings
         await expect(page.locator('[data-test-id="geographic-settings-heading"]')).toBeVisible();
         await expect(page.getByLabel('State')).toBeVisible();
         await expect(page.getByLabel('City')).toBeVisible();
       });
 
       test('selecting "demographic" shows demographic fields', async ({ page }) => {
-        await page.getByRole('button', { name: /I need a population with specific demographics/ }).click();
+        await page.getByRole('button', { name: 'I need a population with specific demographics' }).click();
         
-        // Should show basic settings
         await expect(page.locator('[data-test-id="basic-settings-heading"]')).toBeVisible();
         
-        // Should show demographic settings
         await expect(page.locator('[data-test-id="demographic-settings-heading"]')).toBeVisible();
         await expect(page.getByLabel('Gender')).toBeVisible();
         await expect(page.getByLabel('Age Min')).toBeVisible();
@@ -126,26 +117,22 @@ describe('Synthea Customizer', () => {
       });
 
       test('selecting "reproducibility" shows reproducibility fields', async ({ page }) => {
-        await page.getByRole('button', { name: /I need to re-create the same exact population/ }).click();
+        await page.getByRole('button', { name: 'I need to re-create the same exact population' }).click();
         
-        // Should show basic settings
         await expect(page.locator('[data-test-id="basic-settings-heading"]')).toBeVisible();
         
-        // Should show reproducibility settings
         await expect(page.locator('[data-test-id="reproducibility-settings-heading"]')).toBeVisible();
         await expect(page.getByLabel('Seed', { exact: true })).toBeVisible();
         await expect(page.getByLabel('Clinician Seed')).toBeVisible();
-        await expect(page.getByLabel(/Reference Date/)).toBeVisible();
+        await expect(page.getByLabel('Reference Date')).toBeVisible();
       });
 
       test('selecting "none" shows only basic fields', async ({ page }) => {
-        await page.getByRole('button', { name: /None of these/ }).click();
+        await page.getByRole('button', { name: 'None of these' }).click();
         
-        // Should show basic settings
         await expect(page.locator('[data-test-id="basic-settings-heading"]')).toBeVisible();
         await expect(page.getByLabel('Population')).toBeVisible();
         
-        // Should not show other field groups
         await expect(page.locator('[data-test-id="geographic-settings-heading"]')).not.toBeVisible();
         await expect(page.locator('[data-test-id="demographic-settings-heading"]')).not.toBeVisible();
         await expect(page.locator('[data-test-id="reproducibility-settings-heading"]')).not.toBeVisible();
@@ -156,18 +143,18 @@ describe('Synthea Customizer', () => {
       beforeEach(async ({ page }) => {
         // Select export format and data requirement to get to setup selection
         await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
-        await page.getByRole('button', { name: /None of these/ }).click();
+        await page.getByRole('button', { name: 'None of these' }).click();
       });
 
       test('shows setup mode options', async ({ page }) => {
         await expect(page.locator('[data-test-id="setup-mode-heading"]')).toBeVisible();
-        await expect(page.getByRole('button', { name: /Docker/ })).toBeVisible();
-        await expect(page.getByRole('button', { name: /Basic Setup/ })).toBeVisible();
-        await expect(page.getByRole('button', { name: /Developer Setup/ })).toBeVisible();
+        await expect(page.getByRole('button', { name: 'Docker' })).toBeVisible();
+        await expect(page.getByRole('button', { name: 'Basic Setup' })).toBeVisible();
+        await expect(page.getByRole('button', { name: 'Developer Setup' })).toBeVisible();
       });
 
       test('Docker setup generates docker command', async ({ page }) => {
-        await page.getByRole('button', { name: /Docker/ }).click();
+        await page.getByRole('button', { name: 'Docker' }).click();
         
         // Expand the dockerfile accordion to see the content
         await page.getByText('View Dockerfile').click();
@@ -178,7 +165,7 @@ describe('Synthea Customizer', () => {
       });
 
       test('Basic setup generates jar command', async ({ page }) => {
-        await page.getByRole('button', { name: /Basic Setup/ }).click();
+        await page.getByRole('button', { name: 'Basic Setup' }).click();
         
         const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
         await expect(codeBlock).toBeVisible();
@@ -186,7 +173,7 @@ describe('Synthea Customizer', () => {
       });
 
       test('Developer setup generates gradle command', async ({ page }) => {
-        await page.getByRole('button', { name: /Developer Setup/ }).click();
+        await page.getByRole('button', { name: 'Developer Setup' }).click();
         
         const codeBlock = page.locator('[data-test-id="developer-run-command"]');
         await expect(codeBlock).toBeVisible();
@@ -197,12 +184,11 @@ describe('Synthea Customizer', () => {
     describe('Input Field Integration', () => {
       test('population input affects generated command', async ({ page }) => {
         await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
-        await page.getByRole('button', { name: /None of these/ }).click();
+        await page.getByRole('button', { name: 'None of these' }).click();
         
-        // Fill in population
         await page.getByLabel('Population').fill('100');
         
-        await page.getByRole('button', { name: /Basic Setup/ }).click();
+        await page.getByRole('button', { name: 'Basic Setup' }).click();
         
         const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
         await expect(codeBlock).toContainText('-p 100');
@@ -210,16 +196,14 @@ describe('Synthea Customizer', () => {
 
       test('geographic inputs affect generated command', async ({ page }) => {
         await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
-        await page.getByRole('button', { name: /I need a certain geographic location/ }).click();
+        await page.getByRole('button', { name: 'I need a certain geographic location' }).click();
         
-        // Fill in state
         await page.getByLabel('State').click();
         await page.getByRole('option', { name: 'California' }).click();
         
-        // Fill in city
         await page.getByLabel('City').fill('Los Angeles');
         
-        await page.getByRole('button', { name: /Basic Setup/ }).click();
+        await page.getByRole('button', { name: 'Basic Setup' }).click();
         
         const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
         await expect(codeBlock).toContainText('California');
@@ -228,33 +212,30 @@ describe('Synthea Customizer', () => {
 
       test('demographic inputs affect generated command', async ({ page }) => {
         await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
-        await page.getByRole('button', { name: /I need a population with specific demographics/ }).click();
+        await page.getByRole('button', { name: 'I need a population with specific demographics' }).click();
         
-        // Fill in gender
         await page.getByLabel('Gender').click();
-        await page.getByRole('option', { name: 'M' }).click();
+        await page.getByRole('option', { name: 'F' }).click();
         
-        // Fill in age range
-        await page.getByLabel('Age Min').fill('25');
+        await page.getByLabel('Age Min').fill('18');
         await page.getByLabel('Age Max').fill('65');
         
-        await page.getByRole('button', { name: /Basic Setup/ }).click();
+        await page.getByRole('button', { name: 'Basic Setup' }).click();
         
         const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
-        await expect(codeBlock).toContainText('-g M');
-        await expect(codeBlock).toContainText('-a 25-65');
+        await expect(codeBlock).toContainText('-g F');
+        await expect(codeBlock).toContainText('-a 18-65');
       });
 
       test('reproducibility inputs affect generated command', async ({ page }) => {
         await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
-        await page.getByRole('button', { name: /I need to re-create the same exact population/ }).click();
+        await page.getByRole('button', { name: 'I need to re-create the same exact population' }).click();
         
-        // Fill in reproducibility fields
         await page.getByLabel('Seed', { exact: true }).fill('12345');
         await page.getByLabel('Clinician Seed').fill('67890');
-        await page.getByLabel(/Reference Date/).fill('20240101');
+        await page.getByLabel('Reference Date').fill('20240101');
         
-        await page.getByRole('button', { name: /Basic Setup/ }).click();
+        await page.getByRole('button', { name: 'Basic Setup' }).click();
         
         const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
         await expect(codeBlock).toContainText('-s 12345');
@@ -265,15 +246,12 @@ describe('Synthea Customizer', () => {
 
     test('advanced configuration options are available', async ({ page }) => {
       await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
-      await page.getByRole('button', { name: /None of these/ }).click();
+      await page.getByRole('button', { name: 'None of these' }).click();
       
-      // Check for advanced configuration accordion
       await expect(page.getByText('Advanced Configuration Options')).toBeVisible();
       
-      // Expand the accordion
       await page.getByText('Advanced Configuration Options').click();
       
-      // Should show config options
       await expect(page.locator('input[name*="exporter"]').first()).toBeVisible();
     });
   });
@@ -299,46 +277,32 @@ describe('Synthea Customizer', () => {
     });
 
     test('all input fields are visible', async ({ page }) => {
-      // Basic fields
       await expect(page.getByLabel('Population')).toBeVisible();
-      
-      // Geographic fields
       await expect(page.getByLabel('State')).toBeVisible();
       await expect(page.getByLabel('City')).toBeVisible();
-      
-      // Demographic fields
       await expect(page.getByLabel('Gender')).toBeVisible();
       await expect(page.getByLabel('Age Min')).toBeVisible();
       await expect(page.getByLabel('Age Max')).toBeVisible();
-      
-      // Reproducibility fields
       await expect(page.locator('[data-test-id="seed-input"]')).toBeVisible();
       await expect(page.getByLabel('Clinician Seed')).toBeVisible();
-      await expect(page.getByLabel(/Reference Date/)).toBeVisible();
+      await expect(page.getByLabel('Reference Date')).toBeVisible();
     });
 
     test('command updates when inputs change', async ({ page }) => {
-      // Fill in some values
       await page.getByLabel('Population').fill('50');
-      await page.getByLabel('Seed', { exact: true }).fill('999');
+			await page.getByLabel('Seed', { exact: true }).fill('999');
       
-      // Check command is updated
       const codeBlock = page.locator('[data-test-id="command-output"]');
       await expect(codeBlock).toContainText('-p 50');
       await expect(codeBlock).toContainText('-s 999');
     });
 
     test('config builder allows adding settings', async ({ page }) => {
-      // Click on config dropdown
       await page.getByLabel('Choose Setting').click();
       
-      // Select a config option
-      await page.getByRole('option', { name: /exporter.csv.export/ }).click();
-      
-      // Add the config
+      await page.getByRole('option', { name: 'exporter.csv.export' }).click();      
       await page.getByRole('button', { name: 'Add Config' }).click();
       
-      // Should show the config field
       await expect(page.locator('input[name="exporter.csv.export"]')).toBeVisible();
     });
 
@@ -362,8 +326,8 @@ describe('Synthea Customizer', () => {
 
       await page.getByRole('button', { name: 'Use Guided Mode' }).click();
       await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
-      await page.getByRole('button', { name: /None of these/ }).click();
-      await page.getByRole('button', { name: /Basic Setup/ }).click();
+      await page.getByRole('button', { name: 'None of these' }).click();
+      await page.getByRole('button', { name: 'Basic Setup' }).click();
       
       // Check that the code block is visible
       const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
@@ -390,21 +354,16 @@ describe('Synthea Customizer', () => {
 
       await page.getByRole('button', { name: 'Use Advanced Mode' }).click();
       
-      // Check that the code block is visible
       const codeBlock = page.locator('[data-test-id="command-output"]');
       await expect(codeBlock).toBeVisible();
       
-      // Get the text content of the code block
       const codeText = await codeBlock.textContent();
       
-      // Find the copy button as a child of the code block
       const copyButton = codeBlock.locator('button');
       await expect(copyButton).toBeVisible();
       
-      // Click the copy button
       await copyButton.click();
       
-      // Check that the content was copied to clipboard
       const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
       expect(clipboardText).toContain(codeText);
     });
@@ -412,13 +371,14 @@ describe('Synthea Customizer', () => {
     test('config file download button is available', async ({ page }) => {
       await page.getByRole('button', { name: 'Use Advanced Mode' }).click();
       
-      // Add a config setting first
       await page.getByLabel('Choose Setting').click();
-      await page.getByRole('option', { name: /exporter.csv.export/ }).click();
-      await page.getByRole('button', { name: 'Add Config' }).click();
+      await page.getByRole('option', { name: 'exporter.csv.export' }).click();
+			await page.getByRole('button', { name: 'Add Config' }).click();
+			await page.locator('input[name="exporter.csv.export"]').click();
       
-      // Should show download button
-      await expect(page.getByRole('button', { name: 'Download Config File' })).toBeVisible();
+			await expect(page.getByRole('button', { name: 'Download Config File' })).toBeVisible();
+
+			// TODO: check downloaded file text
     });
   });
 
@@ -429,8 +389,7 @@ describe('Synthea Customizer', () => {
       await page.getByRole('button', { name: 'Use Guided Mode' }).click();
       await expect(page.getByText('Which data formats do you need?')).toBeVisible();
       
-      // Go back to mode selection (this would require a back button or similar navigation)
-      // For now, we'll reload the page to simulate going back
+      // Reload to go back to selection
       await page.reload();
       
       // Switch to advanced mode
@@ -439,14 +398,11 @@ describe('Synthea Customizer', () => {
     });
 
     test('can switch from advanced to guided mode', async ({ page }) => {
-      // Start in advanced mode
       await page.getByRole('button', { name: 'Use Advanced Mode' }).click();
       await expect(page.getByRole('heading', { name: 'Command-line Argument Builder' })).toBeVisible();
       
-      // Go back to mode selection
       await page.reload();
       
-      // Switch to guided mode
       await page.getByRole('button', { name: 'Use Guided Mode' }).click();
       await expect(page.getByText('Which data formats do you need?')).toBeVisible();
     });
