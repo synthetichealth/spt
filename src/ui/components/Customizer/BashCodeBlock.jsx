@@ -2,7 +2,7 @@ import React from 'react';
 import { CopyBlock } from "react-code-blocks";
 /* Docs for react-code-blocks resource: https://github.com/rajinwonderland/react-code-blocks/tree/master */
 
-export function BashCodeBlock({code, lineNumbers=false, singleLine=false}) {
+export function BashCodeBlock({code, lineNumbers=false, singleLine=false, 'data-test-id': dataTestId}) {
 
   const codeTheme = {
     lineNumberColor: `#665973`,
@@ -42,5 +42,9 @@ export function BashCodeBlock({code, lineNumbers=false, singleLine=false}) {
     numberColor: `#6258e5`,
   }
 
-  return(<CopyBlock text={code.trim()} showLineNumbers={false} theme={codeTheme} codeBlock />);
+  return(
+    <div data-test-id={dataTestId}>
+      <CopyBlock text={code.trim()} showLineNumbers={false} theme={codeTheme} codeBlock />
+    </div>
+  );
 }

@@ -90,7 +90,7 @@ const DockerfileBuilder = (props) => {
             View Dockerfile
           </AccordionSummary>
           <AccordionDetails>
-            <BashCodeBlock code={dockerfile} singleLine={true}/>
+            <BashCodeBlock code={dockerfile} singleLine={true} data-test-id="dockerfile-content"/>
             {/* use Bash since no Docker highlighting supported */}
           </AccordionDetails>
         </Accordion>
@@ -107,15 +107,15 @@ const DockerfileBuilder = (props) => {
       <p>Open powershell or terminal, navigate to where you downloaded the above Dockerfile, and run the following commands:</p>
 
       <p>1. Create your customized Synthea Docker container, we'll call it <code>syntheadocker</code>:</p>
-      <BashCodeBlock code="docker build --tag syntheadocker - < Dockerfile" />
+      <BashCodeBlock code="docker build --tag syntheadocker - < Dockerfile" data-test-id="docker-build-command" />
       <br />
 
       <p>2. Create an output folder for synthetic data called <code>docker_output</code>:</p>
-      <BashCodeBlock code="mkdir docker_output" singleLine={true} />
+      <BashCodeBlock code="mkdir docker_output" singleLine={true} data-test-id="mkdir-command" />
       <br />
 
       <p>3. Run the container pointing to your output folder:</p>
-      <BashCodeBlock code="docker run -v ./docker_output:/output -it syntheadocker" />
+      <BashCodeBlock code="docker run -v ./docker_output:/output -it syntheadocker" data-test-id="docker-run-command" />
       <br />
       you should see output similar to the following:
     <pre>

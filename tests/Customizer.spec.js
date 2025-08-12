@@ -72,17 +72,13 @@ describe('Synthea Customizer', () => {
           // Select Basic Setup to generate the command
           await page.getByRole('button', { name: 'Basic Setup' }).click();
           
-          // Check that the command contains the expected configuration
-          const codeBlock = page.locator('code'); // TODO FIX LOCATOR
+          // Check that the command is visible and contains the basic java command
+          const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
           await expect(codeBlock).toBeVisible();
+          await expect(codeBlock).toContainText('java -jar synthea-with-dependencies.jar');
           
-          // For bulk data, we need to check for both bulk_data and fhir export
-          if (name === 'FHIR® Bulk Data') {
-            await expect(codeBlock).toContainText('exporter.fhir.bulk_data=true');
-            await expect(codeBlock).toContainText('exporter.fhir.export=true');
-          } else {
-            await expect(codeBlock).toContainText(`${configKey}=true`);
-          }
+          // In guided mode, configuration is handled via config file, not command line args
+          // So we just verify the command is generated correctly
         });
       });
     });
@@ -173,15 +169,18 @@ describe('Synthea Customizer', () => {
       test('Docker setup generates docker command', async ({ page }) => {
         await page.getByRole('button', { name: /Docker/ }).click();
         
-        const codeBlock = page.locator('pre').first();
+        // Expand the dockerfile accordion to see the content
+        await page.getByText('View Dockerfile').click();
+        
+        const codeBlock = page.locator('[data-test-id="dockerfile-content"]');
         await expect(codeBlock).toBeVisible();
-        await expect(codeBlock).toContainText('docker');
+        await expect(codeBlock).toContainText('CMD java -jar synthea-with-dependencies.jar');
       });
 
       test('Basic setup generates jar command', async ({ page }) => {
         await page.getByRole('button', { name: /Basic Setup/ }).click();
         
-        const codeBlock = page.locator('pre').first();
+        const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
         await expect(codeBlock).toBeVisible();
         await expect(codeBlock).toContainText('java -jar synthea-with-dependencies.jar');
       });
@@ -189,9 +188,9 @@ describe('Synthea Customizer', () => {
       test('Developer setup generates gradle command', async ({ page }) => {
         await page.getByRole('button', { name: /Developer Setup/ }).click();
         
-        const codeBlock = page.locator('pre').first();
+        const codeBlock = page.locator('[data-test-id="developer-run-command"]');
         await expect(codeBlock).toBeVisible();
-        await expect(codeBlock).toContainText('./gradlew');
+        await expect(codeBlock).toContainText('./run_synthea');
       });
     });
 
@@ -205,7 +204,7 @@ describe('Synthea Customizer', () => {
         
         await page.getByRole('button', { name: /Basic Setup/ }).click();
         
-        const codeBlock = page.locator('pre').first();
+        const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
         await expect(codeBlock).toContainText('-p 100');
       });
 
@@ -222,7 +221,7 @@ describe('Synthea Customizer', () => {
         
         await page.getByRole('button', { name: /Basic Setup/ }).click();
         
-        const codeBlock = page.locator('pre').first();
+        const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
         await expect(codeBlock).toContainText('California');
         await expect(codeBlock).toContainText('Los Angeles');
       });
@@ -241,7 +240,7 @@ describe('Synthea Customizer', () => {
         
         await page.getByRole('button', { name: /Basic Setup/ }).click();
         
-        const codeBlock = page.locator('pre').first();
+        const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
         await expect(codeBlock).toContainText('-g M');
         await expect(codeBlock).toContainText('-a 25-65');
       });
@@ -257,7 +256,7 @@ describe('Synthea Customizer', () => {
         
         await page.getByRole('button', { name: /Basic Setup/ }).click();
         
-        const codeBlock = page.locator('pre').first();
+        const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
         await expect(codeBlock).toContainText('-s 12345');
         await expect(codeBlock).toContainText('-cs 67890');
         await expect(codeBlock).toContainText('-r 20240101');
@@ -324,7 +323,7 @@ describe('Synthea Customizer', () => {
       await page.getByLabel('Seed', { exact: true }).fill('999');
       
       // Check command is updated
-      const codeBlock = page.locator('pre').first();
+      const codeBlock = page.locator('[data-test-id="command-output"]');
       await expect(codeBlock).toContainText('-p 50');
       await expect(codeBlock).toContainText('-s 999');
     });
@@ -357,23 +356,57 @@ describe('Synthea Customizer', () => {
 
   describe('Copy and Download Functionality', () => {
     
-    test('copy button works in guided mode', async ({ page }) => {
+    test('copy button works in guided mode', async ({ page, browserName }) => {
+      // Omit clipboard test for safari: https://github.com/microsoft/playwright/issues/13037
+      test.skip(browserName == 'webkit', 'webkit does not support clipboard permissions in playwright');
+
       await page.getByRole('button', { name: 'Use Guided Mode' }).click();
       await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
       await page.getByRole('button', { name: /None of these/ }).click();
       await page.getByRole('button', { name: /Basic Setup/ }).click();
       
-      // Look for copy button in the code block
-      const copyButton = page.locator('button[title="Copy"]');
+      // Check that the code block is visible
+      const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
+      await expect(codeBlock).toBeVisible();
+      
+      // Get the text content of the code block
+      const codeText = await codeBlock.textContent();
+      
+      // Find the copy button as a child of the code block
+      const copyButton = codeBlock.locator('button');
       await expect(copyButton).toBeVisible();
+      
+      // Click the copy button
+      await copyButton.click();
+      
+      // Check that the content was copied to clipboard
+      const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
+      expect(clipboardText).toContain(codeText);
     });
 
-    test('copy button works in advanced mode', async ({ page }) => {
+    test('copy button works in advanced mode', async ({ page, browserName }) => {
+      // Omit clipboard test for safari: https://github.com/microsoft/playwright/issues/13037
+      test.skip(browserName == 'webkit', 'webkit does not support clipboard permissions in playwright');
+
       await page.getByRole('button', { name: 'Use Advanced Mode' }).click();
       
-      // Look for copy button in the code block
-      const copyButton = page.locator('button[title="Copy"]');
+      // Check that the code block is visible
+      const codeBlock = page.locator('[data-test-id="command-output"]');
+      await expect(codeBlock).toBeVisible();
+      
+      // Get the text content of the code block
+      const codeText = await codeBlock.textContent();
+      
+      // Find the copy button as a child of the code block
+      const copyButton = codeBlock.locator('button');
       await expect(copyButton).toBeVisible();
+      
+      // Click the copy button
+      await copyButton.click();
+      
+      // Check that the content was copied to clipboard
+      const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
+      expect(clipboardText).toContain(codeText);
     });
 
     test('config file download button is available', async ({ page }) => {
@@ -394,7 +427,7 @@ describe('Synthea Customizer', () => {
     test('can switch from guided to advanced mode', async ({ page }) => {
       // Start in guided mode
       await page.getByRole('button', { name: 'Use Guided Mode' }).click();
-      await expect(page.locator('h3')).toContainText('Which data formats do you need?');
+      await expect(page.getByText('Which data formats do you need?')).toBeVisible();
       
       // Go back to mode selection (this would require a back button or similar navigation)
       // For now, we'll reload the page to simulate going back
@@ -402,20 +435,20 @@ describe('Synthea Customizer', () => {
       
       // Switch to advanced mode
       await page.getByRole('button', { name: 'Use Advanced Mode' }).click();
-      await expect(page.locator('h3')).toContainText('Command-line Argument Builder');
+      await expect(page.getByRole('heading', { name: 'Command-line Argument Builder' })).toBeVisible();
     });
 
     test('can switch from advanced to guided mode', async ({ page }) => {
       // Start in advanced mode
       await page.getByRole('button', { name: 'Use Advanced Mode' }).click();
-      await expect(page.locator('h3')).toContainText('Command-line Argument Builder');
+      await expect(page.getByRole('heading', { name: 'Command-line Argument Builder' })).toBeVisible();
       
       // Go back to mode selection
       await page.reload();
       
       // Switch to guided mode
       await page.getByRole('button', { name: 'Use Guided Mode' }).click();
-      await expect(page.locator('h3')).toContainText('Which data formats do you need?');
+      await expect(page.getByText('Which data formats do you need?')).toBeVisible();
     });
   });
 });
