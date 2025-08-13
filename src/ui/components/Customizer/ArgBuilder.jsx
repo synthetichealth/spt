@@ -209,23 +209,24 @@ const ArgBuilder = (props) => {
                       variant="outlined"
                       display="inline"
                       onChange={handleChange}
+                      data-test-id={key === 'seed' ? 'seed-input' : undefined}
                       />));
       }
     }
   }
 
   return (
-    <div className={classes.collection}>
+    <div className={classes.collection} data-test-id={'arg'}>
       { !onlyRenderFields && <h3>Command-line Argument Builder</h3> }
       { Object.entries(fields).map(([groupName, argFieldArray]) => { return <div key={groupName}>
-        <h5 style={{margin: "2rem 0 0.5rem 0"}}>{groupName} Settings</h5>
+        <h5 style={{margin: "2rem 0 0.5rem 0"}} data-test-id={`${groupName.toLowerCase()}-settings-heading`}>{groupName} Settings</h5>
         {GROUP_DESCRIPTIONS[groupName]}
         <Stack direction="row" spacing={3}>
             {argFieldArray}
         </Stack>
       </div>}) }
       <br />
-      { !onlyRenderFields && <BashCodeBlock code={renderArgs('java -jar synthea-with-dependencies.jar', args)} /> }
+      { !onlyRenderFields && <BashCodeBlock code={renderArgs('java -jar synthea-with-dependencies.jar', args)} data-test-id="command-output" /> }
     </div>
   );
 }

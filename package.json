@@ -9,8 +9,10 @@
     "startFrontend": "webpack",
     "build": "WATCH=false FRONTEND_ONLY=true webpack",
     "debug": "node --inspect-brk ./bin/www",
-    "test": "jest",
-    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report",
     "lint": "eslint './src/**/*.{js,jsx}'",
     "lint:fix": "eslint './src/**/*.{js,jsx}' --fix"
   },
@@ -19,13 +21,14 @@
     "@babel/eslint-parser": "^7.22.9",
     "@babel/preset-env": "^7.22.9",
     "@babel/preset-react": "^7.8.3",
+    "@playwright/test": "^1.54.2",
+    "@types/node": "^24.2.0",
     "babel-loader": "^8.0.5",
     "css-loader": "^5.0.2",
     "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-only-error": "^1.0.2",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.22.0",
-    "jest": "^26.6.3",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.0.0",
     "style-loader": "^2.0.0",
@@ -85,12 +88,6 @@
   },
   "engines": {
     "node": ">=14.0.0"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "coveragePathIgnorePatterns": [
-      "/node_modules/"
-    ]
   },
   "browserslist": [
     ">0.2%",

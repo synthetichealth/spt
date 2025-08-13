@@ -136,7 +136,7 @@ const KeepModuleBuilder = (props) => {
 
   return (
     <div className={classes.collection}>
-      <h3>Keep Module Builder</h3>
+      <h3 data-test-id="keep-module-builder-heading">Keep Module Builder</h3>
 
       <div m={3}>
         Keep modules allow you to require certain clinical criteria in the generated data. This builder is only for basic set of requirements, for anything more complex

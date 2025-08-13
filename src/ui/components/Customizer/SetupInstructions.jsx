@@ -71,7 +71,7 @@ const BasicSetupInstructions = props => {
     Open a command-line prompt/terminal window and run Synthea 
     by running the command below with your specified configuration as arguments:
     <br/>
-    <BashCodeBlock code={renderArgs('java -jar synthea-with-dependencies.jar', myArgs, config)} />
+    <BashCodeBlock code={renderArgs('java -jar synthea-with-dependencies.jar', myArgs, config)} data-test-id="basic-setup-command" />
     <br />
     When you run this command, you should see output similar to the following:
     <pre>
@@ -140,7 +140,7 @@ To copy the repository locally, install the necessary dependencies, and run the 
 <br/>
 <BashCodeBlock code={`git clone https://github.com/synthetichealth/synthea.git
 cd synthea
-${ isWindows ? '.\\gradlew.bat build check' : './gradlew build check' }`} />
+${ isWindows ? '.\\gradlew.bat build check' : './gradlew build check' }`} data-test-id="developer-setup-commands" />
 <br/>
 
   { keepModuleString && (<div>
@@ -152,7 +152,7 @@ ${ isWindows ? '.\\gradlew.bat build check' : './gradlew build check' }`} />
 
 To run Synthea with your desired settings, use the <code>run_synthea</code> script and provide your specified configuration as arguments:
 
-<BashCodeBlock code={renderArgs(isWindows ? '.\\run_synthea.bat' : './run_synthea', myArgs, config)} />
+<BashCodeBlock code={renderArgs(isWindows ? '.\\run_synthea.bat' : './run_synthea', myArgs, config)} data-test-id="developer-run-command" />
 <br /><br />
 
 

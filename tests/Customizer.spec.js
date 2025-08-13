@@ -1,0 +1,410 @@
+import { test, expect, describe, beforeEach } from '@playwright/test';
+
+describe('Synthea Customizer', () => {
+
+  beforeEach(async ({ page }) => {
+    await page.goto('http://127.0.0.1:3000/spt/#/customizer');
+  });
+
+  test('page has title', async ({ page }) => {
+    await expect(page.locator('h1')).toContainText('Synthea Customizer');
+  });
+
+  test('shows initial mode selection', async ({ page }) => {
+    await expect(page.getByRole('button', { name: 'Use Guided Mode' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Use Advanced Mode' })).toBeVisible();
+  });
+
+  describe('Guided Mode', () => {
+
+    beforeEach(async ({ page }) => {
+      await page.getByRole('button', { name: 'Use Guided Mode' }).click();
+    });
+
+    test('shows export format selection', async ({ page }) => {
+      await expect(page.locator('h3')).toContainText('Which data formats do you need?');
+      await expect(page.getByRole('button', { name: 'HL7® FHIR® R4' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'FHIR® Bulk Data' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'C-CDA' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'CSV' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'JSON' })).toBeVisible();
+    });
+
+    test('shows less common options when requested', async ({ page }) => {
+      await page.getByRole('button', { name: 'Show less common options' }).click();
+      await expect(page.getByRole('button', { name: 'HL7® FHIR® STU 3' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'HL7® FHIR® DSTU 2' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Text' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'CPCDS' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'CMS BFD' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Symptoms' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'VA CDW' })).toBeVisible();
+    });
+
+    test('data requirements question appears after selecting export format', async ({ page }) => {
+      await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
+      await expect(page.locator('[data-test-id="data-requirements-heading"]')).toBeVisible();
+      
+      await expect(page.getByRole('button', { name: 'I need patients that meet certain clinical criteria' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'I need a certain geographic location' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'I need a population with specific demographics' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'I need to re-create the same exact population' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'None of these' })).toBeVisible();
+    });
+
+    describe('Export Format Tests', () => {
+      const EXPORT_FORMATS = [
+        { name: 'HL7® FHIR® R4', configKey: 'exporter.fhir.export' },
+        { name: 'FHIR® Bulk Data', configKey: 'exporter.fhir.bulk_data' },
+        { name: 'C-CDA', configKey: 'exporter.ccda.export' },
+        { name: 'CSV', configKey: 'exporter.csv.export' },
+        { name: 'JSON', configKey: 'exporter.json.export' }
+      ];
+
+      EXPORT_FORMATS.forEach(({ name, configKey }) => {
+        test(`${name} export generates correct command`, async ({ page }) => {
+          // Select the export format
+          await page.getByRole('button', { name }).click();
+          
+          // Select "None of these" for data requirements to get to command generation
+          await page.getByRole('button', { name: 'None of these' }).click();
+          
+          // Select Basic Setup to generate the command
+          await page.getByRole('button', { name: 'Basic Setup' }).click();
+          
+          // Check that the command is visible and contains the basic java command
+          const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
+          await expect(codeBlock).toBeVisible();
+          await expect(codeBlock).toContainText('java -jar synthea-with-dependencies.jar');
+        });
+      });
+    });
+
+    describe('Data Requirements Flow', () => {
+      beforeEach(async ({ page }) => {
+        // Select an export format first
+        await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
+      });
+
+      test('selecting "keep" shows clinical criteria fields', async ({ page }) => {
+        await page.getByRole('button', { name: 'I need patients that meet certain clinical criteria' }).click();
+        
+        await expect(page.locator('[data-test-id="basic-settings-heading"]')).toBeVisible();
+        await expect(page.getByLabel('Population')).toBeVisible();
+        
+        await expect(page.locator('[data-test-id="keep-module-builder-heading"]')).toBeVisible();
+      });
+
+      test('selecting "geographic" shows geographic fields', async ({ page }) => {
+        await page.getByRole('button', { name: 'I need a certain geographic location' }).click();
+        
+        await expect(page.locator('[data-test-id="basic-settings-heading"]')).toBeVisible();
+        
+        await expect(page.locator('[data-test-id="geographic-settings-heading"]')).toBeVisible();
+        await expect(page.getByLabel('State')).toBeVisible();
+        await expect(page.getByLabel('City')).toBeVisible();
+      });
+
+      test('selecting "demographic" shows demographic fields', async ({ page }) => {
+        await page.getByRole('button', { name: 'I need a population with specific demographics' }).click();
+        
+        await expect(page.locator('[data-test-id="basic-settings-heading"]')).toBeVisible();
+        
+        await expect(page.locator('[data-test-id="demographic-settings-heading"]')).toBeVisible();
+        await expect(page.getByLabel('Gender')).toBeVisible();
+        await expect(page.getByLabel('Age Min')).toBeVisible();
+        await expect(page.getByLabel('Age Max')).toBeVisible();
+      });
+
+      test('selecting "reproducibility" shows reproducibility fields', async ({ page }) => {
+        await page.getByRole('button', { name: 'I need to re-create the same exact population' }).click();
+        
+        await expect(page.locator('[data-test-id="basic-settings-heading"]')).toBeVisible();
+        
+        await expect(page.locator('[data-test-id="reproducibility-settings-heading"]')).toBeVisible();
+        await expect(page.getByLabel('Seed', { exact: true })).toBeVisible();
+        await expect(page.getByLabel('Clinician Seed')).toBeVisible();
+        await expect(page.getByLabel('Reference Date')).toBeVisible();
+      });
+
+      test('selecting "none" shows only basic fields', async ({ page }) => {
+        await page.getByRole('button', { name: 'None of these' }).click();
+        
+        await expect(page.locator('[data-test-id="basic-settings-heading"]')).toBeVisible();
+        await expect(page.getByLabel('Population')).toBeVisible();
+        
+        await expect(page.locator('[data-test-id="geographic-settings-heading"]')).not.toBeVisible();
+        await expect(page.locator('[data-test-id="demographic-settings-heading"]')).not.toBeVisible();
+        await expect(page.locator('[data-test-id="reproducibility-settings-heading"]')).not.toBeVisible();
+      });
+    });
+
+    describe('Setup Mode Selection', () => {
+      beforeEach(async ({ page }) => {
+        // Select export format and data requirement to get to setup selection
+        await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
+        await page.getByRole('button', { name: 'None of these' }).click();
+      });
+
+      test('shows setup mode options', async ({ page }) => {
+        await expect(page.locator('[data-test-id="setup-mode-heading"]')).toBeVisible();
+        await expect(page.getByRole('button', { name: 'Docker' })).toBeVisible();
+        await expect(page.getByRole('button', { name: 'Basic Setup' })).toBeVisible();
+        await expect(page.getByRole('button', { name: 'Developer Setup' })).toBeVisible();
+      });
+
+      test('Docker setup generates docker command', async ({ page }) => {
+        await page.getByRole('button', { name: 'Docker' }).click();
+        
+        // Expand the dockerfile accordion to see the content
+        await page.getByText('View Dockerfile').click();
+        
+        const codeBlock = page.locator('[data-test-id="dockerfile-content"]');
+        await expect(codeBlock).toBeVisible();
+        await expect(codeBlock).toContainText('CMD java -jar synthea-with-dependencies.jar');
+      });
+
+      test('Basic setup generates jar command', async ({ page }) => {
+        await page.getByRole('button', { name: 'Basic Setup' }).click();
+        
+        const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
+        await expect(codeBlock).toBeVisible();
+        await expect(codeBlock).toContainText('java -jar synthea-with-dependencies.jar');
+      });
+
+      test('Developer setup generates gradle command', async ({ page }) => {
+        await page.getByRole('button', { name: 'Developer Setup' }).click();
+        
+        const codeBlock = page.locator('[data-test-id="developer-run-command"]');
+        await expect(codeBlock).toBeVisible();
+        await expect(codeBlock).toContainText('./run_synthea');
+      });
+    });
+
+    describe('Input Field Integration', () => {
+      test('population input affects generated command', async ({ page }) => {
+        await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
+        await page.getByRole('button', { name: 'None of these' }).click();
+        
+        await page.getByLabel('Population').fill('100');
+        
+        await page.getByRole('button', { name: 'Basic Setup' }).click();
+        
+        const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
+        await expect(codeBlock).toContainText('-p 100');
+      });
+
+      test('geographic inputs affect generated command', async ({ page }) => {
+        await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
+        await page.getByRole('button', { name: 'I need a certain geographic location' }).click();
+        
+        await page.getByLabel('State').click();
+        await page.getByRole('option', { name: 'California' }).click();
+        
+        await page.getByLabel('City').fill('Los Angeles');
+        
+        await page.getByRole('button', { name: 'Basic Setup' }).click();
+        
+        const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
+        await expect(codeBlock).toContainText('California');
+        await expect(codeBlock).toContainText('Los Angeles');
+      });
+
+      test('demographic inputs affect generated command', async ({ page }) => {
+        await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
+        await page.getByRole('button', { name: 'I need a population with specific demographics' }).click();
+        
+        await page.getByLabel('Gender').click();
+        await page.getByRole('option', { name: 'F' }).click();
+        
+        await page.getByLabel('Age Min').fill('18');
+        await page.getByLabel('Age Max').fill('65');
+        
+        await page.getByRole('button', { name: 'Basic Setup' }).click();
+        
+        const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
+        await expect(codeBlock).toContainText('-g F');
+        await expect(codeBlock).toContainText('-a 18-65');
+      });
+
+      test('reproducibility inputs affect generated command', async ({ page }) => {
+        await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
+        await page.getByRole('button', { name: 'I need to re-create the same exact population' }).click();
+        
+        await page.getByLabel('Seed', { exact: true }).fill('12345');
+        await page.getByLabel('Clinician Seed').fill('67890');
+        await page.getByLabel('Reference Date').fill('20240101');
+        
+        await page.getByRole('button', { name: 'Basic Setup' }).click();
+        
+        const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
+        await expect(codeBlock).toContainText('-s 12345');
+        await expect(codeBlock).toContainText('-cs 67890');
+        await expect(codeBlock).toContainText('-r 20240101');
+      });
+    });
+
+    test('advanced configuration options are available', async ({ page }) => {
+      await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
+      await page.getByRole('button', { name: 'None of these' }).click();
+      
+      await expect(page.getByText('Advanced Configuration Options')).toBeVisible();
+      
+      await page.getByText('Advanced Configuration Options').click();
+      
+      await expect(page.locator('input[name*="exporter"]').first()).toBeVisible();
+    });
+  });
+
+  describe('Advanced Mode', () => {
+
+    beforeEach(async ({ page }) => {
+      await page.getByRole('button', { name: 'Use Advanced Mode' }).click();
+    });
+
+    test('shows all builder components', async ({ page }) => {
+      await expect(page.getByRole('heading', { name: 'Command-line Argument Builder' })).toBeVisible();
+      await expect(page.locator('[data-test-id="config-builder-heading"]')).toBeVisible();
+      await expect(page.locator('[data-test-id="keep-module-builder-heading"]')).toBeVisible();
+      await expect(page.locator('[data-test-id="dockerfile-heading"]')).toBeVisible();
+    });
+
+    test('shows all argument groups', async ({ page }) => {
+      await expect(page.locator('[data-test-id="basic-settings-heading"]')).toBeVisible();
+      await expect(page.locator('[data-test-id="geographic-settings-heading"]')).toBeVisible();
+      await expect(page.locator('[data-test-id="demographic-settings-heading"]')).toBeVisible();
+      await expect(page.locator('[data-test-id="reproducibility-settings-heading"]')).toBeVisible();
+    });
+
+    test('all input fields are visible', async ({ page }) => {
+      await expect(page.getByLabel('Population')).toBeVisible();
+      await expect(page.getByLabel('State')).toBeVisible();
+      await expect(page.getByLabel('City')).toBeVisible();
+      await expect(page.getByLabel('Gender')).toBeVisible();
+      await expect(page.getByLabel('Age Min')).toBeVisible();
+      await expect(page.getByLabel('Age Max')).toBeVisible();
+      await expect(page.locator('[data-test-id="seed-input"]')).toBeVisible();
+      await expect(page.getByLabel('Clinician Seed')).toBeVisible();
+      await expect(page.getByLabel('Reference Date')).toBeVisible();
+    });
+
+    test('command updates when inputs change', async ({ page }) => {
+      await page.getByLabel('Population').fill('50');
+			await page.getByLabel('Seed', { exact: true }).fill('999');
+      
+      const codeBlock = page.locator('[data-test-id="command-output"]');
+      await expect(codeBlock).toContainText('-p 50');
+      await expect(codeBlock).toContainText('-s 999');
+    });
+
+    test('config builder allows adding settings', async ({ page }) => {
+      await page.getByLabel('Choose Setting').click();
+      
+      await page.getByRole('option', { name: 'exporter.csv.export' }).click();      
+      await page.getByRole('button', { name: 'Add Config' }).click();
+      
+      await expect(page.locator('input[name="exporter.csv.export"]')).toBeVisible();
+    });
+
+    test('city field is disabled when no state is selected', async ({ page }) => {
+      await expect(page.getByLabel('City')).toBeDisabled();
+    });
+
+    test('city field is enabled when state is selected', async ({ page }) => {
+      await page.getByLabel('State').click();
+      await page.getByRole('option', { name: 'California' }).click();
+      
+      await expect(page.getByLabel('City')).toBeEnabled();
+    });
+  });
+
+  describe('Copy and Download Functionality', () => {
+    
+    test('copy button works in guided mode', async ({ page, browserName }) => {
+      // Omit clipboard test for safari: https://github.com/microsoft/playwright/issues/13037
+      test.skip(browserName == 'webkit', 'webkit does not support clipboard permissions in playwright');
+
+      await page.getByRole('button', { name: 'Use Guided Mode' }).click();
+      await page.getByRole('button', { name: 'HL7® FHIR® R4' }).click();
+      await page.getByRole('button', { name: 'None of these' }).click();
+      await page.getByRole('button', { name: 'Basic Setup' }).click();
+      
+      // Check that the code block is visible
+      const codeBlock = page.locator('[data-test-id="basic-setup-command"]');
+      await expect(codeBlock).toBeVisible();
+      
+      // Get the text content of the code block
+      const codeText = await codeBlock.textContent();
+      
+      // Find the copy button as a child of the code block
+      const copyButton = codeBlock.locator('button');
+      await expect(copyButton).toBeVisible();
+      
+      // Click the copy button
+      await copyButton.click();
+      
+      // Check that the content was copied to clipboard
+      const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
+      expect(clipboardText).toContain(codeText);
+    });
+
+    test('copy button works in advanced mode', async ({ page, browserName }) => {
+      // Omit clipboard test for safari: https://github.com/microsoft/playwright/issues/13037
+      test.skip(browserName == 'webkit', 'webkit does not support clipboard permissions in playwright');
+
+      await page.getByRole('button', { name: 'Use Advanced Mode' }).click();
+      
+      const codeBlock = page.locator('[data-test-id="command-output"]');
+      await expect(codeBlock).toBeVisible();
+      
+      const codeText = await codeBlock.textContent();
+      
+      const copyButton = codeBlock.locator('button');
+      await expect(copyButton).toBeVisible();
+      
+      await copyButton.click();
+      
+      const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
+      expect(clipboardText).toContain(codeText);
+    });
+
+    test('config file download button is available', async ({ page }) => {
+      await page.getByRole('button', { name: 'Use Advanced Mode' }).click();
+      
+      await page.getByLabel('Choose Setting').click();
+      await page.getByRole('option', { name: 'exporter.csv.export' }).click();
+			await page.getByRole('button', { name: 'Add Config' }).click();
+			await page.locator('input[name="exporter.csv.export"]').click();
+      
+			await expect(page.getByRole('button', { name: 'Download Config File' })).toBeVisible();
+
+			// TODO: check downloaded file text
+    });
+  });
+
+  describe('Mode Switching', () => {
+    
+    test('can switch from guided to advanced mode', async ({ page }) => {
+      // Start in guided mode
+      await page.getByRole('button', { name: 'Use Guided Mode' }).click();
+      await expect(page.getByText('Which data formats do you need?')).toBeVisible();
+      
+      // Reload to go back to selection
+      await page.reload();
+      
+      // Switch to advanced mode
+      await page.getByRole('button', { name: 'Use Advanced Mode' }).click();
+      await expect(page.getByRole('heading', { name: 'Command-line Argument Builder' })).toBeVisible();
+    });
+
+    test('can switch from advanced to guided mode', async ({ page }) => {
+      await page.getByRole('button', { name: 'Use Advanced Mode' }).click();
+      await expect(page.getByRole('heading', { name: 'Command-line Argument Builder' })).toBeVisible();
+      
+      await page.reload();
+      
+      await page.getByRole('button', { name: 'Use Guided Mode' }).click();
+      await expect(page.getByText('Which data formats do you need?')).toBeVisible();
+    });
+  });
+});

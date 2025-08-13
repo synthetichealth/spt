@@ -36,6 +36,17 @@ npm start
 
 The app will now be running locally at http://localhost:3000
 
+### Testing
+
+Simply run tests: `npm t`
+
+Run interactive tests: `npm test:ui`
+
+Run a specific test: `npx playwright test --grep "test name"`
+
+Run tests for debugging: `npx playwright test --trace on`
+
+See [playwright CLI](https://playwright.dev/docs/test-cli) and use `npx playwright ...` for more complex usage
 
 ### Configuration
 
@@ -45,7 +56,6 @@ The app will now be running locally at http://localhost:3000
 | --- | -------- | 
 | SYNTHETICMASS_API_KEY | The API key to use for accessing the SyntheticMass API. Not required except for the SyntheticMass Browser |
 | FRONTEND_ONLY | When `true` this disables the backend server and the features that depend on it. This is primarily used to allow for deploying only a static UI, for example to GitHub Pages |
-
 
 # License
 
