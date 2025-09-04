@@ -57,19 +57,13 @@ const setConditionType = (m, type) => m['states']['Initial']['conditional_transi
 const clone = obj => JSON.parse(JSON.stringify(obj)); // simple deep copy to make sure a template never changes
 
 const buildKeepModule = (keeps, any) => {
-
   const keepModule = clone(KEEP_TEMPLATE); 
-
   setConditionType(keepModule, any ? "Or" : "And")
-
   const keepConditions = getConditions(keepModule);
-
   for (const keep of keeps) {
     // keep = { type, value }
 
     const newCondition = clone(CONDITION_TEMPLATE);
-
-
     newCondition['codes'][0] = keep.value;
 
     switch (keep.type) {
@@ -88,9 +82,7 @@ const buildKeepModule = (keeps, any) => {
       // we can use Active Condition instead
       newCondition['condition_type'] = 'Active Condition';
       break;
-
     }
-
 
     keepConditions.push(newCondition);
   }
@@ -108,6 +100,11 @@ const KeepModuleBuilder = (props) => {
   const [value, setValue] = useState('');
 
   const { setKeepModuleString, showDownload } = props;
+
+  const setAnyAndRebuildModule = (value) => {
+    setAny(value);
+    setKeepModuleString(buildKeepModule(keeps, value));
+  };
 
   const handleChange = () => {};
   const addCurrent = () => {
@@ -160,7 +157,7 @@ const KeepModuleBuilder = (props) => {
 
       <br />
 
-      ALL OF <Switch onChange={e => setAny(e.target.checked)} /> ANY OF <br />
+      ALL OF <Switch onChange={e => setAnyAndRebuildModule(e.target.checked)} /> ANY OF <br />
 
       <div>Keep patients matching <b>{ any ? "Any" : "All" }</b> of the following criteria:</div>
       <ul>
