@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -18,7 +17,7 @@ const style = {
   p: 4,
 };
 
-const ViewNoteModal = ({text}) => {
+const ViewNoteModal = ({ text }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -33,14 +32,22 @@ const ViewNoteModal = ({text}) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-description" component="pre">
-            {text}
+          <Typography
+            id="modal-modal-description"
+            style={{
+              textAlign: 'left',
+              whiteSpace: 'pre-wrap', // preserve whitespace and line breaks, but allow wrapping
+              overflowWrap: 'break-word', // break long words when necessary
+              wordBreak: 'break-word', // fall-back to break words if needed
+              hyphens: 'auto',
+            }}
+          >
+            {text.trim()}
           </Typography>
         </Box>
       </Modal>
     </div>
   );
-}
-
+};
 
 export default ViewNoteModal;

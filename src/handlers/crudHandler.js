@@ -20,16 +20,16 @@ function isMatch(object, attrs) {
 }
 
 function getHandler(collectionName, req, res) {
-  const result = db.select(collectionName, row => isMatch(row, req.query));
+  const result = db.select(collectionName, (row) => isMatch(row, req.query));
   res.send(result);
 }
 
 function updateHandler(collectionName, req, res) {
   const changedItem = req.body;
-  if (req.query.id) db.upsert(collectionName, changedItem, r => r.id === req.query.id);
+  if (req.query.id) db.upsert(collectionName, changedItem, (r) => r.id === req.query.id);
   else if (req.query.fullUrl) {
     const fullUrl = base64url.decode(req.query.fullUrl);
-    db.upsert(collectionName, changedItem, r => r.fullUrl === fullUrl);
+    db.upsert(collectionName, changedItem, (r) => r.fullUrl === fullUrl);
   } else {
     res.send('Must include id or fullUrl').status(StatusCodes.BAD_REQUEST);
     return;
@@ -40,10 +40,10 @@ function updateHandler(collectionName, req, res) {
 
 function deleteHandler(collectionName, req, res) {
   if (req.query.id) {
-    db.delete(collectionName, r => r.id === req.query.id);
+    db.delete(collectionName, (r) => r.id === req.query.id);
   } else if (req.query.fullUrl) {
     const fullUrl = base64url.decode(req.query.fullUrl);
-    db.delete(collectionName, r => r.fullUrl === fullUrl);
+    db.delete(collectionName, (r) => r.fullUrl === fullUrl);
   } else {
     res.send('Must include id or fullUrl').status(StatusCodes.BAD_REQUEST);
     return;

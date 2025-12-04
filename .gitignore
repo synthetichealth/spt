@@ -28,3 +28,6 @@ yarn-error.log*
 
 # https://github.com/facebook/create-react-app/issues/6560
 src/*.d.ts
+
+# Local data directory
+data/

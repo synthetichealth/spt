@@ -2,11 +2,11 @@ import React from 'react';
 
 export const SPACER = { title: '', versions: '*', getter: () => '' };
 
-export const round = function(num, digits) {
+export const round = function (num, digits) {
   return Number.parseFloat(num).toFixed(digits);
 };
 
-export const obsValue = entry => {
+export const obsValue = (entry) => {
   if (entry == null) {
     return '';
   } else if (entry.valueQuantity) {
@@ -46,17 +46,39 @@ export const isMatchingReference = (entry, reference, resourceType) => {
   );
 };
 
-export const getNoteText = dr => {
-  return atob( dr['content'][0]['attachment']['data'] );
+function convertHtmlToText(html) {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  return doc.body.innerText || doc.body.textContent || '';
+}
+
+export const getNoteText = (resource) => {
+  let decoded_note = '';
+  if (resource && resource['content'] && resource['content'][0]) {
+    decoded_note = atob(resource['content'][0]['attachment']['data']);
+  } else if (resource && resource['data']) {
+    decoded_note = atob(resource['data']);
+  } else {
+    return '';
+  }
+
+  // Sniff-test for HTML content
+  if (decoded_note.includes('</div>')) {
+    return convertHtmlToText(decoded_note);
+  } else {
+    return decoded_note;
+  }
 };
 
-export const extractMedia = m => {
+export const extractMedia = (m) => {
   if (!m || !m.content) return undefined;
 
   const contentType = m.content.contentType;
   const data = m.content.data;
   const url = `data:${contentType};base64, ${data}`;
   return (
-    <a href={url} target="_blank"> <img src={url} className="imagemedia" title="Click to open full-size" /> </a>
-    )
+    <a href={url} target="_blank" rel="noreferrer">
+      {' '}
+      <img src={url} className="imagemedia" title="Click to open full-size" />{' '}
+    </a>
+  );
 };
