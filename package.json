@@ -37,10 +37,12 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@mui/icons-material": "^5.11.16",
-    "@mui/lab": "^5.0.0-alpha.129",
-    "@mui/material": "^5.13.4",
-    "@mui/system": "^5.15.15",
+    "@mui/icons-material": "^9.1.1",
+    "@mui/material": "^9.1.2",
+    "@mui/material-pigment-css": "^9.1.1",
+    "@mui/system": "^9.1.2",
+    "@mui/x-data-grid": "^9.6.0",
+    "@pigment-css/react": "^0.0.30",
     "@welldone-software/why-did-you-render": "^8.0.1",
     "axios": "^0.21.1",
     "base64url": "^3.0.1",
@@ -64,9 +66,9 @@
     "react": "^18.0.0",
     "react-accessible-accordion": "^5.0.1",
     "react-code-blocks": "^0.1.0",
-    "react-data-grid": "^7.0.0-beta.44",
     "react-dom": "^18.0.0",
     "react-dropzone": "^11.3.2",
+    "react-is": "^18.3.1",
     "react-json-editor-ajrm": "^2.5.14",
     "react-json-view": "^1.21.3",
     "react-leaflet": "^4.2.1",
@@ -78,6 +80,7 @@
     "uuid": "^14.0.1"
   },
   "overrides": {
+    "react-is": "$react-is",
     "react-json-view": {
       "react": "$react",
       "react-dom": "$react-dom"

@@ -1,9 +1,8 @@
 import React from 'react';
-import DataGrid from 'react-data-grid';
-import 'react-data-grid/lib/styles.css';
 
 import moment from 'moment';
 
+import FhirDataGrid, { getColumnKey } from '../PatientViewer/FhirDataGrid';
 import ViewFhirModal from '../PatientViewer/ViewFhirModal';
 import {
   codeDisplay,
@@ -57,24 +56,17 @@ const FORMATTERS = {
 const WIDTHS = {
   date: 145,
   dateTime: 300,
-  snomed: 125,
+  snomed: 200,
+  rxNorm: 125,
+  loinc: 100,
 };
-
-const COMPACT_ROW_HEIGHT = 35;
-const WRAPPED_ROW_HEIGHT = 56;
-
-const rowNeedsWrapHeight = (row) =>
-  Object.values(row).some(
-    (value) => typeof value === 'string' && (value.length > 48 || value.includes('\n')),
-  );
-
-const defaultRowHeight = (row) => (rowNeedsWrapHeight(row) ? WRAPPED_ROW_HEIGHT : COMPACT_ROW_HEIGHT);
 
 const VIEW_FHIR = {
   key: 'fhir',
   name: 'View FHIR',
   width: 100,
   getter: (resource) => <ViewFhirModal resource={resource} />,
+  sortable: false,
 };
 
 const attributeXTime = (entry, type) => {
@@ -99,9 +91,7 @@ function applyColumns(resource, columns) {
   const row = {};
 
   for (const c of columns) {
-    if (!c.key) {
-      c.key = c.name;
-    }
+    const key = getColumnKey(c);
 
     const formatter = FORMATTERS[c.format];
     let result;
@@ -109,7 +99,7 @@ function applyColumns(resource, columns) {
       result = c.getter(resource);
     } catch (e) {
       console.error(e);
-      result = unsupportedField(c.name || c.key);
+      result = unsupportedField(c.name || key);
     }
     if (result && formatter && !React.isValidElement(result)) {
       result = formatter(result);
@@ -117,10 +107,10 @@ function applyColumns(resource, columns) {
     if ((result == null || result === '') && c.defaultValue) {
       result = c.defaultValue;
     } else if (result == null) {
-      result = missingField(c.name || c.key);
+      result = missingField(c.name || key);
     }
 
-    row[c.key] = result;
+    row[key] = result;
   }
 
   return row;
@@ -130,12 +120,14 @@ class GenericTable extends React.Component {
   render() {
     const rows = [];
 
-    for (const rawRow of this.props.rows.slice().reverse()) {
+    for (const [rowIndex, rawRow] of this.props.rows.slice().reverse().entries()) {
       const row = applyColumns(rawRow, this.props.columns);
+      const rowId = this.props.keyFn ? this.props.keyFn(rawRow) : rowIndex;
+      row.id = `${this.props.title}-${rowId ?? rowIndex}`;
       rows.push(row);
 
       if (this.props.nestedRows) {
-        for (const nestedRow of this.props.nestedRows) {
+        for (const [nestedRowIndex, nestedRow] of this.props.nestedRows.entries()) {
           let subRowLines;
           try {
             subRowLines = nestedRow.getter(rawRow);
@@ -145,13 +137,18 @@ class GenericTable extends React.Component {
           if (!subRowLines) continue;
           const subColumns = nestedRow.columns;
 
-          for (const subRowLine of subRowLines) {
-            const nestedRow = applyColumns(subRowLine, subColumns);
-            rows.push(nestedRow);
+          for (const [subRowIndex, subRowLine] of subRowLines.entries()) {
+            const nestedRowData = applyColumns(subRowLine, subColumns);
+            nestedRowData.id = `${row.id}-nested-${nestedRowIndex}-${subRowLine.id ?? subRowIndex}`;
+            rows.push(nestedRowData);
           }
         }
       }
     }
+
+    const getRowHeight = this.props.rowHeight
+      ? ({ model }) => this.props.rowHeight(model) || 'auto'
+      : undefined;
 
     return (
       <React.Fragment>
@@ -161,12 +158,7 @@ class GenericTable extends React.Component {
           </div>
           <div className="header-divider"></div>
         </div>
-        <DataGrid
-          columns={this.props.columns}
-          rows={rows}
-          style={{ blockSize: '100%' }} // otherwise it defaults to some fixed size and has a scrollbar
-          rowHeight={this.props.rowHeight || defaultRowHeight}
-        />
+        <FhirDataGrid columns={this.props.columns} rows={rows} getRowHeight={getRowHeight} />
       </React.Fragment>
     );
   }
@@ -195,7 +187,7 @@ class ObservationsTable extends GenericTable {
   static defaultProps = {
     title: 'Observations',
     columns: [
-      { name: 'LOINC', getter: (o) => codeValue(o.code, 'Observation.code') },
+      { name: 'LOINC', getter: (o) => codeValue(o.code, 'Observation.code'), width: WIDTHS.loinc },
       { name: 'Observation', getter: (o) => codeDisplay(o.code, 'Observation.code') },
       { name: 'Value', getter: (o) => obsValue(o) },
       { name: 'Date Recorded', getter: (o) => attributeXTime(o, 'effective') },
@@ -209,7 +201,11 @@ class ReportsTable extends GenericTable {
   static defaultProps = {
     title: 'Reports',
     columns: [
-      { name: 'LOINC', getter: (r) => codeValue(r.code, 'DiagnosticReport.code') },
+      {
+        name: 'LOINC',
+        getter: (r) => codeValue(r.code, 'DiagnosticReport.code'),
+        width: WIDTHS.loinc,
+      },
       {
         name: 'Report/Observation',
         getter: (r) => codeDisplay(r.code, 'DiagnosticReport.code'),
@@ -230,7 +226,11 @@ class ReportsTable extends GenericTable {
         getter: (rpt) => rpt.observations,
         keyFn: (o) => o.id,
         columns: [
-          { name: 'LOINC', getter: (o) => codeValue(o.code, 'Observation.code') },
+          {
+            name: 'LOINC',
+            getter: (o) => codeValue(o.code, 'Observation.code'),
+            width: WIDTHS.loinc,
+          },
           { name: 'Report/Observation', getter: (o) => codeDisplay(o.code, 'Observation.code') },
           { name: 'Value', getter: (o) => obsValue(o) },
           VIEW_FHIR,
@@ -253,7 +253,6 @@ class ReportsTable extends GenericTable {
         ],
       },
     ],
-    rowHeight: (row) => (row.type === 'Note' ? null : 35), // makes the row height dynamic when the note is opened/closed
     keyFn: (r) => r.id,
   };
 }
@@ -262,7 +261,11 @@ class AllergiesTable extends GenericTable {
   static defaultProps = {
     title: 'Allergies',
     columns: [
-      { name: 'Allergy', getter: (a) => codeLabel(a.code, 'AllergyIntolerance.code') },
+      {
+        name: 'Allergy',
+        getter: (a) => codeLabel(a.code, 'AllergyIntolerance.code'),
+        width: WIDTHS.snomed,
+      },
       { name: 'Recorded', format: 'date', getter: (a) => a.recordedDate || a.assertedDate },
       { name: 'Onset', format: 'date', getter: (a) => a.onsetDateTime || '' },
       {
@@ -284,12 +287,13 @@ class CarePlansTable extends GenericTable {
   static defaultProps = {
     title: 'CarePlans',
     columns: [
-      // note the -1, us core category "assess-plan" gets added at slot 0
+      // note the "last", us core category "assess-plan" gets added at slot 0
       // but us core is not always active
       // so we want the last one not necessarily always 0 or 1
       {
         name: 'SNOMED',
         getter: (c) => codeValue(lastCodeableConcept(c.category), 'CarePlan.category'),
+        width: WIDTHS.snomed,
       },
       {
         name: 'Care Plan',
@@ -339,7 +343,7 @@ class ProceduresTable extends GenericTable {
   static defaultProps = {
     title: 'Procedures',
     columns: [
-      { name: 'SNOMED', getter: (p) => codeValue(p.code, 'Procedure.code') },
+      { name: 'SNOMED', getter: (p) => codeValue(p.code, 'Procedure.code'), width: WIDTHS.snomed },
       { name: 'Procedure', getter: (p) => codeDisplay(p.code, 'Procedure.code') },
       {
         name: 'Performed',
@@ -356,7 +360,11 @@ class EncountersTable extends GenericTable {
   static defaultProps = {
     title: 'Encounters',
     columns: [
-      { name: 'SNOMED', getter: (e) => codeValue(e.type?.[0], 'Encounter.type') },
+      {
+        name: 'SNOMED',
+        getter: (e) => codeValue(e.type?.[0], 'Encounter.type'),
+        width: WIDTHS.snomed,
+      },
       { name: 'Encounter', getter: (e) => codeDisplay(e.type?.[0], 'Encounter.type') },
       {
         name: 'Start Time',
@@ -427,13 +435,14 @@ class MedicationRequestsTable extends GenericTable {
         name: 'RxNorm',
         getter: (m) =>
           codeValue(m.medicationCodeableConcept, 'MedicationRequest.medicationCodeableConcept'),
+        width: WIDTHS.rxNorm,
       },
       {
         name: 'Medication',
         getter: (m) =>
           codeDisplay(m.medicationCodeableConcept, 'MedicationRequest.medicationCodeableConcept'),
       },
-      { name: 'Date Prescribed', format: 'date', getter: (c) => c.authoredOn },
+      { name: 'Date Prescribed', format: 'date', getter: (c) => c.authoredOn, width: WIDTHS.date },
       { name: 'Status', getter: (c) => c.status },
       VIEW_FHIR,
     ],

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
@@ -24,8 +24,10 @@ const ViewFhirModal = ({ resource }) => {
   const sourceResource = resource?.__sourceResource || resource;
 
   return (
-    <div>
-      <Button onClick={handleOpen}>[i]</Button>
+    <div style={{ textAlign: 'center' }}>
+      <Link component="button" onClick={handleOpen}>
+        [i]
+      </Link>
       <Modal
         open={open}
         onClose={handleClose}

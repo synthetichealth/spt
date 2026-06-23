@@ -37,9 +37,9 @@ code {
   height: auto;
 }
 
-/* Prevent browser scroll anchoring from fighting react-data-grid virtualization in large patient records. */
+/* Prevent browser scroll anchoring from fighting virtualized grids in large patient records. */
 .patient-viewer,
-.patient-viewer .rdg {
+.patient-viewer .fhir-data-grid {
   overflow-anchor: none;
 }
 
@@ -48,17 +48,24 @@ code {
   overflow-x: auto;
 }
 
-.patient-viewer .rdg {
-  min-width: 720px;
+.patient-viewer .fhir-data-grid {
   text-align: left;
 }
 
-.patient-viewer .rdg-cell {
+.patient-viewer .fhir-data-grid .MuiDataGrid-cell {
   white-space: normal;
   overflow-wrap: anywhere;
   line-height: 1.25;
-  display: flex;
   align-items: center;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.patient-viewer .fhir-data-grid__cell-content {
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .fhir-field-warning {

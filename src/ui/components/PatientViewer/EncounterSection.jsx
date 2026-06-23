@@ -1,6 +1,4 @@
 import React from 'react';
-import DataGrid from 'react-data-grid';
-import 'react-data-grid/lib/styles.css';
 
 import {
   Accordion,
@@ -15,6 +13,7 @@ import 'react-accessible-accordion/dist/fancy-example.css';
 
 import moment from 'moment';
 
+import FhirDataGrid from './FhirDataGrid';
 import ViewFhirModal from './ViewFhirModal';
 
 import {
@@ -57,7 +56,7 @@ const COLUMNS = [
     },
   },
   { key: 'additional', name: '' },
-  { key: 'fhir', name: 'View FHIR' },
+  { key: 'fhir', name: 'View FHIR', sortable: false },
 ];
 
 const formatDate = (value, format, fieldName) => {
@@ -88,14 +87,6 @@ const VIEW_FHIR = {
   key: 'fhir',
   getter: (resource) => <ViewFhirModal resource={resource} />,
 };
-
-const COMPACT_ROW_HEIGHT = 35;
-const WRAPPED_ROW_HEIGHT = 56;
-
-const rowNeedsWrapHeight = (row) =>
-  Object.values(row).some(
-    (value) => typeof value === 'string' && (value.length > 48 || value.includes('\n')),
-  );
 
 const attributeXTime = (entry, type) => {
   const value = effectiveTime(entry, type);
@@ -338,10 +329,9 @@ const rowHeightFn = (row) => {
     case 'Media':
       return 200;
     case 'Note':
-      return null; // makes it fit to content when expanded
+      return 'auto'; // makes it fit to content when expanded
     default:
-      // Undefined makes the app hang; null makes the row smaller.
-      return rowNeedsWrapHeight(row) ? WRAPPED_ROW_HEIGHT : COMPACT_ROW_HEIGHT;
+      return 'auto';
   }
 };
 
@@ -351,7 +341,7 @@ const EncounterSection = ({ encounterData }) => {
   for (const rowDef of ROW_FUNCTIONS) {
     const rawRows = rowDef.getter(encounterData);
 
-    for (const rawRow of rawRows) {
+    for (const [rawRowIndex, rawRow] of rawRows.entries()) {
       const row = {};
 
       for (const c of rowDef.columns) {
@@ -375,17 +365,14 @@ const EncounterSection = ({ encounterData }) => {
         row[c.key] = result;
       }
 
+      const rowId = rowDef.keyFn ? rowDef.keyFn(rawRow) : rawRowIndex;
+      row.id = `${row.type}-${rowId ?? rawRowIndex}-${rows.length}`;
       rows.push(row);
     }
   }
 
   return (
-    <DataGrid
-      columns={COLUMNS}
-      rows={rows}
-      style={{ blockSize: '100%' }} // otherwise it defaults to some fixed size and has a scrollbar
-      rowHeight={rowHeightFn}
-    />
+    <FhirDataGrid columns={COLUMNS} rows={rows} getRowHeight={({ model }) => rowHeightFn(model)} />
   );
 };
 

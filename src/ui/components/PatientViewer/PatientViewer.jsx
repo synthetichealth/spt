@@ -124,7 +124,14 @@ const getDropzone = (setLoading, setError, callback) => {
             })}
           >
             <input {...getInputProps()} />
-            <Box display="flex" justifyContent="center" alignItems="center" minHeight="100%">
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                minHeight: '100%',
+              }}
+            >
               <Box sx={{ p: 2, border: '1px dashed grey', textAlign: 'center' }}>
                 <h2>Drag &amp; drop a FHIR JSON file here</h2>
                 <h2>
