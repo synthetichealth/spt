@@ -21,6 +21,7 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import Tooltip from '@mui/material/Tooltip';
 
 function Copyright(props) {
   return (
@@ -36,6 +37,9 @@ function Copyright(props) {
 }
 
 const drawerWidth = 240;
+const collapsedDrawerWidth = 72;
+
+const getDesktopDrawerWidth = (open) => (open ? drawerWidth : collapsedDrawerWidth);
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open' && prop !== 'isDesktop',
@@ -45,44 +49,48 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  ...(isDesktop &&
-    open && {
-      marginLeft: drawerWidth,
-      width: `calc(100% - ${drawerWidth}px)`,
-      transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
+  ...(isDesktop && {
+    marginLeft: getDesktopDrawerWidth(open),
+    width: `calc(100% - ${getDesktopDrawerWidth(open)}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
     }),
+  }),
 }));
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'open' && prop !== 'isDesktop',
 })(({ theme, open, isDesktop }) => ({
+  ...(isDesktop && {
+    width: getDesktopDrawerWidth(open),
+    flexShrink: 0,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: open
+        ? theme.transitions.duration.enteringScreen
+        : theme.transitions.duration.leavingScreen,
+    }),
+  }),
   '& .MuiDrawer-paper': {
     backgroundColor: theme.palette.background.primary,
     color: theme.palette.text.gray,
-    position: isDesktop ? 'relative' : 'fixed',
+    position: 'fixed',
     whiteSpace: 'nowrap',
-    width: drawerWidth,
+    width: isDesktop ? getDesktopDrawerWidth(open) : drawerWidth,
     maxWidth: isDesktop ? drawerWidth : '85vw',
-    transition: theme.transitions.create('width', {
+    transition: theme.transitions.create(['width', 'max-width'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
+      duration: open
+        ? theme.transitions.duration.enteringScreen
+        : theme.transitions.duration.leavingScreen,
     }),
     boxSizing: 'border-box',
-    ...(isDesktop &&
-      !open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    ...(isDesktop && {
+      height: '100vh',
+    }),
   },
 }));
 
@@ -129,9 +137,9 @@ function LayoutShell({ routes }) {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', width: '100%', minHeight: '100vh' }}>
       <CssBaseline />
-      <AppBar position="absolute" open={open} isDesktop={isDesktop}>
+      <AppBar position="fixed" open={open} isDesktop={isDesktop}>
         <Toolbar
           sx={{
             pr: { xs: 1, sm: 3 }, // keep right padding when drawer closed
@@ -146,7 +154,7 @@ function LayoutShell({ routes }) {
             fontSize="large"
             sx={{
               mr: { xs: 1, sm: 4 },
-              ...(isDesktop && open && { display: 'none' }),
+              ...(isDesktop && { display: 'none' }),
             }}
           >
             <MenuIcon />
@@ -176,12 +184,19 @@ function LayoutShell({ routes }) {
           sx={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'flex-end',
+            justifyContent: open ? 'flex-end' : 'center',
             px: [1],
           }}
         >
-          <IconButton onClick={toggleDrawer}>
-            <ChevronLeftIcon fontSize="large" color="primary" />
+          <IconButton
+            onClick={toggleDrawer}
+            aria-label={open ? 'collapse sidebar' : 'expand sidebar'}
+          >
+            {open ? (
+              <ChevronLeftIcon fontSize="large" color="primary" />
+            ) : (
+              <MenuIcon fontSize="large" color="primary" />
+            )}
           </IconButton>
         </Toolbar>
         <Divider />
@@ -189,21 +204,54 @@ function LayoutShell({ routes }) {
           {routes
             .filter((route) => !!route.label)
             .map((route) => {
-              return (
+              const isCollapsed = isDesktop && !open;
+              const navItem = (
                 <ListItemButton
                   component={NavLink}
                   to={route.path}
-                  key={route.path}
                   onClick={() => {
                     if (!isDesktop) setOpen(false);
                   }}
-                  sx={{ '&.active': { backgroundColor: 'rgba(255, 255, 255, 0.08)' } }}
+                  aria-label={isCollapsed ? route.label : undefined}
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: isCollapsed ? 'center' : 'initial',
+                    px: isCollapsed ? 0 : 2.5,
+                    '&.active': { backgroundColor: 'rgba(255, 255, 255, 0.08)' },
+                  }}
                 >
-                  <ListItemIcon>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: isCollapsed ? 0 : 48,
+                      justifyContent: 'center',
+                    }}
+                  >
                     {route.icon || <DashboardIcon color="primary" fontSize="large" />}
                   </ListItemIcon>
-                  <ListItemText primary={route.label} sx={{ fontWeight: 'bold', color: 'white' }} />
+                  <ListItemText
+                    primary={route.label}
+                    sx={{
+                      color: 'white',
+                      display: isCollapsed ? 'none' : 'block',
+                      minWidth: 0,
+                      overflow: 'hidden',
+                      '& .MuiListItemText-primary': {
+                        fontWeight: 'bold',
+                      },
+                    }}
+                  />
                 </ListItemButton>
+              );
+
+              return (
+                <Tooltip
+                  title={isCollapsed ? route.label : ''}
+                  placement="right"
+                  arrow
+                  key={route.path}
+                >
+                  {navItem}
+                </Tooltip>
               );
             })}
           <Divider sx={{ my: 1 }} />
@@ -217,8 +265,7 @@ function LayoutShell({ routes }) {
             theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
           flexGrow: 1,
           minWidth: 0,
-          width: '100%',
-          height: '100vh',
+          minHeight: '100vh',
           overflow: 'auto',
         }}
       >

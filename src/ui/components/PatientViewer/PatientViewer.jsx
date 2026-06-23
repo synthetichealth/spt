@@ -119,7 +119,13 @@ const getDropzone = (setLoading, setError, callback) => {
         <>
           <div
             {...getRootProps({
-              style: { height: '100vh', width: '100%', background: '#F0F8FF', padding: '2rem' },
+              style: {
+                minHeight: 'calc(100vh - 180px)',
+                width: '100%',
+                background: '#F0F8FF',
+                padding: '2rem',
+                boxSizing: 'border-box',
+              },
             })}
           >
             <input {...getInputProps()} />

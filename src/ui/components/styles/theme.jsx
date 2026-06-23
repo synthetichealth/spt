@@ -79,10 +79,11 @@ const componentStyleOverridesBase = {
   MuiTableContainer: {
     styleOverrides: {
       root: {
-        width: '70vw',
-        margin: '0 20px 0 20px',
+        width: '100%',
+        maxWidth: '100%',
+        margin: 0,
         overflowY: 'visible',
-        overflowX: 'scroll',
+        overflowX: 'auto',
         backgroundColor: 'white',
       },
     },
