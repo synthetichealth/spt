@@ -1,4 +1,4 @@
-import { createTheme, adaptV4Theme } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 
 const colors = {
   white: '#fff',
@@ -56,46 +56,52 @@ const paletteBase = {
   }
 };
 
-const materialUiOverridesBase = {
+const componentStyleOverridesBase = {
   MuiTableCell: {
-    body: {
-      color: '#575b62'
-    },
-    head: {
-      color: '#575b62',
-      fontWeight: '600',
-      fontSize: '12px'
-    },
-    sizeSmall: {
-      padding: '5px 24px 5px 16px',
-      '&:last-child': {
-        paddingRight: '0px',
-        width: '80px'
+    styleOverrides: {
+      body: {
+        color: '#575b62'
+      },
+      head: {
+        color: '#575b62',
+        fontWeight: '600',
+        fontSize: '12px'
+      },
+      sizeSmall: {
+        padding: '5px 24px 5px 16px',
+        '&:last-child': {
+          paddingRight: '0px',
+          width: '80px'
+        }
       }
     }
   },
   MuiTableContainer: {
-    root: {
-      width: '70vw',
-      margin: '0 20px 0 20px',
-      overflowY: 'visible',
-      overflowX: 'scroll',
-      backgroundColor: 'white'
+    styleOverrides: {
+      root: {
+        width: '70vw',
+        margin: '0 20px 0 20px',
+        overflowY: 'visible',
+        overflowX: 'scroll',
+        backgroundColor: 'white'
+      }
     }
   },
   MuiTableSortLabel: {
-    root: {
-      color: 'black',
-      '&$active': {
-        color: 'black'
+    styleOverrides: {
+      root: {
+        color: 'black',
+        '&.Mui-active': {
+          color: 'black'
+        }
       }
     }
   }
 };
 
-const theme = createTheme(adaptV4Theme({
+const theme = createTheme({
   palette: { ...paletteBase },
-  overrides: { ...materialUiOverridesBase }
-}));
+  components: { ...componentStyleOverridesBase }
+});
 
 export default theme;
