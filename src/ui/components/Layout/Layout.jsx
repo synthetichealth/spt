@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { NavLink, Outlet, RouterProvider, createHashRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -37,37 +38,41 @@ function Copyright(props) {
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
+  shouldForwardProp: (prop) => prop !== 'open' && prop !== 'isDesktop',
+})(({ theme, open, isDesktop }) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      backgroundColor: theme.palette.background.primary,
-      color: theme.palette.text.gray,
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
+  ...(isDesktop &&
+    open && {
+      marginLeft: drawerWidth,
+      width: `calc(100% - ${drawerWidth}px)`,
+      transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
-      boxSizing: 'border-box',
-      ...(!open && {
+    }),
+}));
+
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== 'open' && prop !== 'isDesktop',
+})(({ theme, open, isDesktop }) => ({
+  '& .MuiDrawer-paper': {
+    backgroundColor: theme.palette.background.primary,
+    color: theme.palette.text.gray,
+    position: isDesktop ? 'relative' : 'fixed',
+    whiteSpace: 'nowrap',
+    width: drawerWidth,
+    maxWidth: isDesktop ? drawerWidth : '85vw',
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    boxSizing: 'border-box',
+    ...(isDesktop &&
+      !open && {
         overflowX: 'hidden',
         transition: theme.transitions.create('width', {
           easing: theme.transitions.easing.sharp,
@@ -78,9 +83,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
           width: theme.spacing(9),
         },
       }),
-    },
-  }),
-);
+  },
+}));
 
 const getRoutePath = (route) => {
   if (route.path === '/') return null;
@@ -112,7 +116,13 @@ const createRouter = (routes) =>
   ]);
 
 function LayoutShell({ routes }) {
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   const [open, setOpen] = React.useState(true);
+
+  React.useEffect(() => {
+    setOpen(isDesktop);
+  }, [isDesktop]);
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -121,10 +131,11 @@ function LayoutShell({ routes }) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="absolute" open={open}>
+      <AppBar position="absolute" open={open} isDesktop={isDesktop}>
         <Toolbar
           sx={{
-            pr: '24px', // keep right padding when drawer closed
+            pr: { xs: 1, sm: 3 }, // keep right padding when drawer closed
+            minWidth: 0,
           }}
         >
           <IconButton
@@ -134,13 +145,19 @@ function LayoutShell({ routes }) {
             onClick={toggleDrawer}
             fontSize="large"
             sx={{
-              marginRight: '36px',
-              ...(open && { display: 'none' }),
+              mr: { xs: 1, sm: 4 },
+              ...(isDesktop && open && { display: 'none' }),
             }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography component="h5" variant="h5" color="inherit" noWrap sx={{ flexGrow: 1 }}>
+          <Typography
+            component="h5"
+            variant="h5"
+            color="inherit"
+            noWrap
+            sx={{ flexGrow: 1, minWidth: 0, fontSize: { xs: '1.05rem', sm: '1.5rem' } }}
+          >
             Synthea Toolkit
           </Typography>
           <IconButton href="https://github.com/synthetichealth/spt" color="inherit">
@@ -148,7 +165,13 @@ function LayoutShell({ routes }) {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer
+        variant={isDesktop ? 'permanent' : 'temporary'}
+        open={open}
+        isDesktop={isDesktop}
+        onClose={() => setOpen(false)}
+        ModalProps={{ keepMounted: true }}
+      >
         <Toolbar
           sx={{
             display: 'flex',
@@ -171,6 +194,9 @@ function LayoutShell({ routes }) {
                   component={NavLink}
                   to={route.path}
                   key={route.path}
+                  onClick={() => {
+                    if (!isDesktop) setOpen(false);
+                  }}
                   sx={{ '&.active': { backgroundColor: 'rgba(255, 255, 255, 0.08)' } }}
                 >
                   <ListItemIcon>
@@ -190,18 +216,31 @@ function LayoutShell({ routes }) {
           backgroundColor: (theme) =>
             theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
           flexGrow: 1,
+          minWidth: 0,
+          width: '100%',
           height: '100vh',
           overflow: 'auto',
         }}
       >
         <Toolbar />
-        <Container sx={{ mt: 4, mb: 4, width: '100%' }} maxWidth={false}>
+        <Container
+          sx={{
+            mt: { xs: 2, sm: 3, md: 4 },
+            mb: { xs: 2, sm: 3, md: 4 },
+            px: { xs: 1, sm: 2, md: 3 },
+            width: '100%',
+            maxWidth: '100%',
+          }}
+          maxWidth={false}
+        >
           <Box
             sx={{
               width: '100%',
               maxWidth: '100%',
               mx: 'auto',
               textAlign: 'center',
+              overflowX: 'auto',
+              WebkitOverflowScrolling: 'touch',
               '& > *': {
                 maxWidth: '100%',
               },

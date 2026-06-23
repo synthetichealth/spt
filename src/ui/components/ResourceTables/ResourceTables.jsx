@@ -60,6 +60,16 @@ const WIDTHS = {
   snomed: 125,
 };
 
+const COMPACT_ROW_HEIGHT = 35;
+const WRAPPED_ROW_HEIGHT = 56;
+
+const rowNeedsWrapHeight = (row) =>
+  Object.values(row).some(
+    (value) => typeof value === 'string' && (value.length > 48 || value.includes('\n')),
+  );
+
+const defaultRowHeight = (row) => (rowNeedsWrapHeight(row) ? WRAPPED_ROW_HEIGHT : COMPACT_ROW_HEIGHT);
+
 const VIEW_FHIR = {
   key: 'fhir',
   name: 'View FHIR',
@@ -155,7 +165,7 @@ class GenericTable extends React.Component {
           columns={this.props.columns}
           rows={rows}
           style={{ blockSize: '100%' }} // otherwise it defaults to some fixed size and has a scrollbar
-          rowHeight={this.props.rowHeight || 35}
+          rowHeight={this.props.rowHeight || defaultRowHeight}
         />
       </React.Fragment>
     );

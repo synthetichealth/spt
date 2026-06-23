@@ -15,8 +15,12 @@ export default styled(
     },
     collection: {
       margin: '60px auto',
-      width: '75vw',
+      width: 'min(1200px, 100%)',
+      overflowX: 'auto',
       backgroundColor: 'white',
+      [theme.breakpoints.down('sm')]: {
+        margin: '24px auto',
+      },
     },
     visuallyHidden: {
       border: 0,

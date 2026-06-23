@@ -89,6 +89,14 @@ const VIEW_FHIR = {
   getter: (resource) => <ViewFhirModal resource={resource} />,
 };
 
+const COMPACT_ROW_HEIGHT = 35;
+const WRAPPED_ROW_HEIGHT = 56;
+
+const rowNeedsWrapHeight = (row) =>
+  Object.values(row).some(
+    (value) => typeof value === 'string' && (value.length > 48 || value.includes('\n')),
+  );
+
 const attributeXTime = (entry, type) => {
   const value = effectiveTime(entry, type);
   if (React.isValidElement(value)) return value;
@@ -333,7 +341,7 @@ const rowHeightFn = (row) => {
       return null; // makes it fit to content when expanded
     default:
       // Undefined makes the app hang; null makes the row smaller.
-      return 35;
+      return rowNeedsWrapHeight(row) ? WRAPPED_ROW_HEIGHT : COMPACT_ROW_HEIGHT;
   }
 };
 

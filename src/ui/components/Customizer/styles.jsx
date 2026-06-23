@@ -15,9 +15,13 @@ export default styled(
     },
     collection: {
       margin: '60px auto',
-      width: '75vw',
+      width: 'min(1200px, 100%)',
       maxWidth: '100%',
+      overflowX: 'auto',
       backgroundColor: 'white',
+      [theme.breakpoints.down('sm')]: {
+        margin: '24px auto',
+      },
     },
     visuallyHidden: {
       border: 0,
@@ -88,9 +92,15 @@ export default styled(
     },
     customizerContainer: {
       padding: '15px 35px',
+      [theme.breakpoints.down('sm')]: {
+        padding: '8px 0',
+      },
     },
     dashboardCard: {
       padding: 10,
+      [theme.breakpoints.down('sm')]: {
+        padding: 8,
+      },
     },
   }),
 

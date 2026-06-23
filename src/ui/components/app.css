@@ -33,13 +33,32 @@ code {
 
 
 .imagemedia {
-  max-width: 200px
+  max-width: min(200px, 100%);
+  height: auto;
 }
 
 /* Prevent browser scroll anchoring from fighting react-data-grid virtualization in large patient records. */
 .patient-viewer,
 .patient-viewer .rdg {
   overflow-anchor: none;
+}
+
+.patient-viewer {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.patient-viewer .rdg {
+  min-width: 720px;
+  text-align: left;
+}
+
+.patient-viewer .rdg-cell {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.25;
+  display: flex;
+  align-items: center;
 }
 
 .fhir-field-warning {
