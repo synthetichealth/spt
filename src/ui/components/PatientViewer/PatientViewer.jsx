@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from "react-router-dom";
 import useLocalStorage from "use-local-storage";
 import {
@@ -23,6 +23,7 @@ import { HashLink as Link } from 'react-router-hash-link';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 
 import {
   Accordion,
@@ -50,18 +51,51 @@ import csvToFhir from './csvToFhir';
 import { evaluateResource, appliesToResource } from '../../fhirpath_utils';
 
 import FILTER_PRESETS from './FilterPresets';
+import usePatientViewerSettings from './usePatientViewerSettings';
 
 
-const getDropzone = (setLoading, callback) => {
+const validateFhirBundle = bundle => {
+  if (!bundle || typeof bundle !== 'object') {
+    return 'The selected file did not contain a FHIR JSON object.';
+  }
+
+  if (bundle.resourceType && bundle.resourceType !== 'Bundle') {
+    return `Expected a FHIR Bundle, but found ${bundle.resourceType}.`;
+  }
+
+  if (!Array.isArray(bundle.entry)) {
+    return 'Expected a FHIR Bundle with an entry array.';
+  }
+
+  const invalidEntry = bundle.entry.find(entry => !entry?.resource?.resourceType);
+  if (invalidEntry) {
+    return 'Every Bundle entry must contain a resource with a resourceType.';
+  }
+
+  return null;
+};
+
+const getDropzone = (setLoading, setError, callback) => {
   const onDrop = files => {
+    if (!files?.length) return;
+
     const reader = new FileReader();
     reader.readAsText(files[0]);
+    setError(null);
     setLoading(true);
+    reader.onerror = () => {
+      setLoading(false);
+      setError('Unable to read the selected file.');
+    };
     reader.onload = () => {
       if (reader.result) {
-        const json = JSON.parse(reader.result);
-        setLoading(false);
-        callback(json);
+        try {
+          const json = JSON.parse(reader.result);
+          callback(json);
+        } catch (_e) {
+          setLoading(false);
+          setError('Unable to parse the selected file as JSON.');
+        }
       }
     };
   };
@@ -111,42 +145,80 @@ const PatientViewer = props => {
   const id = props.id || urlParams.get('patient');
 
   const [bundle, _setBundle] = useState();
+  const [loadedPatientId, setLoadedPatientId] = useState();
+  const pendingPatientId = useRef();
+  const [loadError, setLoadError] = useState();
   const [previousBundle, setPreviousBundle] = useLocalStorage("previousBundle", bundle);
   const [isLoading, setIsLoading] = useState(!bundle);
 
-  const setBundle = (bundle) => {
-    _setBundle(bundle);
-    setPreviousBundle(bundle);
-    setIsLoading(false);
-  }
-
-  const [isGroupByEncounter, setIsGroupByEncounter] = useLocalStorage("group-by-encounter", false);
-
-  const loadedPresets = [];
-  for (const presetKey of Object.keys(FILTER_PRESETS)) {
-    const [isPresetLoaded,] = useLocalStorage(presetKey, false);
-
-    if (isPresetLoaded) {
-      loadedPresets.push(presetKey);
+  const setBundle = (nextBundle, sourceId) => {
+    const validationError = validateFhirBundle(nextBundle);
+    if (validationError) {
+      _setBundle(undefined);
+      setLoadedPatientId(undefined);
+      setLoadError(validationError);
+      setIsLoading(false);
+      return;
     }
-  }
+
+    _setBundle(nextBundle);
+    setPreviousBundle(nextBundle);
+    setLoadedPatientId(sourceId);
+    setLoadError(null);
+    setIsLoading(false);
+  };
+
+  const { settings, setIsGroupByEncounter } = usePatientViewerSettings();
+  const isGroupByEncounter = settings.isGroupByEncounter;
+  const loadedPresets = Object.entries(settings.filterPresets)
+    .filter((entry) => entry[1])
+    .map(([presetKey]) => presetKey);
 
   useEffect(() => {
-    if (id && !bundle) {
-      setIsLoading(true);
-      getPatient(id).then(patientEverythingBundle => {
-        setBundle(patientEverythingBundle);
-      });
+    if (!id || loadedPatientId === id || pendingPatientId.current === id) {
+      return undefined;
     }
-  }, [id, bundle]);
+
+    pendingPatientId.current = id;
+    _setBundle(undefined);
+    setLoadError(null);
+    setIsLoading(true);
+
+    getPatient(id)
+      .then(patientEverythingBundle => {
+        if (pendingPatientId.current === id) {
+          setBundle(patientEverythingBundle, id);
+        }
+      })
+      .catch(error => {
+        if (pendingPatientId.current === id) {
+          _setBundle(undefined);
+          setLoadedPatientId(undefined);
+          setLoadError(error?.message || 'Unable to load the requested patient.');
+          setIsLoading(false);
+        }
+      })
+      .finally(() => {
+        if (pendingPatientId.current === id) {
+          pendingPatientId.current = undefined;
+        }
+      });
+
+    return () => {
+      if (pendingPatientId.current === id) {
+        pendingPatientId.current = undefined;
+      }
+    };
+  }, [id, loadedPatientId]);
 
   if (!id && !bundle) {
     return (
       <>
+      { loadError && <Alert severity="error" sx={{ m: 2 }}>{loadError}</Alert> }
       { previousBundle && 
         <Button variant="contained" onClick={() => setBundle(previousBundle)} style={{textTransform: "none"}}>Reload Last Patient</Button>
       } 
-      { getDropzone(setIsLoading, setBundle) }
+      { getDropzone(setIsLoading, setLoadError, setBundle) }
       </>
 
     );
@@ -154,6 +226,14 @@ const PatientViewer = props => {
 
   if (isLoading)
     return <img src="https://i.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.webp" alt="loading..." />;
+
+  if (loadError) {
+    return (
+      <Paper style={{margin: "1rem", padding: "1rem"}}>
+        <Alert severity="error">{loadError}</Alert>
+      </Paper>
+    );
+  }
 
   let allResources = bundle.entry.map(e => e.resource);
 

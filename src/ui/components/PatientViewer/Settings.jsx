@@ -1,6 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
-
-import useLocalStorage from "use-local-storage";
+import React, { Fragment } from 'react';
 
 import SettingsIcon from '@mui/icons-material/Settings';
 
@@ -16,6 +14,7 @@ import TextField from '@mui/material/TextField';
 import InfoIcon from '@mui/icons-material/Info';
 
 import FILTER_PRESETS from './FilterPresets';
+import usePatientViewerSettings from './usePatientViewerSettings';
 
 const style = {
   position: 'absolute',
@@ -41,22 +40,12 @@ const CONFIG_OPTIONS = [
 
 const Settings = () => {
   const [open, setOpen] = React.useState(false);
+  const { settings, setFilterPreset } = usePatientViewerSettings();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const hooks = {};
-  for (const configOpt of CONFIG_OPTIONS) {
-    const [configValue, setConfigValue] = useLocalStorage(configOpt.key, configOpt.defaultValue);
-
-    hooks[configOpt.key] = { value: configValue, set: setConfigValue }
-  }
-
-  const handleChangeText = (evt) => {
-    hooks[evt.target.name].set(evt.target.value)
-  }
-
   const handleChangeBoolean = (evt) => {
-    hooks[evt.target.name].set(evt.target.checked)
+    setFilterPreset(evt.target.name, evt.target.checked)
   }
 
   const fields = [];
@@ -74,7 +63,7 @@ const Settings = () => {
                         id={key} 
                         name={key} 
                         label={key}
-                        defaultChecked={hooks[key].value ?? configOpt.defaultValue}
+                        checked={settings.filterPresets[key] ?? configOpt.defaultValue}
                         onChange={handleChangeBoolean} />
                       <Tooltip title={configOpt.description} disableInteractive>
                         <span>
@@ -90,9 +79,8 @@ const Settings = () => {
                         name={key}
                         type={configOpt.type}
                         label={key}
-                        defaultValue={hooks[key].value ?? configOpt.defaultValue}
+                        defaultValue={configOpt.defaultValue}
                         variant="outlined"
-                        onChange={handleChangeText}
                         />
                       <Tooltip title={configOpt.description} disableInteractive>
                         <span>
