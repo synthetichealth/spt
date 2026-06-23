@@ -35,3 +35,9 @@ code {
 .imagemedia {
   max-width: 200px
 }
+
+/* Prevent browser scroll anchoring from fighting react-data-grid virtualization in large patient records. */
+.patient-viewer,
+.patient-viewer .rdg {
+  overflow-anchor: none;
+}

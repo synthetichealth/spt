@@ -258,7 +258,7 @@ const PatientViewer = props => {
   };
 
   return (
-    <Paper style={{margin: "1rem", padding: "1rem"}}>
+    <Paper className="patient-viewer" style={{margin: "1rem", padding: "1rem"}}>
       <Settings />
       <PatientVisualizer patient={patient} />
 
