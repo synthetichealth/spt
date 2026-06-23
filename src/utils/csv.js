@@ -5,9 +5,9 @@ const glob = require('glob');
 const path = require('path');
 
 async function loadCsvFromDirectory(dir) {
-  glob(`${dir}/*.csv`, function(error, files) {
+  glob(`${dir}/*.csv`, function (error, files) {
     // TODO error?
-    files.forEach(async f => {
+    files.forEach(async (f) => {
       console.log(f);
       const parser = fs.createReadStream(f).pipe(parse({ columns: true }));
 

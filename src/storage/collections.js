@@ -14,5 +14,5 @@ module.exports = {
   PAYERS: 'payers',
   PROCEDURES: 'procedures',
   PROVIDERS: 'providers',
-  SUPPLIES: 'supplies'
+  SUPPLIES: 'supplies',
 };

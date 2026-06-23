@@ -1,8 +1,8 @@
-import { styled } from "@mui/system";
+import { styled } from '@mui/system';
 export default styled(
-  theme => ({
+  (theme) => ({
     collection: {
-      color: 'red'
+      color: 'red',
     },
     content: {
       float: 'left',
@@ -10,24 +10,24 @@ export default styled(
       backgroundColor: theme.palette.common.redLight,
       fontSize: '14px',
       fontFamily: 'monospace',
-      fontWeight: '600'
+      fontWeight: '600',
     },
     doneIcon: {
       padding: '5px',
       color: theme.palette.common.grayLighter,
       cursor: 'pointer',
-      fontSize: '50px'
+      fontSize: '50px',
     },
     openIcon: {
-      cursor: 'pointer'
+      cursor: 'pointer',
     },
     errorIcon: {
       color: theme.palette.common.maroon,
-      padding: '5px'
+      padding: '5px',
     },
     historyIcon: {
       fontSize: '40px',
-      padding: '5px'
+      padding: '5px',
     },
     timestamp: {
       fontSize: '16px',
@@ -35,7 +35,7 @@ export default styled(
       width: 0,
       textAlign: 'left',
       paddingLeft: '5px',
-      fontWeight: 100
+      fontWeight: 100,
     },
     notificationCard: {
       margin: '25px 35px',
@@ -46,20 +46,20 @@ export default styled(
       alignItems: 'center',
       paddingLeft: '15px',
       fontSize: '18px',
-      color: theme.palette.common.grayDark
+      color: theme.palette.common.grayDark,
     },
     notificationSection: {
-      padding: '5px'
+      padding: '5px',
     },
     notificationContent: {
       flexGrow: '.8',
       width: 0,
-      justifyContent: 'left'
+      justifyContent: 'left',
     },
     spacer: {
-      flexGrow: '.2'
-    }
+      flexGrow: '.2',
+    },
   }),
 
-  { name: 'Notifications', index: 1 }
+  { name: 'Notifications', index: 1 },
 );

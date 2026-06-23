@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme } from '@mui/material/styles';
 
 const colors = {
   white: '#fff',
@@ -25,56 +25,56 @@ const colors = {
   maroon: '#a83048',
   purple: '#8b72d6',
   turquoise: '#37c0ae',
-  turquoiseLight: '#e6f7f5'
+  turquoiseLight: '#e6f7f5',
 };
 
 const paletteBase = {
   primary: {
-    main: colors.blueDark
+    main: colors.blueDark,
   },
   secondary: {
-    main: colors.blue
+    main: colors.blue,
   },
   error: {
-    main: colors.red
+    main: colors.red,
   },
   common: colors,
   background: {
     default: colors.grayLightest,
-    primary: colors.grayLight
+    primary: colors.grayLight,
   },
   text: {
     primary: colors.black,
     secondary: colors.black,
-    gray: colors.grayLighter
+    gray: colors.grayLighter,
   },
   grey: {
-    800: colors.gray
+    800: colors.gray,
   },
   purple: {
-    main: colors.purple
-  }
+    main: colors.purple,
+  },
 };
 
 const componentStyleOverridesBase = {
   MuiTableCell: {
     styleOverrides: {
       body: {
-        color: '#575b62'
+        color: '#575b62',
       },
       head: {
         color: '#575b62',
         fontWeight: '600',
-        fontSize: '12px'
+        fontSize: '12px',
       },
       sizeSmall: {
         padding: '5px 24px 5px 16px',
         '&:last-child': {
           paddingRight: '0px',
-          width: '80px'
-        }
-      }
-    }
+          width: '80px',
+        },
+      },
+    },
   },
   MuiTableContainer: {
     styleOverrides: {
@@ -83,25 +83,25 @@ const componentStyleOverridesBase = {
         margin: '0 20px 0 20px',
         overflowY: 'visible',
         overflowX: 'scroll',
-        backgroundColor: 'white'
-      }
-    }
+        backgroundColor: 'white',
+      },
+    },
   },
   MuiTableSortLabel: {
     styleOverrides: {
       root: {
         color: 'black',
         '&.Mui-active': {
-          color: 'black'
-        }
-      }
-    }
-  }
+          color: 'black',
+        },
+      },
+    },
+  },
 };
 
 const theme = createTheme({
   palette: { ...paletteBase },
-  components: { ...componentStyleOverridesBase }
+  components: { ...componentStyleOverridesBase },
 });
 
 export default theme;

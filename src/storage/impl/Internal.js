@@ -25,7 +25,7 @@ class Internal {
         autoload: true,
         autoloadCallback: markDBReady,
         autosave: true,
-        serializationMethod: 'pretty'
+        serializationMethod: 'pretty',
       });
     } else {
       this.db = new loki('spt.db');
@@ -67,7 +67,7 @@ class Internal {
   upsert(collectionName, value, whereFn) {
     const resultList = this.select(collectionName, whereFn);
     if (resultList.length > 0) {
-      this.update(collectionName, whereFn, oldValue => Object.assign(oldValue, value));
+      this.update(collectionName, whereFn, (oldValue) => Object.assign(oldValue, value));
     } else {
       this.insert(collectionName, value);
     }

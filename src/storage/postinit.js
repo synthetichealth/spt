@@ -28,7 +28,7 @@ function markDBReady() {
   isReady = true;
 
   // TODO, could make these async as well
-  callbacks.forEach(c => c());
+  callbacks.forEach((c) => c());
 }
 
 module.exports = { runWhenDBReady, markDBReady };

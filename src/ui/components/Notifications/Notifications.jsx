@@ -10,12 +10,12 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import useStyles from './styles';
 import moment from 'moment';
 
-const Notifications = props => {
+const Notifications = (props) => {
   const classes = useStyles();
   const queryClient = useQueryClient();
 
   const { notifs } = props;
-  const updateNotif = useCallback(notif => {
+  const updateNotif = useCallback((notif) => {
     return () => {
       notif.viewed = true;
       axios.put(`/collection/notifications?id=${notif.id}`, notif).then(() => {
@@ -27,7 +27,7 @@ const Notifications = props => {
   return (
     <div className={classes.collection}>
       {notifs.length > 0 ? (
-        notifs.map(notif => {
+        notifs.map((notif) => {
           return (
             <div key={notif.id} className={classes.notificationCard}>
               <ErrorOutlineIcon fontSize="large" className={classes.errorIcon} />
@@ -56,6 +56,6 @@ const Notifications = props => {
 };
 
 Notifications.propTypes = {
-  notifs: PropTypes.array
+  notifs: PropTypes.array,
 };
 export default Notifications;

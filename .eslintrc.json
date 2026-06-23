@@ -20,7 +20,7 @@
     "key-spacing": "warn",
     "keyword-spacing": "warn",
     "indent": ["warn", 2, { "SwitchCase": 1 }],
-    "max-len": ["warn", { "code": 100, "ignoreStrings": true }],
+    "max-len": ["warn", { "code": 100, "ignoreStrings": true, "ignoreUrls": true }],
     "no-console": "off",
     "no-trailing-spaces": "warn",
     "no-var": "warn",

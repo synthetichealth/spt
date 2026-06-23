@@ -10,7 +10,7 @@ const StateMap = () => {
     const cityName = feature.properties.cs_name;
     layer.bindTooltip(`<b>${cityName}</b>`);
     layer.on({
-      click: (/*event*/) => history.push({ search: `?city=${cityName}` })
+      click: (/*event*/) => history.push({ search: `?city=${cityName}` }),
     });
   };
 
@@ -31,7 +31,7 @@ const StateMap = () => {
             color: '#ffffff',
             opacity: 0.8,
             fillOpacity: 0.75,
-            fillColor: '#7f7fff'
+            fillColor: '#7f7fff',
           })
         }
       />

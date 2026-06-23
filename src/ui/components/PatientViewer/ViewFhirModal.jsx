@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-
+import React from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -18,7 +17,7 @@ const style = {
   p: 4,
 };
 
-const ViewFhirModal = ({resource}) => {
+const ViewFhirModal = ({ resource }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -35,14 +34,17 @@ const ViewFhirModal = ({resource}) => {
         style={{ overflow: 'scroll' }}
       >
         <Box sx={style}>
-          <Typography id="modal-modal-description" component="pre" style={{ fontFamily: 'monospace', fontSize: 12 }}>
+          <Typography
+            id="modal-modal-description"
+            component="pre"
+            style={{ fontFamily: 'monospace', fontSize: 12 }}
+          >
             {JSON.stringify(sourceResource, null, 2)}
           </Typography>
         </Box>
       </Modal>
     </div>
   );
-}
-
+};
 
 export default ViewFhirModal;

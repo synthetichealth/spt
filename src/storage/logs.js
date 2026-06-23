@@ -4,14 +4,14 @@ const debugConsole = require('debug');
 const { v4: uuidv4 } = require('uuid');
 
 function debug(location) {
-  return message => {
+  return (message) => {
     const logger = debugConsole(location);
     logger(message);
     const log = {
       id: uuidv4(),
       timestamp: Date.now(),
       message: message,
-      location: location
+      location: location,
     };
     db.insert(LOGS, log);
   };
@@ -25,7 +25,7 @@ function error(location) {
       id: uuidv4(),
       timestamp: Date.now(),
       error: error,
-      location: location
+      location: location,
     };
     db.insert(ERRORS, log);
 
@@ -34,7 +34,7 @@ function error(location) {
       timestamp: Date.now(),
       notif: notif || error,
       viewed: false,
-      type: 'error'
+      type: 'error',
     };
     db.insert(NOTIFICATIONS, notification);
   };
@@ -46,7 +46,7 @@ function storeRequest(request) {
     timestamp: Date.now(),
     url: request.url,
     body: request.body,
-    headers: request.headers
+    headers: request.headers,
   };
   db.insert(REQUESTS, log);
 }

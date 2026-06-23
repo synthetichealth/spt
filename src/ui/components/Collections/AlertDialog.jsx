@@ -56,6 +56,6 @@ function AlertDialog(props) {
 AlertDialog.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
-  callback: PropTypes.func.isRequired
+  callback: PropTypes.func.isRequired,
 };
 export default AlertDialog;

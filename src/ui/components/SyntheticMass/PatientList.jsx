@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { getPatientsByCity } from './api';
 
-const PatientList = props => {
+const PatientList = (props) => {
   const { city } = props;
   const [patients, setPatients] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -11,15 +11,15 @@ const PatientList = props => {
   useEffect(() => {
     setPatients([]);
     setIsLoading(true);
-    getPatientsByCity(city).then(searchResultBundle => {
+    getPatientsByCity(city).then((searchResultBundle) => {
       console.log(searchResultBundle);
-      setPatients(searchResultBundle.entry.map(e => e.resource));
+      setPatients(searchResultBundle.entry.map((e) => e.resource));
       setIsLoading(false);
     });
   }, [city]);
 
-  const renderPatients = patients => {
-    return patients.map(p => (
+  const renderPatients = (patients) => {
+    return patients.map((p) => (
       <React.Fragment key={p.id}>
         <dt>
           <Link to={{ search: `?city=${city}&patient=${p.id}` }}>

@@ -7,7 +7,7 @@ import useStyles from './styles';
 import SortedTableHead from './SortedTableHead';
 import CollectionRow from './CollectionRow';
 
-const Collections = props => {
+const Collections = (props) => {
   const classes = useStyles();
 
   const { selectedCollection } = props;
@@ -23,7 +23,7 @@ const Collections = props => {
     (event, newPage) => {
       setPage(newPage);
     },
-    [setPage]
+    [setPage],
   );
 
   function descendingComparator(a, b, orderBy) {
@@ -50,7 +50,7 @@ const Collections = props => {
       if (order !== 0) return order;
       return a[1] - b[1];
     });
-    return stabilizedThis.map(el => el[0]);
+    return stabilizedThis.map((el) => el[0]);
   }
 
   const handleRequestSort = useCallback((event, property) => {
@@ -59,13 +59,13 @@ const Collections = props => {
     setOrderBy(property);
   });
 
-  const handleChangeRowsPerPage = useCallback(event => {
+  const handleChangeRowsPerPage = useCallback((event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   });
 
   const { data } = useQuery(['collections', { selectedCollection }], () =>
-    axios.get(`/collection/${selectedCollection}`)
+    axios.get(`/collection/${selectedCollection}`),
   );
 
   const getInfo = () => {
@@ -80,13 +80,13 @@ const Collections = props => {
           { value: 'PATIENT', label: 'PATIENT', edit: false },
           { value: 'ENCOUNTER', label: 'ENCOUNTER', edit: false },
           { value: 'CODE', label: 'CODE', edit: false },
-          { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false }
+          { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false },
         ];
         return {
           headers,
           data: data.data,
           addButton: false,
-          editable: false
+          editable: false,
         };
 
       case 'careplans':
@@ -99,13 +99,13 @@ const Collections = props => {
           { value: 'CODE', label: 'CODE', edit: false },
           { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false },
           { value: 'REASONCODE', label: 'REASONCODE', edit: false },
-          { value: 'REASONDESCRIPTION', label: 'REASONDESCRIPTION', edit: false }
+          { value: 'REASONDESCRIPTION', label: 'REASONDESCRIPTION', edit: false },
         ];
         return {
           headers,
           data: data.data,
           addButton: false,
-          editable: false
+          editable: false,
         };
 
       case 'conditions':
@@ -115,13 +115,13 @@ const Collections = props => {
           { value: 'PATIENT', label: 'PATIENT', edit: false },
           { value: 'ENCOUNTER', label: 'ENCOUNTER', edit: false },
           { value: 'CODE', label: 'CODE', edit: false },
-          { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false }
+          { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false },
         ];
         return {
           headers,
           data: data.data,
           addButton: false,
-          editable: false
+          editable: false,
         };
 
       case 'devices':
@@ -132,13 +132,13 @@ const Collections = props => {
           { value: 'ENCOUNTER', label: 'ENCOUNTER', edit: false },
           { value: 'CODE', label: 'CODE', edit: false },
           { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false },
-          { value: 'UDI', label: 'UDI', edit: false }
+          { value: 'UDI', label: 'UDI', edit: false },
         ];
         return {
           headers,
           data: data.data,
           addButton: false,
-          editable: false
+          editable: false,
         };
 
       case 'encounters':
@@ -157,13 +157,13 @@ const Collections = props => {
           { value: 'TOTAL_CLAIM_COST', label: 'TOTAL_CLAIM_COST', edit: false },
           { value: 'PAYER_COVERAGE', label: 'PAYER_COVERAGE', edit: false },
           { value: 'REASONCODE', label: 'REASONCODE', edit: false },
-          { value: 'REASONDESCRIPTION', label: 'REASONDESCRIPTION', edit: false }
+          { value: 'REASONDESCRIPTION', label: 'REASONDESCRIPTION', edit: false },
         ];
         return {
           headers,
           data: data.data,
           addButton: false,
-          editable: false
+          editable: false,
         };
 
       case 'imaging_studies':
@@ -177,13 +177,13 @@ const Collections = props => {
           { value: 'MODALITY_CODE', label: 'MODALITY_CODE', edit: false },
           { value: 'MODALITY_DESCRIPTION', label: 'MODALITY_DESCRIPTION', edit: false },
           { value: 'SOP_CODE', label: 'SOP_CODE', edit: false },
-          { value: 'SOP_DESCRIPTION', label: 'SOP_DESCRIPTION', edit: false }
+          { value: 'SOP_DESCRIPTION', label: 'SOP_DESCRIPTION', edit: false },
         ];
         return {
           headers,
           data: data.data,
           addButton: false,
-          editable: false
+          editable: false,
         };
 
       case 'immunizations':
@@ -193,13 +193,13 @@ const Collections = props => {
           { value: 'ENCOUNTER', label: 'ENCOUNTER', edit: false },
           { value: 'CODE', label: 'CODE', edit: false },
           { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false },
-          { value: 'BASE_COST', label: 'BASE_COST', edit: false }
+          { value: 'BASE_COST', label: 'BASE_COST', edit: false },
         ];
         return {
           headers,
           data: data.data,
           addButton: false,
-          editable: false
+          editable: false,
         };
 
       case 'medications':
@@ -216,13 +216,13 @@ const Collections = props => {
           { value: 'DISPENSES', label: 'DISPENSES', edit: false },
           { value: 'TOTALCOST', label: 'TOTALCOST', edit: false },
           { value: 'REASONCODE', label: 'REASONCODE', edit: false },
-          { value: 'REASONDESCRIPTION', label: 'REASONDESCRIPTION', edit: false }
+          { value: 'REASONDESCRIPTION', label: 'REASONDESCRIPTION', edit: false },
         ];
         return {
           headers,
           data: data.data,
           addButton: false,
-          editable: false
+          editable: false,
         };
 
       case 'observations':
@@ -234,13 +234,13 @@ const Collections = props => {
           { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false },
           { value: 'VALUE', label: 'VALUE', edit: false },
           { value: 'UNITS', label: 'UNITS', edit: false },
-          { value: 'TYPE', label: 'TYPE', edit: false }
+          { value: 'TYPE', label: 'TYPE', edit: false },
         ];
         return {
           headers,
           data: data.data,
           addButton: false,
-          editable: false
+          editable: false,
         };
 
       case 'organizations':
@@ -255,13 +255,13 @@ const Collections = props => {
           { value: 'LON', label: 'LON', edit: false },
           { value: 'PHONE', label: 'PHONE', edit: false },
           { value: 'REVENUE', label: 'REVENUE', edit: false },
-          { value: 'UTILIZATION', label: 'UTILIZATION', edit: false }
+          { value: 'UTILIZATION', label: 'UTILIZATION', edit: false },
         ];
         return {
           headers,
           data: data.data,
           addButton: false,
-          editable: false
+          editable: false,
         };
 
       case 'patients':
@@ -290,13 +290,13 @@ const Collections = props => {
           { value: 'LAT', label: 'LAT', edit: false },
           { value: 'LON', label: 'LON', edit: false },
           { value: 'HEALTHCARE_EXPENSES', label: 'HEALTHCARE_EXPENSES', edit: false },
-          { value: 'HEALTHCARE_COVERAGE', label: 'HEALTHCARE_COVERAGE', edit: false }
+          { value: 'HEALTHCARE_COVERAGE', label: 'HEALTHCARE_COVERAGE', edit: false },
         ];
         return {
           headers,
           data: data.data,
           addButton: false,
-          editable: false
+          editable: false,
         };
 
       case 'payer_transitions':
@@ -305,13 +305,13 @@ const Collections = props => {
           { value: 'START_YEAR', label: 'START_YEAR', edit: false },
           { value: 'END_YEAR', label: 'END_YEAR', edit: false },
           { value: 'PAYER', label: 'PAYER', edit: false },
-          { value: 'OWNERSHIP', label: 'OWNERSHIP', edit: false }
+          { value: 'OWNERSHIP', label: 'OWNERSHIP', edit: false },
         ];
         return {
           headers,
           data: data.data,
           addButton: false,
-          editable: false
+          editable: false,
         };
 
       case 'payers':
@@ -336,13 +336,13 @@ const Collections = props => {
           { value: 'UNCOVERED_IMMUNIZATIONS', label: 'UNCOVERED_IMMUNIZATIONS', edit: false },
           { value: 'UNIQUE_CUSTOMERS', label: 'UNIQUE_CUSTOMERS', edit: false },
           { value: 'QOLS_AVG', label: 'QOLS_AVG', edit: false },
-          { value: 'MEMBER_MONTHS', label: 'MEMBER_MONTHS', edit: false }
+          { value: 'MEMBER_MONTHS', label: 'MEMBER_MONTHS', edit: false },
         ];
         return {
           headers,
           data: data.data,
           addButton: false,
-          editable: false
+          editable: false,
         };
 
       case 'procedures':
@@ -354,13 +354,13 @@ const Collections = props => {
           { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false },
           { value: 'BASE_COST', label: 'BASE_COST', edit: false },
           { value: 'REASONCODE', label: 'REASONCODE', edit: false },
-          { value: 'REASONDESCRIPTION', label: 'REASONDESCRIPTION', edit: false }
+          { value: 'REASONDESCRIPTION', label: 'REASONDESCRIPTION', edit: false },
         ];
         return {
           headers,
           data: data.data,
           addButton: false,
-          editable: false
+          editable: false,
         };
 
       case 'providers':
@@ -376,13 +376,13 @@ const Collections = props => {
           { value: 'ZIP', label: 'ZIP', edit: false },
           { value: 'LAT', label: 'LAT', edit: false },
           { value: 'LON', label: 'LON', edit: false },
-          { value: 'UTILIZATION', label: 'UTILIZATION', edit: false }
+          { value: 'UTILIZATION', label: 'UTILIZATION', edit: false },
         ];
         return {
           headers,
           data: data.data,
           addButton: false,
-          editable: false
+          editable: false,
         };
 
       case 'supplies':
@@ -392,25 +392,25 @@ const Collections = props => {
           { value: 'ENCOUNTER', label: 'ENCOUNTER', edit: false },
           { value: 'CODE', label: 'CODE', edit: false },
           { value: 'DESCRIPTION', label: 'DESCRIPTION', edit: false },
-          { value: 'QUANTITY', label: 'QUANTITY', edit: false }
+          { value: 'QUANTITY', label: 'QUANTITY', edit: false },
         ];
         return {
           headers,
           data: data.data,
           addButton: false,
-          editable: false
+          editable: false,
         };
 
       default:
         headers = [
           { value: 'id', label: 'id', edit: false },
-          { value: 'resource', label: 'resource', edit: true }
+          { value: 'resource', label: 'resource', edit: true },
         ];
         return {
           headers,
           data: data.data,
           addButton: false,
-          editable: false
+          editable: false,
         };
     }
   };
@@ -469,7 +469,7 @@ const Collections = props => {
                 page={page}
                 onPageChange={handleChangePage}
                 backIconButtonProps={{
-                  classes: classes.backButton
+                  classes: classes.backButton,
                 }}
                 onRowsPerPageChange={handleChangeRowsPerPage}
               />
@@ -484,6 +484,6 @@ const Collections = props => {
 };
 
 Collections.propTypes = {
-  selectedCollection: PropTypes.string
+  selectedCollection: PropTypes.string,
 };
 export default Collections;

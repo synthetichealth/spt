@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSearchParams } from "react-router-dom";
-import useLocalStorage from "use-local-storage";
-import {
-  PatientVisualizer
-} from 'fhir-visualizers';
+import { useLocation, useSearchParams } from 'react-router-dom';
+import useLocalStorage from 'use-local-storage';
+import { PatientVisualizer } from 'fhir-visualizers';
 import {
   ConditionsTable,
   ObservationsTable,
@@ -15,23 +13,14 @@ import {
   EncountersTable,
   ImmunizationsTable,
   DocumentReferencesTable,
-  MediasTable
+  MediasTable,
 } from '../ResourceTables/ResourceTables';
-import { useLocation } from 'react-router-dom';
 import { HashLink as Link } from 'react-router-hash-link';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
-
-import {
-  Accordion,
-  AccordionItem,
-  AccordionItemHeading,
-  AccordionItemButton,
-  AccordionItemPanel
-} from 'react-accessible-accordion';
 
 import EncounterGroupedRecord from './EncounterGroupedRecord';
 
@@ -48,13 +37,12 @@ import { getPatientById } from '../SyntheticMass/api';
 import { getPatientOnGitHub } from '../../github';
 import csvToFhir from './csvToFhir';
 
-import { evaluateResource, appliesToResource } from '../../fhirpath_utils';
+import { appliesToResource } from '../../fhirpath_utils';
 
 import FILTER_PRESETS from './FilterPresets';
 import usePatientViewerSettings from './usePatientViewerSettings';
 
-
-const validateFhirBundle = bundle => {
+const validateFhirBundle = (bundle) => {
   if (!bundle || typeof bundle !== 'object') {
     return 'The selected file did not contain a FHIR JSON object.';
   }
@@ -67,7 +55,7 @@ const validateFhirBundle = bundle => {
     return 'Expected a FHIR Bundle with an entry array.';
   }
 
-  const invalidEntry = bundle.entry.find(entry => !entry?.resource?.resourceType);
+  const invalidEntry = bundle.entry.find((entry) => !entry?.resource?.resourceType);
   if (invalidEntry) {
     return 'Every Bundle entry must contain a resource with a resourceType.';
   }
@@ -76,7 +64,7 @@ const validateFhirBundle = bundle => {
 };
 
 const getDropzone = (setLoading, setError, callback) => {
-  const onDrop = files => {
+  const onDrop = (files) => {
     if (!files?.length) return;
 
     const reader = new FileReader();
@@ -106,19 +94,20 @@ const getDropzone = (setLoading, setError, callback) => {
         <>
           <div
             {...getRootProps({
-              style: { height: '100vh', width: '100%', background: '#F0F8FF', padding: "2rem" }
+              style: { height: '100vh', width: '100%', background: '#F0F8FF', padding: '2rem' },
             })}
           >
             <input {...getInputProps()} />
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              minHeight="100%"
-            >
+            <Box display="flex" justifyContent="center" alignItems="center" minHeight="100%">
               <Box sx={{ p: 2, border: '1px dashed grey', textAlign: 'center' }}>
                 <h2>Drag &amp; drop a FHIR JSON file here</h2>
-                <h2>or <span style={{textDecoration: 'underline', color: 'blue'}}>click to select a file</span>.</h2>
+                <h2>
+                  or{' '}
+                  <span style={{ textDecoration: 'underline', color: 'blue' }}>
+                    click to select a file
+                  </span>
+                  .
+                </h2>
               </Box>
             </Box>
           </div>
@@ -138,9 +127,8 @@ function getPatient(id) {
   }
 }
 
-const PatientViewer = props => {
-  const location = useLocation();
-  const [urlParams, setUrlParams] = useSearchParams();
+const PatientViewer = (props) => {
+  const [urlParams] = useSearchParams();
 
   const id = props.id || urlParams.get('patient');
 
@@ -148,7 +136,7 @@ const PatientViewer = props => {
   const [loadedPatientId, setLoadedPatientId] = useState();
   const pendingPatientId = useRef();
   const [loadError, setLoadError] = useState();
-  const [previousBundle, setPreviousBundle] = useLocalStorage("previousBundle", bundle);
+  const [previousBundle, setPreviousBundle] = useLocalStorage('previousBundle', bundle);
   const [isLoading, setIsLoading] = useState(!bundle);
 
   const setBundle = (nextBundle, sourceId) => {
@@ -185,12 +173,12 @@ const PatientViewer = props => {
     setIsLoading(true);
 
     getPatient(id)
-      .then(patientEverythingBundle => {
+      .then((patientEverythingBundle) => {
         if (pendingPatientId.current === id) {
           setBundle(patientEverythingBundle, id);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         if (pendingPatientId.current === id) {
           _setBundle(undefined);
           setLoadedPatientId(undefined);
@@ -214,13 +202,22 @@ const PatientViewer = props => {
   if (!id && !bundle) {
     return (
       <>
-      { loadError && <Alert severity="error" sx={{ m: 2 }}>{loadError}</Alert> }
-      { previousBundle && 
-        <Button variant="contained" onClick={() => setBundle(previousBundle)} style={{textTransform: "none"}}>Reload Last Patient</Button>
-      } 
-      { getDropzone(setIsLoading, setLoadError, setBundle) }
+        {loadError && (
+          <Alert severity="error" sx={{ m: 2 }}>
+            {loadError}
+          </Alert>
+        )}
+        {previousBundle && (
+          <Button
+            variant="contained"
+            onClick={() => setBundle(previousBundle)}
+            style={{ textTransform: 'none' }}
+          >
+            Reload Last Patient
+          </Button>
+        )}
+        {getDropzone(setIsLoading, setLoadError, setBundle)}
       </>
-
     );
   }
 
@@ -229,59 +226,55 @@ const PatientViewer = props => {
 
   if (loadError) {
     return (
-      <Paper style={{margin: "1rem", padding: "1rem"}}>
+      <Paper style={{ margin: '1rem', padding: '1rem' }}>
         <Alert severity="error">{loadError}</Alert>
       </Paper>
     );
   }
 
-  let allResources = bundle.entry.map(e => e.resource);
+  let allResources = bundle.entry.map((e) => e.resource);
 
   for (const presetKey of loadedPresets) {
     const preset = FILTER_PRESETS[presetKey];
     if (isGroupByEncounter && !preset.filterOnGroupByEncounter) continue;
-    allResources = allResources.filter(r => {
+    allResources = allResources.filter((r) => {
       const filtersByResourceType = preset.filters[r.resourceType];
       if (!filtersByResourceType) return true;
 
-      const anyMatch = filtersByResourceType.some(f => appliesToResource(r, f));
+      const anyMatch = filtersByResourceType.some((f) => appliesToResource(r, f));
       return preset.mode === 'exclude' ? !anyMatch : anyMatch;
     });
-
   }
 
-  const patient = allResources.find(r => r.resourceType === 'Patient');
+  const patient = allResources.find((r) => r.resourceType === 'Patient');
   const recordSections = buildRecordSections(allResources);
 
-  const toggleGroup = event => {
+  const toggleGroup = (event) => {
     event.preventDefault();
     setIsGroupByEncounter(!isGroupByEncounter);
   };
 
   return (
-    <Paper className="patient-viewer" style={{margin: "1rem", padding: "1rem"}}>
+    <Paper className="patient-viewer" style={{ margin: '1rem', padding: '1rem' }}>
       <Settings />
       <PatientVisualizer patient={patient} />
 
       <a href="#" onClick={toggleGroup}>
-        { isGroupByEncounter ? "Ungroup" : "Group" } by Encounter
+        {isGroupByEncounter ? 'Ungroup' : 'Group'} by Encounter
       </a>
-      <br/>
+      <br />
 
-      { isGroupByEncounter ? (
-          <EncounterGroupedRecord allResources={allResources} />
-        ) : (
+      {isGroupByEncounter ? (
+        <EncounterGroupedRecord allResources={allResources} />
+      ) : (
         // !isGroupByEncounter
         <>
           <LinksByType />
-          <EntireRecord 
-            recordSections={recordSections} />
+          <EntireRecord recordSections={recordSections} />
         </>
-        )}
-
+      )}
     </Paper>
   );
-
 };
 
 const LinksByType = () => {
@@ -296,34 +289,37 @@ const LinksByType = () => {
     'Allergies',
     'Immunizations',
     'Documents',
-    'Images'
+    'Images',
   ];
   const location = useLocation();
   return (
     <div>
-      Jump To:<br />
-        {types.map((t, i) => {
-          // newLocation preserves any query, like if we're in a patient via syntheticmass
-          const newLocation = { ...location, hash: '#' + t };
-          return (
-              <>
-              { i > 0 && ' | ' }
-              <Link to={newLocation}>{t}</Link>
-              </>
-          );
-        })}
+      Jump To:
+      <br />
+      {types.map((t, i) => {
+        // newLocation preserves any query, like if we're in a patient via syntheticmass
+        const newLocation = { ...location, hash: '#' + t };
+        return (
+          <React.Fragment key={t}>
+            {i > 0 && ' | '}
+            <Link to={newLocation}>{t}</Link>
+          </React.Fragment>
+        );
+      })}
     </div>
   );
 };
 
-const buildRecordSections = allResources => {
-  const getByType = type => allResources.filter(r => r.resourceType === type);
+const buildRecordSections = (allResources) => {
+  const getByType = (type) => allResources.filter((r) => r.resourceType === type);
   const conditions = getByType('Condition');
   const meds = getByType('Medication');
 
-  const medications = getByType('MedicationRequest').map(m => {
+  const medications = getByType('MedicationRequest').map((m) => {
     if (m.medicationReference) {
-      const referencedMed = meds.find(med => isMatchingReference(med, m.medicationReference.reference, 'Medication'));
+      const referencedMed = meds.find((med) =>
+        isMatchingReference(med, m.medicationReference.reference, 'Medication'),
+      );
       if (referencedMed) {
         return withDerivedFields(m, { medicationCodeableConcept: referencedMed.code });
       }
@@ -332,12 +328,14 @@ const buildRecordSections = allResources => {
   });
 
   let observations = getByType('Observation');
-  const reports = getByType('DiagnosticReport').map(r => {
+  const reports = getByType('DiagnosticReport').map((r) => {
     if (r.result) {
       const reportObservations = r.result
-        .map(res => observations.find(o => isMatchingReference(o, res.reference, 'Observation')))
-        .filter(o => o);
-      observations = observations.filter(o => !reportObservations.includes(o));
+        .map((res) =>
+          observations.find((o) => isMatchingReference(o, res.reference, 'Observation')),
+        )
+        .filter((o) => o);
+      observations = observations.filter((o) => !reportObservations.includes(o));
       return withDerivedFields(r, { observations: reportObservations });
     }
     return r;
@@ -346,11 +344,11 @@ const buildRecordSections = allResources => {
   const goals = getByType('Goal');
   // note that the syntheticmass server doesn't currently return goals in Patient$everything
 
-  const careplans = getByType('CarePlan').map(cp => {
+  const careplans = getByType('CarePlan').map((cp) => {
     if (cp.goal) {
       const carePlanGoals = cp.goal
-        .map(cpg => goals.find(g => isMatchingReference(g, cpg.reference, 'Goal')))
-        .filter(g => g);
+        .map((cpg) => goals.find((g) => isMatchingReference(g, cpg.reference, 'Goal')))
+        .filter((g) => g);
       return withDerivedFields(cp, { goals: carePlanGoals });
     }
     return cp;
@@ -362,7 +360,7 @@ const buildRecordSections = allResources => {
   const immunizations = getByType('Immunization');
   const documents = getByType('DocumentReference');
 
-  const medias = getByType('Media').map(m => attachImagingStudy(m, allResources));
+  const medias = getByType('Media').map((m) => attachImagingStudy(m, allResources));
 
   return {
     allResources,
@@ -376,11 +374,11 @@ const buildRecordSections = allResources => {
     allergies,
     immunizations,
     documents,
-    medias
+    medias,
   };
 };
 
-const EntireRecord = props => {
+const EntireRecord = (props) => {
   const { recordSections } = props;
 
   return (
@@ -401,24 +399,41 @@ const EntireRecord = props => {
   );
 };
 
+const isNotEmpty = (rows) => rows != null && rows.length > 0;
 
-const isNotEmpty = rows => rows != null && rows.length > 0;
-
-const Section = props => {
-  const show = props.showEmptySections ? _rows => true : rows => isNotEmpty(rows);
+const Section = (props) => {
+  const show = props.showEmptySections ? () => true : (rows) => isNotEmpty(rows);
   const allResources = props.allResources;
   return (
     <div>
-      {show(props.conditions) && <ConditionsTable rows={props.conditions} allResources={allResources} />}
-      {show(props.medications) && <MedicationRequestsTable rows={props.medications} allResources={allResources} />}
-      {show(props.observations) && <ObservationsTable rows={props.observations} allResources={allResources} />}
+      {show(props.conditions) && (
+        <ConditionsTable rows={props.conditions} allResources={allResources} />
+      )}
+      {show(props.medications) && (
+        <MedicationRequestsTable rows={props.medications} allResources={allResources} />
+      )}
+      {show(props.observations) && (
+        <ObservationsTable rows={props.observations} allResources={allResources} />
+      )}
       {show(props.reports) && <ReportsTable rows={props.reports} allResources={allResources} />}
-      {show(props.careplans) && <CarePlansTable rows={props.careplans} allResources={allResources} />}
-      {show(props.procedures) && <ProceduresTable rows={props.procedures} allResources={allResources} />}
-      {show(props.encounters) && <EncountersTable rows={props.encounters} allResources={allResources} />}
-      {show(props.allergies) && <AllergiesTable rows={props.allergies} allResources={allResources} />}
-      {show(props.immunizations) && <ImmunizationsTable rows={props.immunizations} allResources={allResources} />}
-      {show(props.documents) && <DocumentReferencesTable rows={props.documents} allResources={allResources} />}
+      {show(props.careplans) && (
+        <CarePlansTable rows={props.careplans} allResources={allResources} />
+      )}
+      {show(props.procedures) && (
+        <ProceduresTable rows={props.procedures} allResources={allResources} />
+      )}
+      {show(props.encounters) && (
+        <EncountersTable rows={props.encounters} allResources={allResources} />
+      )}
+      {show(props.allergies) && (
+        <AllergiesTable rows={props.allergies} allResources={allResources} />
+      )}
+      {show(props.immunizations) && (
+        <ImmunizationsTable rows={props.immunizations} allResources={allResources} />
+      )}
+      {show(props.documents) && (
+        <DocumentReferencesTable rows={props.documents} allResources={allResources} />
+      )}
       {show(props.medias) && <MediasTable rows={props.medias} allResources={allResources} />}
     </div>
   );

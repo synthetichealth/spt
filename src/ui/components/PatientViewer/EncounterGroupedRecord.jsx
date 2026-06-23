@@ -5,64 +5,74 @@ import TextField from '@mui/material/TextField';
 
 import EncounterSection from './EncounterSection';
 
-import { attachImagingStudy, encounterTitle, isMatchingReference } from './utils';
+import {
+  attachImagingStudy,
+  encounterTitle,
+  isMatchingReference,
+  withDerivedFields,
+} from './utils';
 
-const encounterAnchorId = encounter =>
+const encounterAnchorId = (encounter) =>
   encounter?.id || encounter?.period?.start || encounterTitle(encounter);
 
-const LinksByEncounter = props => {
+const LinksByEncounter = (props) => {
   const { encounters } = props;
 
   return (
     <Autocomplete
       id="combo-box-demo"
       options={encounters}
-      getOptionLabel={e => encounterTitle(e)}
-      onChange={(_event, value, _reason) => {
+      getOptionLabel={(e) => encounterTitle(e)}
+      onChange={(_event, value) => {
         if (!value) return;
         document.getElementById(encounterAnchorId(value))?.scrollIntoView();
       }}
       style={{ width: 900 }}
-      renderInput={params => <TextField {...params} label="Jump To Encounter" variant="outlined" />}
+      renderInput={(params) => (
+        <TextField {...params} label="Jump To Encounter" variant="outlined" />
+      )}
     />
   );
 };
 
-
-const EncounterGroupedRecord = props => {
+const EncounterGroupedRecord = (props) => {
   const { allResources } = props;
-  const encounters = allResources.filter(r => r.resourceType === 'Encounter').reverse(); // reverse chrono order
+  const encounters = allResources.filter((r) => r.resourceType === 'Encounter').reverse(); // reverse chrono order
 
   const encounterSections = [];
 
   for (const e of encounters) {
-    const getByType = type =>
+    const getByType = (type) =>
       allResources.filter(
-        r => r.resourceType === type && isMatchingReference(e, r.encounter?.reference, 'Encounter')
+        (r) =>
+          r.resourceType === type && isMatchingReference(e, r.encounter?.reference, 'Encounter'),
       );
 
     const medications = getByType('MedicationRequest');
 
     const conditions = getByType('Condition');
 
-    const observations = getByType('Observation');
+    let observations = getByType('Observation');
 
     const procedures = getByType('Procedure');
     const notes = allResources.filter(
-        r => r.resourceType === 'DocumentReference' && 
-        Array.isArray(r.context?.encounter) && 
-        isMatchingReference(e, r.context.encounter[0]?.reference, 'Encounter')
-      );
-    const medias = getByType('Media').map(m => attachImagingStudy(m, allResources));
-    // const reports = getByType('DiagnosticReport');
+      (r) =>
+        r.resourceType === 'DocumentReference' &&
+        Array.isArray(r.context?.encounter) &&
+        isMatchingReference(e, r.context.encounter[0]?.reference, 'Encounter'),
+    );
+    const medias = getByType('Media').map((m) => attachImagingStudy(m, allResources));
+    const reports = getByType('DiagnosticReport').map((report) => {
+      if (!report.result) return report;
 
-    // reports.forEach(r => {
-    //   if (r.result) {
-    //     r.observations = r.result.map(res => observations.find(o => isMatchingReference(o, res.reference, 'Observation')));
-    //     observations = observations.filter(o => !r.observations.includes(o));
-    //   }
-    // });
-
+      const reportObservations = report.result
+        .map((result) =>
+          observations.find((o) => isMatchingReference(o, result.reference, 'Observation')),
+        )
+        .filter((o) => o);
+      observations = observations.filter((o) => !reportObservations.includes(o));
+      return withDerivedFields(report, { observations: reportObservations });
+    });
     const title = encounterTitle(e);
 
     const encounterData = {
@@ -70,21 +80,22 @@ const EncounterGroupedRecord = props => {
       conditions,
       medications,
       observations,
+      reports,
       procedures,
       notes,
-      medias
-    }
+      medias,
+    };
 
     encounterSections.push(
       <div key={encounterAnchorId(e)} id={encounterAnchorId(e)}>
         <div className="health-record__header">
           <div className="header-title">
-            <a id={e.period?.start}>{ title }</a>
+            <a id={e.period?.start}>{title}</a>
           </div>
           <div className="header-divider"></div>
         </div>
         <EncounterSection encounterData={encounterData} />
-      </div>
+      </div>,
     );
   }
 

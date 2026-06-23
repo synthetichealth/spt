@@ -27,7 +27,7 @@ function CollectionRow(props) {
 
   const updateData = () => {
     const bundle = {};
-    headers.forEach(header => {
+    headers.forEach((header) => {
       if (!header.viewOnly) {
         bundle[header.value] = state[header.value];
       }
@@ -42,7 +42,7 @@ function CollectionRow(props) {
     });
   };
 
-  const handleJson = event => {
+  const handleJson = (event) => {
     // the event is a custom object returned from
     // JSONInput, not a regular event
     if (event.jsObject) {
@@ -135,7 +135,7 @@ function CollectionRow(props) {
                 <input
                   value={state[header.value]}
                   className={classes.editInput}
-                  onChange={e => {
+                  onChange={(e) => {
                     dispatch({ header: header.value, value: e.target.value });
                   }}
                 />
@@ -173,7 +173,7 @@ CollectionRow.propTypes = {
   selectedCollection: PropTypes.string.isRequired,
   editable: PropTypes.bool.isRequired,
   addNew: PropTypes.bool.isRequired,
-  callback: PropTypes.func.isRequired
+  callback: PropTypes.func.isRequired,
 };
 
 export default CollectionRow;

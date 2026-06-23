@@ -2,13 +2,12 @@ import React from 'react';
 import DataGrid from 'react-data-grid';
 import 'react-data-grid/lib/styles.css';
 
-
 import {
   Accordion,
   AccordionItem,
   AccordionItemHeading,
   AccordionItemButton,
-  AccordionItemPanel
+  AccordionItemPanel,
 } from 'react-accessible-accordion';
 
 // Demo styles, see 'Styles' section below for some notes on use.
@@ -17,33 +16,36 @@ import 'react-accessible-accordion/dist/fancy-example.css';
 import moment from 'moment';
 
 import ViewFhirModal from './ViewFhirModal';
-import ViewNoteModal from './ViewNoteModal';
 
 import {
   codeDisplay,
   codeValue,
+  effectiveTime,
   extractMedia,
   getNoteText,
   mediaTitle,
   missingField,
   obsValue,
   periodStart,
-  unsupportedField
+  unsupportedField,
 } from './utils';
-
 
 const COLUMNS = [
   { key: 'type', name: 'Type' },
   { key: 'code', name: 'Code' },
-  { key: 'description', name: 'Description',
+  {
+    key: 'description',
+    name: 'Description',
     colSpan: (args) => {
       if (args.type === 'ROW' && args.row.type === 'Note') {
         return 3;
       }
       return 1;
-    }
+    },
   },
-  { key: 'details', name: 'Details', 
+  {
+    key: 'details',
+    name: 'Details',
     colSpan: (args) => {
       if (args.type === 'ROW') {
         return args.row?.additional ? 1 : 2;
@@ -52,10 +54,10 @@ const COLUMNS = [
         return 2;
       }
       return 1;
-    }
+    },
   },
   { key: 'additional', name: '' },
-  { key: 'fhir', name: 'View FHIR' }
+  { key: 'fhir', name: 'View FHIR' },
 ];
 
 const formatDate = (value, format, fieldName) => {
@@ -68,7 +70,7 @@ const FORMATTERS = {
   date: (str) => formatDate(str, 'YYYY-MM-DD', 'date'),
   time: (str) => formatDate(str, 'HH:mm:ss', 'time'),
   dateTime: (str) => formatDate(str, 'YYYY-MM-DD - h:mm:ss a', 'dateTime'),
-  numberWithCommas: (str) => str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+  numberWithCommas: (str) => str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
   code: (code) => `${code.code}: ${code.display ? code.display : ''}`,
   period: (period) => {
     if (!period?.start && !period?.end) return missingField('period');
@@ -79,248 +81,304 @@ const FORMATTERS = {
         {start} -&gt; {end}
       </>
     );
-  }
+  },
 };
 
 const VIEW_FHIR = {
   key: 'fhir',
-  getter: resource => (<ViewFhirModal resource={resource} />)
+  getter: (resource) => <ViewFhirModal resource={resource} />,
 };
 
+const attributeXTime = (entry, type) => {
+  const value = effectiveTime(entry, type);
+  if (React.isValidElement(value)) return value;
+  if (typeof value === 'string') {
+    return FORMATTERS.dateTime(value);
+  }
+  return FORMATTERS.period(value);
+};
 
-const renderNote = text => {
+const renderNote = (text) => {
   return (
-  <Accordion allowZeroExpanded>
-    <AccordionItem key={text}>
+    <Accordion allowZeroExpanded>
+      <AccordionItem key={text}>
         <AccordionItemHeading>
-            <AccordionItemButton>
-                View Note
-            </AccordionItemButton>
+          <AccordionItemButton>View Note</AccordionItemButton>
         </AccordionItemHeading>
         <AccordionItemPanel>
           <div style={{ textAlign: 'left', whiteSpace: 'pre' }}>{text}</div>
         </AccordionItemPanel>
-    </AccordionItem>
-  </Accordion>
+      </AccordionItem>
+    </Accordion>
   );
-}
+};
 
-
-
-const ROW_FUNCTIONS = 
-[
+const ROW_FUNCTIONS = [
   {
-    getter: e => [e.encounter],
-    keyFn: e => e.id,
+    getter: (e) => [e.encounter],
+    keyFn: (e) => e.id,
     columns: [
       {
         key: 'type',
-        getter: () => 'Encounter'
+        getter: () => 'Encounter',
       },
       {
         key: 'code',
-        getter: n => codeValue(n.type?.[0], 'Encounter.type')
+        getter: (n) => codeValue(n.type?.[0], 'Encounter.type'),
       },
       {
         key: 'description',
-        getter: n => codeDisplay(n.type?.[0], 'Encounter.type')
+        getter: (n) => codeDisplay(n.type?.[0], 'Encounter.type'),
       },
       {
         key: 'details',
         format: 'date',
-        getter: n => periodStart(n.period, 'Encounter.period.start')
+        getter: (n) => periodStart(n.period, 'Encounter.period.start'),
       },
-      VIEW_FHIR
-    ]
+      VIEW_FHIR,
+    ],
   },
   {
-    getter: r => r.conditions,
-    keyFn: o => o.id,
+    getter: (r) => r.conditions,
+    keyFn: (o) => o.id,
     columns: [
       {
         key: 'type',
-        getter: () => 'Condition'
+        getter: () => 'Condition',
       },
       {
         key: 'code',
-        getter: c => codeValue(c.code, 'Condition.code')
+        getter: (c) => codeValue(c.code, 'Condition.code'),
       },
       {
         key: 'description',
-        getter: c => codeDisplay(c.code, 'Condition.code')
+        getter: (c) => codeDisplay(c.code, 'Condition.code'),
       },
-      VIEW_FHIR
-    ]
+      VIEW_FHIR,
+    ],
   },
   {
-    getter: r => r.procedures,
-    keyFn: o => o.id,
+    getter: (r) => r.procedures,
+    keyFn: (o) => o.id,
     columns: [
       {
         key: 'type',
-        getter: () => 'Procedure'
+        getter: () => 'Procedure',
       },
       {
         key: 'code',
-        getter: p => codeValue(p.code, 'Procedure.code')
+        getter: (p) => codeValue(p.code, 'Procedure.code'),
       },
       {
         key: 'description',
-        getter: p => codeDisplay(p.code, 'Procedure.code')
+        getter: (p) => codeDisplay(p.code, 'Procedure.code'),
       },
       {
         key: 'details',
         format: 'dateTime',
-        getter: p => p.performedDateTime || p.performedPeriod?.start
+        getter: (p) => p.performedDateTime || p.performedPeriod?.start,
       },
-      VIEW_FHIR
-    ]
+      VIEW_FHIR,
+    ],
   },
   {
-    getter: r => r.medications,
-    keyFn: o => o.id,
+    getter: (r) => r.medications,
+    keyFn: (o) => o.id,
     columns: [
       {
         key: 'type',
-        getter: () => 'Medication'
+        getter: () => 'Medication',
       },
       {
         key: 'code',
-        getter: c => codeValue(c.medicationCodeableConcept, 'MedicationRequest.medicationCodeableConcept')
+        getter: (c) =>
+          codeValue(c.medicationCodeableConcept, 'MedicationRequest.medicationCodeableConcept'),
       },
       {
         key: 'description',
-        getter: c => codeDisplay(c.medicationCodeableConcept, 'MedicationRequest.medicationCodeableConcept')
+        getter: (c) =>
+          codeDisplay(c.medicationCodeableConcept, 'MedicationRequest.medicationCodeableConcept'),
       },
       {
         key: 'details',
         format: 'dateTime',
-        getter: c => c.authoredOn
+        getter: (c) => c.authoredOn,
       },
-      { 
-        key: 'additional', 
-        getter: c => c.status 
+      {
+        key: 'additional',
+        getter: (c) => c.status,
       },
-      VIEW_FHIR
-    ]
+      VIEW_FHIR,
+    ],
   },
   {
-    getter: r => r.observations,
-    keyFn: o => o.id,
+    getter: (r) => r.observations,
+    keyFn: (o) => o.id,
     columns: [
       {
         key: 'type',
-        getter: () => 'Observation'
+        getter: () => 'Observation',
       },
       {
         key: 'code',
-        getter: o => codeValue(o.code, 'Observation.code')
+        getter: (o) => codeValue(o.code, 'Observation.code'),
       },
       {
         key: 'description',
-        getter: o => codeDisplay(o.code, 'Observation.code')
+        getter: (o) => codeDisplay(o.code, 'Observation.code'),
       },
       {
         key: 'details',
-        getter: o => obsValue(o) 
+        getter: (o) => obsValue(o),
       },
-      VIEW_FHIR
-    ]
+      VIEW_FHIR,
+    ],
   },
   {
-    getter: r => r.notes,
-    keyFn: dr => dr.id,
+    getter: (r) => r.reports,
+    keyFn: (dr) => dr.id,
     columns: [
       {
         key: 'type',
-        getter: () => 'Note'
+        getter: () => 'Report',
       },
-      { 
+      {
+        key: 'code',
+        getter: (dr) => codeValue(dr.code, 'DiagnosticReport.code'),
+      },
+      {
         key: 'description',
-        getter: dr => renderNote(getNoteText(dr)) // <ViewNoteModal text={getNoteText(dr)} />
+        getter: (dr) => codeDisplay(dr.code, 'DiagnosticReport.code'),
       },
-      VIEW_FHIR
-    ]
+      {
+        key: 'details',
+        getter: (dr) => attributeXTime(dr, 'effective'),
+      },
+      VIEW_FHIR,
+    ],
   },
   {
-    getter: r => r.medias,
-    keyFn: m => m.id,
+    getter: (r) => r.reports.flatMap((report) => report.observations || []),
+    keyFn: (o) => o.id,
     columns: [
       {
         key: 'type',
-        getter: () => 'Media'
+        getter: () => 'Report Observation',
       },
       {
-        key: 'description', 
-        getter: m => {
-          const procedureDisplay = codeDisplay(m.partOf?.[0]?.resource?.procedureCode?.[0], 'Media.partOf.ImagingStudy.procedureCode');
+        key: 'code',
+        getter: (o) => codeValue(o.code, 'Observation.code'),
+      },
+      {
+        key: 'description',
+        getter: (o) => codeDisplay(o.code, 'Observation.code'),
+      },
+      {
+        key: 'details',
+        getter: (o) => obsValue(o),
+      },
+      VIEW_FHIR,
+    ],
+  },
+  {
+    getter: (r) => r.notes,
+    keyFn: (dr) => dr.id,
+    columns: [
+      {
+        key: 'type',
+        getter: () => 'Note',
+      },
+      {
+        key: 'description',
+        getter: (dr) => renderNote(getNoteText(dr)),
+        // TODO: use <ViewNoteModal text={getNoteText(dr)} />
+      },
+      VIEW_FHIR,
+    ],
+  },
+  {
+    getter: (r) => r.medias,
+    keyFn: (m) => m.id,
+    columns: [
+      {
+        key: 'type',
+        getter: () => 'Media',
+      },
+      {
+        key: 'description',
+        getter: (m) => {
+          const procedureDisplay = codeDisplay(
+            m.partOf?.[0]?.resource?.procedureCode?.[0],
+            'Media.partOf.ImagingStudy.procedureCode',
+          );
           const title = mediaTitle(m);
           if (React.isValidElement(procedureDisplay)) return title || procedureDisplay;
           return [procedureDisplay, title].filter(Boolean).join('\n');
-        }
+        },
       },
-      { 
+      {
         key: 'details',
-        getter: m => extractMedia(m) 
+        getter: (m) => extractMedia(m),
       },
       // VIEW_FHIR // temporarily disabled
-    ]
-  }
-]
+    ],
+  },
+];
 
 const rowHeightFn = (row) => {
   switch (row.type) {
-  case 'Media':
-    return 200;
-  case 'Note':
-    return null; // makes it fit to content when expanded
-  default:
-    return 35; // seems to be the default if not set. undefined here makes the app hang. null makes it smaller
+    case 'Media':
+      return 200;
+    case 'Note':
+      return null; // makes it fit to content when expanded
+    default:
+      // Undefined makes the app hang; null makes the row smaller.
+      return 35;
   }
-}
+};
 
-const EncounterSection = ({encounterData}) => {
-    const rows = [];
+const EncounterSection = ({ encounterData }) => {
+  const rows = [];
 
-    for (const rowDef of ROW_FUNCTIONS) {
-      const rawRows = rowDef.getter(encounterData);
+  for (const rowDef of ROW_FUNCTIONS) {
+    const rawRows = rowDef.getter(encounterData);
 
-      for (const rawRow of rawRows) {
-        const row = {};
+    for (const rawRow of rawRows) {
+      const row = {};
 
-        for (const c of rowDef.columns) {
-          const formatter = FORMATTERS[c.format];
-          let result;
-          try {
-            result = c.getter(rawRow, encounterData);
-          } catch (e) {
-            console.error(e);
-            result = unsupportedField(c.key);
-          }
-          if (result && formatter && !React.isValidElement(result)){
-            result = formatter(result);
-          }
-          if ((result == null || result === '') && c.defaultValue) {
-            result = c.defaultValue;
-          } else if (result == null) {
-            result = missingField(c.key);
-          }
-
-          row[c.key] = result;
+      for (const c of rowDef.columns) {
+        const formatter = FORMATTERS[c.format];
+        let result;
+        try {
+          result = c.getter(rawRow, encounterData);
+        } catch (e) {
+          console.error(e);
+          result = unsupportedField(c.key);
+        }
+        if (result && formatter && !React.isValidElement(result)) {
+          result = formatter(result);
+        }
+        if ((result == null || result === '') && c.defaultValue) {
+          result = c.defaultValue;
+        } else if (result == null) {
+          result = missingField(c.key);
         }
 
-        rows.push(row);
+        row[c.key] = result;
       }
-    }
 
-    return (
-      <DataGrid 
-        columns={COLUMNS} 
-        rows={rows} 
-        style={{ blockSize: '100%' }} // otherwise it defaults to some fixed size and has a scrollbar
-        rowHeight={rowHeightFn}
-      />
-    );
-}
+      rows.push(row);
+    }
+  }
+
+  return (
+    <DataGrid
+      columns={COLUMNS}
+      rows={rows}
+      style={{ blockSize: '100%' }} // otherwise it defaults to some fixed size and has a scrollbar
+      rowHeight={rowHeightFn}
+    />
+  );
+};
 
 export default EncounterSection;

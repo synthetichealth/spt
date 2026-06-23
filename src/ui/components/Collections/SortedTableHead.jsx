@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 
 function SortedTableHead(props) {
   const { classes, order, orderBy, onRequestSort, headers } = props;
-  const createSortHandler = useCallback(property => event => {
+  const createSortHandler = useCallback((property) => (event) => {
     onRequestSort(event, property);
   });
 
-  const labels = headers.map(header => {
+  const labels = headers.map((header) => {
     if (header.value !== undefined) {
       return header;
     } else {
@@ -18,7 +18,7 @@ function SortedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        {labels.map(headCell => (
+        {labels.map((headCell) => (
           <TableCell
             key={headCell.value}
             align="left"
@@ -50,7 +50,7 @@ SortedTableHead.propTypes = {
   onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
-  headers: PropTypes.array.isRequired
+  headers: PropTypes.array.isRequired,
 };
 
 export default SortedTableHead;

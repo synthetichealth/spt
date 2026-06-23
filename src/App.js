@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(bodyParser.json({ type: ['application/json', 'application/fhir+json'] }));
 
 // Routes for collections
-Object.values(collections).forEach(collectionName => {
+Object.values(collections).forEach((collectionName) => {
   app.use(`/collection/${collectionName}`, genericController(collectionName));
 });
 

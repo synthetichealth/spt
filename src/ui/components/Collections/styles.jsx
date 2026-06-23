@@ -1,22 +1,22 @@
-import { styled } from "@mui/system";
+import { styled } from '@mui/system';
 export default styled(
-  theme => ({
+  (theme) => ({
     addButton: {
       float: 'right',
       marginRight: '25px',
       marginTop: '17px',
-      color: theme.palette.common.white
+      color: theme.palette.common.white,
     },
     break: {
       width: '100%',
       height: '0',
       borderTop: '1px solid',
-      borderColor: theme.palette.common.grayHighlight
+      borderColor: theme.palette.common.grayHighlight,
     },
     collection: {
       margin: '60px auto',
       width: '75vw',
-      backgroundColor: 'white'
+      backgroundColor: 'white',
     },
     visuallyHidden: {
       border: 0,
@@ -27,7 +27,7 @@ export default styled(
       padding: 0,
       position: 'absolute',
       top: 20,
-      width: 1
+      width: 1,
     },
     greenIcon: {
       border: '2px solid white',
@@ -36,7 +36,7 @@ export default styled(
       height: '12px',
       display: 'flex',
       borderRadius: '100px',
-      marginLeft: '12px'
+      marginLeft: '12px',
     },
     redIcon: {
       border: '2px solid white',
@@ -45,47 +45,47 @@ export default styled(
       height: '12px',
       display: 'flex',
       borderRadius: '100px',
-      marginLeft: '12px'
+      marginLeft: '12px',
     },
     icon: {
       marginRight: '10px',
-      cursor: 'pointer'
+      cursor: 'pointer',
     },
     headerCell: {
-      color: 'black'
+      color: 'black',
     },
     noData: {
       height: '60px',
-      lineHeight: '60px'
+      lineHeight: '60px',
     },
     tableRow: {
       '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.common.grayHighlight
-      }
+        backgroundColor: theme.palette.common.grayHighlight,
+      },
     },
     tableRowEdit: {
-      backgroundColor: theme.palette.common.turquoiseLight
+      backgroundColor: theme.palette.common.turquoiseLight,
     },
     topBar: {
       height: '70px',
-      lineHeight: '70px'
+      lineHeight: '70px',
     },
     topBarText: {
       float: 'left',
-      marginLeft: '20px'
+      marginLeft: '20px',
     },
     backButton: {
       color: 'red',
-      backgroundColor: 'red'
+      backgroundColor: 'red',
     },
     editInput: {
       width: '100%',
       border: '1px solid',
       borderColor: theme.palette.common.grayHighlight,
       padding: '2px',
-      color: 'inherit'
-    }
+      color: 'inherit',
+    },
   }),
 
-  { name: 'Collection', index: 1 }
+  { name: 'Collection', index: 1 },
 );

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-
+import React from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -18,7 +17,7 @@ const style = {
   p: 4,
 };
 
-const ViewNoteModal = ({text}) => {
+const ViewNoteModal = ({ text }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -40,7 +39,6 @@ const ViewNoteModal = ({text}) => {
       </Modal>
     </div>
   );
-}
-
+};
 
 export default ViewNoteModal;

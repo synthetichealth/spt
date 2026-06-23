@@ -1,9 +1,8 @@
 import React from 'react';
-import { CopyBlock } from "react-code-blocks";
+import { CopyBlock } from 'react-code-blocks';
 /* Docs for react-code-blocks resource: https://github.com/rajinwonderland/react-code-blocks/tree/master */
 
-export function BashCodeBlock({code, lineNumbers=false, singleLine=false}) {
-
+export function BashCodeBlock({ code }) {
   const codeTheme = {
     lineNumberColor: `#665973`,
     lineNumberBgColor: `#30343d`,
@@ -40,9 +39,9 @@ export function BashCodeBlock({code, lineNumbers=false, singleLine=false}) {
     metaColor: `#7f659a`,
     functionColor: `#49ace9`,
     numberColor: `#6258e5`,
-  }
+  };
 
-  return(
+  return (
     <div style={{ textAlign: 'left' }}>
       <CopyBlock text={code.trim()} showLineNumbers={false} theme={codeTheme} codeBlock />
     </div>
