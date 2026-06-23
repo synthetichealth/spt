@@ -110,6 +110,15 @@ const KeepModuleBuilder = (props) => {
   const { setKeepModuleString, showDownload } = props;
 
   const handleChange = () => {};
+  const updateKeepModuleString = (updatedKeeps, updatedAny) => {
+    setKeepModuleString(buildKeepModule(updatedKeeps, updatedAny));
+  };
+
+  const updateAnyAndKeeps = updatedAny => {
+    setAny(updatedAny);
+    updateKeepModuleString(keeps, updatedAny);
+  };
+
   const addCurrent = () => {
     if (value) {
       let string;
@@ -126,7 +135,7 @@ const KeepModuleBuilder = (props) => {
         newKeep
       ];
       setKeeps(updatedKeeps);
-      setKeepModuleString(buildKeepModule(updatedKeeps, any));
+      updateKeepModuleString(updatedKeeps, any);
       setValue('');
     }
   };
@@ -160,7 +169,7 @@ const KeepModuleBuilder = (props) => {
 
       <br />
 
-      ALL OF <Switch onChange={e => setAny(e.target.checked)} /> ANY OF <br />
+      ALL OF <Switch onChange={(e, checked) => updateAnyAndKeeps(checked)} /> ANY OF <br />
 
       <div>Keep patients matching <b>{ any ? "Any" : "All" }</b> of the following criteria:</div>
       <ul>
