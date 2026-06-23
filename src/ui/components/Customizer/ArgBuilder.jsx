@@ -128,7 +128,7 @@ const ArgBuilder = (props) => {
   }
 
   const handleChangeRange = (name, index, value) => {
-    const valueArray = name in args ? args[name] : [];
+    const valueArray = Array.isArray(args[name]) ? [...args[name]] : [];
     valueArray[index] = value;
 
     setArgs({

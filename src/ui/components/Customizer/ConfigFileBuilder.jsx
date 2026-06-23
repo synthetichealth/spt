@@ -487,9 +487,19 @@ const intersection = (list1, list2) => {
   return list1.filter(value => list2.includes(value));
 }
 
+const valueForConfigOption = (config, configOpt) => {
+  const value = config[configOpt.key];
+  if (value == null) return configOpt.defaultValue;
+
+  if (configOpt.type == 'boolean' && typeof value === 'string') {
+    return value === 'true';
+  }
+
+  return value;
+};
+
 const ConfigFileBuilder = (props) => {
   const classes = useStyles();
-  const settings = CONFIG_OPTIONS.map(o => o.key);
 
   const { config, setConfig, configAsArgs, setConfigAsArgs, targetedCategories } = props;
 
@@ -513,7 +523,7 @@ const ConfigFileBuilder = (props) => {
   const handleChangeBoolean = (evt) => {
     setConfig({
       ...config,
-      [evt.target.name]: evt.target.checked.toString()
+      [evt.target.name]: evt.target.checked
     });
   }
 
@@ -539,7 +549,7 @@ const ConfigFileBuilder = (props) => {
                         id={key} 
                         name={key} 
                         label={key}
-                        defaultChecked={configOpt.defaultValue}
+                        checked={valueForConfigOption(config, configOpt)}
                         onChange={handleChangeBoolean} />
                       <Tooltip title={configOpt.description} disableInteractive>
                         <span>
@@ -555,7 +565,7 @@ const ConfigFileBuilder = (props) => {
                         name={key}
                         type={configOpt.type}
                         label={key}
-                        defaultValue={configOpt.defaultValue}
+                        value={valueForConfigOption(config, configOpt)}
                         variant="outlined"
                         onChange={handleChangeText}
                         />

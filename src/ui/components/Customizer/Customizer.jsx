@@ -86,7 +86,7 @@ const GuidedMode = props => {
   const [dataReqs, setDataReqs] = useState([]);
   const [mode, setMode] = useState();
 
-  const targetedCategories = ['commnon', ...exportFormats];
+  const targetedCategories = ['common', ...exportFormats];
 
   if (keepModuleString) {
     targetedCategories.push('keep');

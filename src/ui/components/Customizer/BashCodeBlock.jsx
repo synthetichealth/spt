@@ -42,5 +42,9 @@ export function BashCodeBlock({code, lineNumbers=false, singleLine=false}) {
     numberColor: `#6258e5`,
   }
 
-  return(<CopyBlock text={code.trim()} showLineNumbers={false} theme={codeTheme} codeBlock />);
+  return(
+    <div style={{ textAlign: 'left' }}>
+      <CopyBlock text={code.trim()} showLineNumbers={false} theme={codeTheme} codeBlock />
+    </div>
+  );
 }
