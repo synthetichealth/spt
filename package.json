@@ -10,6 +10,7 @@
     "build": "WATCH=false FRONTEND_ONLY=true webpack",
     "debug": "node --inspect-brk ./bin/www",
     "test": "jest",
+    "test:upgrade": "jest --runInBand && npm run build",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "lint": "eslint './src/**/*.{js,jsx}'",
     "lint:fix": "eslint './src/**/*.{js,jsx}' --fix"
@@ -88,6 +89,12 @@
   },
   "jest": {
     "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/test/setupTests.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|scss|sass)$": "<rootDir>/src/test/styleMock.js"
+    },
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ]
