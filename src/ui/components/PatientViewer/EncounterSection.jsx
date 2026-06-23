@@ -19,7 +19,17 @@ import moment from 'moment';
 import ViewFhirModal from './ViewFhirModal';
 import ViewNoteModal from './ViewNoteModal';
 
-import { obsValue, SPACER, isMatchingReference, getNoteText, extractMedia } from './utils';
+import {
+  codeDisplay,
+  codeValue,
+  extractMedia,
+  getNoteText,
+  mediaTitle,
+  missingField,
+  obsValue,
+  periodStart,
+  unsupportedField
+} from './utils';
 
 
 const COLUMNS = [
@@ -48,13 +58,28 @@ const COLUMNS = [
   { key: 'fhir', name: 'View FHIR' }
 ];
 
+const formatDate = (value, format, fieldName) => {
+  if (!value) return missingField(fieldName);
+  const date = moment(value);
+  return date.isValid() ? date.format(format) : unsupportedField(fieldName);
+};
+
 const FORMATTERS = {
-  date: (str) => moment(str).format('YYYY-MM-DD'),
-  time: (str) => moment(str).format('HH:mm:ss'),
-  dateTime: (str) => moment(str).format('YYYY-MM-DD - h:mm:ss a'),
+  date: (str) => formatDate(str, 'YYYY-MM-DD', 'date'),
+  time: (str) => formatDate(str, 'HH:mm:ss', 'time'),
+  dateTime: (str) => formatDate(str, 'YYYY-MM-DD - h:mm:ss a', 'dateTime'),
   numberWithCommas: (str) => str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
   code: (code) => `${code.code}: ${code.display ? code.display : ''}`,
-  period: (period) => `${moment(period.start).format('YYYY-MM-DD - h:mm:ss a')} -> ${moment(period.end).format('YYYY-MM-DD - h:mm:ss a')}`
+  period: (period) => {
+    if (!period?.start && !period?.end) return missingField('period');
+    const start = period?.start ? FORMATTERS.dateTime(period.start) : missingField('period.start');
+    const end = period?.end ? FORMATTERS.dateTime(period.end) : missingField('period.end');
+    return (
+      <>
+        {start} -&gt; {end}
+      </>
+    );
+  }
 };
 
 const VIEW_FHIR = {
@@ -94,16 +119,16 @@ const ROW_FUNCTIONS =
       },
       {
         key: 'code',
-        getter: n => n.type[0].coding[0].code
+        getter: n => codeValue(n.type?.[0], 'Encounter.type')
       },
       {
         key: 'description',
-        getter: n => n.type[0].coding[0].display
+        getter: n => codeDisplay(n.type?.[0], 'Encounter.type')
       },
       {
         key: 'details',
         format: 'date',
-        getter: n => n.period.start
+        getter: n => periodStart(n.period, 'Encounter.period.start')
       },
       VIEW_FHIR
     ]
@@ -118,11 +143,11 @@ const ROW_FUNCTIONS =
       },
       {
         key: 'code',
-        getter: c => c.code.coding[0].code
+        getter: c => codeValue(c.code, 'Condition.code')
       },
       {
         key: 'description',
-        getter: c => c.code.coding[0].display
+        getter: c => codeDisplay(c.code, 'Condition.code')
       },
       VIEW_FHIR
     ]
@@ -137,16 +162,16 @@ const ROW_FUNCTIONS =
       },
       {
         key: 'code',
-        getter: p => p.code.coding[0].code
+        getter: p => codeValue(p.code, 'Procedure.code')
       },
       {
         key: 'description',
-        getter: p => p.code.coding[0].display
+        getter: p => codeDisplay(p.code, 'Procedure.code')
       },
       {
         key: 'details',
         format: 'dateTime',
-        getter: p => p.performedPeriod.start
+        getter: p => p.performedDateTime || p.performedPeriod?.start
       },
       VIEW_FHIR
     ]
@@ -161,11 +186,11 @@ const ROW_FUNCTIONS =
       },
       {
         key: 'code',
-        getter: c => c.medicationCodeableConcept.coding[0].code
+        getter: c => codeValue(c.medicationCodeableConcept, 'MedicationRequest.medicationCodeableConcept')
       },
       {
         key: 'description',
-        getter: c => c.medicationCodeableConcept.coding[0].display
+        getter: c => codeDisplay(c.medicationCodeableConcept, 'MedicationRequest.medicationCodeableConcept')
       },
       {
         key: 'details',
@@ -189,11 +214,11 @@ const ROW_FUNCTIONS =
       },
       {
         key: 'code',
-        getter: o => o.code.coding[0].code
+        getter: o => codeValue(o.code, 'Observation.code')
       },
       {
         key: 'description',
-        getter: o => o.code.coding[0].display
+        getter: o => codeDisplay(o.code, 'Observation.code')
       },
       {
         key: 'details',
@@ -228,21 +253,10 @@ const ROW_FUNCTIONS =
       {
         key: 'description', 
         getter: m => {
-          let codeDisplay = '';
-          try {
-            codeDisplay = m.partOf[0].resource.procedureCode[0].coding[0].display + '\n';
-          } catch (e) {}
-
-          let title = '';
-          try {
-            const myIdentifer = m.identifier[0].value; // "urn:oid:1.2.840.99999999.1.1.33607723.407560999967"
-            const instance = m.partOf[0].resource.series[0].instance.find(i => `urn:oid:${i.uid}` === myIdentifer);
-            if (instance?.title) {
-              title = instance.title;
-            }
-          } catch (e) {}
-
-          return codeDisplay + title;
+          const procedureDisplay = codeDisplay(m.partOf?.[0]?.resource?.procedureCode?.[0], 'Media.partOf.ImagingStudy.procedureCode');
+          const title = mediaTitle(m);
+          if (React.isValidElement(procedureDisplay)) return title || procedureDisplay;
+          return [procedureDisplay, title].filter(Boolean).join('\n');
         }
       },
       { 
@@ -281,13 +295,15 @@ const EncounterSection = ({encounterData}) => {
             result = c.getter(rawRow, encounterData);
           } catch (e) {
             console.error(e);
-            result = undefined;
+            result = unsupportedField(c.key);
           }
-          if (result && formatter){
+          if (result && formatter && !React.isValidElement(result)){
             result = formatter(result);
           }
-          if (!result && c.defaultValue) {
+          if ((result == null || result === '') && c.defaultValue) {
             result = c.defaultValue;
+          } else if (result == null) {
+            result = missingField(c.key);
           }
 
           row[c.key] = result;

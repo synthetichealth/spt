@@ -37,7 +37,7 @@ import EncounterGroupedRecord from './EncounterGroupedRecord';
 
 import Settings from './Settings';
 
-import { isMatchingReference } from './utils';
+import { attachImagingStudy, isMatchingReference, withDerivedFields } from './utils';
 
 // Demo styles, see 'Styles' section below for some notes on use.
 import 'react-accessible-accordion/dist/fancy-example.css';
@@ -251,6 +251,7 @@ const PatientViewer = props => {
   }
 
   const patient = allResources.find(r => r.resourceType === 'Patient');
+  const recordSections = buildRecordSections(allResources);
 
   const toggleGroup = event => {
     event.preventDefault();
@@ -274,7 +275,7 @@ const PatientViewer = props => {
         <>
           <LinksByType />
           <EntireRecord 
-            allResources={allResources} />
+            recordSections={recordSections} />
         </>
         )}
 
@@ -315,43 +316,44 @@ const LinksByType = () => {
   );
 };
 
-const EntireRecord = props => {
-  const { allResources } = props;
+const buildRecordSections = allResources => {
   const getByType = type => allResources.filter(r => r.resourceType === type);
   const conditions = getByType('Condition');
-  const medications = getByType('MedicationRequest');
   const meds = getByType('Medication');
-  medications.forEach(m => {
+
+  const medications = getByType('MedicationRequest').map(m => {
     if (m.medicationReference) {
       const referencedMed = meds.find(med => isMatchingReference(med, m.medicationReference.reference, 'Medication'));
       if (referencedMed) {
-        m.medicationCodeableConcept = referencedMed.code;
+        return withDerivedFields(m, { medicationCodeableConcept: referencedMed.code });
       }
     }
+    return m;
   });
 
   let observations = getByType('Observation');
-  const reports = getByType('DiagnosticReport');
-
-  reports.forEach(r => {
+  const reports = getByType('DiagnosticReport').map(r => {
     if (r.result) {
-      r.observations = r.result.map(res =>
-        observations.find(o => isMatchingReference(o, res.reference, 'Observation'))
-      );
-      observations = observations.filter(o => !r.observations.includes(o));
+      const reportObservations = r.result
+        .map(res => observations.find(o => isMatchingReference(o, res.reference, 'Observation')))
+        .filter(o => o);
+      observations = observations.filter(o => !reportObservations.includes(o));
+      return withDerivedFields(r, { observations: reportObservations });
     }
+    return r;
   });
 
-  const careplans = getByType('CarePlan');
   const goals = getByType('Goal');
   // note that the syntheticmass server doesn't currently return goals in Patient$everything
 
-  careplans.forEach(cp => {
+  const careplans = getByType('CarePlan').map(cp => {
     if (cp.goal) {
-      cp.goals = cp.goal
+      const carePlanGoals = cp.goal
         .map(cpg => goals.find(g => isMatchingReference(g, cpg.reference, 'Goal')))
         .filter(g => g);
+      return withDerivedFields(cp, { goals: carePlanGoals });
     }
+    return cp;
   });
 
   const procedures = getByType('Procedure');
@@ -360,32 +362,41 @@ const EntireRecord = props => {
   const immunizations = getByType('Immunization');
   const documents = getByType('DocumentReference');
 
-  const medias = getByType('Media');
+  const medias = getByType('Media').map(m => attachImagingStudy(m, allResources));
 
-  medias.forEach(m => {
-    if (m.partOf && m.partOf[0]) {
-      const partOf = allResources.find(r => `urn:uuid:${r.id}` === m.partOf[0].reference);
+  return {
+    allResources,
+    conditions,
+    medications,
+    observations,
+    reports,
+    careplans,
+    procedures,
+    encounters,
+    allergies,
+    immunizations,
+    documents,
+    medias
+  };
+};
 
-      if (partOf?.resourceType === 'ImagingStudy') {
-        m.partOf[0].resource = partOf;
-      }
-    }
-  });
+const EntireRecord = props => {
+  const { recordSections } = props;
 
   return (
     <Section
-      allResources={allResources}
-      conditions={conditions}
-      medications={medications}
-      observations={observations}
-      reports={reports}
-      careplans={careplans}
-      procedures={procedures}
-      encounters={encounters}
-      allergies={allergies}
-      immunizations={immunizations}
-      documents={documents}
-      medias={medias}
+      allResources={recordSections.allResources}
+      conditions={recordSections.conditions}
+      medications={recordSections.medications}
+      observations={recordSections.observations}
+      reports={recordSections.reports}
+      careplans={recordSections.careplans}
+      procedures={recordSections.procedures}
+      encounters={recordSections.encounters}
+      allergies={recordSections.allergies}
+      immunizations={recordSections.immunizations}
+      documents={recordSections.documents}
+      medias={recordSections.medias}
     />
   );
 };

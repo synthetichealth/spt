@@ -5,7 +5,19 @@ import 'react-data-grid/lib/styles.css';
 import moment from 'moment';
 
 import ViewFhirModal from '../PatientViewer/ViewFhirModal';
-import { obsValue, SPACER, isMatchingReference, getNoteText, extractMedia } from '../PatientViewer/utils';
+import {
+  codeDisplay,
+  codeLabel,
+  codeValue,
+  effectiveTime,
+  extractMedia,
+  lastCodeableConcept,
+  mediaTitle,
+  missingField,
+  obsValue,
+  periodStart,
+  unsupportedField
+} from '../PatientViewer/utils';
 
 import {
   Accordion,
@@ -18,13 +30,28 @@ import {
 // Demo styles, see 'Styles' section below for some notes on use.
 import 'react-accessible-accordion/dist/fancy-example.css';
 
+const formatDate = (value, format, fieldName) => {
+  if (!value) return missingField(fieldName);
+  const date = moment(value);
+  return date.isValid() ? date.format(format) : unsupportedField(fieldName);
+};
+
 const FORMATTERS = {
-  date: (str) => moment(str).format('YYYY-MM-DD'),
-  time: (str) => moment(str).format('HH:mm:ss'),
-  dateTime: (str) => moment(str).format('YYYY-MM-DD - h:mm a'), // to re-add seconds: 'YYYY-MM-DD - h:mm:ss a'
+  date: (str) => formatDate(str, 'YYYY-MM-DD', 'date'),
+  time: (str) => formatDate(str, 'HH:mm:ss', 'time'),
+  dateTime: (str) => formatDate(str, 'YYYY-MM-DD - h:mm a', 'dateTime'), // to re-add seconds: 'YYYY-MM-DD - h:mm:ss a'
   numberWithCommas: (str) => str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
   code: (code) => `${code.code}: ${code.display ? code.display : ''}`,
-  period: (period) => `${moment(period.start).format('YYYY-MM-DD - h:mm a')} -> ${moment(period.end).format('YYYY-MM-DD - h:mm a')}`
+  period: (period) => {
+    if (!period?.start && !period?.end) return missingField('period');
+    const start = period?.start ? FORMATTERS.dateTime(period.start) : missingField('period.start');
+    const end = period?.end ? FORMATTERS.dateTime(period.end) : missingField('period.end');
+    return (
+      <>
+        {start} -&gt; {end}
+      </>
+    );
+  }
 };
 
 const WIDTHS = {
@@ -39,23 +66,21 @@ const VIEW_FHIR = {
 };
 
 const attributeXTime = (entry, type) => {
-  if (entry == null) {
-    return '';
-  } else if (entry[`${type}DateTime`]) {
-    return FORMATTERS['dateTime'](entry[`${type}DateTime`])
-  } else if (entry[`${type}Period`]) {
-    return FORMATTERS['period'](entry[`${type}Period`])
+  const value = effectiveTime(entry, type);
+  if (React.isValidElement(value)) return value;
+  if (typeof value === 'string') {
+    return FORMATTERS.dateTime(value);
   }
-  return '';
+  return FORMATTERS.period(value);
 }
 
 const duration = (period) => {
-  if (!period.end) {
-    return '';
+  if (!period?.start || !period?.end) {
+    return missingField('period');
   }
   let start = moment(period.start);
   let end = moment(period.end);
-  return moment.duration( start.diff(end) ).humanize();
+  return moment.duration( end.diff(start) ).humanize();
 };
 
 
@@ -71,13 +96,15 @@ function applyColumns(resource, columns) {
       result = c.getter(resource);
     } catch (e) {
       console.error(e);
-      result = undefined;
+      result = unsupportedField(c.name || c.key);
     }
-    if (result && formatter){
+    if (result && formatter && !React.isValidElement(result)){
       result = formatter(result);
     }
-    if (!result && c.defaultValue) {
+    if ((result == null || result === '') && c.defaultValue) {
       result = c.defaultValue;
+    } else if (result == null) {
+      result = missingField(c.name || c.key);
     }
 
     row[c.key] = result;
@@ -141,10 +168,10 @@ class ConditionsTable extends GenericTable {
   static defaultProps = {
     title: 'Conditions',
     columns: [
-        { name: 'SNOMED', getter: c => c.code.coding[0].code, width: WIDTHS.snomed },
-        { name: 'Condition', getter: c => c.code.coding[0].display },
+        { name: 'SNOMED', getter: c => codeValue(c.code, 'Condition.code'), width: WIDTHS.snomed },
+        { name: 'Condition', getter: c => codeDisplay(c.code, 'Condition.code') },
         { name: 'Date of Onset', format: 'date', getter: c => c.onsetDateTime, width: WIDTHS.date },
-        { name: 'Date Resolved', format: 'date', getter: c => c.abatementDateTime, width: WIDTHS.date },
+        { name: 'Date Resolved', format: 'date', getter: c => c.abatementDateTime || '', width: WIDTHS.date },
         VIEW_FHIR
       ],
       keyFn: c => c.id
@@ -156,8 +183,8 @@ class ObservationsTable extends GenericTable {
   static defaultProps = {
     title: 'Observations',
     columns: [
-        { name: 'LOINC', getter: o => o.code.coding[0].code },
-        { name: 'Observation', getter: o => o.code.coding[0].display },
+        { name: 'LOINC', getter: o => codeValue(o.code, 'Observation.code') },
+        { name: 'Observation', getter: o => codeDisplay(o.code, 'Observation.code') },
         { name: 'Value', getter: o => obsValue(o) },
         { name: 'Date Recorded', getter: o => attributeXTime(o,'effective') },
         VIEW_FHIR
@@ -171,8 +198,8 @@ class ReportsTable extends GenericTable {
   static defaultProps = {
     title: 'Reports',
     columns: [
-        { name: 'LOINC',  getter: r => r.code.coding[0].code },
-        { name: 'Report/Observation', getter: r => r.code.coding[0].display,
+        { name: 'LOINC',  getter: r => codeValue(r.code, 'DiagnosticReport.code') },
+        { name: 'Report/Observation', getter: r => codeDisplay(r.code, 'DiagnosticReport.code'),
           colSpan: (args) => {
             if (args.type === 'ROW' && (args.row.type === 'Note')) {
               return 3;
@@ -190,8 +217,8 @@ class ReportsTable extends GenericTable {
         getter: rpt => rpt.observations,
         keyFn: o => o.id,
         columns: [
-          { name: 'LOINC',  getter: o => o.code.coding[0].code },
-          { name: 'Report/Observation', getter: o => o.code.coding[0].display },
+          { name: 'LOINC',  getter: o => codeValue(o.code, 'Observation.code') },
+          { name: 'Report/Observation', getter: o => codeDisplay(o.code, 'Observation.code') },
           { name: 'Value', getter: o => obsValue(o) },
           VIEW_FHIR
         ]
@@ -200,7 +227,7 @@ class ReportsTable extends GenericTable {
         getter: rpt => rpt.presentedForm,
         keyFn: p => Math.floor(Math.random() * 100), // TODO, pass in index
         columns: [
-          { name: 'Content', key: 'Report/Observation', getter: p => renderNote(atob(p.data)) },
+          { name: 'Content', key: 'Report/Observation', getter: p => renderNote(p.data ? atob(p.data) : missingField('DiagnosticReport.presentedForm.data')) },
           { key: 'type', getter: () => 'Note' },
           VIEW_FHIR
         ]
@@ -215,11 +242,10 @@ class AllergiesTable extends GenericTable {
   static defaultProps = {
     title: 'Allergies',
     columns: [
-        { name: 'Allergy', format: 'code', getter: a => a.code.coding[0] },
-        { name: 'Date Recorded',  getter: a => a.recordedDate },
-        { name: 'Date Recorded',  format: 'date', getter: a => a.assertedDate },
-        { name: 'Onset', format: 'date', getter: a => a.onsetDateTime },
-        { name: 'Resolution Age', format: 'date', getter: a => a.extension.resolutionAge },
+        { name: 'Allergy', getter: a => codeLabel(a.code, 'AllergyIntolerance.code') },
+        { name: 'Recorded', format: 'date', getter: a => a.recordedDate || a.assertedDate },
+        { name: 'Onset', format: 'date', getter: a => a.onsetDateTime || '' },
+        { name: 'Clinical Status', getter: a => codeDisplay(a.clinicalStatus, 'AllergyIntolerance.clinicalStatus') },
         VIEW_FHIR
       ],
       keyFn: c => c.id
@@ -244,9 +270,9 @@ class CarePlansTable extends GenericTable {
         // note the -1, us core category "assess-plan" gets added at slot 0
         // but us core is not always active
         // so we want the last one not necessarily always 0 or 1
-        { name: 'SNOMED', getter: c => c.category.at(-1).coding[0].code },
-        { name: 'Care Plan', getter: c => c.category.at(-1).coding[0].display },
-        { name: 'StartDate', format: 'date', getter: c => c.period.start },
+        { name: 'SNOMED', getter: c => codeValue(lastCodeableConcept(c.category), 'CarePlan.category') },
+        { name: 'Care Plan', getter: c => codeDisplay(lastCodeableConcept(c.category), 'CarePlan.category') },
+        { name: 'StartDate', format: 'date', getter: c => periodStart(c.period, 'CarePlan.period.start') },
         VIEW_FHIR
     ],
     nestedRows: [
@@ -262,7 +288,15 @@ class CarePlansTable extends GenericTable {
         getter: cp => cp.activity,
         keyFn: a => Math.random(),
         columns: [
-          { name: 'Activity', key: 'Care Plan', getter: a => `Activity: ${a.detail.code.coding[0].display}` },
+          { name: 'Activity', key: 'Care Plan', getter: a => {
+              const display = codeDisplay(a.detail?.code, 'CarePlan.activity.detail.code');
+              return React.isValidElement(display) ? (
+                <>
+                  Activity: {display}
+                </>
+              ) : `Activity: ${display}`;
+            }
+          },
           VIEW_FHIR
         ]
       }
@@ -275,9 +309,9 @@ class ProceduresTable extends GenericTable {
   static defaultProps = {
     title: 'Procedures',
     columns: [
-      { name: 'SNOMED', getter: p => p.code.coding[0].code },
-      { name: 'Procedure', getter: p => p.code.coding[0].display },
-      { name: 'Performed', format: 'dateTime', getter: p => p.performedDateTime || p.performedPeriod.start },
+      { name: 'SNOMED', getter: p => codeValue(p.code, 'Procedure.code') },
+      { name: 'Procedure', getter: p => codeDisplay(p.code, 'Procedure.code') },
+      { name: 'Performed', format: 'dateTime', getter: p => p.performedDateTime || p.performedPeriod?.start },
       VIEW_FHIR
     ],
     keyFn: c => c.id
@@ -288,9 +322,9 @@ class EncountersTable extends GenericTable {
   static defaultProps = {
     title: 'Encounters',
     columns: [
-        { name: 'SNOMED', getter: e => e.type[0].coding[0].code },
-        { name: 'Encounter', getter: e => e.type[0].coding[0].display },
-        { name: 'Start Time', format: 'dateTime', getter: e => e.period.start },
+        { name: 'SNOMED', getter: e => codeValue(e.type?.[0], 'Encounter.type') },
+        { name: 'Encounter', getter: e => codeDisplay(e.type?.[0], 'Encounter.type') },
+        { name: 'Start Time', format: 'dateTime', getter: e => periodStart(e.period, 'Encounter.period.start') },
         { name: 'Duration', getter: e => duration(e.period) },
         VIEW_FHIR
       ],
@@ -302,8 +336,8 @@ class ImmunizationsTable extends GenericTable {
   static defaultProps = {
     title: 'Immunizations',
     columns: [
-        { name: 'CVX', getter: i => i.vaccineCode.coding[0].code },
-        { name: 'Vaccine', getter: i => i.vaccineCode.coding[0].display },
+        { name: 'CVX', getter: i => codeValue(i.vaccineCode, 'Immunization.vaccineCode') },
+        { name: 'Vaccine', getter: i => codeDisplay(i.vaccineCode, 'Immunization.vaccineCode') },
         { name: 'Date Given', format: 'date', getter: i => i.occurrenceDateTime },
         VIEW_FHIR
       ],
@@ -333,7 +367,7 @@ class DocumentReferencesTable extends GenericTable {
     title: 'Documents',
     columns: [
         { name: 'Date', format: 'date', getter: d => d.date, width: WIDTHS.date },
-        { name: 'Content', getter: d => renderNote(atob(d.content[0].attachment.data)) },
+        { name: 'Content', getter: d => renderNote(d.content?.[0]?.attachment?.data ? atob(d.content[0].attachment.data) : missingField('DocumentReference.content.attachment.data')) },
         VIEW_FHIR
       ],
     rowHeight: () => null, // makes the row height dynamic when the note is opened/closed
@@ -345,8 +379,8 @@ class MedicationRequestsTable extends GenericTable {
   static defaultProps = {
     title: 'Medication Requests',
     columns: [
-        { name: 'RxNorm', getter: m => m.medicationCodeableConcept.coding[0].code },
-        { name: 'Medication', getter: m => m.medicationCodeableConcept.coding[0].display },
+        { name: 'RxNorm', getter: m => codeValue(m.medicationCodeableConcept, 'MedicationRequest.medicationCodeableConcept') },
+        { name: 'Medication', getter: m => codeDisplay(m.medicationCodeableConcept, 'MedicationRequest.medicationCodeableConcept') },
         { name: 'Date Prescribed', format: 'date', getter: c => c.authoredOn },
         { name: 'Status', getter: c => c.status },
         VIEW_FHIR
@@ -359,21 +393,10 @@ class MediasTable extends GenericTable {
   static defaultProps = {
     title: 'Images',
     columns: [
-        { name: 'Code', getter: m => m.partOf[0].resource.procedureCode[0].coding[0].display },
-        { name: 'Title', getter: m => {
-            let title = '';
-            try {
-              const myIdentifer = m.identifier[0].value; // "urn:oid:1.2.840.99999999.1.1.33607723.407560999967"
-              const instance = m.partOf[0].resource.series[0].instance.find(i => `urn:oid:${i.uid}` === myIdentifer);
-              if (instance?.title) {
-                title = instance.title;
-              }
-            } catch (e) {}
-            return title;
-          }
-        },
+        { name: 'Code', getter: m => codeDisplay(m.partOf?.[0]?.resource?.procedureCode?.[0], 'Media.partOf.ImagingStudy.procedureCode') },
+        { name: 'Title', getter: m => mediaTitle(m) },
         { name: 'Media', getter: m => extractMedia(m) },
-        { name: 'Date', getter: m => m.partOf[0].resource.started },
+        { name: 'Date', getter: m => m.partOf?.[0]?.resource?.started || missingField('ImagingStudy.started') },
         // VIEW_FHIR // temporarily disabled
     ],
     keyFn: m => m.id,
@@ -394,4 +417,3 @@ export {
   MedicationRequestsTable,
   MediasTable
 };
-

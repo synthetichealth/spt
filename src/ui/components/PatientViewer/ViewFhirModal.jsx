@@ -22,6 +22,7 @@ const ViewFhirModal = ({resource}) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const sourceResource = resource?.__sourceResource || resource;
 
   return (
     <div>
@@ -35,7 +36,7 @@ const ViewFhirModal = ({resource}) => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-description" component="pre" style={{ fontFamily: 'monospace', fontSize: 12 }}>
-            {JSON.stringify(resource, null, 2)}
+            {JSON.stringify(sourceResource, null, 2)}
           </Typography>
         </Box>
       </Modal>

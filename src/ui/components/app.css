@@ -41,3 +41,14 @@ code {
 .patient-viewer .rdg {
   overflow-anchor: none;
 }
+
+.fhir-field-warning {
+  display: inline-block;
+  color: #8a5a00;
+  background: #fff4cc;
+  border: 1px solid #d8aa34;
+  border-radius: 3px;
+  padding: 0 4px;
+  font-size: 0.85em;
+  line-height: 1.4;
+}

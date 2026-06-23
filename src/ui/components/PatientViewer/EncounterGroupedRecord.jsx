@@ -1,28 +1,26 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
 import EncounterSection from './EncounterSection';
 
-import { obsValue, SPACER, isMatchingReference, getNoteText, extractMedia } from './utils';
+import { attachImagingStudy, encounterTitle, isMatchingReference } from './utils';
 
+const encounterAnchorId = encounter =>
+  encounter?.id || encounter?.period?.start || encounterTitle(encounter);
 
 const LinksByEncounter = props => {
   const { encounters } = props;
-  const location = useLocation();
 
   return (
     <Autocomplete
       id="combo-box-demo"
       options={encounters}
-      getOptionLabel={e =>
-        `${e.period.start} - ${e.type[0].coding[0].code} ${e.type[0].coding[0].display}`
-      }
+      getOptionLabel={e => encounterTitle(e)}
       onChange={(_event, value, _reason) => {
-        const newLocation = { ...location, hash: '#' + value.period.start };
-        document.getElementById(value.period.start).scrollIntoView();
+        if (!value) return;
+        document.getElementById(encounterAnchorId(value))?.scrollIntoView();
       }}
       style={{ width: 900 }}
       renderInput={params => <TextField {...params} label="Jump To Encounter" variant="outlined" />}
@@ -55,17 +53,7 @@ const EncounterGroupedRecord = props => {
         Array.isArray(r.context?.encounter) && 
         isMatchingReference(e, r.context.encounter[0]?.reference, 'Encounter')
       );
-    const medias = getByType('Media');
-
-    medias.forEach(m => {
-      if (m.partOf && m.partOf[0]) {
-        const partOf = allResources.find(r => `urn:uuid:${r.id}` === m.partOf[0].reference);
-
-        if (partOf?.resourceType === 'ImagingStudy') {
-          m.partOf[0].resource = partOf;
-        }
-      }
-    });
+    const medias = getByType('Media').map(m => attachImagingStudy(m, allResources));
     // const reports = getByType('DiagnosticReport');
 
     // reports.forEach(r => {
@@ -75,7 +63,7 @@ const EncounterGroupedRecord = props => {
     //   }
     // });
 
-    const title = `${e.period.start} - ${e.type[0].coding[0].code} ${e.type[0].coding[0].display}`;
+    const title = encounterTitle(e);
 
     const encounterData = {
       encounter: e,
@@ -88,10 +76,10 @@ const EncounterGroupedRecord = props => {
     }
 
     encounterSections.push(
-      <div key={title} id={title}>
+      <div key={encounterAnchorId(e)} id={encounterAnchorId(e)}>
         <div className="health-record__header">
           <div className="header-title">
-            <a id={e.period.start}>{ title }</a>
+            <a id={e.period?.start}>{ title }</a>
           </div>
           <div className="header-divider"></div>
         </div>
