@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
 
 import FILTER_PRESETS from './FilterPresets';
-import { readStoredJson, saveStoredJson } from './localStorage';
+import { readStoredJson, useStoredJson } from './localStorage';
 
 const SETTINGS_STORAGE_KEY = 'patient-viewer-settings';
 
@@ -36,15 +36,9 @@ const normalizeSettings = (settings) => {
 };
 
 const usePatientViewerSettings = () => {
-  const [storedSettings, setStoredSettingsState] = useState(() =>
-    readStoredJson(SETTINGS_STORAGE_KEY, getDefaultSettings()),
-  );
+  const defaultSettings = useMemo(() => getDefaultSettings(), []);
+  const [storedSettings, setStoredSettings] = useStoredJson(SETTINGS_STORAGE_KEY, defaultSettings);
   const settings = normalizeSettings(storedSettings);
-
-  const setStoredSettings = (nextSettings) => {
-    setStoredSettingsState(nextSettings);
-    saveStoredJson(SETTINGS_STORAGE_KEY, nextSettings);
-  };
 
   const setIsGroupByEncounter = (isGroupByEncounter) => {
     setStoredSettings({
