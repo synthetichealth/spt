@@ -1,33 +1,23 @@
 import React from 'react';
 
-import {
-  Accordion,
-  AccordionItem,
-  AccordionItemHeading,
-  AccordionItemButton,
-  AccordionItemPanel,
-} from 'react-accessible-accordion';
-
-// Demo styles, see 'Styles' section below for some notes on use.
-import 'react-accessible-accordion/dist/fancy-example.css';
-
-import moment from 'moment';
-
 import FhirDataGrid from './FhirDataGrid';
-import ViewFhirModal from './ViewFhirModal';
 
 import {
   codeDisplay,
   codeValue,
-  effectiveTime,
   extractMedia,
   getNoteText,
   mediaTitle,
-  missingField,
   obsValue,
   periodStart,
-  unsupportedField,
 } from './utils';
+import {
+  SECOND_PRECISION_FORMATTERS,
+  applyColumns,
+  attributeXTime,
+  createViewFhirColumn,
+  renderNote,
+} from './tableUtils';
 
 const COLUMNS = [
   { key: 'type', name: 'Type' },
@@ -59,57 +49,8 @@ const COLUMNS = [
   { key: 'fhir', name: 'View FHIR', sortable: false },
 ];
 
-const formatDate = (value, format, fieldName) => {
-  if (!value) return missingField(fieldName);
-  const date = moment(value);
-  return date.isValid() ? date.format(format) : unsupportedField(fieldName);
-};
-
-const FORMATTERS = {
-  date: (str) => formatDate(str, 'YYYY-MM-DD', 'date'),
-  time: (str) => formatDate(str, 'HH:mm:ss', 'time'),
-  dateTime: (str) => formatDate(str, 'YYYY-MM-DD - h:mm:ss a', 'dateTime'),
-  numberWithCommas: (str) => str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-  code: (code) => `${code.code}: ${code.display ? code.display : ''}`,
-  period: (period) => {
-    if (!period?.start && !period?.end) return missingField('period');
-    const start = period?.start ? FORMATTERS.dateTime(period.start) : missingField('period.start');
-    const end = period?.end ? FORMATTERS.dateTime(period.end) : missingField('period.end');
-    return (
-      <>
-        {start} -&gt; {end}
-      </>
-    );
-  },
-};
-
 const VIEW_FHIR = {
-  key: 'fhir',
-  getter: (resource) => <ViewFhirModal resource={resource} />,
-};
-
-const attributeXTime = (entry, type) => {
-  const value = effectiveTime(entry, type);
-  if (React.isValidElement(value)) return value;
-  if (typeof value === 'string') {
-    return FORMATTERS.dateTime(value);
-  }
-  return FORMATTERS.period(value);
-};
-
-const renderNote = (text) => {
-  return (
-    <Accordion allowZeroExpanded>
-      <AccordionItem key={text}>
-        <AccordionItemHeading>
-          <AccordionItemButton>View Note</AccordionItemButton>
-        </AccordionItemHeading>
-        <AccordionItemPanel>
-          <div style={{ textAlign: 'left', whiteSpace: 'pre' }}>{text}</div>
-        </AccordionItemPanel>
-      </AccordionItem>
-    </Accordion>
-  );
+  ...createViewFhirColumn(),
 };
 
 const ROW_FUNCTIONS = [
@@ -251,7 +192,7 @@ const ROW_FUNCTIONS = [
       },
       {
         key: 'details',
-        getter: (dr) => attributeXTime(dr, 'effective'),
+        getter: (dr) => attributeXTime(dr, 'effective', SECOND_PRECISION_FORMATTERS),
       },
       VIEW_FHIR,
     ],
@@ -342,29 +283,10 @@ const EncounterSection = ({ encounterData }) => {
     const rawRows = rowDef.getter(encounterData);
 
     for (const [rawRowIndex, rawRow] of rawRows.entries()) {
-      const row = {};
-
-      for (const c of rowDef.columns) {
-        const formatter = FORMATTERS[c.format];
-        let result;
-        try {
-          result = c.getter(rawRow, encounterData);
-        } catch (e) {
-          console.error(e);
-          result = unsupportedField(c.key);
-        }
-        if (result && formatter && !React.isValidElement(result)) {
-          result = formatter(result);
-        }
-        if ((result == null || result === '') && c.defaultValue) {
-          result = c.defaultValue;
-        } else if (result == null) {
-          result = missingField(c.key);
-        }
-
-        row[c.key] = result;
-      }
-
+      const row = applyColumns(rawRow, rowDef.columns, {
+        context: encounterData,
+        formatters: SECOND_PRECISION_FORMATTERS,
+      });
       const rowId = rowDef.keyFn ? rowDef.keyFn(rawRow) : rawRowIndex;
       row.id = `${row.type}-${rowId ?? rawRowIndex}-${rows.length}`;
       rows.push(row);

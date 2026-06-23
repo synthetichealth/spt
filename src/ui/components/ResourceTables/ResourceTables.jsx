@@ -1,57 +1,24 @@
 import React from 'react';
 
-import moment from 'moment';
-
-import FhirDataGrid, { getColumnKey } from '../PatientViewer/FhirDataGrid';
-import ViewFhirModal from '../PatientViewer/ViewFhirModal';
+import FhirDataGrid from '../PatientViewer/FhirDataGrid';
 import {
   codeDisplay,
   codeLabel,
   codeValue,
-  effectiveTime,
   extractMedia,
   lastCodeableConcept,
   mediaTitle,
   missingField,
   obsValue,
   periodStart,
-  unsupportedField,
 } from '../PatientViewer/utils';
-
 import {
-  Accordion,
-  AccordionItem,
-  AccordionItemHeading,
-  AccordionItemButton,
-  AccordionItemPanel,
-} from 'react-accessible-accordion';
-
-// Demo styles, see 'Styles' section below for some notes on use.
-import 'react-accessible-accordion/dist/fancy-example.css';
-
-const formatDate = (value, format, fieldName) => {
-  if (!value) return missingField(fieldName);
-  const date = moment(value);
-  return date.isValid() ? date.format(format) : unsupportedField(fieldName);
-};
-
-const FORMATTERS = {
-  date: (str) => formatDate(str, 'YYYY-MM-DD', 'date'),
-  time: (str) => formatDate(str, 'HH:mm:ss', 'time'),
-  dateTime: (str) => formatDate(str, 'YYYY-MM-DD - h:mm a', 'dateTime'), // to re-add seconds: 'YYYY-MM-DD - h:mm:ss a'
-  numberWithCommas: (str) => str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-  code: (code) => `${code.code}: ${code.display ? code.display : ''}`,
-  period: (period) => {
-    if (!period?.start && !period?.end) return missingField('period');
-    const start = period?.start ? FORMATTERS.dateTime(period.start) : missingField('period.start');
-    const end = period?.end ? FORMATTERS.dateTime(period.end) : missingField('period.end');
-    return (
-      <>
-        {start} -&gt; {end}
-      </>
-    );
-  },
-};
+  attributeXTime,
+  buildRows,
+  createViewFhirColumn,
+  duration,
+  renderNote,
+} from '../PatientViewer/tableUtils';
 
 const WIDTHS = {
   date: 145,
@@ -62,89 +29,19 @@ const WIDTHS = {
 };
 
 const VIEW_FHIR = {
-  key: 'fhir',
-  name: 'View FHIR',
-  width: 100,
-  getter: (resource) => <ViewFhirModal resource={resource} />,
-  sortable: false,
+  ...createViewFhirColumn({ name: 'View FHIR', width: 100 }),
 };
-
-const attributeXTime = (entry, type) => {
-  const value = effectiveTime(entry, type);
-  if (React.isValidElement(value)) return value;
-  if (typeof value === 'string') {
-    return FORMATTERS.dateTime(value);
-  }
-  return FORMATTERS.period(value);
-};
-
-const duration = (period) => {
-  if (!period?.start || !period?.end) {
-    return missingField('period');
-  }
-  const start = moment(period.start);
-  const end = moment(period.end);
-  return moment.duration(end.diff(start)).humanize();
-};
-
-function applyColumns(resource, columns) {
-  const row = {};
-
-  for (const c of columns) {
-    const key = getColumnKey(c);
-
-    const formatter = FORMATTERS[c.format];
-    let result;
-    try {
-      result = c.getter(resource);
-    } catch (e) {
-      console.error(e);
-      result = unsupportedField(c.name || key);
-    }
-    if (result && formatter && !React.isValidElement(result)) {
-      result = formatter(result);
-    }
-    if ((result == null || result === '') && c.defaultValue) {
-      result = c.defaultValue;
-    } else if (result == null) {
-      result = missingField(c.name || key);
-    }
-
-    row[key] = result;
-  }
-
-  return row;
-}
 
 class GenericTable extends React.Component {
   render() {
-    const rows = [];
-
-    for (const [rowIndex, rawRow] of this.props.rows.slice().reverse().entries()) {
-      const row = applyColumns(rawRow, this.props.columns);
-      const rowId = this.props.keyFn ? this.props.keyFn(rawRow) : rowIndex;
-      row.id = `${this.props.title}-${rowId ?? rowIndex}`;
-      rows.push(row);
-
-      if (this.props.nestedRows) {
-        for (const [nestedRowIndex, nestedRow] of this.props.nestedRows.entries()) {
-          let subRowLines;
-          try {
-            subRowLines = nestedRow.getter(rawRow);
-          } catch (e) {
-            subRowLines = undefined;
-          }
-          if (!subRowLines) continue;
-          const subColumns = nestedRow.columns;
-
-          for (const [subRowIndex, subRowLine] of subRowLines.entries()) {
-            const nestedRowData = applyColumns(subRowLine, subColumns);
-            nestedRowData.id = `${row.id}-nested-${nestedRowIndex}-${subRowLine.id ?? subRowIndex}`;
-            rows.push(nestedRowData);
-          }
-        }
-      }
-    }
+    const rows = buildRows({
+      rows: this.props.rows,
+      columns: this.props.columns,
+      keyPrefix: this.props.title,
+      keyFn: this.props.keyFn,
+      nestedRows: this.props.nestedRows,
+      reverse: true,
+    });
 
     const getRowHeight = this.props.rowHeight
       ? ({ model }) => this.props.rowHeight(model) || 'auto'
@@ -390,21 +287,6 @@ class ImmunizationsTable extends GenericTable {
     keyFn: (c) => c.id,
   };
 }
-
-const renderNote = (text) => {
-  return (
-    <Accordion allowZeroExpanded>
-      <AccordionItem key={text}>
-        <AccordionItemHeading>
-          <AccordionItemButton>View Note</AccordionItemButton>
-        </AccordionItemHeading>
-        <AccordionItemPanel>
-          <div style={{ textAlign: 'left', whiteSpace: 'pre' }}>{text}</div>
-        </AccordionItemPanel>
-      </AccordionItem>
-    </Accordion>
-  );
-};
 
 class DocumentReferencesTable extends GenericTable {
   static defaultProps = {
