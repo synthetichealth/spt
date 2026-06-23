@@ -75,7 +75,6 @@
     "react-router-hash-link": "^2.4.3",
     "react-select": "^5.10.2",
     "react-transition-group": "^4.4.5",
-    "use-local-storage": "^3.0.0",
     "uuid": "^14.0.1"
   },
   "overrides": {

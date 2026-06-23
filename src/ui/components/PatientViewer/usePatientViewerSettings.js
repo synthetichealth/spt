@@ -1,29 +1,19 @@
-import useLocalStorage from 'use-local-storage';
+import { useState } from 'react';
 
 import FILTER_PRESETS from './FilterPresets';
+import { readStoredJson, saveStoredJson } from './localStorage';
 
 const SETTINGS_STORAGE_KEY = 'patient-viewer-settings';
-
-const getStoredValue = (key, defaultValue) => {
-  if (typeof window === 'undefined') return defaultValue;
-
-  try {
-    const storedValue = window.localStorage.getItem(key);
-    return storedValue == null ? defaultValue : JSON.parse(storedValue);
-  } catch (_e) {
-    return defaultValue;
-  }
-};
 
 const getDefaultSettings = () => {
   const filterPresets = {};
 
   Object.keys(FILTER_PRESETS).forEach((presetKey) => {
-    filterPresets[presetKey] = getStoredValue(presetKey, false);
+    filterPresets[presetKey] = readStoredJson(presetKey, false);
   });
 
   return {
-    isGroupByEncounter: getStoredValue('group-by-encounter', false),
+    isGroupByEncounter: readStoredJson('group-by-encounter', false),
     filterPresets,
   };
 };
@@ -46,11 +36,15 @@ const normalizeSettings = (settings) => {
 };
 
 const usePatientViewerSettings = () => {
-  const [storedSettings, setStoredSettings] = useLocalStorage(
-    SETTINGS_STORAGE_KEY,
-    getDefaultSettings(),
+  const [storedSettings, setStoredSettingsState] = useState(() =>
+    readStoredJson(SETTINGS_STORAGE_KEY, getDefaultSettings()),
   );
   const settings = normalizeSettings(storedSettings);
+
+  const setStoredSettings = (nextSettings) => {
+    setStoredSettingsState(nextSettings);
+    saveStoredJson(SETTINGS_STORAGE_KEY, nextSettings);
+  };
 
   const setIsGroupByEncounter = (isGroupByEncounter) => {
     setStoredSettings({

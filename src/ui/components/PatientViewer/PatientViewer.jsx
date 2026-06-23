@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import useLocalStorage from 'use-local-storage';
 import { PatientVisualizer } from 'fhir-visualizers';
 import {
   ConditionsTable,
@@ -41,6 +40,33 @@ import { appliesToResource } from '../../fhirpath_utils';
 
 import FILTER_PRESETS from './FilterPresets';
 import usePatientViewerSettings from './usePatientViewerSettings';
+import { readStoredJson, removeStoredValue, saveStoredJson } from './localStorage';
+
+const PREVIOUS_BUNDLE_KEY = 'previousBundle';
+const PREVIOUS_PATIENT_ID_KEY = 'previousPatientId';
+
+const savePreviousSourcePatient = (sourceId) => {
+  removeStoredValue(PREVIOUS_BUNDLE_KEY);
+
+  const isSaved = saveStoredJson(PREVIOUS_PATIENT_ID_KEY, sourceId);
+  if (!isSaved) {
+    removeStoredValue(PREVIOUS_PATIENT_ID_KEY);
+  }
+
+  return isSaved;
+};
+
+const savePreviousBundle = (nextBundle) => {
+  removeStoredValue(PREVIOUS_PATIENT_ID_KEY);
+  removeStoredValue(PREVIOUS_BUNDLE_KEY);
+
+  const isSaved = saveStoredJson(PREVIOUS_BUNDLE_KEY, nextBundle);
+  if (!isSaved) {
+    removeStoredValue(PREVIOUS_BUNDLE_KEY);
+  }
+
+  return isSaved;
+};
 
 const validateFhirBundle = (bundle) => {
   if (!bundle || typeof bundle !== 'object') {
@@ -136,7 +162,10 @@ const PatientViewer = (props) => {
   const [loadedPatientId, setLoadedPatientId] = useState();
   const pendingPatientId = useRef();
   const [loadError, setLoadError] = useState();
-  const [previousBundle, setPreviousBundle] = useLocalStorage('previousBundle', bundle);
+  const [previousBundle, setPreviousBundle] = useState(() => readStoredJson(PREVIOUS_BUNDLE_KEY));
+  const [previousPatientId, setPreviousPatientId] = useState(() =>
+    readStoredJson(PREVIOUS_PATIENT_ID_KEY),
+  );
   const [isLoading, setIsLoading] = useState(!bundle);
 
   const setBundle = (nextBundle, sourceId) => {
@@ -150,7 +179,15 @@ const PatientViewer = (props) => {
     }
 
     _setBundle(nextBundle);
-    setPreviousBundle(nextBundle);
+    if (sourceId) {
+      savePreviousSourcePatient(sourceId);
+      setPreviousPatientId(sourceId);
+      setPreviousBundle(undefined);
+    } else {
+      const isSaved = savePreviousBundle(nextBundle);
+      setPreviousPatientId(undefined);
+      setPreviousBundle(isSaved ? nextBundle : undefined);
+    }
     setLoadedPatientId(sourceId);
     setLoadError(null);
     setIsLoading(false);
@@ -162,24 +199,20 @@ const PatientViewer = (props) => {
     .filter((entry) => entry[1])
     .map(([presetKey]) => presetKey);
 
-  useEffect(() => {
-    if (!id || loadedPatientId === id || pendingPatientId.current === id) {
-      return undefined;
-    }
-
-    pendingPatientId.current = id;
+  const loadPatient = (patientId) => {
+    pendingPatientId.current = patientId;
     _setBundle(undefined);
     setLoadError(null);
     setIsLoading(true);
 
-    getPatient(id)
+    getPatient(patientId)
       .then((patientEverythingBundle) => {
-        if (pendingPatientId.current === id) {
-          setBundle(patientEverythingBundle, id);
+        if (pendingPatientId.current === patientId) {
+          setBundle(patientEverythingBundle, patientId);
         }
       })
       .catch((error) => {
-        if (pendingPatientId.current === id) {
+        if (pendingPatientId.current === patientId) {
           _setBundle(undefined);
           setLoadedPatientId(undefined);
           setLoadError(error?.message || 'Unable to load the requested patient.');
@@ -187,10 +220,26 @@ const PatientViewer = (props) => {
         }
       })
       .finally(() => {
-        if (pendingPatientId.current === id) {
+        if (pendingPatientId.current === patientId) {
           pendingPatientId.current = undefined;
         }
       });
+  };
+
+  const reloadPreviousPatient = () => {
+    if (previousPatientId) {
+      loadPatient(previousPatientId);
+    } else {
+      setBundle(previousBundle);
+    }
+  };
+
+  useEffect(() => {
+    if (!id || loadedPatientId === id || pendingPatientId.current === id) {
+      return undefined;
+    }
+
+    loadPatient(id);
 
     return () => {
       if (pendingPatientId.current === id) {
@@ -207,10 +256,10 @@ const PatientViewer = (props) => {
             {loadError}
           </Alert>
         )}
-        {previousBundle && (
+        {(previousPatientId || previousBundle) && (
           <Button
             variant="contained"
-            onClick={() => setBundle(previousBundle)}
+            onClick={reloadPreviousPatient}
             style={{ textTransform: 'none' }}
           >
             Reload Last Patient
