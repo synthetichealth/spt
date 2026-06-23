@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { RouterProvider, createHashRouter } from 'react-router-dom';
+import { NavLink, Outlet, RouterProvider, createHashRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -14,10 +15,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -84,99 +82,157 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function Layout({ routes }) {
+const getRoutePath = (route) => {
+  if (route.path === '/') return null;
+  if (route.path === '/*') return '*';
+  return route.path.replace(/^\//, '');
+};
+
+const createRouter = (routes) =>
+  createHashRouter([
+    {
+      path: '/',
+      element: <LayoutShell routes={routes} />,
+      children: routes.map((route) => {
+        const path = getRoutePath(route);
+
+        if (path == null) {
+          return {
+            index: true,
+            element: route.element,
+          };
+        }
+
+        return {
+          path,
+          element: route.element,
+        };
+      }),
+    },
+  ]);
+
+function LayoutShell({ routes }) {
   const [open, setOpen] = React.useState(true);
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  const hashRouter = createHashRouter(routes);
-
   return (
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar position="absolute" open={open}>
-          <Toolbar
-            sx={{
-              pr: '24px', // keep right padding when drawer closed
-            }}
-          >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              fontSize="large"
-              sx={{
-                marginRight: '36px',
-                ...(open && { display: 'none' }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              component="h5"
-              variant="h5"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
-              Synthea Toolkit
-            </Typography>
-            <IconButton href="https://github.com/synthetichealth/spt" color="inherit">
-              <GitHubIcon fontSize="large" />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon fontSize="large" color="primary" />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          <List component="nav">
-            { routes.filter((route) => !!route.label).map((route) => {
-              return <ListItemButton href={'/spt/#' + route.path} key={route.path}>
-                      <ListItemIcon>
-                        {route.icon || <DashboardIcon color="primary" fontSize="large" />}
-                      </ListItemIcon>
-                      <ListItemText primary={route.label} sx={{fontWeight: "bold", color: "white"}} />
-                    </ListItemButton>
-            }) }
-            <Divider sx={{ my: 1 }} />
-            {/* TODO: add dividers within in nav list */}
-          </List>
-        </Drawer>
-        <Box
-          component="main"
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar position="absolute" open={open}>
+        <Toolbar
           sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
-            flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
+            pr: '24px', // keep right padding when drawer closed
           }}
         >
-          <Toolbar />
-          <Container sx={{ mt: 4, mb: 4 }} style={{width: "100%"}} maxWidth={false} >
-            <Grid container spacing={3} style={{width: "100%"}}>
-              <center style={{width: "100%"}}>
-                <RouterProvider router={hashRouter} />
-              </center>
-            </Grid>
-            <Copyright sx={{ pt: 4 }} />
-          </Container>
-        </Box>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={toggleDrawer}
+            fontSize="large"
+            sx={{
+              marginRight: '36px',
+              ...(open && { display: 'none' }),
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography component="h5" variant="h5" color="inherit" noWrap sx={{ flexGrow: 1 }}>
+            Synthea Toolkit
+          </Typography>
+          <IconButton href="https://github.com/synthetichealth/spt" color="inherit">
+            <GitHubIcon fontSize="large" />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <Drawer variant="permanent" open={open}>
+        <Toolbar
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            px: [1],
+          }}
+        >
+          <IconButton onClick={toggleDrawer}>
+            <ChevronLeftIcon fontSize="large" color="primary" />
+          </IconButton>
+        </Toolbar>
+        <Divider />
+        <List component="nav">
+          {routes
+            .filter((route) => !!route.label)
+            .map((route) => {
+              return (
+                <ListItemButton
+                  component={NavLink}
+                  to={route.path}
+                  key={route.path}
+                  sx={{ '&.active': { backgroundColor: 'rgba(255, 255, 255, 0.08)' } }}
+                >
+                  <ListItemIcon>
+                    {route.icon || <DashboardIcon color="primary" fontSize="large" />}
+                  </ListItemIcon>
+                  <ListItemText primary={route.label} sx={{ fontWeight: 'bold', color: 'white' }} />
+                </ListItemButton>
+              );
+            })}
+          <Divider sx={{ my: 1 }} />
+          {/* TODO: add dividers within in nav list */}
+        </List>
+      </Drawer>
+      <Box
+        component="main"
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
+          flexGrow: 1,
+          height: '100vh',
+          overflow: 'auto',
+        }}
+      >
+        <Toolbar />
+        <Container sx={{ mt: 4, mb: 4, width: '100%' }} maxWidth={false}>
+          <Box
+            sx={{
+              width: '100%',
+              maxWidth: '100%',
+              mx: 'auto',
+              textAlign: 'center',
+              '& > *': {
+                maxWidth: '100%',
+              },
+            }}
+          >
+            <Outlet />
+          </Box>
+          <Copyright sx={{ pt: 4 }} />
+        </Container>
       </Box>
+    </Box>
   );
 }
 
+const routePropType = PropTypes.shape({
+  path: PropTypes.string.isRequired,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  element: PropTypes.element.isRequired,
+  icon: PropTypes.element,
+});
+
+LayoutShell.propTypes = {
+  routes: PropTypes.arrayOf(routePropType).isRequired,
+};
+
+export default function Layout({ routes }) {
+  const hashRouter = React.useMemo(() => createRouter(routes), [routes]);
+
+  return <RouterProvider router={hashRouter} />;
+}
+
+Layout.propTypes = {
+  routes: PropTypes.arrayOf(routePropType).isRequired,
+};
