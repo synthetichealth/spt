@@ -1,8 +1,10 @@
 const webpack = require('webpack');
 const watch = process.env.WATCH !== 'false';
+const mode = process.env.NODE_ENV || (watch ? 'development' : 'production');
+
 module.exports = {
   entry: __dirname + '/src/ui/index.jsx',
-  mode: 'development',
+  mode,
   output: {
     path: __dirname + '/public/js',
     filename: 'bundle.js',

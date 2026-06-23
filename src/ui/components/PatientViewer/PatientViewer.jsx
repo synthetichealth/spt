@@ -32,7 +32,6 @@ import 'react-accessible-accordion/dist/fancy-example.css';
 
 import Dropzone from 'react-dropzone';
 
-import { getPatientById } from '../SyntheticMass/api';
 import { getPatientOnGitHub } from '../../github';
 import csvToFhir from './csvToFhir';
 
@@ -156,7 +155,7 @@ function getPatient(id) {
   } else if (id.startsWith('github/')) {
     return getPatientOnGitHub(id);
   } else {
-    return getPatientById(id);
+    return null;
   }
 }
 
