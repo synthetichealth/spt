@@ -30,6 +30,7 @@ import Dropzone from 'react-dropzone';
 import { getPatientOnGitHub } from '../../github';
 import csvToFhir from './csvToFhir';
 import fhirCollectionToBundle from './fhirCollectionToBundle';
+import readFhirUpload from './readFhirUpload';
 
 import { appliesToResource } from '../../fhirpath_utils';
 
@@ -88,25 +89,15 @@ const getDropzone = (setLoading, setError, callback) => {
   const onDrop = (files) => {
     if (!files?.length) return;
 
-    const reader = new FileReader();
-    reader.readAsText(files[0]);
     setError(null);
     setLoading(true);
-    reader.onerror = () => {
-      setLoading(false);
-      setError('Unable to read the selected file.');
-    };
-    reader.onload = () => {
-      if (reader.result) {
-        try {
-          const json = JSON.parse(reader.result);
-          callback(json);
-        } catch (_e) {
-          setLoading(false);
-          setError('Unable to parse the selected file as JSON.');
-        }
-      }
-    };
+
+    readFhirUpload(files[0])
+      .then(callback)
+      .catch((error) => {
+        setLoading(false);
+        setError(error?.message || 'Unable to load the selected file.');
+      });
   };
 
   return (
