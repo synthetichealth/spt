@@ -2,19 +2,26 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
 async function csvToFhir(id) {
-  const [patientResp, conditionsResp, medicationsResp, encountersResp] = await Promise.all([
-    axios.get(`/collection/patients?Id=${id}`),
-    axios.get(`/collection/conditions?PATIENT=${id}`),
-    axios.get(`/collection/medications?PATIENT=${id}`),
-    axios.get(`/collection/encounters?PATIENT=${id}`),
-  ]);
+  const [patientResp, conditionsResp, medicationsResp, encountersResp, observationsResp] =
+    await Promise.all([
+      axios.get(`/collection/patients?Id=${id}`),
+      axios.get(`/collection/conditions?PATIENT=${id}`),
+      axios.get(`/collection/medications?PATIENT=${id}`),
+      axios.get(`/collection/encounters?PATIENT=${id}`),
+      axios.get(`/collection/observations?PATIENT=${id}`),
+    ]);
 
   // for testing, map these into FHIR
 
   const patientCSV = patientResp.data[0];
+  if (!patientCSV) {
+    throw new Error(`No CSV patient found for ${id}.`);
+  }
+
   const conditionsCSV = conditionsResp.data;
   const medicationsCSV = medicationsResp.data;
   const encountersCSV = encountersResp.data;
+  const observationsCSV = observationsResp.data;
 
   const bundle = {
     resourceType: 'Bundle',
@@ -56,9 +63,10 @@ async function csvToFhir(id) {
 
   // START,STOP,PATIENT,ENCOUNTER,CODE,DESCRIPTION
   conditionsCSV.forEach((c) => {
+    const conditionId = c.Id || c.ID || uuidv4();
     const conditionFHIR = {
       resourceType: 'Condition',
-      id: uuidv4(), // just to have something
+      id: conditionId,
       code: {
         coding: [
           {
@@ -75,7 +83,7 @@ async function csvToFhir(id) {
       abatementDateTime: c.STOP,
     };
 
-    bundle.entry.push({ fullUrl: `urn:uuid:${c.ID}`, resource: conditionFHIR });
+    bundle.entry.push({ fullUrl: `urn:uuid:${conditionId}`, resource: conditionFHIR });
   });
 
   // Id,START,STOP,PATIENT,ORGANIZATION,PROVIDER,PAYER,
@@ -84,9 +92,10 @@ async function csvToFhir(id) {
   // REASONCODE,REASONDESCRIPTION
 
   encountersCSV.forEach((e) => {
+    const encounterId = e.Id || e.ID || uuidv4();
     const encounterFHIR = {
       resourceType: 'Encounter',
-      id: e.ID,
+      id: encounterId,
       class: {
         code: e.ENCOUNTERCLASS,
       },
@@ -111,16 +120,17 @@ async function csvToFhir(id) {
       },
     };
 
-    bundle.entry.push({ fullUrl: `urn:uuid:${e.ID}`, resource: encounterFHIR });
+    bundle.entry.push({ fullUrl: `urn:uuid:${encounterId}`, resource: encounterFHIR });
   });
 
   // START,STOP,PATIENT,PAYER,ENCOUNTER,CODE,DESCRIPTION,
   // BASE_COST,PAYER_COVERAGE,DISPENSES,TOTALCOST,REASONCODE,REASONDESCRIPTION
 
   medicationsCSV.forEach((m) => {
+    const medicationId = m.Id || m.ID || uuidv4();
     const medicationFHIR = {
       resourceType: 'MedicationRequest',
-      id: m.ID,
+      id: medicationId,
       status: m.STOP ? `stopped ${m.STOP}` : 'active',
       intent: 'order',
       medicationCodeableConcept: {
@@ -142,8 +152,50 @@ async function csvToFhir(id) {
       authoredOn: m.START,
     };
 
-    bundle.entry.push({ fullUrl: `urn:uuid:${m.ID}`, resource: medicationFHIR });
+    bundle.entry.push({ fullUrl: `urn:uuid:${medicationId}`, resource: medicationFHIR });
   });
+
+  // DATE,PATIENT,ENCOUNTER,CODE,DESCRIPTION,VALUE,UNITS,TYPE
+  observationsCSV.forEach((o) => {
+    const observationId = o.Id || o.ID || uuidv4();
+    const observationFHIR = {
+      resourceType: 'Observation',
+      id: observationId,
+      status: 'final',
+      code: {
+        coding: [
+          {
+            system: 'http://loinc.org',
+            code: o.CODE,
+            display: o.DESCRIPTION,
+          },
+        ],
+        text: o.DESCRIPTION,
+      },
+      subject: {
+        reference: patientURI,
+      },
+      encounter: {
+        reference: `urn:uuid:${o.ENCOUNTER}`,
+      },
+      effectiveDateTime: o.DATE,
+    };
+
+    if ((o.TYPE || o.type) === 'numeric') {
+      const numericValue = Number.parseFloat(o.VALUE);
+      observationFHIR.valueQuantity = {
+        value: Number.isNaN(numericValue) ? o.VALUE : numericValue,
+        code: o.UNITS,
+        unit: o.UNITS,
+      };
+    } else {
+      observationFHIR.valueString = o.VALUE;
+    }
+
+    bundle.entry.push({ fullUrl: `urn:uuid:${observationId}`, resource: observationFHIR });
+  });
+
+  bundle.entry.reverse();
 
   return bundle;
 }
