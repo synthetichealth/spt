@@ -2,7 +2,7 @@ const request = require('supertest');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const app = require('../app');
+const app = require('../App');
 
 describe('Test the root path', () => {
   test('It should redirect to the frontend entry point', () => {
