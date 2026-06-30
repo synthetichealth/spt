@@ -1,13 +1,13 @@
 import React from 'react';
 import moment from 'moment';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { getColumnKey } from './FhirDataGrid';
 import ViewFhirModal from './ViewFhirModal';
+import ViewNoteModal from './ViewNoteModal';
 import { effectiveTime, missingField, unsupportedField } from './utils';
+
+const NOTE_PREVIEW_LINE_COUNT = 3;
+const NOTE_PREVIEW_MAX_CHARS = 500;
 
 const formatDate = (value, format, fieldName) => {
   if (!value) return missingField(fieldName);
@@ -68,14 +68,25 @@ const duration = (period) => {
   return moment.duration(end.diff(start)).humanize();
 };
 
+const getNotePreview = (text) => {
+  const lines = text.split(/\r?\n/);
+  let preview = lines.slice(0, NOTE_PREVIEW_LINE_COUNT).join('\n').trimEnd();
+  if (preview.length > NOTE_PREVIEW_MAX_CHARS) {
+    preview = preview.slice(0, NOTE_PREVIEW_MAX_CHARS).trimEnd();
+  }
+
+  const isTruncated = preview.length < text.trimEnd().length;
+  return isTruncated ? `${preview}\n...` : preview;
+};
+
 const renderNote = (text) => {
+  if (typeof text !== 'string') return text;
+
   return (
-    <Accordion disableGutters>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>View Note</AccordionSummary>
-      <AccordionDetails>
-        <div style={{ textAlign: 'left', whiteSpace: 'pre' }}>{text}</div>
-      </AccordionDetails>
-    </Accordion>
+    <div style={{ textAlign: 'left' }}>
+      <div style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{getNotePreview(text)}</div>
+      <ViewNoteModal text={text} />
+    </div>
   );
 };
 

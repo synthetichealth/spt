@@ -231,7 +231,6 @@ const ROW_FUNCTIONS = [
       {
         key: 'description',
         getter: (dr) => renderNote(getNoteText(dr)),
-        // TODO: use <ViewNoteModal text={getNoteText(dr)} />
       },
       VIEW_FHIR,
     ],
