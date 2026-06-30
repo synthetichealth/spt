@@ -72,6 +72,27 @@ const COLLECTIONS = [
     'DESCRIPTION',
     'UDI',
   ]),
+  collection('diagnostic_reports', 'Diagnostic Reports', [
+    'DATE',
+    'PATIENT',
+    'ENCOUNTER',
+    'CODE',
+    'DESCRIPTION',
+  ]),
+  collection('document_references', 'Document References', [
+    'DATE',
+    'PATIENT',
+    'ENCOUNTER',
+    'CODE',
+    'DESCRIPTION',
+  ]),
+  collection('fhir_resources', 'FHIR Resources', [
+    'Id',
+    'resourceType',
+    'patientId',
+    'encounterId',
+    'sourceFile',
+  ]),
   collection('encounters', 'Encounters', [
     'Id',
     'START',
@@ -124,6 +145,7 @@ const COLLECTIONS = [
     'REASONCODE',
     'REASONDESCRIPTION',
   ]),
+  collection('media', 'Media', ['DATE', 'PATIENT', 'ENCOUNTER', 'CODE', 'DESCRIPTION']),
   collection('observations', 'Observations', [
     'DATE',
     'PATIENT',

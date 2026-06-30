@@ -4,6 +4,7 @@ const express = require('express');
 const logger = require('morgan');
 
 const csvHandler = require('./handlers/csvHandler');
+const fhirHandler = require('./handlers/fhirHandler');
 const { genericController } = require('./handlers/crudHandler');
 const collections = require('./storage/collections');
 
@@ -18,6 +19,7 @@ Object.values(collections).forEach((collectionName) => {
   app.use(`/collection/${collectionName}`, genericController(collectionName));
 });
 app.use('/csv', csvHandler);
+app.use('/fhir', fhirHandler);
 
 // frontend
 app.get('/', (req, res) => res.redirect('/spt'));

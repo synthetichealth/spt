@@ -34,7 +34,7 @@ import { COLLECTIONS } from './Collections/config';
 const PatientViewer = lazy(() => import('./PatientViewer'));
 const Customizer = lazy(() => import('./Customizer'));
 const Collections = lazy(() => import('./Collections'));
-const CSVFileManager = lazy(() => import('./CSVFileManager'));
+const DataLoadManager = lazy(() => import('./CSVFileManager'));
 const NotFound = lazy(() => import('./NotFound'));
 
 const queryClient = new QueryClient();
@@ -51,9 +51,12 @@ const collectionIcons = {
   careplans: <AssignmentIcon {...collectionIconProps} />,
   conditions: <SickIcon {...collectionIconProps} />,
   devices: <DevicesOtherIcon {...collectionIconProps} />,
+  diagnostic_reports: <FactCheckIcon {...collectionIconProps} />,
+  document_references: <AssignmentIcon {...collectionIconProps} />,
   encounters: <LocalHospitalIcon {...collectionIconProps} />,
   imaging_studies: <VisibilityIcon {...collectionIconProps} />,
   immunizations: <VaccinesIcon {...collectionIconProps} />,
+  media: <VisibilityIcon {...collectionIconProps} />,
   medications: <MedicationIcon {...collectionIconProps} />,
   observations: <MonitorHeartIcon {...collectionIconProps} />,
   organizations: <BusinessIcon {...collectionIconProps} />,
@@ -85,9 +88,9 @@ const routes = [
     icon: <ConstructionIcon fontSize="large" color="primary" />,
   },
   {
-    path: '/load_csvs',
-    label: offline ? false : 'Load CSVs',
-    element: routeElement(CSVFileManager),
+    path: '/manage_data',
+    label: offline ? false : 'Manage Data',
+    element: routeElement(DataLoadManager),
     icon: <UploadFileIcon fontSize="large" color="primary" />,
   },
 

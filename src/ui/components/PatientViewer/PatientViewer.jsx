@@ -29,6 +29,7 @@ import Dropzone from 'react-dropzone';
 
 import { getPatientOnGitHub } from '../../github';
 import csvToFhir from './csvToFhir';
+import fhirCollectionToBundle from './fhirCollectionToBundle';
 
 import { appliesToResource } from '../../fhirpath_utils';
 
@@ -153,6 +154,8 @@ const getDropzone = (setLoading, setError, callback) => {
 function getPatient(id) {
   if (id.startsWith('csv/')) {
     return csvToFhir(id.slice(4)); // slice off the "csv/" bit
+  } else if (id.startsWith('fhir/')) {
+    return fhirCollectionToBundle(id.slice(5)); // slice off the "fhir/" bit
   } else if (id.startsWith('github/')) {
     return getPatientOnGitHub(id);
   } else {

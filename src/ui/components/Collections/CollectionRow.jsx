@@ -5,6 +5,21 @@ import { TableCell, TableRow } from '@mui/material';
 import PropTypes from 'prop-types';
 import useStyles from './styles';
 
+function getCellValue(data, header) {
+  const value = data[header.value] ?? data[header.value?.toLowerCase()];
+  if (value == null) return '';
+  if (typeof value === 'object') return JSON.stringify(value);
+  return value;
+}
+
+function getPatientLink(data, header, selectedCollection) {
+  const patientId = selectedCollection === 'patients' ? data.id || data.Id : data[header.value];
+  if (!patientId) return undefined;
+
+  const source = data.sourceFormat === 'fhir' ? 'fhir' : 'csv';
+  return `/record_viewer?patient=${source}/${patientId}`;
+}
+
 function CollectionRow(props) {
   const classes = useStyles();
 
@@ -17,17 +32,17 @@ function CollectionRow(props) {
         const isPatientId =
           header.value === 'PATIENT' ||
           (selectedCollection === 'patients' && header.value === 'Id');
+        const patientLink = isPatientId ? getPatientLink(data, header, selectedCollection) : null;
+        const cellValue = getCellValue(data, header);
         return (
           <TableCell key={cellKey} style={{ whiteSpace: 'nowrap' }}>
             {' '}
-            {isPatientId ? (
-              <Link
-                to={{ pathname: '/record_viewer', search: `?patient=csv/${data[header.value]}` }}
-              >
-                {data[header.value]}
+            {patientLink ? (
+              <Link to={patientLink}>
+                {selectedCollection === 'patients' ? data.Id || data.id : cellValue}
               </Link>
             ) : (
-              data[header.value || header.toLowerCase()]
+              cellValue
             )}{' '}
           </TableCell>
         );
