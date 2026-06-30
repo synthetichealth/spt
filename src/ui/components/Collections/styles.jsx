@@ -1,12 +1,6 @@
 import { styled } from '@mui/material/styles';
 export default styled(
   (theme) => ({
-    addButton: {
-      float: 'right',
-      marginRight: '25px',
-      marginTop: '17px',
-      color: theme.palette.common.white,
-    },
     break: {
       width: '100%',
       height: '0',
@@ -33,28 +27,6 @@ export default styled(
       top: 20,
       width: 1,
     },
-    greenIcon: {
-      border: '2px solid white',
-      backgroundColor: theme.palette.common.turquoise,
-      width: '12px',
-      height: '12px',
-      display: 'flex',
-      borderRadius: '100px',
-      marginLeft: '12px',
-    },
-    redIcon: {
-      border: '2px solid white',
-      backgroundColor: theme.palette.common.red,
-      width: '12px',
-      height: '12px',
-      display: 'flex',
-      borderRadius: '100px',
-      marginLeft: '12px',
-    },
-    icon: {
-      marginRight: '10px',
-      cursor: 'pointer',
-    },
     headerCell: {
       color: 'black',
     },
@@ -67,9 +39,6 @@ export default styled(
         backgroundColor: theme.palette.common.grayHighlight,
       },
     },
-    tableRowEdit: {
-      backgroundColor: theme.palette.common.turquoiseLight,
-    },
     topBar: {
       height: '70px',
       lineHeight: '70px',
@@ -81,13 +50,6 @@ export default styled(
     backButton: {
       color: 'red',
       backgroundColor: 'red',
-    },
-    editInput: {
-      width: '100%',
-      border: '1px solid',
-      borderColor: theme.palette.common.grayHighlight,
-      padding: '2px',
-      color: 'inherit',
     },
   }),
 

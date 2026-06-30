@@ -60,20 +60,10 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-dropzone": "^11.3.2",
-    "react-is": "^18.3.1",
-    "react-json-editor-ajrm": "^2.5.14",
-    "react-json-view": "^1.21.3",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.14.2",
     "react-router-hash-link": "^2.4.3",
     "uuid": "^14.0.1"
-  },
-  "overrides": {
-    "react-is": "$react-is",
-    "react-json-view": {
-      "react": "$react",
-      "react-dom": "$react-dom"
-    }
   },
   "engines": {
     "node": ">=14.0.0"

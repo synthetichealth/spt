@@ -70,9 +70,7 @@ const Collections = (props) => {
   );
 
   const selectedConfig = COLLECTION_CONFIG[selectedCollection] || DEFAULT_COLLECTION_CONFIG;
-  const infoBundle = data
-    ? { ...selectedConfig, data: data.data }
-    : { headers: [], data: [], addButton: true };
+  const infoBundle = data ? { ...selectedConfig, data: data.data } : { headers: [], data: [] };
 
   const formatRows = () => {
     if (!infoBundle.data) return [];
@@ -85,7 +83,6 @@ const Collections = (props) => {
             headers={infoBundle.headers}
             data={d}
             selectedCollection={selectedCollection}
-            editable={infoBundle.editable}
           />
         );
       });

@@ -6,8 +6,6 @@ const collection = (name, label, headerValues) => ({
   name,
   label,
   headers: headers(...headerValues),
-  addButton: false,
-  editable: false,
 });
 
 const COLLECTIONS = [
@@ -219,11 +217,9 @@ const COLLECTION_CONFIG = Object.fromEntries(
 
 const DEFAULT_COLLECTION_CONFIG = {
   headers: [
-    { value: 'id', label: 'id', edit: false },
-    { value: 'resource', label: 'resource', edit: true },
+    { value: 'id', label: 'id' },
+    { value: 'resource', label: 'resource' },
   ],
-  addButton: false,
-  editable: false,
 };
 
 export { COLLECTIONS, COLLECTION_CONFIG, DEFAULT_COLLECTION_CONFIG };
