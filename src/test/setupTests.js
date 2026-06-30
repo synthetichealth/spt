@@ -7,6 +7,17 @@ globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 globalThis.TextDecoder = TextDecoder;
 globalThis.TextEncoder = TextEncoder;
 
+if (!globalThis.Request) {
+  globalThis.Request = class Request {
+    constructor(input, init = {}) {
+      this.url = String(input);
+      this.method = init.method || 'GET';
+      this.headers = init.headers || {};
+      this.signal = init.signal;
+    }
+  };
+}
+
 if (globalThis.window) {
   Object.defineProperty(globalThis.window, 'matchMedia', {
     writable: true,

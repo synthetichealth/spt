@@ -1,15 +1,9 @@
 import React from 'react';
 import moment from 'moment';
-
-import {
-  Accordion,
-  AccordionItem,
-  AccordionItemHeading,
-  AccordionItemButton,
-  AccordionItemPanel,
-} from 'react-accessible-accordion';
-
-import 'react-accessible-accordion/dist/fancy-example.css';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { getColumnKey } from './FhirDataGrid';
 import ViewFhirModal from './ViewFhirModal';
@@ -76,15 +70,11 @@ const duration = (period) => {
 
 const renderNote = (text) => {
   return (
-    <Accordion allowZeroExpanded>
-      <AccordionItem key={text}>
-        <AccordionItemHeading>
-          <AccordionItemButton>View Note</AccordionItemButton>
-        </AccordionItemHeading>
-        <AccordionItemPanel>
-          <div style={{ textAlign: 'left', whiteSpace: 'pre' }}>{text}</div>
-        </AccordionItemPanel>
-      </AccordionItem>
+    <Accordion disableGutters>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>View Note</AccordionSummary>
+      <AccordionDetails>
+        <div style={{ textAlign: 'left', whiteSpace: 'pre' }}>{text}</div>
+      </AccordionDetails>
     </Accordion>
   );
 };

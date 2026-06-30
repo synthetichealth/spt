@@ -27,9 +27,6 @@ import Settings from './Settings';
 
 import { attachImagingStudy, isMatchingReference, withDerivedFields } from './utils';
 
-// Demo styles, see 'Styles' section below for some notes on use.
-import 'react-accessible-accordion/dist/fancy-example.css';
-
 import Dropzone from 'react-dropzone';
 
 import { getPatientOnGitHub } from '../../github';

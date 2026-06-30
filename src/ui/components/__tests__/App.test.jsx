@@ -5,6 +5,13 @@ import React, { act } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from '../App';
 
+const renderApp = async (root) => {
+  await act(async () => {
+    root.render(<App />);
+    await Promise.resolve();
+  });
+};
+
 jest.mock(
   '../PatientViewer',
   () =>
@@ -53,10 +60,8 @@ describe('App', () => {
     container.remove();
   });
 
-  test('renders the routed application shell', () => {
-    act(() => {
-      root.render(<App />);
-    });
+  test('renders the routed application shell', async () => {
+    await renderApp(root);
 
     expect(container.textContent).toContain('Synthea Toolkit');
     expect(container.textContent).toContain('Patient Viewer');
@@ -64,12 +69,10 @@ describe('App', () => {
     expect(container.textContent).toContain('Patient Viewer Screen');
   });
 
-  test('renders the not-found route', () => {
+  test('renders the not-found route', async () => {
     window.location.hash = '#/missing';
 
-    act(() => {
-      root.render(<App />);
-    });
+    await renderApp(root);
 
     expect(container.textContent).toContain('Page not found');
     expect(container.textContent).toContain('return to home');

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 
@@ -29,14 +29,20 @@ import VaccinesIcon from '@mui/icons-material/Vaccines';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import Layout from './Layout';
-import PatientViewer from './PatientViewer';
-import Customizer from './Customizer';
-import Collections from './Collections';
 import { COLLECTIONS } from './Collections/config';
-import CSVFileManager from './CSVFileManager';
-import NotFound from './NotFound';
+
+const PatientViewer = lazy(() => import('./PatientViewer'));
+const Customizer = lazy(() => import('./Customizer'));
+const Collections = lazy(() => import('./Collections'));
+const CSVFileManager = lazy(() => import('./CSVFileManager'));
+const NotFound = lazy(() => import('./NotFound'));
 
 const queryClient = new QueryClient();
+const routeElement = (Component, props = {}) => (
+  <Suspense fallback={null}>
+    <Component {...props} />
+  </Suspense>
+);
 
 const offline = process.env.FRONTEND_ONLY === 'true';
 const collectionIconProps = { fontSize: 'large', color: 'primary' };
@@ -65,35 +71,35 @@ const collectionIcons = {
 // if icon is blank it will default to DashboardIcon
 const routes = [
   // HashRouter Path, Nav Label, Rendered React Component, Icon (optional)
-  { path: '/', label: false, element: <PatientViewer /> },
+  { path: '/', label: false, element: routeElement(PatientViewer) },
   {
     path: '/record_viewer',
     label: 'Patient Viewer',
-    element: <PatientViewer />,
+    element: routeElement(PatientViewer),
     icon: <PersonSearchIcon fontSize="large" color="primary" />,
   },
   {
     path: '/customizer',
     label: 'Synthea Customizer',
-    element: <Customizer />,
+    element: routeElement(Customizer),
     icon: <ConstructionIcon fontSize="large" color="primary" />,
   },
   {
     path: '/load_csvs',
     label: offline ? false : 'Load CSVs',
-    element: <CSVFileManager />,
+    element: routeElement(CSVFileManager),
     icon: <UploadFileIcon fontSize="large" color="primary" />,
   },
 
   ...COLLECTIONS.map(({ name, label }) => ({
     path: `/${name}`,
     label: offline ? false : label,
-    element: <Collections selectedCollection={name} />,
+    element: routeElement(Collections, { selectedCollection: name }),
     icon: collectionIcons[name] || <FactCheckIcon {...collectionIconProps} />,
   })),
 
   // this must be last:
-  { path: '/*', label: false, element: <NotFound /> },
+  { path: '/*', label: false, element: routeElement(NotFound) },
 ];
 
 function App() {
