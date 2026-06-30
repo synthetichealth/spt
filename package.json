@@ -1,6 +1,6 @@
 {
   "name": "spt",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "Apache-2.0",
   "scripts": {
     "start": "npm-run-all --parallel startFrontend startBackend",
@@ -66,7 +66,7 @@
     "uuid": "^14.0.1"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=20.0.0"
   },
   "jest": {
     "testEnvironment": "node",
