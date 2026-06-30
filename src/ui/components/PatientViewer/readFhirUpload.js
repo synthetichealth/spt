@@ -9,9 +9,9 @@ const readFileAsBytes = (file) =>
     reader.readAsArrayBuffer(file);
   });
 
-const isZip = (fileName, bytes) => fileName.endsWith('.zip');
+const isZip = (fileName) => fileName.endsWith('.zip');
 
-const isGzip = (fileName, bytes) => fileName.endsWith('.gz') && !fileName.endsWith('.tar.gz');
+const isGzip = (fileName) => fileName.endsWith('.gz') && !fileName.endsWith('.tar.gz');
 
 const isTarGzip = (fileName) => fileName.endsWith('.tar.gz') || fileName.endsWith('.tgz');
 
@@ -85,7 +85,7 @@ const extractFirstZipFile = (bytes) => {
 };
 
 const extractUploadPayload = async (fileName, bytes) => {
-  if (isZip(fileName, bytes)) {
+  if (isZip(fileName)) {
     return extractFirstZipFile(bytes);
   }
 
@@ -93,7 +93,7 @@ const extractUploadPayload = async (fileName, bytes) => {
     return extractFirstTarFile(gunzipSync(bytes));
   }
 
-  if (isGzip(fileName, bytes)) {
+  if (isGzip(fileName)) {
     return gunzipSync(bytes);
   }
 
