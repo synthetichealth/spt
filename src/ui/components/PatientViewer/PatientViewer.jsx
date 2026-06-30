@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { PatientVisualizer } from 'fhir-visualizers';
 import {
   ConditionsTable,
@@ -14,8 +14,6 @@ import {
   DocumentReferencesTable,
   MediasTable,
 } from '../ResourceTables/ResourceTables';
-import { HashLink as Link } from 'react-router-hash-link';
-
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';

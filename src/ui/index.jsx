@@ -1,18 +1,12 @@
 /* eslint-env browser */
 import React from 'react';
-if (process.env.NODE_ENV === 'development') {
-  const whyDidYouRender = require('@welldone-software/why-did-you-render');
-  whyDidYouRender(React, {
-    trackAllPureComponents: true,
-  });
-}
-
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import App from './components/App.jsx';
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root'));
+
+root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById('root'),
 );
