@@ -18,17 +18,19 @@ const isTest = process.env.NODE_ENV === 'test';
 
 class Internal {
   constructor(persist = !isTest) {
+    const dbPath = process.env.SPT_DB_PATH || 'spt.db';
+
     // By default, persist unless we are in the test environment.
     // But this can be overridden by the given arg.
     if (persist) {
-      this.db = new loki('spt.db', {
+      this.db = new loki(dbPath, {
         autoload: true,
         autoloadCallback: markDBReady,
         autosave: true,
         serializationMethod: 'pretty',
       });
     } else {
-      this.db = new loki('spt.db');
+      this.db = new loki(dbPath);
     }
   }
 

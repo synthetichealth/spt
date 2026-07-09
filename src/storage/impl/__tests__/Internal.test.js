@@ -1,6 +1,22 @@
 const Internal = require('../Internal');
+const os = require('os');
+const path = require('path');
 
 describe('Test the internal data store', () => {
+  test('It should use the configured database path', () => {
+    const previousDbPath = process.env.SPT_DB_PATH;
+    const dbPath = path.join(os.tmpdir(), 'spt-custom.db');
+    process.env.SPT_DB_PATH = dbPath;
+
+    try {
+      const db = new Internal(false);
+      expect(db.db.filename).toBe(dbPath);
+    } finally {
+      if (previousDbPath === undefined) delete process.env.SPT_DB_PATH;
+      else process.env.SPT_DB_PATH = previousDbPath;
+    }
+  });
+
   test('It should not find objects that do not exist', () => {
     const db = new Internal(false);
     const result = db.select('stuff', (row) => row.name === 'jane doe');

@@ -32,6 +32,25 @@ npm start
 
 The app will now be running locally at http://localhost:3000
 
+### Electron App
+
+SPT can also run as a desktop app. This mode builds the React frontend with
+backend-backed features enabled, starts the Express app on a local loopback port,
+and opens it in an Electron window.
+
+```sh
+npm run startElectron
+```
+
+To create a packaged desktop build:
+
+```sh
+npm run packageElectron
+```
+
+In Electron mode, the Loki database is stored in the operating system's per-user
+application data directory instead of `spt.db` in the repository root.
+
 
 ### Configuration
 

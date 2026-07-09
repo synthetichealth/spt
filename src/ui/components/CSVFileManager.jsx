@@ -14,7 +14,11 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
+import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+
+const desktopApi = typeof window !== 'undefined' ? window.sptDesktop : undefined;
+const canSelectDirectory = typeof desktopApi?.selectDirectory === 'function';
 
 function CSVFileManager() {
   const [csvPath, setCsvPath] = useState('');
@@ -139,6 +143,20 @@ function CSVFileManager() {
     }
   }, []);
 
+  const selectCsvDirectory = useCallback(async () => {
+    if (!canSelectDirectory) return;
+
+    const selectedPath = await desktopApi.selectDirectory();
+    if (selectedPath) setCsvPath(selectedPath);
+  }, []);
+
+  const selectFhirDirectory = useCallback(async () => {
+    if (!canSelectDirectory) return;
+
+    const selectedPath = await desktopApi.selectDirectory();
+    if (selectedPath) setFhirPath(selectedPath);
+  }, []);
+
   return (
     <Box sx={{ width: 'min(720px, 100%)', mx: 'auto', textAlign: 'left' }}>
       <Paper sx={{ p: { xs: 2, sm: 3 } }}>
@@ -162,6 +180,17 @@ function CSVFileManager() {
                     disabled={isLoading}
                     placeholder="/path/to/csv"
                   />
+                  {canSelectDirectory && (
+                    <Button
+                      variant="outlined"
+                      onClick={selectCsvDirectory}
+                      disabled={isLoading}
+                      startIcon={<FolderOpenIcon />}
+                      sx={{ minWidth: 120 }}
+                    >
+                      Browse
+                    </Button>
+                  )}
                   <Button
                     variant="contained"
                     type="submit"
@@ -200,6 +229,17 @@ function CSVFileManager() {
                     disabled={isLoading}
                     placeholder="/path/to/fhir"
                   />
+                  {canSelectDirectory && (
+                    <Button
+                      variant="outlined"
+                      onClick={selectFhirDirectory}
+                      disabled={isLoading}
+                      startIcon={<FolderOpenIcon />}
+                      sx={{ minWidth: 120 }}
+                    >
+                      Browse
+                    </Button>
+                  )}
                   <Button
                     variant="contained"
                     type="submit"
