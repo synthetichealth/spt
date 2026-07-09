@@ -1,25 +1,26 @@
 const db = require('../storage/DataAccess');
-const parse = require('csv-parse');
+const { parse } = require('csv-parse');
 const fs = require('fs');
 const glob = require('glob');
 const path = require('path');
+const { promisify } = require('util');
 
-async function loadCsvFromDirectory(dir) {
-  glob(`${dir}/*.csv`, function(error, files) {
-    // TODO error?
-    files.forEach(async f => {
-      console.log(f);
-      const parser = fs.createReadStream(f).pipe(parse({ columns: true }));
+const globAsync = promisify(glob);
 
-      const extension = path.extname(f);
-      const filename = path.basename(f, extension);
-      // collection name is the filename
-      for await (const record of parser) {
-        // console.log(`inserting record into ${filename}`);
-        db.insert(filename, record);
-      }
-    });
-  });
+async function loadCsvFile(filePath) {
+  const parser = fs.createReadStream(filePath).pipe(parse({ columns: true }));
+  const extension = path.extname(filePath);
+  const filename = path.basename(filePath, extension);
+
+  for await (const record of parser) {
+    db.insert(filename, record);
+  }
 }
 
-module.exports = { loadCsvFromDirectory };
+async function loadCsvFromDirectory(dir) {
+  const files = await globAsync(path.join(dir, '*.csv'));
+  await Promise.all(files.map(loadCsvFile));
+  return files;
+}
+
+module.exports = { loadCsvFromDirectory, loadCsvFile };

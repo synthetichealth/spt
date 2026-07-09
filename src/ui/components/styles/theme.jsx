@@ -1,4 +1,4 @@
-import { createTheme, adaptV4Theme } from "@mui/material/styles";
+import { createTheme } from '@mui/material/styles';
 
 const colors = {
   white: '#fff',
@@ -25,77 +25,84 @@ const colors = {
   maroon: '#a83048',
   purple: '#8b72d6',
   turquoise: '#37c0ae',
-  turquoiseLight: '#e6f7f5'
+  turquoiseLight: '#e6f7f5',
 };
 
 const paletteBase = {
   primary: {
-    main: colors.blueDark
+    main: colors.blueDark,
   },
   secondary: {
-    main: colors.blue
+    main: colors.blue,
   },
   error: {
-    main: colors.red
+    main: colors.red,
   },
   common: colors,
   background: {
     default: colors.grayLightest,
-    primary: colors.grayLight
+    primary: colors.grayLight,
   },
   text: {
     primary: colors.black,
     secondary: colors.black,
-    gray: colors.grayLighter
+    gray: colors.grayLighter,
   },
   grey: {
-    800: colors.gray
+    800: colors.gray,
   },
   purple: {
-    main: colors.purple
-  }
+    main: colors.purple,
+  },
 };
 
-const materialUiOverridesBase = {
+const componentStyleOverridesBase = {
   MuiTableCell: {
-    body: {
-      color: '#575b62'
+    styleOverrides: {
+      body: {
+        color: '#575b62',
+      },
+      head: {
+        color: '#575b62',
+        fontWeight: '600',
+        fontSize: '12px',
+      },
+      sizeSmall: {
+        padding: '5px 24px 5px 16px',
+        '&:last-child': {
+          paddingRight: '0px',
+          width: '80px',
+        },
+      },
     },
-    head: {
-      color: '#575b62',
-      fontWeight: '600',
-      fontSize: '12px'
-    },
-    sizeSmall: {
-      padding: '5px 24px 5px 16px',
-      '&:last-child': {
-        paddingRight: '0px',
-        width: '80px'
-      }
-    }
   },
   MuiTableContainer: {
-    root: {
-      width: '70vw',
-      margin: '0 20px 0 20px',
-      overflowY: 'visible',
-      overflowX: 'scroll',
-      backgroundColor: 'white'
-    }
+    styleOverrides: {
+      root: {
+        width: '100%',
+        maxWidth: '100%',
+        margin: 0,
+        overflowY: 'visible',
+        overflowX: 'auto',
+        backgroundColor: 'white',
+      },
+    },
   },
   MuiTableSortLabel: {
-    root: {
-      color: 'black',
-      '&$active': {
-        color: 'black'
-      }
-    }
-  }
+    styleOverrides: {
+      root: {
+        color: 'black',
+        '&.Mui-active': {
+          color: 'black',
+        },
+      },
+    },
+  },
 };
 
-const theme = createTheme(adaptV4Theme({
+const theme = createTheme({
   palette: { ...paletteBase },
-  overrides: { ...materialUiOverridesBase }
-}));
+  components: { ...componentStyleOverridesBase },
+});
 
 export default theme;

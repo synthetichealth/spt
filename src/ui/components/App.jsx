@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 
@@ -9,47 +9,100 @@ import './app.css';
 
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import ConstructionIcon from '@mui/icons-material/Construction';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import BusinessIcon from '@mui/icons-material/Business';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
+import DevicesOtherIcon from '@mui/icons-material/DevicesOther';
+import FactCheckIcon from '@mui/icons-material/FactCheck';
+import HealingIcon from '@mui/icons-material/Healing';
+import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
+import MedicationIcon from '@mui/icons-material/Medication';
+import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
+import PaidIcon from '@mui/icons-material/Paid';
+import PersonIcon from '@mui/icons-material/Person';
+import SickIcon from '@mui/icons-material/Sick';
+import VaccinesIcon from '@mui/icons-material/Vaccines';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import Layout from './Layout';
-import PatientViewer from './PatientViewer';
-import Customizer from './Customizer';
-import Collections from './Collections';
-import NotFound from './NotFound';
+import { COLLECTIONS } from './Collections/config';
+
+const PatientViewer = lazy(() => import('./PatientViewer'));
+const Customizer = lazy(() => import('./Customizer'));
+const Collections = lazy(() => import('./Collections'));
+const DataLoadManager = lazy(() => import('./CSVFileManager'));
+const NotFound = lazy(() => import('./NotFound'));
 
 const queryClient = new QueryClient();
+const routeElement = (Component, props = {}) => (
+  <Suspense fallback={null}>
+    <Component {...props} />
+  </Suspense>
+);
 
 const offline = process.env.FRONTEND_ONLY === 'true';
+const collectionIconProps = { fontSize: 'large', color: 'primary' };
+const collectionIcons = {
+  allergies: <HealthAndSafetyIcon {...collectionIconProps} />,
+  careplans: <AssignmentIcon {...collectionIconProps} />,
+  conditions: <SickIcon {...collectionIconProps} />,
+  devices: <DevicesOtherIcon {...collectionIconProps} />,
+  diagnostic_reports: <FactCheckIcon {...collectionIconProps} />,
+  document_references: <AssignmentIcon {...collectionIconProps} />,
+  encounters: <LocalHospitalIcon {...collectionIconProps} />,
+  imaging_studies: <VisibilityIcon {...collectionIconProps} />,
+  immunizations: <VaccinesIcon {...collectionIconProps} />,
+  media: <VisibilityIcon {...collectionIconProps} />,
+  medications: <MedicationIcon {...collectionIconProps} />,
+  observations: <MonitorHeartIcon {...collectionIconProps} />,
+  organizations: <BusinessIcon {...collectionIconProps} />,
+  patients: <PersonIcon {...collectionIconProps} />,
+  payer_transitions: <CreditCardIcon {...collectionIconProps} />,
+  payers: <PaidIcon {...collectionIconProps} />,
+  procedures: <HealingIcon {...collectionIconProps} />,
+  providers: <MedicalInformationIcon {...collectionIconProps} />,
+  supplies: <Inventory2Icon {...collectionIconProps} />,
+};
 
 // App Routes:
 // path must start with '/'
 // if label is false no navlink will render in sidebar
 // if icon is blank it will default to DashboardIcon
 const routes = [
-    // HashRouter Path,          Nav Label,                                    Rendered React Component,   Icon (optional)
-    { path: '/',                 label: false,                                 element: <PatientViewer /> },
-    { path: '/record_viewer',    label: 'Patient Viewer',                      element: <PatientViewer />, icon: <PersonSearchIcon fontSize="large" color="primary" /> },
-    { path: '/customizer',       label: 'Synthea Customizer',                  element: <Customizer />,    icon: <ConstructionIcon fontSize="large" color="primary" /> },    
+  // HashRouter Path, Nav Label, Rendered React Component, Icon (optional)
+  { path: '/', label: false, element: routeElement(PatientViewer) },
+  {
+    path: '/record_viewer',
+    label: 'Patient Viewer',
+    element: routeElement(PatientViewer),
+    icon: <PersonSearchIcon fontSize="large" color="primary" />,
+  },
+  {
+    path: '/customizer',
+    label: 'Synthea Customizer',
+    element: routeElement(Customizer),
+    icon: <ConstructionIcon fontSize="large" color="primary" />,
+  },
+  {
+    path: '/manage_data',
+    label: offline ? false : 'Manage Data',
+    element: routeElement(DataLoadManager),
+    icon: <UploadFileIcon fontSize="large" color="primary" />,
+  },
 
-    // collections
-    { path: '/patients',          label: offline ? false : 'Patients',          element: <Collections selectedCollection="patients" />          },
-    { path: '/allergies',         label: offline ? false : 'Allergies',         element: <Collections selectedCollection="allergies" />         },
-    { path: '/careplans',         label: offline ? false : 'Careplans',         element: <Collections selectedCollection="careplans" />         },
-    { path: '/conditions',        label: offline ? false : 'Conditions',        element: <Collections selectedCollection="conditions" />        },
-    { path: '/devices',           label: offline ? false : 'Devices',           element: <Collections selectedCollection="devices" />           },
-    { path: '/encounters',        label: offline ? false : 'Encounters',        element: <Collections selectedCollection="encounters" />        },
-    { path: '/imaging_studies',   label: offline ? false : 'Imaging Studies',   element: <Collections selectedCollection="imaging_studies" />   },
-    { path: '/immunizations',     label: offline ? false : 'Immunizations',     element: <Collections selectedCollection="immunizations" />     },
-    { path: '/medications',       label: offline ? false : 'Medications',       element: <Collections selectedCollection="medications" />       },
-    { path: '/observations',      label: offline ? false : 'Observations',      element: <Collections selectedCollection="observations" />      },
-    { path: '/organizations',     label: offline ? false : 'Organizations',     element: <Collections selectedCollection="organizations" />     },
-    { path: '/payer_transitions', label: offline ? false : 'Payer Transitions', element: <Collections selectedCollection="payer_transitions" /> },
-    { path: '/payers',            label: offline ? false : 'Payers',            element: <Collections selectedCollection="payers" />            },
-    { path: '/procedures',        label: offline ? false : 'Procedures',        element: <Collections selectedCollection="procedures" />        },
-    { path: '/providers',         label: offline ? false : 'Providers',         element: <Collections selectedCollection="providers" />         },
-    { path: '/supplies',          label: offline ? false : 'Supplies',          element: <Collections selectedCollection="supplies" />          },
+  ...COLLECTIONS.map(({ name, label }) => ({
+    path: `/${name}`,
+    label: offline ? false : label,
+    element: routeElement(Collections, { selectedCollection: name }),
+    icon: collectionIcons[name] || <FactCheckIcon {...collectionIconProps} />,
+  })),
 
-    // this must be last:
-    { path: '/*',                label: false,                                 element: <NotFound />}
+  // this must be last:
+  { path: '/*', label: false, element: routeElement(NotFound) },
 ];
 
 function App() {
@@ -67,7 +120,3 @@ function App() {
 }
 
 export default App;
-
-
-
-

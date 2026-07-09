@@ -1,46 +1,56 @@
-import React from 'react';
-import { CopyBlock } from "react-code-blocks";
-/* Docs for react-code-blocks resource: https://github.com/rajinwonderland/react-code-blocks/tree/master */
+import React, { useState } from 'react';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import DoneIcon from '@mui/icons-material/Done';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 
-export function BashCodeBlock({code, lineNumbers=false, singleLine=false}) {
+const codeBlockStyle = {
+  backgroundColor: '#30343d',
+  borderRadius: 4,
+  color: '#ecf8ff',
+  fontFamily:
+    'SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+  fontSize: '1.05rem',
+  margin: 0,
+  overflowX: 'auto',
+  padding: '1rem 3rem 1rem 1rem',
+  whiteSpace: 'pre-wrap',
+};
 
-  const codeTheme = {
-    lineNumberColor: `#665973`,
-    lineNumberBgColor: `#30343d`,
-    backgroundColor: `#30343d`,
-    /* unfortunately all the cool syntax highlighting is overwritten by app.css */
-    textColor: `#92d9ff`,
-    substringColor: `#bf8ef1`,
-    keywordColor: `#df769b`,
-    attributeColor: `#e69533`,
-    selectorAttributeColor: `#ccbfd9`,
-    docTagColor: `#e66533`,
-    nameColor: `#ccbfd9`,
-    builtInColor: `#e66533`,
-    literalColor: `#ccbfd9`,
-    bulletColor: `#ccbfd9`,
-    codeColor: `#30343d`,
-    additionColor: `#a3be8c`,
-    regexpColor: `#7f659a`,
-    symbolColor: `#ccbfd9`,
-    variableColor: `#e4b781`,
-    templateVariableColor: `#bf8ef1`,
-    linkColor: `#bf8ef1`,
-    selectorClassColor: `#d67e5c`,
-    typeColor: `#d67e5c`,
-    stringColor: `#49e9a6`,
-    selectorIdColor: `#d67e5c`,
-    quoteColor: `#665973`,
-    templateTagColor: `#e66533`,
-    deletionColor: `#bf616a`,
-    titleColor: `#d67e5c`,
-    sectionColor: `#e4b781`,
-    commentColor: `#7f659a`,
-    metaKeywordColor: `#7f659a`,
-    metaColor: `#7f659a`,
-    functionColor: `#49ace9`,
-    numberColor: `#6258e5`,
-  }
+const wrapperStyle = {
+  position: 'relative',
+  textAlign: 'left',
+};
 
-  return(<CopyBlock text={code.trim()} showLineNumbers={false} theme={codeTheme} codeBlock />);
+const copyButtonStyle = {
+  color: '#ecf8ff',
+  position: 'absolute',
+  right: 4,
+  top: 4,
+};
+
+export function BashCodeBlock({ code }) {
+  const text = code.trim();
+  const [copied, setCopied] = useState(false);
+
+  const copyCode = async () => {
+    if (typeof navigator === 'undefined' || !navigator.clipboard) return;
+
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
+  return (
+    <div style={wrapperStyle}>
+      <Tooltip title={copied ? 'Copied' : 'Copy'}>
+        <IconButton aria-label="copy code" size="small" onClick={copyCode} style={copyButtonStyle}>
+          {copied ? <DoneIcon fontSize="small" /> : <ContentCopyIcon fontSize="small" />}
+        </IconButton>
+      </Tooltip>
+      <pre style={codeBlockStyle}>
+        <code>{text}</code>
+      </pre>
+    </div>
+  );
 }

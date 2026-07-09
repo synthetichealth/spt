@@ -1,7 +1,7 @@
 export function getPatientOnGitHub(path) {
   // path is of the form "github/org/repo/folderpath/to/file.json"
 
-  if (path.startsWith("github/")) {
+  if (path.startsWith('github/')) {
     path = path.substring(7);
   }
 
@@ -11,7 +11,7 @@ export function getPatientOnGitHub(path) {
   const branch = parts[2];
   const filepath = parts.slice(3).join('/');
 
-  return fetch(`https://raw.githubusercontent.com/${path}`)
-      .then(response => response.text())
-      .then(text => JSON.parse(text))
+  return fetch(`https://raw.githubusercontent.com/${org}/${repo}/${branch}/${filepath}`)
+    .then((response) => response.text())
+    .then((text) => JSON.parse(text));
 }

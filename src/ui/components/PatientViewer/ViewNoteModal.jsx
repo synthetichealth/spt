@@ -1,46 +1,49 @@
-import React, { useState } from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '65%',
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
+const noteTextStyle = {
+  fontFamily: 'inherit',
+  m: 0,
+  whiteSpace: 'pre-wrap',
+  wordBreak: 'break-word',
 };
 
-const ViewNoteModal = ({text}) => {
+const ViewNoteModal = ({ text, buttonLabel = 'View full note', title = 'Note' }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
-    <div>
-      <Button onClick={handleOpen}>View Note</Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-description" component="pre">
+    <>
+      <Button size="small" onClick={handleOpen} sx={{ mt: 1, textTransform: 'none' }}>
+        {buttonLabel}
+      </Button>
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
+        <DialogTitle>{title}</DialogTitle>
+        <DialogContent dividers>
+          <Box component="pre" sx={noteTextStyle}>
             {text}
-          </Typography>
-        </Box>
-      </Modal>
-    </div>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
-}
+};
 
+ViewNoteModal.propTypes = {
+  buttonLabel: PropTypes.string,
+  text: PropTypes.string.isRequired,
+  title: PropTypes.string,
+};
 
 export default ViewNoteModal;

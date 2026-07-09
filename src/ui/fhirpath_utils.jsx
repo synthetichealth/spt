@@ -11,7 +11,7 @@ import fhirpath_r4_model from 'fhirpath/fhir-context/r4';
  * @param fhirpath FHIRPath string
  * @return Raw values from FHIRPath engine evaluating the string
  */
-export function evaluateResource(resource, path, variables={}) {
+export function evaluateResource(resource, path, variables = {}) {
   return fhirpath.evaluate(resource, path, variables, fhirpath_r4_model);
 }
 
@@ -31,7 +31,7 @@ export function evaluateResource(resource, path, variables={}) {
  * @return Differs based on input - see above
  */
 export function evaluateBundle(bundle, path, variables, returnResources) {
-  if (path.startsWith("Bundle")) {
+  if (path.startsWith('Bundle')) {
     // run it on the entire bundle
 
     // NOTE: this doesn't check returnResources -- would that be useful here?
@@ -39,10 +39,10 @@ export function evaluateBundle(bundle, path, variables, returnResources) {
   } else {
     // the fhirpath doesn't start with "Bundle"
     //  so we'll apply it to each resource within the bundle
-    results = [];
+    const results = [];
 
     for (const entry of bundle.entry) {
-      const resourceResults = evaluateResource(entry.resource, path);
+      const resourceResults = evaluateResource(entry.resource, path, variables);
 
       if (returnResources) {
         if (isTruthy(resourceResults)) {
@@ -56,8 +56,6 @@ export function evaluateBundle(bundle, path, variables, returnResources) {
     return results;
   }
 }
-
-
 
 export function appliesToResource(resource, path) {
   return isTruthy(evaluateResource(resource, path));
@@ -74,14 +72,14 @@ export function appliesToBundle(bundle, path, variables) {
 function isTruthy(result) {
   if (result == null) {
     return false;
-  // } else if (result instanceof StringType) {
-  //   StringType str = ((StringType) result);
-  //   return !str.isEmpty() && !str.getValue().isEmpty();
-  // } else if (result instanceof BooleanType) {
-  //   BooleanType bool = ((BooleanType) result);
-  //   return !bool.isEmpty() && bool.booleanValue();
+    // } else if (result instanceof StringType) {
+    //   StringType str = ((StringType) result);
+    //   return !str.isEmpty() && !str.getValue().isEmpty();
+    // } else if (result instanceof BooleanType) {
+    //   BooleanType bool = ((BooleanType) result);
+    //   return !bool.isEmpty() && bool.booleanValue();
   } else if (Array.isArray(result)) {
-    return !!result.find(i => isTruthy(i));
+    return !!result.find((i) => isTruthy(i));
   }
 
   return true;

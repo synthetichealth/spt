@@ -20,18 +20,54 @@ pre {
 }
 */
 
-/* sets BashCodeBlock color, required to overright some upstream css library */
-span code span, span code {
-    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
-    font-size: 1.05rem;
-    color: #ecf8ff !important;
-}
-
 code {
     font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
 }
 
 
 .imagemedia {
-  max-width: 200px
+  max-width: min(200px, 100%);
+  height: auto;
+}
+
+/* Prevent browser scroll anchoring from fighting virtualized grids in large patient records. */
+.patient-viewer,
+.patient-viewer .fhir-data-grid {
+  overflow-anchor: none;
+}
+
+.patient-viewer {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.patient-viewer .fhir-data-grid {
+  text-align: left;
+}
+
+.patient-viewer .fhir-data-grid .MuiDataGrid-cell {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.25;
+  align-items: center;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.patient-viewer .fhir-data-grid__cell-content {
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.fhir-field-warning {
+  display: inline-block;
+  color: #8a5a00;
+  background: #fff4cc;
+  border: 1px solid #d8aa34;
+  border-radius: 3px;
+  padding: 0 4px;
+  font-size: 0.85em;
+  line-height: 1.4;
 }

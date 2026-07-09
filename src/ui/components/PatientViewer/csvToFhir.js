@@ -2,31 +2,30 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
 async function csvToFhir(id) {
-  const [
-    patientResp,
-    conditionsResp,
-    medicationsResp,
-    proceduresResp,
-    encountersResp
-  ] = await Promise.all([
-    axios.get(`/collection/patients?Id=${id}`),
-    axios.get(`/collection/conditions?PATIENT=${id}`),
-    axios.get(`/collection/medications?PATIENT=${id}`),
-    axios.get(`/collection/procedures?PATIENT=${id}`),
-    axios.get(`/collection/encounters?PATIENT=${id}`)
-  ]);
+  const [patientResp, conditionsResp, medicationsResp, encountersResp, observationsResp] =
+    await Promise.all([
+      axios.get(`/collection/patients?Id=${id}`),
+      axios.get(`/collection/conditions?PATIENT=${id}`),
+      axios.get(`/collection/medications?PATIENT=${id}`),
+      axios.get(`/collection/encounters?PATIENT=${id}`),
+      axios.get(`/collection/observations?PATIENT=${id}`),
+    ]);
 
   // for testing, map these into FHIR
 
   const patientCSV = patientResp.data[0];
+  if (!patientCSV) {
+    throw new Error(`No CSV patient found for ${id}.`);
+  }
+
   const conditionsCSV = conditionsResp.data;
   const medicationsCSV = medicationsResp.data;
-  const proceduresCSV = proceduresResp.data;
   const encountersCSV = encountersResp.data;
+  const observationsCSV = observationsResp.data;
 
   const bundle = {
     resourceType: 'Bundle',
-    entry: []
+    entry: [],
   };
 
   // Id,BIRTHDATE,DEATHDATE,SSN,DRIVERS,PASSPORT,
@@ -42,8 +41,8 @@ async function csvToFhir(id) {
         use: 'official',
         family: patientCSV.LAST,
         given: [patientCSV.FIRST],
-        prefix: [patientCSV.PREFIX]
-      }
+        prefix: [patientCSV.PREFIX],
+      },
     ],
     gender: patientCSV.GENDER,
     birthDate: patientCSV.BIRTHDATE,
@@ -53,9 +52,9 @@ async function csvToFhir(id) {
         city: patientCSV.CITY,
         state: patientCSV.STATE,
         postalCode: patientCSV.ZIP,
-        country: 'US'
-      }
-    ]
+        country: 'US',
+      },
+    ],
   };
 
   const patientURI = `urn:uuid:${id}`;
@@ -63,27 +62,28 @@ async function csvToFhir(id) {
   bundle.entry.push({ fullUrl: patientURI, resource: patientFHIR });
 
   // START,STOP,PATIENT,ENCOUNTER,CODE,DESCRIPTION
-  conditionsCSV.forEach(c => {
+  conditionsCSV.forEach((c) => {
+    const conditionId = c.Id || c.ID || uuidv4();
     const conditionFHIR = {
       resourceType: 'Condition',
-      id: uuidv4(), // just to have something
+      id: conditionId,
       code: {
         coding: [
           {
             system: 'http://snomed.info/sct',
             code: c.CODE,
-            display: c.DESCRIPTION
-          }
+            display: c.DESCRIPTION,
+          },
         ],
-        text: c.DESCRIPTION
+        text: c.DESCRIPTION,
       },
       subject: { reference: patientURI },
       encounter: { reference: `urn:uuid:${c.ENCOUNTER}` },
       onsetDateTime: c.START,
-      abatementDateTime: c.STOP
+      abatementDateTime: c.STOP,
     };
 
-    bundle.entry.push({ fullUrl: `urn:uuid:${c.ID}`, resource: conditionFHIR });
+    bundle.entry.push({ fullUrl: `urn:uuid:${conditionId}`, resource: conditionFHIR });
   });
 
   // Id,START,STOP,PATIENT,ORGANIZATION,PROVIDER,PAYER,
@@ -91,12 +91,13 @@ async function csvToFhir(id) {
   // BASE_ENCOUNTER_COST,TOTAL_CLAIM_COST,PAYER_COVERAGE,
   // REASONCODE,REASONDESCRIPTION
 
-  encountersCSV.forEach(e => {
+  encountersCSV.forEach((e) => {
+    const encounterId = e.Id || e.ID || uuidv4();
     const encounterFHIR = {
       resourceType: 'Encounter',
-      id: e.ID,
+      id: encounterId,
       class: {
-        code: e.ENCOUNTERCLASS
+        code: e.ENCOUNTERCLASS,
       },
       type: [
         {
@@ -104,31 +105,32 @@ async function csvToFhir(id) {
             {
               system: 'http://snomed.info/sct',
               code: e.CODE,
-              display: e.DESCRIPTION
-            }
+              display: e.DESCRIPTION,
+            },
           ],
-          text: e.DESCRIPTION
-        }
+          text: e.DESCRIPTION,
+        },
       ],
       subject: {
-        reference: patientURI
+        reference: patientURI,
       },
       period: {
         start: e.START,
-        end: e.STOP
-      }
+        end: e.STOP,
+      },
     };
 
-    bundle.entry.push({ fullUrl: `urn:uuid:${e.ID}`, resource: encounterFHIR });
+    bundle.entry.push({ fullUrl: `urn:uuid:${encounterId}`, resource: encounterFHIR });
   });
 
   // START,STOP,PATIENT,PAYER,ENCOUNTER,CODE,DESCRIPTION,
   // BASE_COST,PAYER_COVERAGE,DISPENSES,TOTALCOST,REASONCODE,REASONDESCRIPTION
 
-  medicationsCSV.forEach(m => {
+  medicationsCSV.forEach((m) => {
+    const medicationId = m.Id || m.ID || uuidv4();
     const medicationFHIR = {
       resourceType: 'MedicationRequest',
-      id: m.ID,
+      id: medicationId,
       status: m.STOP ? `stopped ${m.STOP}` : 'active',
       intent: 'order',
       medicationCodeableConcept: {
@@ -136,22 +138,64 @@ async function csvToFhir(id) {
           {
             system: 'http://www.nlm.nih.gov/research/umls/rxnorm',
             code: m.CODE,
-            display: m.DESCRIPTION
-          }
+            display: m.DESCRIPTION,
+          },
         ],
-        text: m.DESCRIPTION
+        text: m.DESCRIPTION,
       },
       subject: {
-        reference: patientURI
+        reference: patientURI,
       },
       encounter: {
-        reference: `urn:uuid:${m.ENCOUNTER}`
+        reference: `urn:uuid:${m.ENCOUNTER}`,
       },
-      authoredOn: m.START
+      authoredOn: m.START,
     };
 
-    bundle.entry.push({ fullUrl: `urn:uuid:${m.ID}`, resource: medicationFHIR });
+    bundle.entry.push({ fullUrl: `urn:uuid:${medicationId}`, resource: medicationFHIR });
   });
+
+  // DATE,PATIENT,ENCOUNTER,CODE,DESCRIPTION,VALUE,UNITS,TYPE
+  observationsCSV.forEach((o) => {
+    const observationId = o.Id || o.ID || uuidv4();
+    const observationFHIR = {
+      resourceType: 'Observation',
+      id: observationId,
+      status: 'final',
+      code: {
+        coding: [
+          {
+            system: 'http://loinc.org',
+            code: o.CODE,
+            display: o.DESCRIPTION,
+          },
+        ],
+        text: o.DESCRIPTION,
+      },
+      subject: {
+        reference: patientURI,
+      },
+      encounter: {
+        reference: `urn:uuid:${o.ENCOUNTER}`,
+      },
+      effectiveDateTime: o.DATE,
+    };
+
+    if ((o.TYPE || o.type) === 'numeric') {
+      const numericValue = Number.parseFloat(o.VALUE);
+      observationFHIR.valueQuantity = {
+        value: Number.isNaN(numericValue) ? o.VALUE : numericValue,
+        code: o.UNITS,
+        unit: o.UNITS,
+      };
+    } else {
+      observationFHIR.valueString = o.VALUE;
+    }
+
+    bundle.entry.push({ fullUrl: `urn:uuid:${observationId}`, resource: observationFHIR });
+  });
+
+  bundle.entry.reverse();
 
   return bundle;
 }

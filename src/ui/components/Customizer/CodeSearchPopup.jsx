@@ -10,7 +10,6 @@ import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 
 import concepts from './concepts.json';
 
-
 const filter = createFilterOptions();
 
 // adapted from MUI docs https://mui.com/material-ui/react-autocomplete/#system-FreeSoloCreateOptionDialog.js
@@ -67,10 +66,10 @@ const CodeSearchPopup = (props) => {
         filterOptions={(options, params) => {
           let filtered = options;
 
-          if (type === "medication") {
-            filtered = filtered.filter(o => o.system === "RxNorm");
+          if (type === 'medication') {
+            filtered = filtered.filter((o) => o.system === 'RxNorm');
           } else {
-            filtered = filtered.filter(o => o.system === "SNOMED-CT");
+            filtered = filtered.filter((o) => o.system === 'SNOMED-CT');
           }
 
           filtered = filter(filtered, params);
@@ -99,7 +98,9 @@ const CodeSearchPopup = (props) => {
         selectOnFocus
         clearOnBlur
         handleHomeEndKeys
-        renderOption={(props, option) => <li {...props}>{`[${option.system}] ${option.code}: ${option.display}`}</li>}
+        renderOption={(props, option) => (
+          <li {...props}>{`[${option.system}] ${option.code}: ${option.display}`}</li>
+        )}
         sx={{ width: 600 }}
         freeSolo
         renderInput={(params) => <TextField {...params} label="Code search" />}
@@ -109,7 +110,8 @@ const CodeSearchPopup = (props) => {
           <DialogTitle>Adding a code</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              WARNING: The code you entered is not in Synthea by default! You can still add it to the keep module if you know what you're doing.
+              WARNING: The code you entered is not in Synthea by default! You can still add it to
+              the keep module if you know what you&apos;re doing.
             </DialogContentText>
             <TextField
               autoFocus

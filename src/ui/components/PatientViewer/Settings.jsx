@@ -1,6 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
-
-import useLocalStorage from "use-local-storage";
+import React, { Fragment } from 'react';
 
 import SettingsIcon from '@mui/icons-material/Settings';
 
@@ -11,11 +9,11 @@ import Modal from '@mui/material/Modal';
 import Checkbox from '@mui/material/Checkbox';
 import Tooltip from '@mui/material/Tooltip';
 import TextField from '@mui/material/TextField';
- 
 
 import InfoIcon from '@mui/icons-material/Info';
 
 import FILTER_PRESETS from './FilterPresets';
+import usePatientViewerSettings from './usePatientViewerSettings';
 
 const style = {
   position: 'absolute',
@@ -30,84 +28,87 @@ const style = {
 };
 
 const CONFIG_OPTIONS = [
-  // { key: "filters", defaultValue: "{}", 
+  // { key: "filters", defaultValue: "{}",
   //   description: "TBD" },
   // { key: "Hide Resolved Conditions", defaultValue: false, type: "boolean",
-  //   description: "If true, conditions with an abatement date will be hidden" },  
+  //   description: "If true, conditions with an abatement date will be hidden" },
   // { key: "Hide Stopped Medications", defaultValue: false, type: "boolean",
   //   description: "If true, medications with a status of 'stopped' will be hidden" },
-  ...Object.entries(FILTER_PRESETS).map(([key, value]) => ({ key, description: value.description, type: "boolean" }))
+  ...Object.entries(FILTER_PRESETS).map(([key, value]) => ({
+    key,
+    description: value.description,
+    type: 'boolean',
+  })),
 ];
 
 const Settings = () => {
   const [open, setOpen] = React.useState(false);
+  const { settings, setFilterPreset } = usePatientViewerSettings();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const hooks = {};
-  for (const configOpt of CONFIG_OPTIONS) {
-    const [configValue, setConfigValue] = useLocalStorage(configOpt.key, configOpt.defaultValue);
-
-    hooks[configOpt.key] = { value: configValue, set: setConfigValue }
-  }
-
-  const handleChangeText = (evt) => {
-    hooks[evt.target.name].set(evt.target.value)
-  }
-
   const handleChangeBoolean = (evt) => {
-    hooks[evt.target.name].set(evt.target.checked)
-  }
+    setFilterPreset(evt.target.name, evt.target.checked);
+  };
 
   const fields = [];
   for (const configOpt of CONFIG_OPTIONS) {
     const key = configOpt.key;
 
     if (configOpt.type == 'separator') {
-      fields.push((<hr />));
+      fields.push(<hr />);
     } else if (configOpt.type == 'header') {
-      fields.push((<Typography component="h4"> { configOpt.key }</Typography>));
+      fields.push(<Typography component="h4"> {configOpt.key}</Typography>);
     } else if (configOpt.type == 'boolean') {
-      fields.push((<Fragment key={key}>
-                    {key}
-                      <Checkbox 
-                        id={key} 
-                        name={key} 
-                        label={key}
-                        defaultChecked={hooks[key].value ?? configOpt.defaultValue}
-                        onChange={handleChangeBoolean} />
-                      <Tooltip title={configOpt.description} disableInteractive>
-                        <span>
-                          <Button disabled><InfoIcon fontSize="small" /></Button>
-                        </span>
-                      </Tooltip>
-                      <br />
-                    </Fragment>));
+      fields.push(
+        <Fragment key={key}>
+          {key}
+          <Checkbox
+            id={key}
+            name={key}
+            label={key}
+            checked={settings.filterPresets[key] ?? configOpt.defaultValue}
+            onChange={handleChangeBoolean}
+          />
+          <Tooltip title={configOpt.description} disableInteractive>
+            <span>
+              <Button disabled>
+                <InfoIcon fontSize="small" />
+              </Button>
+            </span>
+          </Tooltip>
+          <br />
+        </Fragment>,
+      );
     } else {
-      fields.push((<Fragment key={key} >
-                     <TextField
-                        id={key}
-                        name={key}
-                        type={configOpt.type}
-                        label={key}
-                        defaultValue={hooks[key].value ?? configOpt.defaultValue}
-                        variant="outlined"
-                        onChange={handleChangeText}
-                        />
-                      <Tooltip title={configOpt.description} disableInteractive>
-                        <span>
-                          <Button disabled><InfoIcon fontSize="small" /></Button>
-                        </span>
-                      </Tooltip>
-                      <br />
-                    </Fragment>));
-
+      fields.push(
+        <Fragment key={key}>
+          <TextField
+            id={key}
+            name={key}
+            type={configOpt.type}
+            label={key}
+            defaultValue={configOpt.defaultValue}
+            variant="outlined"
+          />
+          <Tooltip title={configOpt.description} disableInteractive>
+            <span>
+              <Button disabled>
+                <InfoIcon fontSize="small" />
+              </Button>
+            </span>
+          </Tooltip>
+          <br />
+        </Fragment>,
+      );
     }
   }
 
   return (
     <div>
-      <Button style={{ position: 'relative', float: 'right' }} onClick={handleOpen}><SettingsIcon /></Button>
+      <Button style={{ position: 'relative', float: 'right' }} onClick={handleOpen}>
+        <SettingsIcon />
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -116,12 +117,12 @@ const Settings = () => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-description" component="pre">
-            { fields }
+            {fields}
           </Typography>
         </Box>
       </Modal>
     </div>
   );
-}
+};
 
 export default Settings;
